@@ -1,4 +1,4 @@
-package io.api.core.logs;
+package io.api.core.impl;
 
 /**
  * ! NO DESCRIPTION !

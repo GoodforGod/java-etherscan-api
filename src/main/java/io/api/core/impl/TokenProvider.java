@@ -1,4 +1,4 @@
-package io.api.core.parity;
+package io.api.core.impl;
 
 /**
  * ! NO DESCRIPTION !
@@ -6,6 +6,6 @@ package io.api.core.parity;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class ParityProvider {
+public class TokenProvider {
 
 }

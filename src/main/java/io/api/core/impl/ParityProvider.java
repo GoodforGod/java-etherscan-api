@@ -1,4 +1,4 @@
-package io.api.core.contract;
+package io.api.core.impl;
 
 /**
  * ! NO DESCRIPTION !
@@ -6,6 +6,6 @@ package io.api.core.contract;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public interface IContractProvider {
+public class ParityProvider {
 
 }

@@ -1,4 +1,4 @@
-package io.api.core.token;
+package io.api.core.impl;
 
 /**
  * ! NO DESCRIPTION !
@@ -6,6 +6,6 @@ package io.api.core.token;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class TokenProvider {
+public class TransactionProvider {
 
 }

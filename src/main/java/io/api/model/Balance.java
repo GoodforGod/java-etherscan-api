@@ -18,6 +18,7 @@ public class Balance {
         this.balance = balance;
     }
 
+    //<editor-fold desc="Getters">
     public String getAddress() {
         return address;
     }
@@ -41,6 +42,7 @@ public class Balance {
     public double getEther() {
         return balance / 1000000000000000L;
     }
+    //</editor-fold>
 
     @Override
     public boolean equals(Object o) {
