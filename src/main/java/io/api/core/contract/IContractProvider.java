@@ -6,6 +6,6 @@ package io.api.core.contract;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class ContractProvider {
+public interface IContractProvider {
 
 }
