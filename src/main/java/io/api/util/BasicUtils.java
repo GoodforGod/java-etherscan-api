@@ -1,5 +1,7 @@
 package io.api.util;
 
+import io.api.error.InvalidAddressException;
+
 import java.util.regex.Pattern;
 
 /**
@@ -22,5 +24,10 @@ public class BasicUtils {
 
     public static boolean isAddress(String value) {
         return !isEmpty(value) && addressPattern.matcher(value).matches();
+    }
+
+    public static void validateAddress(String address) {
+        if(!isAddress(address))
+            throw new InvalidAddressException("Address is not Ethereum based.");
     }
 }

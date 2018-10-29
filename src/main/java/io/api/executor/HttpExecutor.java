@@ -1,4 +1,4 @@
-package io.api.core.executor;
+package io.api.executor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,14 +18,24 @@ import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
  */
 public class HttpExecutor {
 
+    private final int timeout;
+
+    public HttpExecutor() {
+        this(30000);
+    }
+
+    public HttpExecutor(int timeout) {
+        this.timeout = timeout;
+    }
+
     public String get(final String urlAsString,
                       final Map<String, String> headers) throws IOException {
 
         final URL url = new URL(urlAsString);
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+        connection.setConnectTimeout(timeout);
         headers.forEach(connection::setRequestProperty);
-        connection.setConnectTimeout(30000);
 
         final int status = connection.getResponseCode();
         if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
@@ -33,15 +43,16 @@ public class HttpExecutor {
             return get(location, headers);
         }
 
-        final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
         final StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null)
-            content.append(inputLine);
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                content.append(inputLine);
 
-        in.close();
+            in.close();
+        }
+
         connection.disconnect();
-
         return content.toString();
     }
 }

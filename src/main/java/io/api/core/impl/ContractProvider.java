@@ -1,6 +1,7 @@
 package io.api.core.impl;
 
 import io.api.core.IContractProvider;
+import io.api.model.temporary.StringResponseTO;
 import io.api.util.BasicUtils;
 
 import java.util.Map;
@@ -13,8 +14,8 @@ import java.util.Map;
  */
 public class ContractProvider extends BasicProvider implements IContractProvider {
 
-    private static final String abiParam = "&action=getabi";
-    private static final String addressParam = "&address=";
+    private static final String ABI_PARAM = "&action=getabi";
+    private static final String ADDRESS_PARAM = "&address=";
 
     public ContractProvider(final String baseUrl,
                             final Map<String, String> headers) {
@@ -23,9 +24,10 @@ public class ContractProvider extends BasicProvider implements IContractProvider
 
     @Override
     public String contractAbi(String address) {
-        if(!BasicUtils.isAddress(address))
-            throw new RuntimeException("Not address");
+        BasicUtils.validateAddress(address);
 
-        return getRequest(addressParam + address + abiParam);
+        final String response = getRequest(ABI_PARAM + ADDRESS_PARAM + address);
+        final StringResponseTO convert = convert(response, StringResponseTO.class);
+        return convert.getMessage();
     }
 }

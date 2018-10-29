@@ -6,7 +6,7 @@ package io.api.model;
  * @author GoodforGod
  * @since 28.10.2018
  */
-abstract class BasicTransaction {
+abstract class BaseTransaction {
 
     private String blockNumber;
     private String blockHash;
@@ -27,9 +27,9 @@ abstract class BasicTransaction {
     private String input;
     private String contractAddress;
 
-    BasicTransaction(String blockNumber, String blockHash, String timeStamp, String hash, String nonce, String confirmations,
-                     String transactionIndex, String from, String to, String value,
-                     String gas, String gasPrice, String gasUsed, String cumulativeGasUsed, String input, String contractAddress) {
+    BaseTransaction(String blockNumber, String blockHash, String timeStamp, String hash, String nonce, String confirmations,
+                    String transactionIndex, String from, String to, String value,
+                    String gas, String gasPrice, String gasUsed, String cumulativeGasUsed, String input, String contractAddress) {
         this.blockNumber = blockNumber;
         this.blockHash = blockHash;
         this.timeStamp = timeStamp;

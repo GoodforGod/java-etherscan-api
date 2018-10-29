@@ -6,7 +6,7 @@ package io.api.model;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class Transaction extends BasicTransaction {
+public class Transaction extends BaseTransaction {
 
     private String txreceipt_status;
     private boolean isError;

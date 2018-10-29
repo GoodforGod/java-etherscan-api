@@ -6,7 +6,7 @@ package io.api.model;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class TokenTransaction extends BasicTransaction {
+public class TokenTransaction extends BaseTransaction {
 
     private String tokenName;
     private String tokenSymbol;

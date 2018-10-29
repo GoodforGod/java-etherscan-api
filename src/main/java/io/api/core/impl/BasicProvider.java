@@ -1,6 +1,9 @@
 package io.api.core.impl;
 
-import io.api.core.executor.HttpExecutor;
+import com.jsoniter.JsonIterator;
+import io.api.error.ConnectionException;
+import io.api.error.ParseException;
+import io.api.executor.HttpExecutor;
 
 import java.io.IOException;
 import java.util.Map;
@@ -33,8 +36,12 @@ abstract class BasicProvider {
         return moduleParam + module;
     }
 
-    <T> T deserialize(String json, Class<T> tClass) {
-        return deserialize(json, tClass);
+    <T> T convert(String json, Class<T> tClass) {
+        try {
+            return JsonIterator.deserialize(json, tClass);
+        } catch (Exception e) {
+            throw new ParseException(e.getMessage(), e.getCause());
+        }
     }
 
     String getRequest(final String urlParameters) {
@@ -42,7 +49,7 @@ abstract class BasicProvider {
             final String fullUrl = baseUrl + getModuleParam() + urlParameters;
             return executor.get(fullUrl, headers);
         } catch (IOException e) {
-            throw new RuntimeException(e.getLocalizedMessage());
+            throw new ConnectionException(e.getLocalizedMessage(), e.getCause());
         }
     }
 }
