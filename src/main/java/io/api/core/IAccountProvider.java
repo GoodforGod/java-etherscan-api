@@ -2,7 +2,7 @@ package io.api.core;
 
 import io.api.model.Balance;
 import io.api.model.Block;
-import io.api.model.Transaction;
+import io.api.model.Tx;
 
 import java.util.List;
 
@@ -25,22 +25,24 @@ public interface IAccountProvider {
     List<Balance> balances(List<String> addresses);
 
     /** All txs */
-    List<Transaction> txs(String address);
+    List<Tx> txs(String address);
     /** Only last 10000 txs */
-    List<Transaction> txs(String address, int startBlock);
-    List<Transaction> txs(String address, int startBlock, int endBlock);
+    List<Tx> txs(String address, long startBlock);
+    List<Tx> txs(String address, long startBlock, long endBlock);
 
     /** All internal txs */
-    List<Transaction> txsInternal(String address);
+    List<Tx> txsInternal(String address);
     /** Only last 10000 internal txs */
-    List<Transaction> txsInternal(String address, int startBlock);
-    List<Transaction> txsInternal(String address, int startBlock, int endBlock);
+    List<Tx> txsInternal(String address, long startBlock);
+    List<Tx> txsInternal(String address, long startBlock, long endBlock);
+    /** Only last 10000 internal txs by txhash */
+    List<Tx> txsInternalByHash(String txhash);
 
     /** All token txs */
-    List<Transaction> txsToken(String address);
+    List<Tx> txsToken(String address);
     /** Only last 10000 token txs */
-    List<Transaction> txsToken(String address, int startBlock);
-    List<Transaction> txsToken(String address, int startBlock, int endBlock);
+    List<Tx> txsToken(String address, long startBlock);
+    List<Tx> txsToken(String address, long startBlock, long endBlock);
 
     /** All blocks mined by address */
     List<Block> minedBlocks(String address);

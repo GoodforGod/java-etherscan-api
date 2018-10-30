@@ -1,5 +1,7 @@
 package io.api.model;
 
+import io.api.model.temporary.BalanceTO;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -16,6 +18,10 @@ public class Balance {
                    final long balance) {
         this.address = address;
         this.balance = balance;
+    }
+
+    public static Balance of(BalanceTO balance) {
+        return new Balance(balance.getAccount(), Long.valueOf(balance.getBalance()));
     }
 
     //<editor-fold desc="Getters">

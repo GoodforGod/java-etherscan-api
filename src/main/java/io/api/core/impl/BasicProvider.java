@@ -1,6 +1,6 @@
 package io.api.core.impl;
 
-import com.jsoniter.JsonIterator;
+import com.google.gson.Gson;
 import io.api.error.ConnectionException;
 import io.api.error.ParseException;
 import io.api.executor.HttpExecutor;
@@ -16,7 +16,9 @@ import java.util.Map;
  */
 abstract class BasicProvider {
 
-    private static final String moduleParam = "&module=";
+    static final String ACTION_PARAM = "&module=";
+
+    private static final String MODULE_PARAM = "&module=";
     private final String module;
 
     private final String baseUrl;
@@ -33,12 +35,12 @@ abstract class BasicProvider {
     }
 
     private String getModuleParam() {
-        return moduleParam + module;
+        return MODULE_PARAM + module;
     }
 
     <T> T convert(String json, Class<T> tClass) {
         try {
-            return JsonIterator.deserialize(json, tClass);
+            return new Gson().fromJson(json, tClass);
         } catch (Exception e) {
             throw new ParseException(e.getMessage(), e.getCause());
         }

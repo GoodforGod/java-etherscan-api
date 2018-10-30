@@ -2,6 +2,7 @@ package io.api.util;
 
 import io.api.error.InvalidAddressException;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -26,8 +27,26 @@ public class BasicUtils {
         return !isEmpty(value) && addressPattern.matcher(value).matches();
     }
 
+    public static boolean areAddresses(List<String> strings) {
+        return (strings != null) && !strings.isEmpty()
+                && strings.stream().noneMatch(BasicUtils::isAddress);
+    }
+
     public static void validateAddress(String address) {
         if(!isAddress(address))
             throw new InvalidAddressException("Address is not Ethereum based.");
+    }
+
+    public static void validateAddresses(List<String> addresses) {
+        if(addresses == null)
+            throw new NullPointerException("Addresses can not be nullable.");
+
+        if(addresses.isEmpty())
+            return;
+
+        for (String address : addresses) {
+            if (!isAddress(address))
+                throw new InvalidAddressException("Address is not Ethereum based.");
+        }
     }
 }

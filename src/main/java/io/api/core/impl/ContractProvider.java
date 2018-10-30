@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ContractProvider extends BasicProvider implements IContractProvider {
 
-    private static final String ABI_PARAM = "&action=getabi";
+    private static final String ACTION_ABI_PARAM = "&action=getabi";
     private static final String ADDRESS_PARAM = "&address=";
 
     public ContractProvider(final String baseUrl,
@@ -26,8 +26,8 @@ public class ContractProvider extends BasicProvider implements IContractProvider
     public String contractAbi(String address) {
         BasicUtils.validateAddress(address);
 
-        final String response = getRequest(ABI_PARAM + ADDRESS_PARAM + address);
-        final StringResponseTO convert = convert(response, StringResponseTO.class);
-        return convert.getMessage();
+        final String response = getRequest(ACTION_ABI_PARAM + ADDRESS_PARAM + address);
+        final StringResponseTO converted = convert(response, StringResponseTO.class);
+        return converted.getResult();
     }
 }
