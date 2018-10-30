@@ -26,21 +26,17 @@ public interface IAccountProvider {
 
     /** All txs */
     @NotNull List<Tx> txs(String address) throws ApiException;
-    /** Only last 10000 txs */
     @NotNull List<Tx> txs(String address, long startBlock);
     @NotNull List<Tx> txs(String address, long startBlock, long endBlock);
 
     /** All internal txs */
     @NotNull List<TxInternal> txsInternal(String address);
-    /** Only last 10000 internal txs */
     @NotNull List<TxInternal> txsInternal(String address, long startBlock);
     @NotNull List<TxInternal> txsInternal(String address, long startBlock, long endBlock);
-    /** Only last 10000 internal txs by txhash */
     @NotNull List<TxInternal> txsInternalByHash(String txhash);
 
     /** All token txs */
     @NotNull List<TxToken> txsToken(String address);
-    /** Only last 10000 token txs */
     @NotNull List<TxToken> txsToken(String address, long startBlock);
     @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock);
 

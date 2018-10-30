@@ -62,4 +62,19 @@ abstract class BaseTx {
         return gasUsed;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BaseTx baseTx = (BaseTx) o;
+
+        return hash != null ? hash.equals(baseTx.hash) : baseTx.hash == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return hash != null ? hash.hashCode() : 0;
+    }
 }

@@ -6,7 +6,7 @@ package io.api.model.temporary;
  * @author GoodforGod
  * @since 29.10.2018
  */
-public class StringResponseTO extends BaseReponseTO {
+public class StringResponseTO extends BaseResponseTO {
 
     private String result;
 

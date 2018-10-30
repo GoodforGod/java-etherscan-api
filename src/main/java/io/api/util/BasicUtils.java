@@ -1,6 +1,8 @@
 package io.api.util;
 
+import io.api.error.EtherScanException;
 import io.api.error.InvalidAddressException;
+import io.api.model.temporary.BaseResponseTO;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -26,7 +28,7 @@ public class BasicUtils {
     }
 
     public static <T> boolean isEmpty(Collection<T> collection) {
-        return (collection != null && !collection.isEmpty());
+        return (collection == null || collection.isEmpty());
     }
 
     public static boolean isNotAddress(String value) {
@@ -34,7 +36,7 @@ public class BasicUtils {
     }
 
     public static boolean isNotTxHash(String value) {
-        return !isEmpty(value) && txhashPattern.matcher(value).matches();
+        return isEmpty(value) || !txhashPattern.matcher(value).matches();
     }
 
     public static void validateAddress(String address) {
@@ -45,6 +47,11 @@ public class BasicUtils {
     public static void validateTxHash(String txhash) {
         if(isNotTxHash(txhash))
             throw new InvalidAddressException("TxHash [" + txhash + "] is not Ethereum based.");
+    }
+
+    public static <T extends BaseResponseTO> void validateTxResponse(T response) {
+        if(response.getStatus() != 1 && !response.getMessage().startsWith("No trans"))
+            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
     }
 
     public static void validateAddresses(List<String> addresses) {

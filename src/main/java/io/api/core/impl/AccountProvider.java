@@ -25,6 +25,8 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     private static final int MAX_END_BLOCK = 999999999;
     private static final int MIN_START_BLOCK = 0;
 
+    private static final int OFFSET_MAX = 10000;
+
     private static final String BALANCE_ACTION = ACTION_PARAM + "balance";
     private static final String BALANCE_MULTI_ACTION = ACTION_PARAM + "balancemulti";
     private static final String TX_ACTION = ACTION_PARAM + "txlist";
@@ -55,11 +57,11 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
         BasicUtils.validateAddress(address);
 
         final String urlParams = BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
-        final StringResponseTO converted = getRequest(urlParams, StringResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + ", with status " + converted.getStatus());
+        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        if (response.getStatus() != 1)
+            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
 
-        return new Balance(address, Long.valueOf(converted.getResult()));
+        return new Balance(address, Long.valueOf(response.getResult()));
     }
 
     @NotNull
@@ -76,12 +78,12 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
         for (final List<String> batch : addressesAsBatches) {
             final String urlParams = BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(batch);
-            final BalanceResponseTO converted = getRequest(urlParams, BalanceResponseTO.class);
-            if (converted.getStatus() != 1)
-                throw new EtherScanException(converted.getMessage() + ", with status " + converted.getStatus());
+            final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
+            if (response.getStatus() != 1)
+                throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
 
-            if (!BasicUtils.isEmpty(converted.getBalances()))
-                balances.addAll(converted.getBalances().stream()
+            if (!BasicUtils.isEmpty(response.getResult()))
+                balances.addAll(response.getResult().stream()
                         .map(Balance::of)
                         .collect(Collectors.toList()));
         }
@@ -96,7 +98,6 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     @NotNull
     @Override
     public List<Tx> txs(final String address) {
-        //TODO all txs implementations with pagination
         return txs(address, MIN_START_BLOCK);
     }
 
@@ -111,21 +112,44 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     public List<Tx> txs(final String address, final long startBlock, final long endBlock) {
         BasicUtils.validateAddress(address);
 
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
         final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
-        final String urlParams = TX_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
-        final TxResponseTO converted = getRequest(urlParams, TxResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        final String urlParams = TX_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
 
-        return (converted.getResult() == null)
-                ? Collections.emptyList()
-                : converted.getResult();
+        return getRequestUsingOffset(urlParams, TxResponseTO.class);
+    }
+
+    /**
+     * Generic search for txs using offset api param
+     * To avoid 10k limit per response
+     *
+     * @param urlParams Url params for #getRequest()
+     * @param tClass responseListTO class
+     * @param <T> responseTO list T type
+     * @param <R> responseListTO type
+     * @return List of T values
+     */
+    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass) {
+        final List<T> result = new ArrayList<>();
+        int page = 1;
+        while (true) {
+            final String formattedUrl = String.format(urlParams, page++);
+            final R response = getRequest(formattedUrl, tClass);
+            BasicUtils.validateTxResponse(response);
+            if(BasicUtils.isEmpty(response.getResult()))
+                break;
+
+            result.addAll(response.getResult());
+            if(response.getResult().size() < OFFSET_MAX)
+                break;
+        }
+
+        return result;
     }
 
     @NotNull
     @Override
     public List<TxInternal> txsInternal(final String address) {
-        //TODO all txs implementations with pagination
         return txsInternal(address, MIN_START_BLOCK);
     }
 
@@ -140,16 +164,13 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     public List<TxInternal> txsInternal(final String address, final long startBlock, final long endBlock) {
         BasicUtils.validateAddress(address);
 
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
         final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
-        final String urlParams = TX_INTERNAL_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
-        final TxInternalResponseTO converted = getRequest(urlParams, TxInternalResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        final String urlParams = TX_INTERNAL_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
 
-        return (converted.getResult() == null)
-                ? Collections.emptyList()
-                : converted.getResult();
+        return getRequestUsingOffset(urlParams, TxInternalResponseTO.class);
     }
+
 
     @NotNull
     @Override
@@ -157,19 +178,17 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = TX_INTERNAL_ACTION + TXHASH_PARAM + txhash;
-        final TxInternalResponseTO converted = getRequest(urlParams, TxInternalResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        final TxInternalResponseTO response = getRequest(urlParams, TxInternalResponseTO.class);
+        BasicUtils.validateTxResponse(response);
 
-        return (converted.getResult() == null)
+        return BasicUtils.isEmpty(response.getResult())
                 ? Collections.emptyList()
-                : converted.getResult();
+                : response.getResult();
     }
 
     @NotNull
     @Override
     public List<TxToken> txsToken(final String address) {
-        //TODO all txs implementations with pagination
         return txsToken(address, MIN_START_BLOCK);
     }
 
@@ -184,15 +203,11 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     public List<TxToken> txsToken(final String address, final long startBlock, final long endBlock) {
         BasicUtils.validateAddress(address);
 
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
         final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
-        final String urlParams = TX_TOKEN_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
-        final TxTokenResponseTO converted = getRequest(urlParams, TxTokenResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        final String urlParams = TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
 
-        return (converted.getResult() == null)
-                ? Collections.emptyList()
-                : converted.getResult();
+        return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
     }
 
     @NotNull
@@ -200,13 +215,9 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     public List<Block> minedBlocks(final String address) {
         BasicUtils.validateAddress(address);
 
-        final String urlParams = MINED_ACTION + BLOCK_TYPE_PARAM + ADDRESS_PARAM + address;
-        final BlockResponseTO converted = getRequest(urlParams, BlockResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String urlParams = MINED_ACTION + offsetParam + BLOCK_TYPE_PARAM + ADDRESS_PARAM + address;
 
-        return (converted.getResult() == null)
-                ? Collections.emptyList()
-                : converted.getResult();
+        return getRequestUsingOffset(urlParams, BlockResponseTO.class);
     }
 }

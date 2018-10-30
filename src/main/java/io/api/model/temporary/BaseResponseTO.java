@@ -8,7 +8,7 @@ import io.api.util.BasicUtils;
  * @author GoodforGod
  * @since 29.10.2018
  */
-abstract class BaseReponseTO {
+public abstract class BaseResponseTO {
 
     private String status;
     private String message;
