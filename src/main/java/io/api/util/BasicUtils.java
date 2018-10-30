@@ -1,8 +1,9 @@
 package io.api.util;
 
 import io.api.error.InvalidAddressException;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 public class BasicUtils {
 
     private static final Pattern addressPattern = Pattern.compile("0x[a-zA-Z0-9]{40}");
+    private static final Pattern txhashPattern = Pattern.compile("0x[a-zA-Z0-9]{64}");
 
     public static boolean isEmpty(String value) {
         return value == null || value.isEmpty();
@@ -23,30 +25,55 @@ public class BasicUtils {
         return value == null || value.isEmpty() || value.trim().isEmpty();
     }
 
-    public static boolean isAddress(String value) {
-        return !isEmpty(value) && addressPattern.matcher(value).matches();
+    public static <T> boolean isEmpty(Collection<T> collection) {
+        return (collection != null && !collection.isEmpty());
     }
 
-    public static boolean areAddresses(List<String> strings) {
-        return (strings != null) && !strings.isEmpty()
-                && strings.stream().noneMatch(BasicUtils::isAddress);
+    public static boolean isNotAddress(String value) {
+        return isEmpty(value) || !addressPattern.matcher(value).matches();
+    }
+
+    public static boolean isNotTxHash(String value) {
+        return !isEmpty(value) && txhashPattern.matcher(value).matches();
     }
 
     public static void validateAddress(String address) {
-        if(!isAddress(address))
-            throw new InvalidAddressException("Address is not Ethereum based.");
+        if(isNotAddress(address))
+            throw new InvalidAddressException("Address [" + address + "] is not Ethereum based.");
+    }
+
+    public static void validateTxHash(String txhash) {
+        if(isNotTxHash(txhash))
+            throw new InvalidAddressException("TxHash [" + txhash + "] is not Ethereum based.");
     }
 
     public static void validateAddresses(List<String> addresses) {
-        if(addresses == null)
-            throw new NullPointerException("Addresses can not be nullable.");
-
-        if(addresses.isEmpty())
-            return;
-
         for (String address : addresses) {
-            if (!isAddress(address))
-                throw new InvalidAddressException("Address is not Ethereum based.");
+            if (isNotAddress(address))
+                throw new InvalidAddressException("Address [" + address + "] is not Ethereum based.");
         }
+    }
+
+    @NotNull
+    public static List<List<String>> partition(List<String> list, int pairSize) {
+        if(isEmpty(list))
+            return Collections.emptyList();
+
+        final List<List<String>> partitioned = new ArrayList<>();
+        final Iterator<String> iterator = list.iterator();
+        int counter = 0;
+
+        List<String> temp = new ArrayList<>();
+        while (iterator.hasNext()) {
+            temp.add(iterator.next());
+
+            if(++counter > pairSize) {
+                partitioned.add(temp);
+                temp = new ArrayList<>();
+                counter = 0;
+            }
+        }
+
+        return partitioned;
     }
 }

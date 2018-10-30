@@ -6,7 +6,7 @@ package io.api.error;
  * @author GoodforGod
  * @since 29.10.2018
  */
-public class ParseException extends RuntimeException {
+public class ParseException extends ApiException {
 
     public ParseException(String message) {
         super(message);

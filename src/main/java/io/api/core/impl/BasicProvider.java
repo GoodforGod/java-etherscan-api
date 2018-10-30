@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.api.error.ConnectionException;
 import io.api.error.ParseException;
 import io.api.executor.HttpExecutor;
+import io.api.manager.IQueueManager;
 
 import java.io.IOException;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 abstract class BasicProvider {
 
-    static final String ACTION_PARAM = "&module=";
+    static final String ACTION_PARAM = "&action=";
 
     private static final String MODULE_PARAM = "&module=";
     private final String module;
@@ -24,21 +25,20 @@ abstract class BasicProvider {
     private final String baseUrl;
     private final Map<String, String> headers;
     private final HttpExecutor executor;
+    private final IQueueManager queue;
 
-    BasicProvider(final String module,
+    BasicProvider(final IQueueManager queue,
+                  final String module,
                   final String baseUrl,
                   final Map<String, String> headers) {
-        this.module = module;
+        this.queue = queue;
+        this.module = MODULE_PARAM + module;
         this.baseUrl = baseUrl;
         this.headers = headers;
         this.executor = new HttpExecutor();
     }
 
-    private String getModuleParam() {
-        return MODULE_PARAM + module;
-    }
-
-    <T> T convert(String json, Class<T> tClass) {
+    private <T> T convert(final String json, final Class<T> tClass) {
         try {
             return new Gson().fromJson(json, tClass);
         } catch (Exception e) {
@@ -46,12 +46,17 @@ abstract class BasicProvider {
         }
     }
 
-    String getRequest(final String urlParameters) {
+    private String getRequest(final String urlParameters) {
         try {
-            final String fullUrl = baseUrl + getModuleParam() + urlParameters;
+            queue.takeTurn();
+            final String fullUrl = baseUrl + module + urlParameters;
             return executor.get(fullUrl, headers);
         } catch (IOException e) {
             throw new ConnectionException(e.getLocalizedMessage(), e.getCause());
         }
+    }
+
+    <T> T getRequest(final String urlParameters, final Class<T> tClass) {
+        return convert(getRequest(urlParameters), tClass);
     }
 }

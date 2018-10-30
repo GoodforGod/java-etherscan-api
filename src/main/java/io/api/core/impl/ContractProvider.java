@@ -1,6 +1,8 @@
 package io.api.core.impl;
 
 import io.api.core.IContractProvider;
+import io.api.error.EtherScanException;
+import io.api.manager.IQueueManager;
 import io.api.model.temporary.StringResponseTO;
 import io.api.util.BasicUtils;
 
@@ -17,17 +19,21 @@ public class ContractProvider extends BasicProvider implements IContractProvider
     private static final String ACTION_ABI_PARAM = "&action=getabi";
     private static final String ADDRESS_PARAM = "&address=";
 
-    public ContractProvider(final String baseUrl,
+    public ContractProvider(final IQueueManager queueManager,
+                            final String baseUrl,
                             final Map<String, String> headers) {
-        super("contract", baseUrl, headers);
+        super(queueManager, "contract", baseUrl, headers);
     }
 
     @Override
-    public String contractAbi(String address) {
+    public String contractAbi(final String address) {
         BasicUtils.validateAddress(address);
 
-        final String response = getRequest(ACTION_ABI_PARAM + ADDRESS_PARAM + address);
-        final StringResponseTO converted = convert(response, StringResponseTO.class);
+        final String urlParam = ACTION_ABI_PARAM + ADDRESS_PARAM + address;
+        final StringResponseTO converted = getRequest(urlParam, StringResponseTO.class);
+        if (converted.getStatus() != 1)
+            throw new EtherScanException(converted.getMessage() + ", with status " + converted.getStatus());
+
         return converted.getResult();
     }
 }

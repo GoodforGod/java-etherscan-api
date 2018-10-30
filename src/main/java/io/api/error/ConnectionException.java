@@ -6,7 +6,7 @@ package io.api.error;
  * @author GoodforGod
  * @since 29.10.2018
  */
-public class ConnectionException extends RuntimeException {
+public class ConnectionException extends ApiException {
 
     public ConnectionException(String message) {
         super(message);

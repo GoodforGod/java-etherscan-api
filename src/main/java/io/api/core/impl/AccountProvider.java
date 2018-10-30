@@ -1,16 +1,14 @@
 package io.api.core.impl;
 
-import com.sun.istack.internal.NotNull;
 import io.api.core.IAccountProvider;
 import io.api.error.EtherScanException;
-import io.api.model.Balance;
-import io.api.model.Block;
-import io.api.model.Tx;
-import io.api.model.temporary.BalanceResponseTO;
-import io.api.model.temporary.StringResponseTO;
-import io.api.model.temporary.TxResponseTO;
+import io.api.manager.IQueueManager;
+import io.api.model.*;
+import io.api.model.temporary.*;
 import io.api.util.BasicUtils;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +43,10 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     private static final String OFFSET_PARAM = "&offset=";
     private static final String PAGE_PARAM = "&page=";
 
-    public AccountProvider(final String baseUrl,
+    public AccountProvider(final IQueueManager queueManager,
+                           final String baseUrl,
                            final Map<String, String> header) {
-        super("account", baseUrl, header);
+        super(queueManager, "account", baseUrl, header);
     }
 
     @NotNull
@@ -56,10 +55,9 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
         BasicUtils.validateAddress(address);
 
         final String urlParams = BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
-        final String response = getRequest(urlParams);
-        final StringResponseTO converted = convert(response, StringResponseTO.class);
+        final StringResponseTO converted = getRequest(urlParams, StringResponseTO.class);
         if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+            throw new EtherScanException(converted.getMessage() + ", with status " + converted.getStatus());
 
         return new Balance(address, Long.valueOf(converted.getResult()));
     }
@@ -67,17 +65,28 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     @NotNull
     @Override
     public List<Balance> balances(final List<String> addresses) {
-        BasicUtils.validateAddresses(addresses);
-        if (addresses.isEmpty())
+        if (BasicUtils.isEmpty(addresses))
             return Collections.emptyList();
 
-        final String urlParams = BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(addresses);
-        final String response = getRequest(urlParams);
-        final BalanceResponseTO converted = convert(response, BalanceResponseTO.class);
-        if (converted.getStatus() != 1)
-            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+        BasicUtils.validateAddresses(addresses);
 
-        return converted.getBalances().stream().map(Balance::of).collect(Collectors.toList());
+        // Maximum addresses in batch request - 20
+        final List<Balance> balances = new ArrayList<>();
+        final List<List<String>> addressesAsBatches = BasicUtils.partition(addresses, 20);
+
+        for (final List<String> batch : addressesAsBatches) {
+            final String urlParams = BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(batch);
+            final BalanceResponseTO converted = getRequest(urlParams, BalanceResponseTO.class);
+            if (converted.getStatus() != 1)
+                throw new EtherScanException(converted.getMessage() + ", with status " + converted.getStatus());
+
+            if (!BasicUtils.isEmpty(converted.getBalances()))
+                balances.addAll(converted.getBalances().stream()
+                        .map(Balance::of)
+                        .collect(Collectors.toList()));
+        }
+
+        return balances;
     }
 
     private String toAddressParam(final List<String> addresses) {
@@ -88,8 +97,7 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     @Override
     public List<Tx> txs(final String address) {
         //TODO all txs implementations with pagination
-
-        return txs(address, MIN_START_BLOCK, MAX_END_BLOCK);
+        return txs(address, MIN_START_BLOCK);
     }
 
     @NotNull
@@ -105,8 +113,7 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
         final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
         final String urlParams = TX_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
-        final String response = getRequest(urlParams);
-        final TxResponseTO converted = convert(response, TxResponseTO.class);
+        final TxResponseTO converted = getRequest(urlParams, TxResponseTO.class);
         if (converted.getStatus() != 1)
             throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
 
@@ -117,49 +124,89 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public List<Tx> txsInternal(final String address) {
-        return null;
+    public List<TxInternal> txsInternal(final String address) {
+        //TODO all txs implementations with pagination
+        return txsInternal(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txsInternal(final String address, final long startBlock) {
+    public List<TxInternal> txsInternal(final String address, final long startBlock) {
         return txsInternal(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txsInternal(final String address, final long startBlock, final long endBlock) {
-        return null;
+    public List<TxInternal> txsInternal(final String address, final long startBlock, final long endBlock) {
+        BasicUtils.validateAddress(address);
+
+        final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
+        final String urlParams = TX_INTERNAL_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+        final TxInternalResponseTO converted = getRequest(urlParams, TxInternalResponseTO.class);
+        if (converted.getStatus() != 1)
+            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+
+        return (converted.getResult() == null)
+                ? Collections.emptyList()
+                : converted.getResult();
     }
 
     @NotNull
     @Override
-    public List<Tx> txsInternalByHash(String txhash) {
-        return null;
+    public List<TxInternal> txsInternalByHash(final String txhash) {
+        BasicUtils.validateTxHash(txhash);
+
+        final String urlParams = TX_INTERNAL_ACTION + TXHASH_PARAM + txhash;
+        final TxInternalResponseTO converted = getRequest(urlParams, TxInternalResponseTO.class);
+        if (converted.getStatus() != 1)
+            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+
+        return (converted.getResult() == null)
+                ? Collections.emptyList()
+                : converted.getResult();
     }
 
     @NotNull
     @Override
-    public List<Tx> txsToken(final String address) {
-        return null;
+    public List<TxToken> txsToken(final String address) {
+        //TODO all txs implementations with pagination
+        return txsToken(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txsToken(final String address, final long startBlock) {
+    public List<TxToken> txsToken(final String address, final long startBlock) {
         return txsToken(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txsToken(final String address, final long startBlock, final long endBlock) {
-        return null;
+    public List<TxToken> txsToken(final String address, final long startBlock, final long endBlock) {
+        BasicUtils.validateAddress(address);
+
+        final String blockParam = START_BLOCK_PARAM + startBlock + END_BLOCK_PARAM + endBlock;
+        final String urlParams = TX_TOKEN_ACTION + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+        final TxTokenResponseTO converted = getRequest(urlParams, TxTokenResponseTO.class);
+        if (converted.getStatus() != 1)
+            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+
+        return (converted.getResult() == null)
+                ? Collections.emptyList()
+                : converted.getResult();
     }
 
     @NotNull
     @Override
     public List<Block> minedBlocks(final String address) {
-        return null;
+        BasicUtils.validateAddress(address);
+
+        final String urlParams = MINED_ACTION + BLOCK_TYPE_PARAM + ADDRESS_PARAM + address;
+        final BlockResponseTO converted = getRequest(urlParams, BlockResponseTO.class);
+        if (converted.getStatus() != 1)
+            throw new EtherScanException(converted.getMessage() + " with status " + converted.getStatus());
+
+        return (converted.getResult() == null)
+                ? Collections.emptyList()
+                : converted.getResult();
     }
 }

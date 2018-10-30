@@ -8,18 +8,18 @@ package io.api.model;
  */
 public class TxToken extends BaseTx {
 
-    private String nonce;
+    private long nonce;
     private String blockHash;
     private String tokenName;
     private String tokenSymbol;
     private String tokenDecimal;
-    private String transactionIndex;
-    private String gasPrice;
-    private String cumulativeGasUsed;
-    private String confirmations;
+    private int transactionIndex;
+    private long gasPrice;
+    private long cumulativeGasUsed;
+    private long confirmations;
 
     //<editor-fold desc="Getters">
-    public String getNonce() {
+    public long getNonce() {
         return nonce;
     }
 
@@ -39,19 +39,19 @@ public class TxToken extends BaseTx {
         return tokenDecimal;
     }
 
-    public String getTransactionIndex() {
+    public int getTransactionIndex() {
         return transactionIndex;
     }
 
-    public String getGasPrice() {
+    public long getGasPrice() {
         return gasPrice;
     }
 
-    public String getCumulativeGasUsed() {
+    public long getCumulativeGasUsed() {
         return cumulativeGasUsed;
     }
 
-    public String getConfirmations() {
+    public long getConfirmations() {
         return confirmations;
     }
     //</editor-fold>

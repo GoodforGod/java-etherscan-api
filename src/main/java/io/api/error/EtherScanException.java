@@ -6,7 +6,7 @@ package io.api.error;
  * @author GoodforGod
  * @since 29.10.2018
  */
-public class EtherScanException extends RuntimeException {
+public class EtherScanException extends ApiException {
 
     public EtherScanException(String message) {
         super(message);

@@ -6,11 +6,11 @@ package io.api.model;
  * @author GoodforGod
  * @since 29.10.2018
  */
-public class TxInternal {
+public class TxInternal extends BaseTx {
 
     private String type;
-    private String traceId;
-    private String isError;
+    private long traceId;
+    private int isError;
     private String errCode;
 
     //<editor-fold desc="Getters">
@@ -18,11 +18,11 @@ public class TxInternal {
         return type;
     }
 
-    public String getTraceId() {
+    public long getTraceId() {
         return traceId;
     }
 
-    public String getIsError() {
+    public int getIsError() {
         return isError;
     }
 

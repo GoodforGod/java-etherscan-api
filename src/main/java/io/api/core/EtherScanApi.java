@@ -2,6 +2,8 @@ package io.api.core;
 
 import io.api.core.impl.AccountProvider;
 import io.api.core.impl.ContractProvider;
+import io.api.manager.IQueueManager;
+import io.api.manager.impl.QueueManager;
 import io.api.model.EthereumNetwork;
 
 import java.util.HashMap;
@@ -24,8 +26,8 @@ public class EtherScanApi {
         HEADERS.put("cache-control", "max-age=0");
     }
 
-    private final ContractProvider contract;
-    private final AccountProvider account;
+    private final IContractProvider contract;
+    private final IAccountProvider account;
 
     public EtherScanApi(final String apiKey) {
         this(apiKey, EthereumNetwork.MAINNET);
@@ -37,16 +39,19 @@ public class EtherScanApi {
                 ? EthereumNetwork.MAINNET
                 : network;
 
+        // EtherScan 5req\sec limit support
+        final IQueueManager masterQueue = new QueueManager(5, 1);
+
         final String url = "https://" + usedNetwork.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
-        this.contract = new ContractProvider(url, HEADERS);
-        this.account = new AccountProvider(url, HEADERS);
+        this.contract = new ContractProvider(masterQueue, url, HEADERS);
+        this.account = new AccountProvider(masterQueue, url, HEADERS);
     }
 
-    public ContractProvider contract() {
+    public IContractProvider contract() {
         return contract;
     }
 
-    public AccountProvider account() {
+    public IAccountProvider account() {
         return account;
     }
 }
