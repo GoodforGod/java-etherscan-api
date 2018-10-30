@@ -1,6 +1,10 @@
 package io.api.model;
 
+import io.api.util.BasicUtils;
+
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * ! NO DESCRIPTION !
@@ -12,6 +16,7 @@ abstract class BaseTx {
 
     private long blockNumber;
     private String timeStamp;
+    private LocalDateTime _timeStamp;
     private String hash;
     private String from;
     private String to;
@@ -26,8 +31,10 @@ abstract class BaseTx {
         return blockNumber;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public LocalDateTime getTimeStamp() {
+        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
+            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
+        return _timeStamp;
     }
 
     public String getHash() {

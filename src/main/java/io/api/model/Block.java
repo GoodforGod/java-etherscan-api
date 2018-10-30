@@ -1,5 +1,10 @@
 package io.api.model;
 
+import io.api.util.BasicUtils;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -10,6 +15,7 @@ public class Block {
 
     private String blockNumber;
     private String timeStamp;
+    private LocalDateTime _timeStamp;
     private String blockReward;
 
     public Block(String blockNumber, String timeStamp, String blockReward) {
@@ -23,8 +29,10 @@ public class Block {
         return blockNumber;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public LocalDateTime getTimeStamp() {
+        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
+            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
+        return _timeStamp;
     }
 
     public String getBlockReward() {

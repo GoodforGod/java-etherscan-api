@@ -1,7 +1,8 @@
 package io.api.core;
 
 /**
- * ! NO DESCRIPTION !
+ * EtherScan - API Descriptions
+ * https://etherscan.io/apis#contracts
  *
  * @author GoodforGod
  * @since 28.10.2018
