@@ -1,5 +1,7 @@
 package io.api.model;
 
+import io.api.util.BasicUtils;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -34,8 +36,8 @@ public class Tx extends BaseTx {
         return gasPrice;
     }
 
-    public String getIsError() {
-        return isError;
+    public boolean haveError() {
+        return !BasicUtils.isEmpty(isError) && !isError.equals("0");
     }
 
     public String getTxreceipt_status() {

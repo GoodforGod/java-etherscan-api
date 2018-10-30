@@ -8,6 +8,7 @@ import io.api.model.temporary.*;
 import io.api.util.BasicUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,7 +62,7 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
         if (response.getStatus() != 1)
             throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
 
-        return new Balance(address, Long.valueOf(response.getResult()));
+        return new Balance(address, new BigInteger(response.getResult()));
     }
 
     @NotNull

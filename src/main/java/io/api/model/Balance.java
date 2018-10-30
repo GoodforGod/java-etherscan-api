@@ -2,6 +2,8 @@ package io.api.model;
 
 import io.api.model.temporary.BalanceTO;
 
+import java.math.BigInteger;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -11,17 +13,17 @@ import io.api.model.temporary.BalanceTO;
 public class Balance {
 
     /** Balance in Wei */
-    private final long balance;
+    private final Wei balance;
     private final String address;
 
     public Balance(final String address,
-                   final long balance) {
+                   final BigInteger balance) {
         this.address = address;
-        this.balance = balance;
+        this.balance = new Wei(balance);
     }
 
     public static Balance of(BalanceTO balance) {
-        return new Balance(balance.getAccount(), Long.valueOf(balance.getBalance()));
+        return new Balance(balance.getAccount(), new BigInteger(balance.getBalance()));
     }
 
     //<editor-fold desc="Getters">
@@ -29,24 +31,24 @@ public class Balance {
         return address;
     }
 
-    public long getWei() {
-        return balance;
+    public BigInteger getWei() {
+        return balance.getValue();
     }
 
-    public double getKwei() {
-        return balance / 1000;
+    public BigInteger getKwei() {
+        return balance.getKwei();
     }
 
-    public double getMwei() {
-        return balance / 1000000;
+    public BigInteger getMwei() {
+        return balance.getMwei();
     }
 
-    public double getGwei() {
-        return balance / 1000000000;
+    public BigInteger getGwei() {
+        return balance.getGwei();
     }
 
-    public double getEther() {
-        return balance / 1000000000000000L;
+    public BigInteger getEther() {
+        return balance.getEther();
     }
     //</editor-fold>
 
@@ -57,17 +59,14 @@ public class Balance {
 
         Balance balance1 = (Balance) o;
 
-        if (Double.compare(balance1.balance, balance) != 0) return false;
-        return address.equals(balance1.address);
+        if (!balance.equals(balance1.balance)) return false;
+        return address != null ? address.equals(balance1.address) : balance1.address == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = address.hashCode();
-        temp = Double.doubleToLongBits(balance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        int result = balance.hashCode();
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 

@@ -50,7 +50,9 @@ public class BasicUtils {
     }
 
     public static <T extends BaseResponseTO> void validateTxResponse(T response) {
-        if(response.getStatus() != 1 && !response.getMessage().startsWith("No trans"))
+        if(response.getStatus() != 1
+                && !response.getMessage().startsWith("No tra")
+                && !response.getMessage().startsWith("No rec"))
             throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
     }
 

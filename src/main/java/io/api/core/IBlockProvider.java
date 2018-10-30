@@ -11,5 +11,6 @@ import io.api.model.UncleBlock;
  */
 public interface IBlockProvider {
 
+    /** Return uncle blocks */
     UncleBlock uncles(long blockNumber);
 }

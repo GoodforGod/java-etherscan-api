@@ -22,8 +22,8 @@ public class TxInternal extends BaseTx {
         return traceId;
     }
 
-    public int getIsError() {
-        return isError;
+    public boolean haveError() {
+        return isError == 1;
     }
 
     public String getErrCode() {

@@ -19,27 +19,27 @@ public interface IAccountProvider {
     @NotNull Balance balance(String address) throws ApiException;
 
     /**
-     * Maximum 20 address for batch request
+     * Maximum 20 address for single batch request
      * If address > 20, then there will be more than 1 request performed
      */
     @NotNull List<Balance> balances(List<String> addresses) throws ApiException;
 
     /** All txs */
     @NotNull List<Tx> txs(String address) throws ApiException;
-    @NotNull List<Tx> txs(String address, long startBlock);
-    @NotNull List<Tx> txs(String address, long startBlock, long endBlock);
+    @NotNull List<Tx> txs(String address, long startBlock) throws ApiException;
+    @NotNull List<Tx> txs(String address, long startBlock, long endBlock) throws ApiException;
 
     /** All internal txs */
-    @NotNull List<TxInternal> txsInternal(String address);
-    @NotNull List<TxInternal> txsInternal(String address, long startBlock);
-    @NotNull List<TxInternal> txsInternal(String address, long startBlock, long endBlock);
+    @NotNull List<TxInternal> txsInternal(String address) throws ApiException;
+    @NotNull List<TxInternal> txsInternal(String address, long startBlock) throws ApiException;
+    @NotNull List<TxInternal> txsInternal(String address, long startBlock, long endBlock) throws ApiException;
     @NotNull List<TxInternal> txsInternalByHash(String txhash);
 
     /** All token txs */
-    @NotNull List<TxToken> txsToken(String address);
-    @NotNull List<TxToken> txsToken(String address, long startBlock);
-    @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock);
+    @NotNull List<TxToken> txsToken(String address) throws ApiException;
+    @NotNull List<TxToken> txsToken(String address, long startBlock) throws ApiException;
+    @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock) throws ApiException;
 
     /** All blocks mined by address */
-    @NotNull List<Block> minedBlocks(String address);
+    @NotNull List<Block> minedBlocks(String address) throws ApiException;
 }

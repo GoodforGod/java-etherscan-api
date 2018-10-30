@@ -11,8 +11,8 @@ public class Status {
     private int isError;
     private String errDescription;
 
-    public int getIsError() {
-        return isError;
+    public boolean haveError() {
+        return isError == 1;
     }
 
     public String getErrDescription() {

@@ -9,4 +9,5 @@ package io.api.core;
  */
 public interface IParityProvider {
 
+    //TODO implement
 }

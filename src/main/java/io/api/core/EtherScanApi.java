@@ -35,13 +35,10 @@ public class EtherScanApi {
 
     public EtherScanApi(final String apiKey,
                         final EthereumNetwork network) {
-        final EthereumNetwork usedNetwork = (network == null)
-                ? EthereumNetwork.MAINNET
-                : network;
-
         // EtherScan 5req\sec limit support
         final IQueueManager masterQueue = new QueueManager(5, 1);
 
+        final EthereumNetwork usedNetwork = (network == null) ? EthereumNetwork.MAINNET : network;
         final String url = "https://" + usedNetwork.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
         this.contract = new ContractProvider(masterQueue, url, HEADERS);
         this.account = new AccountProvider(masterQueue, url, HEADERS);

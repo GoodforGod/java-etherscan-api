@@ -1,0 +1,22 @@
+package io.api.model.builder;
+
+/**
+ * ! NO DESCRIPTION !
+ *
+ * @author GoodforGod
+ * @since 31.10.2018
+ */
+public enum LogOp {
+    AND(""),
+    OR("");
+
+    private final String operation;
+
+    LogOp(String operation) {
+        this.operation = operation;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+}
