@@ -29,19 +29,19 @@ public class Wei {
         return result;
     }
 
-    public BigInteger getKwei() {
+    public BigInteger asKwei() {
         return result.divide(BigInteger.valueOf(1000));
     }
 
-    public BigInteger getMwei() {
+    public BigInteger asMwei() {
         return result.divide(BigInteger.valueOf(1000000));
     }
 
-    public BigInteger getGwei() {
+    public BigInteger asGwei() {
         return result.divide(BigInteger.valueOf(1000000000));
     }
 
-    public BigInteger getEther() {
+    public BigInteger asEther() {
         return result.divide(BigInteger.valueOf(1000000000000000L));
     }
     //</editor-fold>

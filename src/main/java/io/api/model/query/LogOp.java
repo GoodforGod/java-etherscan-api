@@ -1,4 +1,4 @@
-package io.api.model.builder;
+package io.api.model.query;
 
 /**
  * ! NO DESCRIPTION !

@@ -19,7 +19,7 @@ public interface IAccountProvider {
     @NotNull Balance balance(String address) throws ApiException;
 
     /** ERC20 token balance for address */
-    @NotNull Balance balance(String address, String contract) throws ApiException;
+    @NotNull TokenBalance balance(String address, String contract) throws ApiException;
 
     /**
      * Maximum 20 address for single batch request

@@ -36,19 +36,19 @@ public class Balance {
     }
 
     public BigInteger getKwei() {
-        return balance.getKwei();
+        return balance.asKwei();
     }
 
     public BigInteger getMwei() {
-        return balance.getMwei();
+        return balance.asMwei();
     }
 
     public BigInteger getGwei() {
-        return balance.getGwei();
+        return balance.asGwei();
     }
 
     public BigInteger getEther() {
-        return balance.getEther();
+        return balance.asEther();
     }
     //</editor-fold>
 

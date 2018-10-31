@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class UncleBlock {
 
+    public static UncleBlock EMPTY = new UncleBlock();
+
     private long blockNumber;
     private BigInteger blockReward;
     private String blockMiner;

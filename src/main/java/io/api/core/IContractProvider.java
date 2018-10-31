@@ -1,6 +1,7 @@
 package io.api.core;
 
 import io.api.error.ApiException;
+import io.api.model.Abi;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,5 +14,5 @@ import org.jetbrains.annotations.NotNull;
 public interface IContractProvider {
 
     /** Get Verified Contract Sources */
-    @NotNull String contractAbi(String address) throws ApiException;
+    @NotNull Abi contractAbi(String address) throws ApiException;
 }

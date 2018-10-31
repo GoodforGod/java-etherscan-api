@@ -1,7 +1,7 @@
 package io.api.core;
 
 import io.api.model.Log;
-import io.api.model.builder.LogQuery;
+import io.api.model.query.impl.LogQuery;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

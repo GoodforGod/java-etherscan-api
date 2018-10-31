@@ -26,14 +26,15 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     private static final int OFFSET_MAX = 10000;
 
-    private static final String ACT_BALANCE_ACTION = ACT_PARAM + "balance";
-    private static final String ACT_TOKEN_BALANCE_PARAM = ACT_PARAM + "tokenbalance";
-    private static final String ACT_BALANCE_MULTI_ACTION = ACT_PARAM + "balancemulti";
-    private static final String ACT_TX_ACTION = ACT_PARAM + "txlist";
-    private static final String ACT_TX_INTERNAL_ACTION = ACT_PARAM + "txlistinternal";
-    private static final String ACT_TX_TOKEN_ACTION = ACT_PARAM + "tokentx";
-    private static final String ACT_MINED_ACTION = ACT_PARAM + "getminedblocks";
+    private static final String ACT_BALANCE_ACTION = ACT_PREFIX + "balance";
+    private static final String ACT_TOKEN_BALANCE_PARAM = ACT_PREFIX + "tokenbalance";
+    private static final String ACT_BALANCE_MULTI_ACTION = ACT_PREFIX + "balancemulti";
+    private static final String ACT_TX_ACTION = ACT_PREFIX + "txlist";
+    private static final String ACT_TX_INTERNAL_ACTION = ACT_PREFIX + "txlistinternal";
+    private static final String ACT_TX_TOKEN_ACTION = ACT_PREFIX + "tokentx";
+    private static final String ACT_MINED_ACTION = ACT_PREFIX + "getminedblocks";
 
+    private static final String CONTRACT_PARAM = "&contractaddress=";
     private static final String BLOCK_TYPE_PARAM = "&blocktype=blocks";
     private static final String TAG_LATEST_PARAM = "&tag=latest";
     private static final String START_BLOCK_PARAM = "&startblock=";
@@ -53,7 +54,7 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public Balance balance(final String address) {
+    public Balance balance(final String address) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
@@ -66,13 +67,21 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public Balance balance(final String address, final String contract) throws ApiException {
-        return null;
+    public TokenBalance balance(final String address, final String contract) throws ApiException {
+        BasicUtils.validateAddress(address);
+        BasicUtils.validateAddress(contract);
+
+        final String urlParams = ACT_TOKEN_BALANCE_PARAM + ADDRESS_PARAM + address + CONTRACT_PARAM + contract;
+        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        if (response.getStatus() != 1)
+            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+
+        return new TokenBalance(address, new BigInteger(response.getResult()), contract);
     }
 
     @NotNull
     @Override
-    public List<Balance> balances(final List<String> addresses) {
+    public List<Balance> balances(final List<String> addresses) throws ApiException {
         if (BasicUtils.isEmpty(addresses))
             return Collections.emptyList();
 
@@ -103,19 +112,19 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public List<Tx> txs(final String address) {
+    public List<Tx> txs(final String address) throws ApiException {
         return txs(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txs(final String address, final long startBlock) {
+    public List<Tx> txs(final String address, final long startBlock) throws ApiException {
         return txs(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txs(final String address, final long startBlock, final long endBlock) {
+    public List<Tx> txs(final String address, final long startBlock, final long endBlock) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
@@ -135,7 +144,8 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
      * @param <R>       responseListTO type
      * @return List of T values
      */
-    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass) {
+    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass)
+            throws ApiException {
         final List<T> result = new ArrayList<>();
         int page = 1;
         while (true) {
@@ -155,19 +165,19 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(final String address) {
+    public List<TxInternal> txsInternal(final String address) throws ApiException {
         return txsInternal(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(final String address, final long startBlock) {
+    public List<TxInternal> txsInternal(final String address, final long startBlock) throws ApiException {
         return txsInternal(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(final String address, final long startBlock, final long endBlock) {
+    public List<TxInternal> txsInternal(final String address, final long startBlock, final long endBlock) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
@@ -177,10 +187,9 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
         return getRequestUsingOffset(urlParams, TxInternalResponseTO.class);
     }
 
-
     @NotNull
     @Override
-    public List<TxInternal> txsInternalByHash(final String txhash) {
+    public List<TxInternal> txsInternalByHash(final String txhash) throws ApiException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_INTERNAL_ACTION + TXHASH_PARAM + txhash;
@@ -194,19 +203,19 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address) {
+    public List<TxToken> txsToken(final String address) throws ApiException {
         return txsToken(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address, final long startBlock) {
+    public List<TxToken> txsToken(final String address, final long startBlock) throws ApiException {
         return txsToken(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address, final long startBlock, final long endBlock) {
+    public List<TxToken> txsToken(final String address, final long startBlock, final long endBlock) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
@@ -218,7 +227,7 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
 
     @NotNull
     @Override
-    public List<Block> minedBlocks(final String address) {
+    public List<Block> minedBlocks(final String address) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;

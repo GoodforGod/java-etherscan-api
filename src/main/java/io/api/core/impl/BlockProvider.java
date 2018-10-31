@@ -8,8 +8,6 @@ import io.api.model.utility.UncleBlockResponseTO;
 import io.api.util.BasicUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
 /**
  * ! NO DESCRIPTION !
  *
@@ -18,7 +16,7 @@ import java.util.Optional;
  */
 public class BlockProvider extends BasicProvider implements IBlockProvider {
 
-    private static final String ACT_BLOCK_PARAM = ACT_PARAM + "getblockreward";
+    private static final String ACT_BLOCK_PARAM = ACT_PREFIX + "getblockreward";
 
     private static final String BLOCKNO_PARAM = "&blockno=";
 
@@ -30,13 +28,13 @@ public class BlockProvider extends BasicProvider implements IBlockProvider {
 
     @NotNull
     @Override
-    public Optional<UncleBlock> uncles(long blockNumber) {
+    public UncleBlock uncles(long blockNumber) {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
         final UncleBlockResponseTO response = getRequest(urlParam, UncleBlockResponseTO.class);
         BasicUtils.validateTxResponse(response);
 
-        return (response.getResult() == null || response.getResult().isEmpty())
-                ? Optional.empty()
-                : Optional.of(response.getResult());
+        return (response.getResult() == null)
+                ? UncleBlock.EMPTY
+                : response.getResult();
     }
 }

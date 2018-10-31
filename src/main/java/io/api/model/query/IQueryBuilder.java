@@ -1,6 +1,7 @@
-package io.api.model.builder;
+package io.api.model.query;
 
 import io.api.error.LogQueryException;
+import io.api.model.query.impl.LogQuery;
 
 /**
  * ! NO DESCRIPTION !

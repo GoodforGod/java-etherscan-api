@@ -1,8 +1,6 @@
 package io.api.core.impl;
 
-import io.api.core.IAccountProvider;
-import io.api.core.IBlockProvider;
-import io.api.core.IContractProvider;
+import io.api.core.*;
 import io.api.executor.IHttpExecutor;
 import io.api.executor.impl.HttpExecutor;
 import io.api.manager.IQueueManager;
@@ -21,9 +19,13 @@ public class EtherScanApi {
 
     private static final Supplier<IHttpExecutor> DEFAULT_SUPPLIER = HttpExecutor::new;
 
-    private final IContractProvider contract;
     private final IAccountProvider account;
     private final IBlockProvider block;
+    private final IContractProvider contract;
+    private final ILogsProvider logs;
+    //private final IParityProvider parityProvider;
+    private final IStatisticProvider stats;
+    private final ITransactionProvider txs;
 
     public EtherScanApi(final String apiKey) {
         this(apiKey, EthereumNetwork.MAINNET);
@@ -44,9 +46,12 @@ public class EtherScanApi {
         final EthereumNetwork usedNetwork = (network == null) ? EthereumNetwork.MAINNET : network;
         final String baseUrl = "https://" + usedNetwork.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
 
-        this.contract = new ContractProvider(masterQueue, baseUrl, executor);
         this.account = new AccountProvider(masterQueue, baseUrl, executor);
-        this.block = new BlockProvider(masterQueue, baseUrl, executor);
+        this.block  = new BlockProvider(masterQueue, baseUrl, executor);
+        this.contract = new ContractProvider(masterQueue, baseUrl, executor);
+        this.logs   = new LogsProvider(masterQueue, baseUrl, executor);
+        this.stats  = new StatisticProvider(masterQueue, baseUrl, executor);
+        this.txs    = new TransactionProvider(masterQueue, baseUrl, executor);
     }
 
     public IContractProvider contract() {
@@ -59,5 +64,17 @@ public class EtherScanApi {
 
     public IBlockProvider block() {
         return block;
+    }
+
+    public ILogsProvider logs() {
+        return logs;
+    }
+
+    public IStatisticProvider stats() {
+        return stats;
+    }
+
+    public ITransactionProvider txs() {
+        return txs;
     }
 }

@@ -17,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TransactionProvider extends BasicProvider implements ITransactionProvider {
 
-    private static final String ACT_EXEC_STATUS_PARAM = ACT_PARAM + "getstatus";
-    private static final String ACT_RECEIPT_STATUS_PARAM = ACT_PARAM + "gettxreceiptstatus";
+    private static final String ACT_EXEC_STATUS_PARAM = ACT_PREFIX + "getstatus";
+    private static final String ACT_RECEIPT_STATUS_PARAM = ACT_PREFIX + "gettxreceiptstatus";
 
     private static final String TXHASH_PARAM = "&txhash=";
 

@@ -16,7 +16,7 @@ abstract class BasicProvider {
     static final int MAX_END_BLOCK = 999999999;
     static final int MIN_START_BLOCK = 0;
 
-    static final String ACT_PARAM = "&action=";
+    static final String ACT_PREFIX = "&action=";
 
     private final String module;
     private final String baseUrl;
