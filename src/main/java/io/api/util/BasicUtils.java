@@ -50,13 +50,13 @@ public class BasicUtils {
         return new BlockParam(startFinal, endFinal);
     }
 
-    private static long compensateMinBlock(long blockNumber) {
+    public static long compensateMinBlock(long blockNumber) {
         return (blockNumber < MIN_START_BLOCK)
                 ? MIN_START_BLOCK
                 : blockNumber;
     }
 
-    private static long compensateMaxBlock(long blockNumber) {
+    public static long compensateMaxBlock(long blockNumber) {
         return (blockNumber > MAX_END_BLOCK)
                 ? MAX_END_BLOCK
                 : blockNumber;
@@ -68,6 +68,14 @@ public class BasicUtils {
 
     public static boolean isNotTxHash(String value) {
         return isEmpty(value) || !txhashPattern.matcher(value).matches();
+    }
+
+    public static long parseHex(String hex) {
+        try {
+            return Long.valueOf(hex, 16);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     public static void validateAddress(String address) {

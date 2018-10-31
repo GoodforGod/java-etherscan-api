@@ -2,9 +2,6 @@ package io.api.model;
 
 import io.api.util.BasicUtils;
 
-import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -13,46 +10,19 @@ import java.util.List;
  * @author GoodforGod
  * @since 30.10.2018
  */
-public class UncleBlock {
+public class UncleBlock extends Block {
 
     public static UncleBlock EMPTY = new UncleBlock();
 
-    private long blockNumber;
-    private BigInteger blockReward;
     private String blockMiner;
-    private String timeStamp;
-    private LocalDateTime _timeStamp;
     private List<Uncle> uncles;
     private String uncleInclusionReward;
 
-    public UncleBlock() { }
-
-    public UncleBlock(long blockNumber, BigInteger blockReward, String blockMiner,
-                      LocalDateTime _timeStamp, List<Uncle> uncles, String uncleInclusionReward) {
-        this.blockNumber = blockNumber;
-        this.blockReward = blockReward;
-        this.blockMiner = blockMiner;
-        this._timeStamp = _timeStamp;
-        this.uncles = uncles;
-        this.uncleInclusionReward = uncleInclusionReward;
-    }
-
     //<editor-fold desc="Getters">
-
     public boolean isEmpty() {
-        return blockNumber == 0 && blockReward == null
-                && BasicUtils.isEmpty(timeStamp)
+        return getBlockNumber() == 0 && getBlockReward() == null
+                && getTimeStamp() == null
                 && BasicUtils.isEmpty(blockMiner);
-    }
-
-    public LocalDateTime getTimeStamp() {
-        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
-            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
-        return _timeStamp;
-    }
-
-    public BigInteger getBlockReward() {
-        return blockReward;
     }
 
     public String getBlockMiner() {
@@ -66,9 +36,23 @@ public class UncleBlock {
     public String getUncleInclusionReward() {
         return uncleInclusionReward;
     }
-
-    public long getBlockNumber() {
-        return blockNumber;
-    }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        UncleBlock that = (UncleBlock) o;
+
+        return getBlockNumber() != 0 && getBlockNumber() == that.getBlockNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = (int) (31 * result + getBlockNumber());
+        return result;
+    }
 }

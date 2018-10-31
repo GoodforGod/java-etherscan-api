@@ -34,10 +34,10 @@ public class AccountProvider extends BasicProvider implements IAccountProvider {
     private static final String ACT_TX_TOKEN_ACTION = ACT_PREFIX + "tokentx";
     private static final String ACT_MINED_ACTION = ACT_PREFIX + "getminedblocks";
 
-    private static final String CONTRACT_PARAM = "&contractaddress=";
     private static final String BLOCK_TYPE_PARAM = "&blocktype=blocks";
-    private static final String TAG_LATEST_PARAM = "&tag=latest";
+    private static final String CONTRACT_PARAM = "&contractaddress=";
     private static final String START_BLOCK_PARAM = "&startblock=";
+    private static final String TAG_LATEST_PARAM = "&tag=latest";
     private static final String END_BLOCK_PARAM = "&endblock=";
     private static final String SORT_DESC_PARAM = "&sort=desc";
     private static final String SORT_ASC_PARAM = "&sort=asc";

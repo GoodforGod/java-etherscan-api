@@ -2,6 +2,7 @@ package io.api.model;
 
 import io.api.util.BasicUtils;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -13,21 +14,13 @@ import java.time.ZoneOffset;
  */
 public class Block {
 
-    private String blockNumber;
+    private long blockNumber;
+    private BigInteger blockReward;
     private String timeStamp;
     private LocalDateTime _timeStamp;
-    private String blockReward;
-
-    public Block() {}
-
-    public Block(String blockNumber, String timeStamp, String blockReward) {
-        this.blockNumber = blockNumber;
-        this.timeStamp = timeStamp;
-        this.blockReward = blockReward;
-    }
 
     //<editor-fold desc="Getter">
-    public String getBlockNumber() {
+    public long getBlockNumber() {
         return blockNumber;
     }
 
@@ -37,7 +30,7 @@ public class Block {
         return _timeStamp;
     }
 
-    public String getBlockReward() {
+    public BigInteger getBlockReward() {
         return blockReward;
     }
     //</editor-fold>
@@ -49,11 +42,11 @@ public class Block {
 
         Block block = (Block) o;
 
-        return blockNumber != null ? blockNumber.equals(block.blockNumber) : block.blockNumber == null;
+        return blockNumber == block.blockNumber;
     }
 
     @Override
     public int hashCode() {
-        return blockNumber != null ? blockNumber.hashCode() : 0;
+        return (int) (blockNumber ^ (blockNumber >>> 32));
     }
 }

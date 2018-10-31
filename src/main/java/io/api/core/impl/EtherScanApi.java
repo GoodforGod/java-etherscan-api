@@ -23,7 +23,7 @@ public class EtherScanApi {
     private final IBlockProvider block;
     private final IContractProvider contract;
     private final ILogsProvider logs;
-    //private final IParityProvider parityProvider;
+    //private final IProxyProvider parityProvider;
     private final IStatisticProvider stats;
     private final ITransactionProvider txs;
 
