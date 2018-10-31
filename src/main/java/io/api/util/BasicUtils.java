@@ -2,7 +2,8 @@ package io.api.util;
 
 import io.api.error.EtherScanException;
 import io.api.error.InvalidAddressException;
-import io.api.model.temporary.BaseResponseTO;
+import io.api.model.utility.BaseResponseTO;
+import io.api.model.utility.BlockParam;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -15,6 +16,9 @@ import java.util.regex.Pattern;
  * @since 28.10.2018
  */
 public class BasicUtils {
+
+    private static final int MAX_END_BLOCK = 999999999;
+    private static final int MIN_START_BLOCK = 0;
 
     private static final Pattern addressPattern = Pattern.compile("0x[a-zA-Z0-9]{40}");
     private static final Pattern txhashPattern = Pattern.compile("0x[a-zA-Z0-9]{64}");
@@ -29,6 +33,33 @@ public class BasicUtils {
 
     public static <T> boolean isEmpty(Collection<T> collection) {
         return (collection == null || collection.isEmpty());
+    }
+
+    public static BlockParam compensateBlocks(long startBlock, long endBlock) {
+        long startCompensated   = compensateMinBlock(startBlock);
+        long endCompensated     = compensateMaxBlock(endBlock);
+
+        final long startFinal = (startCompensated > endCompensated)
+                ? endCompensated
+                : startCompensated;
+
+        final long endFinal = (startCompensated > endCompensated)
+                ? startCompensated
+                : endCompensated;
+
+        return new BlockParam(startFinal, endFinal);
+    }
+
+    private static long compensateMinBlock(long blockNumber) {
+        return (blockNumber < MIN_START_BLOCK)
+                ? MIN_START_BLOCK
+                : blockNumber;
+    }
+
+    private static long compensateMaxBlock(long blockNumber) {
+        return (blockNumber > MAX_END_BLOCK)
+                ? MAX_END_BLOCK
+                : blockNumber;
     }
 
     public static boolean isNotAddress(String value) {

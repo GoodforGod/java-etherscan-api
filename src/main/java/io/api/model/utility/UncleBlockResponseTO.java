@@ -1,4 +1,4 @@
-package io.api.model.temporary;
+package io.api.model.utility;
 
 import io.api.model.UncleBlock;
 
@@ -10,9 +10,9 @@ import io.api.model.UncleBlock;
  */
 public class UncleBlockResponseTO extends BaseResponseTO {
 
-    private UncleBlock uncleBlock;
+    private UncleBlock result;
 
-    public UncleBlock getUncleBlock() {
-        return uncleBlock;
+    public UncleBlock getResult() {
+        return result;
     }
 }

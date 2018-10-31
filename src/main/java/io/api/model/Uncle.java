@@ -14,6 +14,14 @@ public class Uncle {
     private BigInteger blockreward;
     private int unclePosition;
 
+    public Uncle() {}
+
+    public Uncle(String miner, BigInteger blockreward, int unclePosition) {
+        this.miner = miner;
+        this.blockreward = blockreward;
+        this.unclePosition = unclePosition;
+    }
+
     //<editor-fold desc="Getters">
     public String getMiner() {
         return miner;

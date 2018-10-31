@@ -18,6 +18,8 @@ public class Block {
     private LocalDateTime _timeStamp;
     private String blockReward;
 
+    public Block() {}
+
     public Block(String blockNumber, String timeStamp, String blockReward) {
         this.blockNumber = blockNumber;
         this.timeStamp = timeStamp;

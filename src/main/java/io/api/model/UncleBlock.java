@@ -23,7 +23,25 @@ public class UncleBlock {
     private List<Uncle> uncles;
     private String uncleInclusionReward;
 
+    public UncleBlock() { }
+
+    public UncleBlock(long blockNumber, BigInteger blockReward, String blockMiner,
+                      LocalDateTime _timeStamp, List<Uncle> uncles, String uncleInclusionReward) {
+        this.blockNumber = blockNumber;
+        this.blockReward = blockReward;
+        this.blockMiner = blockMiner;
+        this._timeStamp = _timeStamp;
+        this.uncles = uncles;
+        this.uncleInclusionReward = uncleInclusionReward;
+    }
+
     //<editor-fold desc="Getters">
+
+    public boolean isEmpty() {
+        return blockNumber == 0 && blockReward == null
+                && BasicUtils.isEmpty(timeStamp)
+                && BasicUtils.isEmpty(blockMiner);
+    }
 
     public LocalDateTime getTimeStamp() {
         if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))

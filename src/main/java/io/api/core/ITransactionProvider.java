@@ -1,6 +1,7 @@
 package io.api.core;
 
 import io.api.model.Status;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan - API Descriptions
@@ -11,7 +12,7 @@ import io.api.model.Status;
  */
 public interface ITransactionProvider {
 
-    Status execStatus(String txhash);
+    @NotNull Status execStatus(String txhash);
 
     boolean receiptStatus(String txhash);
 }

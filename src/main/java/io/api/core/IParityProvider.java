@@ -8,6 +8,5 @@ package io.api.core;
  * @since 30.10.2018
  */
 public interface IParityProvider {
-
     //TODO implement
 }

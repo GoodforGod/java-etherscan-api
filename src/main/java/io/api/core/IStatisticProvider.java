@@ -2,6 +2,10 @@ package io.api.core;
 
 import io.api.model.Price;
 import io.api.model.Supply;
+import org.jetbrains.annotations.NotNull;
+
+import java.math.BigInteger;
+import java.util.Optional;
 
 /**
  * EtherScan - API Descriptions
@@ -12,9 +16,12 @@ import io.api.model.Supply;
  */
 public interface IStatisticProvider {
 
+    /** ERC20 Total Supply */
+    @NotNull Optional<BigInteger> supply(String contract);
+
     /** Eth Total Supply */
-    Supply supply();
+    @NotNull Supply supply();
 
     /** Eth last USD and BTC price */
-    Price lastPrice();
+    @NotNull Price lastPrice();
 }

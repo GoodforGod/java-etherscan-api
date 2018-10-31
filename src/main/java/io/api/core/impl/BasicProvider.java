@@ -1,13 +1,9 @@
 package io.api.core.impl;
 
 import com.google.gson.Gson;
-import io.api.error.ConnectionException;
 import io.api.error.ParseException;
-import io.api.executor.HttpExecutor;
+import io.api.executor.IHttpExecutor;
 import io.api.manager.IQueueManager;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * ! NO DESCRIPTION !
@@ -17,25 +13,24 @@ import java.util.Map;
  */
 abstract class BasicProvider {
 
-    static final String ACTION_PARAM = "&action=";
+    static final int MAX_END_BLOCK = 999999999;
+    static final int MIN_START_BLOCK = 0;
 
-    private static final String MODULE_PARAM = "&module=";
+    static final String ACT_PARAM = "&action=";
+
     private final String module;
-
     private final String baseUrl;
-    private final Map<String, String> headers;
-    private final HttpExecutor executor;
+    private final IHttpExecutor executor;
     private final IQueueManager queue;
 
     BasicProvider(final IQueueManager queue,
                   final String module,
                   final String baseUrl,
-                  final Map<String, String> headers) {
+                  final IHttpExecutor executor) {
         this.queue = queue;
-        this.module = MODULE_PARAM + module;
+        this.module = "&module=" + module;
         this.baseUrl = baseUrl;
-        this.headers = headers;
-        this.executor = new HttpExecutor();
+        this.executor = executor;
     }
 
     private <T> T convert(final String json, final Class<T> tClass) {
@@ -47,13 +42,9 @@ abstract class BasicProvider {
     }
 
     private String getRequest(final String urlParameters) {
-        try {
-            queue.takeTurn();
-            final String fullUrl = baseUrl + module + urlParameters;
-            return executor.get(fullUrl, headers);
-        } catch (IOException e) {
-            throw new ConnectionException(e.getLocalizedMessage(), e.getCause());
-        }
+        queue.takeTurn();
+        final String url = baseUrl + module + urlParameters;
+        return executor.get(url);
     }
 
     <T> T getRequest(final String urlParameters, final Class<T> tClass) {

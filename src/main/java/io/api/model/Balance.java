@@ -1,6 +1,6 @@
 package io.api.model;
 
-import io.api.model.temporary.BalanceTO;
+import io.api.model.utility.BalanceTO;
 
 import java.math.BigInteger;
 

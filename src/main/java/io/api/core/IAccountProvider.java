@@ -18,6 +18,9 @@ public interface IAccountProvider {
     /** Address ETH balance */
     @NotNull Balance balance(String address) throws ApiException;
 
+    /** ERC20 token balance for address */
+    @NotNull Balance balance(String address, String contract) throws ApiException;
+
     /**
      * Maximum 20 address for single batch request
      * If address > 20, then there will be more than 1 request performed

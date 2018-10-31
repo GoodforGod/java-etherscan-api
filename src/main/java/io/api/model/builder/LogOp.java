@@ -7,8 +7,8 @@ package io.api.model.builder;
  * @since 31.10.2018
  */
 public enum LogOp {
-    AND(""),
-    OR("");
+    AND("and"),
+    OR("or");
 
     private final String operation;
 

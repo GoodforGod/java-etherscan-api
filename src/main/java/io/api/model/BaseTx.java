@@ -26,6 +26,23 @@ abstract class BaseTx {
     private long gas;
     private long gasUsed;
 
+    BaseTx() { }
+
+    public BaseTx(long blockNumber, LocalDateTime _timeStamp, String hash,
+                  String from, String to, BigInteger value, String contractAddress,
+                  String input, long gas, long gasUsed) {
+        this.blockNumber = blockNumber;
+        this._timeStamp = _timeStamp;
+        this.hash = hash;
+        this.from = from;
+        this.to = to;
+        this.value = value;
+        this.contractAddress = contractAddress;
+        this.input = input;
+        this.gas = gas;
+        this.gasUsed = gasUsed;
+    }
+
     //<editor-fold desc="Getter">
     public long getBlockNumber() {
         return blockNumber;

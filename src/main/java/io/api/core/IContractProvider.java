@@ -1,5 +1,8 @@
 package io.api.core;
 
+import io.api.error.ApiException;
+import org.jetbrains.annotations.NotNull;
+
 /**
  * EtherScan - API Descriptions
  * https://etherscan.io/apis#contracts
@@ -10,5 +13,5 @@ package io.api.core;
 public interface IContractProvider {
 
     /** Get Verified Contract Sources */
-    String contractAbi(String address);
+    @NotNull String contractAbi(String address) throws ApiException;
 }

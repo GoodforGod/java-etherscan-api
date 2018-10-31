@@ -1,8 +1,14 @@
 package io.api.core.impl;
 
+import io.api.core.IBlockProvider;
+import io.api.executor.IHttpExecutor;
 import io.api.manager.IQueueManager;
+import io.api.model.UncleBlock;
+import io.api.model.utility.UncleBlockResponseTO;
+import io.api.util.BasicUtils;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+import java.util.Optional;
 
 /**
  * ! NO DESCRIPTION !
@@ -10,11 +16,27 @@ import java.util.Map;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class BlockProvider extends BasicProvider {
+public class BlockProvider extends BasicProvider implements IBlockProvider {
 
-    public BlockProvider(final IQueueManager queue,
+    private static final String ACT_BLOCK_PARAM = ACT_PARAM + "getblockreward";
+
+    private static final String BLOCKNO_PARAM = "&blockno=";
+
+    BlockProvider(final IQueueManager queueManager,
                   final String baseUrl,
-                  final Map<String, String> headers) {
-        super(queue, "", baseUrl, headers);
+                  final IHttpExecutor executor) {
+        super(queueManager, "block", baseUrl, executor);
+    }
+
+    @NotNull
+    @Override
+    public Optional<UncleBlock> uncles(long blockNumber) {
+        final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
+        final UncleBlockResponseTO response = getRequest(urlParam, UncleBlockResponseTO.class);
+        BasicUtils.validateTxResponse(response);
+
+        return (response.getResult() == null || response.getResult().isEmpty())
+                ? Optional.empty()
+                : Optional.of(response.getResult());
     }
 }

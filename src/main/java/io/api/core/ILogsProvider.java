@@ -1,6 +1,8 @@
 package io.api.core;
 
 import io.api.model.Log;
+import io.api.model.builder.LogQuery;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -13,7 +15,5 @@ import java.util.List;
  */
 public interface ILogsProvider {
 
-    List<Log> logs(String address);
-    List<Log> logs(String address, long startBlock);
-    List<Log> logs(String address, long startBlock, long endBlock);
+    @NotNull List<Log> logs(LogQuery query);
 }

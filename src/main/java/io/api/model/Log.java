@@ -23,6 +23,23 @@ public class Log {
     private List<String> topics;
     private String logIndex;
 
+    public Log() { }
+
+    public Log(String blockNumber, String address, String transactionHash, String transactionIndex,
+               LocalDateTime _timeStamp, String data, String gasPrice, String gasUsed,
+               List<String> topics, String logIndex) {
+        this.blockNumber = blockNumber;
+        this.address = address;
+        this.transactionHash = transactionHash;
+        this.transactionIndex = transactionIndex;
+        this._timeStamp = _timeStamp;
+        this.data = data;
+        this.gasPrice = gasPrice;
+        this.gasUsed = gasUsed;
+        this.topics = topics;
+        this.logIndex = logIndex;
+    }
+
     //<editor-fold desc="Getters">
     public String getBlockNumber() {
         return blockNumber;

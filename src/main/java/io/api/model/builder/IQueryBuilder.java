@@ -9,5 +9,5 @@ import io.api.error.LogQueryException;
  * @since 31.10.2018
  */
 public interface IQueryBuilder {
-    LogQueryFinal build() throws LogQueryException;
+    LogQuery build() throws LogQueryException;
 }

@@ -7,7 +7,6 @@ package io.api.model.builder;
  * @since 31.10.2018
  */
 abstract class BaseLogQuery {
-    static final String MAX_BLOCK = "9999999999";
 
     static final String FROM_BLOCK_PARAM = "&fromBlock=";
     static final String TO_BLOCK_PARAM = "&toBlock=";

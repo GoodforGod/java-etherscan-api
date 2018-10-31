@@ -1,4 +1,4 @@
-package io.api.model.temporary;
+package io.api.model.utility;
 
 import java.util.List;
 

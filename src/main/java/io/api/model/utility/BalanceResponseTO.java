@@ -1,4 +1,4 @@
-package io.api.model.temporary;
+package io.api.model.utility;
 
 /**
  * ! NO DESCRIPTION !

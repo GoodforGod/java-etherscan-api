@@ -1,6 +1,10 @@
 package io.api.core;
 
+import io.api.error.ApiException;
 import io.api.model.UncleBlock;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * EtherScan - API Descriptions
@@ -12,5 +16,5 @@ import io.api.model.UncleBlock;
 public interface IBlockProvider {
 
     /** Return uncle blocks */
-    UncleBlock uncles(long blockNumber);
+    @NotNull Optional<UncleBlock> uncles(long blockNumber) throws ApiException;
 }
