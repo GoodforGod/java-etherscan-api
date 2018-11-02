@@ -35,6 +35,7 @@ public class BlockApiProvider extends BasicProvider implements IBlockApi {
     public Optional<UncleBlock> uncles(long blockNumber) {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
         final UncleBlockResponseTO response = getRequest(urlParam, UncleBlockResponseTO.class);
+
         BasicUtils.validateTxResponse(response);
 
         return (response.getResult() == null || response.getResult().isEmpty())

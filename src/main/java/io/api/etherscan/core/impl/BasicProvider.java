@@ -1,16 +1,17 @@
 package io.api.etherscan.core.impl;
 
 import com.google.gson.Gson;
+import io.api.etherscan.error.NoResponseException;
 import io.api.etherscan.error.ParseException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
+import io.api.etherscan.util.BasicUtils;
 
 /**
  * Base provider for API Implementations
  *
- * @see EtherScanApi
- *
  * @author GoodforGod
+ * @see EtherScanApi
  * @since 28.10.2018
  */
 abstract class BasicProvider {
@@ -24,6 +25,7 @@ abstract class BasicProvider {
     private final String baseUrl;
     private final IHttpExecutor executor;
     private final IQueueManager queue;
+    private final Gson gson;
 
     BasicProvider(final IQueueManager queue,
                   final String module,
@@ -33,11 +35,12 @@ abstract class BasicProvider {
         this.module = "&module=" + module;
         this.baseUrl = baseUrl;
         this.executor = executor;
+        this.gson = new Gson();
     }
 
     private <T> T convert(final String json, final Class<T> tClass) {
         try {
-            return new Gson().fromJson(json, tClass);
+            return gson.fromJson(json, tClass);
         } catch (Exception e) {
             throw new ParseException(e.getMessage(), e.getCause());
         }
@@ -46,10 +49,24 @@ abstract class BasicProvider {
     private String getRequest(final String urlParameters) {
         queue.takeTurn();
         final String url = baseUrl + module + urlParameters;
-        return executor.get(url);
+        final String result = executor.get(url);
+        if (BasicUtils.isEmpty(result))
+            throw new NoResponseException("Server returned null value for GET request at URL - " + url);
+
+        return result;
+    }
+
+    private String postRequest(final String urlParameters, final String dataToPost) {
+        queue.takeTurn();
+        final String url = baseUrl + module + urlParameters;
+        return executor.post(url, dataToPost);
     }
 
     <T> T getRequest(final String urlParameters, final Class<T> tClass) {
         return convert(getRequest(urlParameters), tClass);
+    }
+
+    <T> T postRequest(final String urlParameters, final String dataToPost, final Class<T> tClass) {
+        return convert(postRequest(urlParameters, dataToPost), tClass);
     }
 }

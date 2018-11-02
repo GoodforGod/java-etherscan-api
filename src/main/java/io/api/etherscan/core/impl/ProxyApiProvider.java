@@ -2,13 +2,16 @@ package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.IProxyApi;
 import io.api.etherscan.error.ApiException;
+import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.InvalidDataHexException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.proxy.BlockProxy;
+import io.api.etherscan.model.proxy.TxInfoProxy;
 import io.api.etherscan.model.proxy.TxProxy;
 import io.api.etherscan.model.proxy.utility.BlockProxyTO;
 import io.api.etherscan.model.proxy.utility.StringProxyTO;
+import io.api.etherscan.model.proxy.utility.TxInfoProxyTO;
 import io.api.etherscan.model.proxy.utility.TxProxyTO;
 import io.api.etherscan.util.BasicUtils;
 import org.jetbrains.annotations.NotNull;
@@ -112,7 +115,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public int txCount(final long blockNo) throws ApiException {
         final long compensatedBlockNo = BasicUtils.compensateMinBlock(blockNo);
-        final String urlParams = ACT_TX_COUNT_PARAM + TAG_PARAM + compensatedBlockNo;
+        final String urlParams = ACT_BLOCKTX_COUNT_PARAM + TAG_PARAM + compensatedBlockNo;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return Integer.valueOf(response.getResult());
     }
@@ -121,52 +124,73 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     public int txSendCount(final String address) throws ApiException {
         BasicUtils.validateAddress(address);
 
-        final String urlParams = ACT_TX_BY_HASH_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
+        final String urlParams = ACT_TX_COUNT_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (int) BasicUtils.parseHex(response.getResult());
     }
 
-    //TODO need postRequest executor implementation
     @Override
-    public boolean txSendRaw(final String hexEncodedTx) throws ApiException {
-        return false;
+    @NotNull
+    public Optional<String> txSendRaw(final String hexEncodedTx) throws ApiException {
+        if(BasicUtils.isNotHex(hexEncodedTx))
+            throw new InvalidDataHexException("Data is not encoded in hex format - " + hexEncodedTx);
+
+        final String urlParams = ACT_SEND_RAW_TX_PARAM + HEX_PARAM + hexEncodedTx;
+        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        if(response.getError() != null)
+            throw new EtherScanException("Error occurred with code " + response.getError().getCode()
+                    + " with message " + response.getError().getMessage());
+
+        return (BasicUtils.isEmpty(response.getResult()))
+                ? Optional.empty()
+                : Optional.of(response.getResult());
     }
 
     @NotNull
     @Override
-    public String call(final String address, final String data) throws ApiException {
+    public Optional<TxInfoProxy> txReceipt(final String txhash) {
+        BasicUtils.validateTxHash(txhash);
+
+        final String urlParams = ACT_TX_RECEIPT_PARAM + TXHASH_PARAM + txhash;
+        final TxInfoProxyTO response = getRequest(urlParams, TxInfoProxyTO.class);
+        return Optional.ofNullable(response.getResult());
+    }
+
+    @NotNull
+    @Override
+    public Optional<String> call(final String address, final String data) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_CALL_PARAM + TO_PARAM + address + DATA_PARAM + data + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? ""
-                : response.getResult();
+                ? Optional.empty()
+                : Optional.of(response.getResult());
     }
 
     @NotNull
     @Override
-    public String code(final String address) throws ApiException {
+    public Optional<String> code(final String address) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_CODE_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? ""
-                : response.getResult();
+                ? Optional.empty()
+                : Optional.of(response.getResult());
     }
 
     @NotNull
     @Override
-    public String storageAt(final String address, final long position) throws ApiException {
+    public Optional<String> storageAt(final String address, final long position) throws ApiException {
         BasicUtils.validateAddress(address);
         final long compPosition = BasicUtils.compensateMinBlock(position);
 
         final String urlParams = ACT_STORAGEAT_PARAM + ADDRESS_PARAM + address + POSITION_PARAM + compPosition + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? ""
-                : response.getResult();
+                ? Optional.empty()
+                : Optional.of(response.getResult());
     }
 
     @NotNull

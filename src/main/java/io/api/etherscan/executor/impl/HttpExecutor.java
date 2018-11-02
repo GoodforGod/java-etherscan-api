@@ -2,8 +2,10 @@ package io.api.etherscan.executor.impl;
 
 import io.api.etherscan.error.ConnectionException;
 import io.api.etherscan.executor.IHttpExecutor;
+import io.api.etherscan.util.BasicUtils;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -63,19 +65,55 @@ public class HttpExecutor implements IHttpExecutor {
                 return get(location);
             }
 
-            final StringBuilder content = new StringBuilder();
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null)
-                    content.append(inputLine);
-
-                in.close();
-            }
-
+            final String data = readData(connection);
             connection.disconnect();
-            return content.toString();
+            return data;
         } catch (IOException e) {
             throw new ConnectionException(e.getLocalizedMessage(), e);
         }
+    }
+
+    @Override
+    public String post(final String urlAsString, final String dataToPost) {
+        try {
+            final URL url = new URL(urlAsString);
+            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setConnectTimeout(timeout);
+            headers.forEach(connection::setRequestProperty);
+
+            if(!BasicUtils.isEmpty(dataToPost)) {
+                connection.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+                wr.writeBytes(dataToPost);
+                wr.flush();
+                wr.close();
+            }
+
+            final int status = connection.getResponseCode();
+            if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
+                final String location = connection.getHeaderField("Location");
+                return post(location, dataToPost);
+            }
+
+            final String data = readData(connection);
+            connection.disconnect();
+            return data;
+        } catch (IOException e) {
+            throw new ConnectionException(e.getLocalizedMessage(), e);
+        }
+    }
+
+    private String readData(final HttpURLConnection connection) throws IOException {
+        final StringBuilder content = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                content.append(inputLine);
+
+            in.close();
+        }
+
+        return content.toString();
     }
 }

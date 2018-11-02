@@ -10,6 +10,7 @@ abstract class BaseProxyTO {
 
     private String id;
     private String jsonrpc;
+    private ErrorProxyTO error;
 
     public String getId() {
         return id;
@@ -17,5 +18,9 @@ abstract class BaseProxyTO {
 
     public String getJsonrpc() {
         return jsonrpc;
+    }
+
+    public ErrorProxyTO getError() {
+        return error;
     }
 }
