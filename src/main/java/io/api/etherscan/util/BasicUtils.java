@@ -7,6 +7,7 @@ import io.api.etherscan.model.utility.BaseResponseTO;
 import io.api.etherscan.model.utility.BlockParam;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -69,18 +70,25 @@ public class BasicUtils {
     }
 
     public static boolean isNotTxHash(String value) {
-        return isEmpty(value) || !TXHASH_PATTERN.matcher(value).matches();
+        return isEmpty(value) || !TXHASH_PATTERN.matcher(value).find();
     }
 
     public static boolean isNotHex(String value) {
         return isEmpty(value) || !HEX_PATTERN.matcher(value).matches();
     }
 
-    public static long parseHex(String hex) {
+    public static BigInteger parseHex(String hex) {
         try {
-            return Long.valueOf(hex, 16);
+            if(BasicUtils.isEmpty(hex))
+                return BigInteger.valueOf(0);
+
+            final String formatted = (hex.length() > 2 && hex.charAt(0) == '0' && hex.charAt(1) == 'x')
+                    ? hex.substring(2, hex.length())
+                    : hex;
+
+            return new BigInteger(formatted, 16);
         } catch (NumberFormatException e) {
-            return -1;
+            return BigInteger.valueOf(-1L);
         }
     }
 

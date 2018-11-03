@@ -45,7 +45,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     private static final String ACT_ESTIMATEGAS_PARAM = ACT_PREFIX + "eth_estimateGas";
 
     private static final String BOOLEAN_PARAM = "&boolean=true";
-    private static final String TAG_LAST_PARAM = "&tag=lastest";
+    private static final String TAG_LAST_PARAM = "&tag=latest";
     private static final String POSITION_PARAM = "&position=";
     private static final String ADDRESS_PARAM = "&address=";
     private static final String TXHASH_PARAM = "&txhash=";
@@ -67,7 +67,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
         final StringProxyTO response = getRequest(ACT_BLOCKNO_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? -1
-                : BasicUtils.parseHex(response.getResult());
+                : BasicUtils.parseHex(response.getResult()).longValue();
     }
 
     @NotNull
@@ -105,9 +105,9 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public Optional<TxProxy> tx(final long blockNo, final long index) throws ApiException {
         final long compBlockNo = BasicUtils.compensateMinBlock(blockNo);
-        final long compIndex = BasicUtils.compensateMinBlock(index);
+        final long compIndex = (index < 1) ? 1 : index;
 
-        final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + compIndex;
+        final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + "0x" + Long.toHexString(compIndex);
         final TxProxyTO response = getRequest(urlParams, TxProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
@@ -115,9 +115,9 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public int txCount(final long blockNo) throws ApiException {
         final long compensatedBlockNo = BasicUtils.compensateMinBlock(blockNo);
-        final String urlParams = ACT_BLOCKTX_COUNT_PARAM + TAG_PARAM + compensatedBlockNo;
+        final String urlParams = ACT_BLOCKTX_COUNT_PARAM + TAG_PARAM + "0x" + Long.toHexString(compensatedBlockNo);
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return Integer.valueOf(response.getResult());
+        return BasicUtils.parseHex(response.getResult()).intValue();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
         final String urlParams = ACT_TX_COUNT_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return (int) BasicUtils.parseHex(response.getResult());
+        return BasicUtils.parseHex(response.getResult()).intValue();
     }
 
     @Override
@@ -160,6 +160,8 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public Optional<String> call(final String address, final String data) throws ApiException {
         BasicUtils.validateAddress(address);
+        if(BasicUtils.isNotHex(data))
+            throw new InvalidDataHexException("Data is not hex encoded.");
 
         final String urlParams = ACT_CALL_PARAM + TO_PARAM + address + DATA_PARAM + data + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
@@ -199,7 +201,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
         final StringProxyTO response = getRequest(ACT_GASPRICE_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? BigInteger.valueOf(-1)
-                : BigInteger.valueOf(BasicUtils.parseHex(response.getResult()));
+                : BasicUtils.parseHex(response.getResult());
     }
 
     @NotNull
@@ -211,13 +213,13 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @NotNull
     @Override
     public BigInteger gasEstimated(final String hexData) throws ApiException {
-        if(BasicUtils.isNotHex(hexData))
+        if(!BasicUtils.isEmpty(hexData) && BasicUtils.isNotHex(hexData))
             throw new InvalidDataHexException("Data is not in hex format.");
 
         final String urlParams = ACT_ESTIMATEGAS_PARAM + DATA_PARAM + hexData + GAS_PARAM + "2000000000000000";
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? BigInteger.valueOf(-1)
-                : BigInteger.valueOf(BasicUtils.parseHex(response.getResult()));
+                : BasicUtils.parseHex(response.getResult());
     }
 }
