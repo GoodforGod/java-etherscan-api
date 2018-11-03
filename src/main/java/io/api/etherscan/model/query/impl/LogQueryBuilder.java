@@ -35,42 +35,43 @@ public class LogQueryBuilder {
     }
 
     public static LogQueryBuilder with(String address, long startBlock, long endBlock) {
+        BasicUtils.validateAddress(address);
         return new LogQueryBuilder(address, startBlock, endBlock);
     }
 
     public LogTopicSingle topic(String topic0) {
-        if(BasicUtils.isEmpty(topic0))
-            throw new LogQueryException("topic0 can not be empty.");
+        if(BasicUtils.isNotHex(topic0))
+            throw new LogQueryException("topic0 can not be empty or non hex.");
         return new LogTopicSingle(address, startBlock, endBlock, topic0);
     }
 
     public LogTopicTuple topic(String topic0, String topic1) {
-        if(BasicUtils.isEmpty(topic0))
-            throw new LogQueryException("topic0 can not be empty.");
-        if(BasicUtils.isEmpty(topic1))
-            throw new LogQueryException("topic1 can not be empty.");
+        if(BasicUtils.isNotHex(topic0))
+            throw new LogQueryException("topic0 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic1))
+            throw new LogQueryException("topic1 can not be empty or non hex.");
         return new LogTopicTuple(address, startBlock, endBlock, topic0, topic1);
     }
 
     public LogTopicTriple topic(String topic0, String topic1, String topic2) {
-        if(BasicUtils.isEmpty(topic0))
-            throw new LogQueryException("topic0 can not be empty.");
-        if(BasicUtils.isEmpty(topic1))
-            throw new LogQueryException("topic1 can not be empty.");
-        if(BasicUtils.isEmpty(topic2))
-            throw new LogQueryException("topic2 can not be empty.");
+        if(BasicUtils.isNotHex(topic0))
+            throw new LogQueryException("topic0 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic1))
+            throw new LogQueryException("topic1 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic2))
+            throw new LogQueryException("topic2 can not be empty or non hex.");
         return new LogTopicTriple(address, startBlock, endBlock, topic0, topic1, topic2);
     }
 
     public LogTopicQuadro topic(String topic0, String topic1, String topic2, String topic3) {
-        if(BasicUtils.isEmpty(topic0))
-            throw new LogQueryException("topic0 can not be empty.");
-        if(BasicUtils.isEmpty(topic1))
-            throw new LogQueryException("topic1 can not be empty.");
-        if(BasicUtils.isEmpty(topic2))
-            throw new LogQueryException("topic2 can not be empty.");
-        if(BasicUtils.isEmpty(topic3))
-            throw new LogQueryException("topic3 can not be empty.");
+        if(BasicUtils.isNotHex(topic0))
+            throw new LogQueryException("topic0 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic1))
+            throw new LogQueryException("topic1 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic2))
+            throw new LogQueryException("topic2 can not be empty or non hex.");
+        if(BasicUtils.isNotHex(topic3))
+            throw new LogQueryException("topic3 can not be empty or non hex.");
 
         return new LogTopicQuadro(address, startBlock, endBlock, topic0, topic1, topic2, topic3);
     }

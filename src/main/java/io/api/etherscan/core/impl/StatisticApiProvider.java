@@ -1,6 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.IStatisticApi;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
@@ -37,7 +38,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
 
     @NotNull
     @Override
-    public Supply supply() {
+    public Supply supply() throws ApiException {
         final StringResponseTO response = getRequest(ACT_SUPPLY_PARAM, StringResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
@@ -47,7 +48,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
 
     @NotNull
     @Override
-    public BigInteger supply(final String contract) {
+    public BigInteger supply(final String contract) throws ApiException {
         BasicUtils.validateAddress(contract);
 
         final String urlParams = ACT_TOKEN_SUPPLY_PARAM + CONTRACT_ADDRESS_PARAM + contract;
@@ -60,7 +61,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
 
     @NotNull
     @Override
-    public Price lastPrice() {
+    public Price lastPrice() throws ApiException {
         final PriceResponseTO response = getRequest(ACT_LASTPRICE_PARAM, PriceResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());

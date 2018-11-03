@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * ! NO DESCRIPTION !
+ * Queue implementation
+ * With size and reset time as params
+ * @see IQueueManager
  *
  * @author GoodforGod
  * @since 30.10.2018
@@ -25,12 +27,16 @@ public class QueueManager implements IQueueManager {
     private final ScheduledExecutorService queueExecutor;
 
     public QueueManager(int queueSize, int queueResetTimeInSec) {
+        this(queueSize, queueResetTimeInSec, 0);
+    }
+
+    public QueueManager(int queueSize, int queueResetTimeInSec, int delayInSec) {
         this.queueSize = queueSize;
         this.queueValues = generateList(queueSize);
         this.queue = new ArrayBlockingQueue<>(queueSize);
 
         this.queueExecutor = Executors.newSingleThreadScheduledExecutor();
-        this.queueExecutor.scheduleAtFixedRate(createTask(), queueResetTimeInSec, queueResetTimeInSec, TimeUnit.SECONDS);
+        this.queueExecutor.scheduleAtFixedRate(createTask(), delayInSec, queueResetTimeInSec, TimeUnit.SECONDS);
     }
 
     @Override

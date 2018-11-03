@@ -1,11 +1,12 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.ITransactionApi;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.Status;
+import io.api.etherscan.model.utility.ReceiptStatusResponseTO;
 import io.api.etherscan.model.utility.StatusResponseTO;
-import io.api.etherscan.model.utility.StringResponseTO;
 import io.api.etherscan.util.BasicUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,9 +15,8 @@ import java.util.Optional;
 /**
  * Transaction API Implementation
  *
- * @see ITransactionApi
- *
  * @author GoodforGod
+ * @see ITransactionApi
  * @since 28.10.2018
  */
 public class TransactionApiProvider extends BasicProvider implements ITransactionApi {
@@ -34,29 +34,27 @@ public class TransactionApiProvider extends BasicProvider implements ITransactio
 
     @NotNull
     @Override
-    public Optional<Status> execStatus(final String txhash) {
+    public Optional<Status> execStatus(final String txhash) throws ApiException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_EXEC_STATUS_PARAM + TXHASH_PARAM + txhash;
         final StatusResponseTO response = getRequest(urlParams, StatusResponseTO.class);
         BasicUtils.validateTxResponse(response);
 
-        return (response.getResult() == null)
-                ? Optional.empty()
-                : Optional.of(response.getResult());
+        return Optional.ofNullable(response.getResult());
     }
 
     @NotNull
     @Override
-    public Optional<Boolean> receiptStatus(final String txhash) {
+    public Optional<Boolean> receiptStatus(final String txhash) throws ApiException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_RECEIPT_STATUS_PARAM + TXHASH_PARAM + txhash;
-        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        final ReceiptStatusResponseTO response = getRequest(urlParams, ReceiptStatusResponseTO.class);
         BasicUtils.validateTxResponse(response);
 
-        return (BasicUtils.isEmpty(response.getResult()))
+        return (response.getResult() == null || BasicUtils.isEmpty(response.getResult().getStatus()))
                 ? Optional.empty()
-                : Optional.of(response.getResult().contains("1"));
+                : Optional.of(response.getResult().getStatus().contains("1"));
     }
 }

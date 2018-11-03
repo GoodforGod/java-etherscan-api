@@ -1,6 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.ILogsApi;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.Log;
@@ -32,7 +33,7 @@ public class LogsApiProvider extends BasicProvider implements ILogsApi {
 
     @NotNull
     @Override
-    public List<Log> logs(final LogQuery query) {
+    public List<Log> logs(final LogQuery query) throws ApiException {
         final String urlParams = ACT_LOGS_PARAM + query.getParams();
         final LogResponseTO response = getRequest(urlParams, LogResponseTO.class);
         BasicUtils.validateTxResponse(response);

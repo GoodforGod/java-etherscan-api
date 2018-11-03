@@ -70,7 +70,7 @@ public interface IProxyApi {
      * Returns the receipt of a transaction by transaction hash
      * eth_getTransactionReceipt
      */
-    @NotNull Optional<TxInfoProxy> txReceipt(String txhash);
+    @NotNull Optional<TxInfoProxy> txReceipt(String txhash) throws ApiException;
 
     /**
      * Executes a new message call immediately without creating a transaction on the block chain

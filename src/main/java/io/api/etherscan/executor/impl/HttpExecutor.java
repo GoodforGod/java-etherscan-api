@@ -17,7 +17,7 @@ import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
 
 /**
- * ! NO DESCRIPTION !
+ * @see IHttpExecutor
  *
  * @author GoodforGod
  * @since 28.10.2018

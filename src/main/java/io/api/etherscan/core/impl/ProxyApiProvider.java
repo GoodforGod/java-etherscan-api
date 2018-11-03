@@ -148,7 +148,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
     @NotNull
     @Override
-    public Optional<TxInfoProxy> txReceipt(final String txhash) {
+    public Optional<TxInfoProxy> txReceipt(final String txhash) throws ApiException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_RECEIPT_PARAM + TXHASH_PARAM + txhash;

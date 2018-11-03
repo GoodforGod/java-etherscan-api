@@ -95,6 +95,9 @@ public class BasicUtils {
     }
 
     public static <T extends BaseResponseTO> void validateTxResponse(T response) {
+        if(response == null)
+            throw new EtherScanException("EtherScan responded with null value");
+
         if(response.getStatus() != 1
                 && !response.getMessage().startsWith("No tra")
                 && !response.getMessage().startsWith("No rec"))
@@ -127,6 +130,9 @@ public class BasicUtils {
                 counter = 0;
             }
         }
+
+        if(!temp.isEmpty())
+            partitioned.add(temp);
 
         return partitioned;
     }

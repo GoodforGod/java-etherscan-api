@@ -17,7 +17,7 @@ public class TokenBalance extends Balance {
         this.tokenContract = tokenContract;
     }
 
-    public String getTokenContract() {
+    public String getContract() {
         return tokenContract;
     }
 

@@ -1,6 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.IContractApi;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
@@ -31,7 +32,7 @@ public class ContractApiProvider extends BasicProvider implements IContractApi {
 
     @NotNull
     @Override
-    public Abi contractAbi(final String address) {
+    public Abi contractAbi(final String address) throws ApiException {
         BasicUtils.validateAddress(address);
 
         final String urlParam = ACT_ABI_PARAM + ADDRESS_PARAM + address;

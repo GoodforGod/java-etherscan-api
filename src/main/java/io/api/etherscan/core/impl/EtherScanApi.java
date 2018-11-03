@@ -4,8 +4,10 @@ import io.api.etherscan.core.*;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.executor.impl.HttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
+import io.api.etherscan.manager.impl.FakeQueueManager;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
+import io.api.etherscan.util.BasicUtils;
 
 import java.util.function.Supplier;
 
@@ -28,6 +30,14 @@ public class EtherScanApi {
     private final IStatisticApi stats;
     private final ITransactionApi txs;
 
+    public EtherScanApi() {
+        this("YourApiKeyToken", EthNetwork.MAINNET);
+    }
+
+    public EtherScanApi(final EthNetwork network) {
+        this("YourApiKeyToken", network);
+    }
+
     public EtherScanApi(final String apiKey) {
         this(apiKey, EthNetwork.MAINNET);
     }
@@ -40,20 +50,25 @@ public class EtherScanApi {
     public EtherScanApi(final String apiKey,
                         final EthNetwork network,
                         final Supplier<IHttpExecutor> executorSupplier) {
-        // EtherScan 5request\sec limit support by queue manager
-        final IQueueManager masterQueue = new QueueManager(5, 1);
-        final IHttpExecutor executor = executorSupplier.get();
+        if (BasicUtils.isEmpty(apiKey))
+            throw new NullPointerException("API key can not be null");
 
+        // EtherScan 5request\sec limit support by queue manager
+        final IQueueManager masterQueue = (apiKey.equals("YourApiKeyToken"))
+                ? new FakeQueueManager()
+                : new QueueManager(5, 1);
+
+        final IHttpExecutor executor = executorSupplier.get();
         final EthNetwork usedNetwork = (network == null) ? EthNetwork.MAINNET : network;
         final String baseUrl = "https://" + usedNetwork.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
 
         this.account = new AccountApiProvider(masterQueue, baseUrl, executor);
-        this.block  = new BlockApiProvider(masterQueue, baseUrl, executor);
+        this.block = new BlockApiProvider(masterQueue, baseUrl, executor);
         this.contract = new ContractApiProvider(masterQueue, baseUrl, executor);
-        this.logs   = new LogsApiProvider(masterQueue, baseUrl, executor);
-        this.proxy  = new ProxyApiProvider(masterQueue, baseUrl, executor);
-        this.stats  = new StatisticApiProvider(masterQueue, baseUrl, executor);
-        this.txs    = new TransactionApiProvider(masterQueue, baseUrl, executor);
+        this.logs = new LogsApiProvider(masterQueue, baseUrl, executor);
+        this.proxy = new ProxyApiProvider(masterQueue, baseUrl, executor);
+        this.stats = new StatisticApiProvider(masterQueue, baseUrl, executor);
+        this.txs = new TransactionApiProvider(masterQueue, baseUrl, executor);
     }
 
     public IContractApi contract() {

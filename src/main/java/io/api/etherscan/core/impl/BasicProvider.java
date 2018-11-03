@@ -38,7 +38,7 @@ abstract class BasicProvider {
         this.gson = new Gson();
     }
 
-    private <T> T convert(final String json, final Class<T> tClass) {
+    <T> T convert(final String json, final Class<T> tClass) {
         try {
             return gson.fromJson(json, tClass);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ abstract class BasicProvider {
         }
     }
 
-    private String getRequest(final String urlParameters) {
+    String getRequest(final String urlParameters) {
         queue.takeTurn();
         final String url = baseUrl + module + urlParameters;
         final String result = executor.get(url);
@@ -56,7 +56,7 @@ abstract class BasicProvider {
         return result;
     }
 
-    private String postRequest(final String urlParameters, final String dataToPost) {
+    String postRequest(final String urlParameters, final String dataToPost) {
         queue.takeTurn();
         final String url = baseUrl + module + urlParameters;
         return executor.post(url, dataToPost);

@@ -12,8 +12,6 @@ import java.util.List;
  */
 public class UncleBlock extends Block {
 
-    public static UncleBlock EMPTY = new UncleBlock();
-
     private String blockMiner;
     private List<Uncle> uncles;
     private String uncleInclusionReward;
