@@ -24,7 +24,6 @@ public class AccountTxInternalByHashTest extends Assert {
         assertNotNull(txs);
         assertEquals(1, txs.size());
         assertTxs(txs);
-        assertNotNull(txs.get(0).getHash());
         assertNotNull(txs.get(0).getFrom());
         assertNotNull(txs.get(0).getTimeStamp());
         assertNotNull(txs.get(0).getGas());

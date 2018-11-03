@@ -15,7 +15,7 @@ import java.util.Optional;
  * @since 03.11.2018
  */
 //TODO contact etherscan and ask about methods
-public class ProxyTxSendRawApiTest extends Assert{
+public class ProxyTxSendRawApiTest extends Assert {
 
     private final EtherScanApi api = new EtherScanApi();
 
@@ -31,7 +31,7 @@ public class ProxyTxSendRawApiTest extends Assert{
 
     @Test(expected = EtherScanException.class)
     public void invalidParamEtherScanDataException() {
-        Optional<String> sendRaw = api.proxy().txSendRaw("0x0");
+        Optional<String> sendRaw = api.proxy().txSendRaw("0x1");
     }
 
     public void correctParamWithEmptyExpectedResult() {

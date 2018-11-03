@@ -136,7 +136,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
             throw new InvalidDataHexException("Data is not encoded in hex format - " + hexEncodedTx);
 
         final String urlParams = ACT_SEND_RAW_TX_PARAM + HEX_PARAM + hexEncodedTx;
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = postRequest(urlParams, "", StringProxyTO.class);
         if(response.getError() != null)
             throw new EtherScanException("Error occurred with code " + response.getError().getCode()
                     + " with message " + response.getError().getMessage());

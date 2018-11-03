@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class ProxyTxCountApiTest extends Assert{
+public class ProxyTxCountApiTest extends Assert {
 
     private final EtherScanApi api = new EtherScanApi();
 

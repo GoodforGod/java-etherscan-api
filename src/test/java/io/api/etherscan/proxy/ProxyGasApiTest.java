@@ -13,7 +13,7 @@ import java.math.BigInteger;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class ProxyGasApiTest extends Assert{
+public class ProxyGasApiTest extends Assert {
 
     private final EtherScanApi api = new EtherScanApi();
 

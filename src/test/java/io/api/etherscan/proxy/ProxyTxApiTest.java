@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class ProxyTxApiTest extends Assert{
+public class ProxyTxApiTest extends Assert {
 
     private final EtherScanApi api = new EtherScanApi();
 

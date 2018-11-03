@@ -19,7 +19,7 @@ public class BlockApiTest extends Assert {
 
     @Test
     public void correct() {
-        Optional<UncleBlock> uncles = api.block().uncles(242512);
+        Optional<UncleBlock> uncles = api.block().uncles(2165403);
         assertTrue(uncles.isPresent());
         assertFalse(uncles.get().isEmpty());
         assertNotNull(uncles.get().getBlockMiner());
