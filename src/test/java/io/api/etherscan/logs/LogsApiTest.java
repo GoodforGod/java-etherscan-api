@@ -68,5 +68,14 @@ public class LogsApiTest extends Assert {
     public void validateQuery() {
         List<Log> logs = api.logs().logs(query);
         assertEquals(logsSize, logs.size());
+        if(logsSize > 0) {
+            assertNotNull(logs.get(0).getAddress());
+            assertNotEquals(0, logs.get(0).getBlockNumber());
+            assertNotNull(logs.get(0).getData());
+            assertNotNull(logs.get(0).getTimeStamp());
+            assertNotNull(logs.get(0).getTransactionHash());
+            assertNotEquals(0, logs.get(0).getTransactionIndex());
+            assertNotNull(logs.get(0).getGasUsed());
+        }
     }
 }

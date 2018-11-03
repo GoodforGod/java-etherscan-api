@@ -21,6 +21,10 @@ public class AccountBalanceTest extends Assert {
         Balance balance = api.account().balance("0x8d4426f94e42f721C7116E81d6688cd935cB3b4F");
         assertNotNull(balance);
         assertNotNull(balance.getWei());
+        assertNotNull(balance.getMwei());
+        assertNotNull(balance.getKwei());
+        assertNotNull(balance.getGwei());
+        assertNotNull(balance.getEther());
         assertNotNull(balance.getAddress());
         assertNotEquals(0, balance.getWei());
     }

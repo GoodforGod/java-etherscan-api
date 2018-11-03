@@ -7,7 +7,7 @@ import io.api.etherscan.error.InvalidDataHexException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.proxy.BlockProxy;
-import io.api.etherscan.model.proxy.TxInfoProxy;
+import io.api.etherscan.model.proxy.ReceiptProxy;
 import io.api.etherscan.model.proxy.TxProxy;
 import io.api.etherscan.model.proxy.utility.BlockProxyTO;
 import io.api.etherscan.model.proxy.utility.StringProxyTO;
@@ -148,7 +148,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
     @NotNull
     @Override
-    public Optional<TxInfoProxy> txReceipt(final String txhash) throws ApiException {
+    public Optional<ReceiptProxy> txReceipt(final String txhash) throws ApiException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_RECEIPT_PARAM + TXHASH_PARAM + txhash;

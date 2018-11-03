@@ -1,6 +1,10 @@
 package io.api.etherscan.model;
 
+import io.api.etherscan.util.BasicUtils;
+
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -12,37 +16,28 @@ import java.util.List;
 public class Log {
 
     private String blockNumber;
+    private long _blockNumber;
     private String address;
     private String transactionHash;
     private String transactionIndex;
+    private long _transactionIndex;
     private String timeStamp;
     private LocalDateTime _timeStamp;
     private String data;
     private String gasPrice;
+    private BigInteger _gasPrice;
     private String gasUsed;
+    private BigInteger _gasUsed;
     private List<String> topics;
     private String logIndex;
-
-    public Log() { }
-
-    public Log(String blockNumber, String address, String transactionHash, String transactionIndex,
-               LocalDateTime _timeStamp, String data, String gasPrice, String gasUsed,
-               List<String> topics, String logIndex) {
-        this.blockNumber = blockNumber;
-        this.address = address;
-        this.transactionHash = transactionHash;
-        this.transactionIndex = transactionIndex;
-        this._timeStamp = _timeStamp;
-        this.data = data;
-        this.gasPrice = gasPrice;
-        this.gasUsed = gasUsed;
-        this.topics = topics;
-        this.logIndex = logIndex;
-    }
+    private long _logIndex;
 
     //<editor-fold desc="Getters">
-    public String getBlockNumber() {
-        return blockNumber;
+    public long getBlockNumber() {
+        if(!BasicUtils.isEmpty(blockNumber)){
+            _blockNumber = BasicUtils.parseHex(blockNumber).longValue();
+        }
+        return _blockNumber;
     }
 
     public String getAddress() {
@@ -53,15 +48,21 @@ public class Log {
         return transactionHash;
     }
 
-    public String getTransactionIndex() {
-        return transactionIndex;
+    public long getTransactionIndex() {
+        if(!BasicUtils.isEmpty(transactionIndex)){
+            _transactionIndex = BasicUtils.parseHex(transactionIndex).longValue();
+        }
+
+        return _transactionIndex;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
-    }
-
-    public LocalDateTime get_timeStamp() {
+    public LocalDateTime getTimeStamp() {
+        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp)) {
+            long formatted = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
+                    ? BasicUtils.parseHex(timeStamp).longValue()
+                    : Long.valueOf(timeStamp);
+            _timeStamp = LocalDateTime.ofEpochSecond(formatted, 0, ZoneOffset.UTC);
+        }
         return _timeStamp;
     }
 
@@ -69,20 +70,31 @@ public class Log {
         return data;
     }
 
-    public String getGasPrice() {
-        return gasPrice;
+    public BigInteger getGasPrice() {
+        if(!BasicUtils.isEmpty(gasPrice)){
+            _gasPrice = BasicUtils.parseHex(gasPrice);
+        }
+
+        return _gasPrice;
     }
 
-    public String getGasUsed() {
-        return gasUsed;
+    public BigInteger getGasUsed() {
+        if(!BasicUtils.isEmpty(gasUsed)){
+            _gasUsed = BasicUtils.parseHex(gasUsed);
+        }
+
+        return _gasUsed;
     }
 
     public List<String> getTopics() {
         return topics;
     }
 
-    public String getLogIndex() {
-        return logIndex;
+    public long getLogIndex() {
+        if(!BasicUtils.isEmpty(logIndex)){
+            _logIndex = BasicUtils.parseHex(logIndex).longValue();
+        }
+        return _logIndex;
     }
     //</editor-fold>
 }

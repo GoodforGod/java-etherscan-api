@@ -32,6 +32,13 @@ public class QueueManagerTest extends Assert {
         queueManager.takeTurn();
     }
 
+    @Test(timeout = 4500)
+    public void queueManagerWithDelay() {
+        IQueueManager queueManager = new QueueManager(1, 2, 2);
+        assertTrue(queueManager.takeTurn());
+        queueManager.takeTurn();
+    }
+
     @Test
     public void queueManagerTimeout() {
         IQueueManager queueManager = new QueueManager(1, 3);

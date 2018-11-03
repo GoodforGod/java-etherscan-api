@@ -2,7 +2,7 @@ package io.api.etherscan.core;
 
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.proxy.BlockProxy;
-import io.api.etherscan.model.proxy.TxInfoProxy;
+import io.api.etherscan.model.proxy.ReceiptProxy;
 import io.api.etherscan.model.proxy.TxProxy;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,7 +70,7 @@ public interface IProxyApi {
      * Returns the receipt of a transaction by transaction hash
      * eth_getTransactionReceipt
      */
-    @NotNull Optional<TxInfoProxy> txReceipt(String txhash) throws ApiException;
+    @NotNull Optional<ReceiptProxy> txReceipt(String txhash) throws ApiException;
 
     /**
      * Executes a new message call immediately without creating a transaction on the block chain

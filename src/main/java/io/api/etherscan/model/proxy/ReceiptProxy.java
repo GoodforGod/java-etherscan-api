@@ -1,37 +1,32 @@
 package io.api.etherscan.model.proxy;
 
+import io.api.etherscan.model.Log;
+
 import java.util.List;
 
 /**
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 31.10.2018
+ * @since 03.11.2018
  */
 public class ReceiptProxy {
 
-    private String blockNumber;
-    private String blockHash;
     private String root;
     private String from;
     private String to;
+    private String blockNumber;
+    private String blockHash;
     private String transactionHash;
     private String transactionIndex;
-    private String cumulativeGasUsed;
     private String gasUsed;
+    private String cumulativeGasUsed;
     private String contractAddress;
+
+    private List<Log> logs;
     private String logsBloom;
-    private List<LogProxy> logs;
 
     //<editor-fold desc="Getters">
-    public String getBlockNumber() {
-        return blockNumber;
-    }
-
-    public String getBlockHash() {
-        return blockHash;
-    }
-
     public String getRoot() {
         return root;
     }
@@ -44,6 +39,14 @@ public class ReceiptProxy {
         return to;
     }
 
+    public String getBlockNumber() {
+        return blockNumber;
+    }
+
+    public String getBlockHash() {
+        return blockHash;
+    }
+
     public String getTransactionHash() {
         return transactionHash;
     }
@@ -52,24 +55,24 @@ public class ReceiptProxy {
         return transactionIndex;
     }
 
-    public String getCumulativeGasUsed() {
-        return cumulativeGasUsed;
-    }
-
     public String getGasUsed() {
         return gasUsed;
+    }
+
+    public String getCumulativeGasUsed() {
+        return cumulativeGasUsed;
     }
 
     public String getContractAddress() {
         return contractAddress;
     }
 
-    public String getLogsBloom() {
-        return logsBloom;
+    public List<Log> getLogs() {
+        return logs;
     }
 
-    public List<LogProxy> getLogs() {
-        return logs;
+    public String getLogsBloom() {
+        return logsBloom;
     }
     //</editor-fold>
 }

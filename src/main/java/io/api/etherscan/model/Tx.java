@@ -2,6 +2,8 @@ package io.api.etherscan.model;
 
 import io.api.etherscan.util.BasicUtils;
 
+import java.math.BigInteger;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -13,8 +15,8 @@ public class Tx extends BaseTx {
     private long nonce;
     private String blockHash;
     private int transactionIndex;
-    private long gasPrice;
-    private long cumulativeGasUsed;
+    private BigInteger gasPrice;
+    private BigInteger cumulativeGasUsed;
     private long confirmations;
     private String isError;
     private String txreceipt_status;
@@ -32,7 +34,7 @@ public class Tx extends BaseTx {
         return transactionIndex;
     }
 
-    public long getGasPrice() {
+    public BigInteger getGasPrice() {
         return gasPrice;
     }
 
@@ -44,7 +46,7 @@ public class Tx extends BaseTx {
         return txreceipt_status;
     }
 
-    public long getCumulativeGasUsed() {
+    public BigInteger getCumulativeGasUsed() {
         return cumulativeGasUsed;
     }
 

@@ -1,6 +1,6 @@
 package io.api.etherscan.model.proxy.utility;
 
-import io.api.etherscan.model.proxy.TxInfoProxy;
+import io.api.etherscan.model.proxy.ReceiptProxy;
 
 /**
  * ! NO DESCRIPTION !
@@ -10,9 +10,9 @@ import io.api.etherscan.model.proxy.TxInfoProxy;
  */
 public class TxInfoProxyTO extends BaseProxyTO {
 
-    private TxInfoProxy result;
+    private ReceiptProxy result;
 
-    public TxInfoProxy getResult() {
+    public ReceiptProxy getResult() {
         return result;
     }
 }

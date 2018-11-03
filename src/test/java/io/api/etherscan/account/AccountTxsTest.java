@@ -24,6 +24,15 @@ public class AccountTxsTest extends Assert {
         assertNotNull(txs);
         assertEquals(5, txs.size());
         assertTxs(txs);
+        assertNotNull(txs.get(0).getTimeStamp());
+        assertNotNull(txs.get(0).getHash());
+        assertNotNull(txs.get(0).getFrom());
+        assertNotNull(txs.get(0).getTo());
+        assertNotNull(txs.get(0).getBlockHash());
+        assertNotNull(txs.get(0).getGas());
+        assertNotNull(txs.get(0).getCumulativeGasUsed());
+        assertNotNull(txs.get(0).getGasPrice());
+        assertNotNull(txs.get(0).getValue());
     }
 
     @Test
