@@ -17,8 +17,10 @@ import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
 
 /**
- * @author GoodforGod
+ * Http client implementation
  * @see IHttpExecutor
+ *
+ * @author GoodforGod
  * @since 28.10.2018
  */
 public class HttpExecutor implements IHttpExecutor {
@@ -29,7 +31,7 @@ public class HttpExecutor implements IHttpExecutor {
         DEFAULT_HEADERS.put("accept-language", "en,ru;q=0.9");
         DEFAULT_HEADERS.put("accept-encoding", "gzip, deflate, br");
         DEFAULT_HEADERS.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) Chrome/68.0.3440.106");
-        DEFAULT_HEADERS.put("content-Type", "application/x-www-form-urlencoded");
+        DEFAULT_HEADERS.put("content-type", "application/x-www-form-urlencoded");
     }
 
     private final Map<String, String> headers;
@@ -43,6 +45,11 @@ public class HttpExecutor implements IHttpExecutor {
         this(timeout, DEFAULT_HEADERS);
     }
 
+    /**
+     *
+     * @param timeout custom timeout in millis
+     * @param headers custom HTTP headers
+     */
     public HttpExecutor(final int timeout,
                         final Map<String, String> headers) {
         this.timeout = timeout;
@@ -82,7 +89,7 @@ public class HttpExecutor implements IHttpExecutor {
             headers.forEach(connection::setRequestProperty);
 
             final String contentLength = (BasicUtils.isEmpty(dataToPost)) ? "0" : String.valueOf(dataToPost.length());
-            connection.setRequestProperty("Content-Length", contentLength);
+            connection.setRequestProperty("content-length", contentLength);
 
             connection.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());

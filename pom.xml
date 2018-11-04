@@ -7,13 +7,12 @@
   <artifactId>etherscan</artifactId>
   <version>1.0.0</version>
 
-  <name>etherscan-api</name>
+  <name>java-etherscan-api</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <apache.http>4.5.6</apache.http>
   </properties>
 
   <dependencies>
@@ -22,12 +21,6 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>${apache.http}</version>
     </dependency>
 
     <dependency>
@@ -40,12 +33,6 @@
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
       <version>13.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.jsoniter</groupId>
-      <artifactId>jsoniter</artifactId>
-      <version>0.9.23</version>
     </dependency>
   </dependencies>
 

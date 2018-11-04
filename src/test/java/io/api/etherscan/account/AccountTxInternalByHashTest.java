@@ -3,6 +3,7 @@ package io.api.etherscan.account;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.InvalidTxHashException;
 import io.api.etherscan.model.TxInternal;
+import io.api.etherscan.util.BasicUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,7 +28,8 @@ public class AccountTxInternalByHashTest extends Assert {
         assertNotNull(txs.get(0).getFrom());
         assertNotNull(txs.get(0).getTimeStamp());
         assertNotNull(txs.get(0).getGas());
-        assertNotNull(txs.get(0).getHash());
+        assertNotNull(txs.get(0).getValue());
+        assertTrue(BasicUtils.isEmpty(txs.get(0).getErrCode()));
     }
 
     @Test(expected = InvalidTxHashException.class)
