@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * ! NO DESCRIPTION !
+ * Basic utils for library
  *
  * @author GoodforGod
  * @since 28.10.2018
@@ -30,7 +30,7 @@ public class BasicUtils {
         return value == null || value.isEmpty();
     }
 
-    public static boolean isBlack(String value) {
+    public static boolean isBlank(String value) {
         return value == null || value.isEmpty() || value.trim().isEmpty();
     }
 

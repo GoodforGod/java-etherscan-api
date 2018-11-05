@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
@@ -28,10 +29,11 @@ public class HttpExecutor implements IHttpExecutor {
     private static final Map<String, String> DEFAULT_HEADERS = new HashMap<>();
 
     static {
-        DEFAULT_HEADERS.put("accept-language", "en,ru;q=0.9");
-        DEFAULT_HEADERS.put("accept-encoding", "gzip, deflate, br");
-        DEFAULT_HEADERS.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) Chrome/68.0.3440.106");
-        DEFAULT_HEADERS.put("content-type", "application/x-www-form-urlencoded");
+        DEFAULT_HEADERS.put("Accept-Language", "en;q=0.9");
+        DEFAULT_HEADERS.put("Accept-Encoding", "deflate, gzip");
+        DEFAULT_HEADERS.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) Chrome/68.0.3440.106");
+        DEFAULT_HEADERS.put("Content-Type", "application/x-www-form-urlencoded");
+        DEFAULT_HEADERS.put("Accept-Charset", "UTF-8");
     }
 
     private final Map<String, String> headers;
@@ -113,7 +115,7 @@ public class HttpExecutor implements IHttpExecutor {
 
     private String readData(final HttpURLConnection connection) throws IOException {
         final StringBuilder content = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        try (BufferedReader in = new BufferedReader(getStreamReader(connection))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null)
                 content.append(inputLine);
@@ -122,5 +124,11 @@ public class HttpExecutor implements IHttpExecutor {
         }
 
         return content.toString();
+    }
+
+    private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
+        return ("gzip".equals(connection.getContentEncoding()))
+                ? new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8")
+                : new InputStreamReader(connection.getInputStream(), "utf-8");
     }
 }

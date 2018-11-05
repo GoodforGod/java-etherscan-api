@@ -1,6 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.*;
+import io.api.etherscan.error.ApiKeyException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.executor.impl.HttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
@@ -50,8 +51,8 @@ public class EtherScanApi {
     public EtherScanApi(final String apiKey,
                         final EthNetwork network,
                         final Supplier<IHttpExecutor> executorSupplier) {
-        if (BasicUtils.isEmpty(apiKey))
-            throw new NullPointerException("API key can not be null");
+        if (BasicUtils.isBlank(apiKey))
+            throw new ApiKeyException("API key can not be null or empty");
 
         // EtherScan 5request\sec limit support by queue manager
         final IQueueManager masterQueue = (apiKey.equals("YourApiKeyToken"))
