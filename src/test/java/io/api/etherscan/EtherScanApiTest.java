@@ -51,7 +51,7 @@ public class EtherScanApiTest extends Assert {
 
     @Test(expected = ApiTimeoutException.class)
     public void timeout() {
-        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(1000, 1000);
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300, 300);
         EtherScanApi api = new EtherScanApi(EthNetwork.KOVAN, supplier);
         List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
         assertNotNull(api);

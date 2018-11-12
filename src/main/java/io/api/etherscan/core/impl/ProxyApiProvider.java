@@ -86,7 +86,8 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
         final long compBlockNo = BasicUtils.compensateMinBlock(blockNo);
         final long compIndex = BasicUtils.compensateMinBlock(index);
 
-        final String urlParams = ACT_UNCLE_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + compIndex;
+        final String urlParams = ACT_UNCLE_BY_BLOCKNOINDEX_PARAM + TAG_PARAM
+                + "0x" + Long.toHexString(compBlockNo) + INDEX_PARAM + "0x" + Long.toHexString(compIndex);
         final BlockProxyTO response = getRequest(urlParams, BlockProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }

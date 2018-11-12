@@ -8,10 +8,6 @@ package io.api.etherscan.error;
  */
 public class ParseException extends ApiException {
 
-    public ParseException(String message) {
-        super(message);
-    }
-
     public ParseException(String message, Throwable cause) {
         super(message, cause);
     }

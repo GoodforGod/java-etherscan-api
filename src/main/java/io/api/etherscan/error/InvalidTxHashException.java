@@ -11,8 +11,4 @@ public class InvalidTxHashException extends ApiException {
     public InvalidTxHashException(String message) {
         super(message);
     }
-
-    public InvalidTxHashException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

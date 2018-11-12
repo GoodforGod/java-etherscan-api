@@ -11,8 +11,4 @@ public class InvalidDataHexException extends ApiException {
     public InvalidDataHexException(String message) {
         super(message);
     }
-
-    public InvalidDataHexException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
