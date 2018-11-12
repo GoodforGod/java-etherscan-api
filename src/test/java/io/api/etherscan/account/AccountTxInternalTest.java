@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class AccountTxInternalTest extends Assert {
 
-    private final EtherScanApi api = new EtherScanApi();
+    private EtherScanApi api = new EtherScanApi();
 
     @Test
     public void correct() {

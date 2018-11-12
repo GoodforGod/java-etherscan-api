@@ -4,6 +4,7 @@ import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.InvalidDataHexException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -14,7 +15,8 @@ import java.util.Optional;
  * @author GoodforGod
  * @since 03.11.2018
  */
-//TODO contact etherscan and ask about methods
+@Ignore
+//TODO contact etherscan and ask about method behavior
 public class ProxyTxSendRawApiTest extends Assert {
 
     private final EtherScanApi api = new EtherScanApi();
