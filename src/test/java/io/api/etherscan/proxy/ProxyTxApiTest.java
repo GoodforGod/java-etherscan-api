@@ -38,6 +38,15 @@ public class ProxyTxApiTest extends Assert {
         assertNotNull(tx.get().getTo());
         assertNotNull(tx.get().getHash());
         assertNotNull(tx.get().getNonce());
+        assertNotNull(tx.get().getS());
+        assertNotNull(tx.get().getR());
+        assertNotNull(tx.get().getValue());
+        assertNotNull(tx.get().getV());
+        assertNotNull(tx.get().getGas());
+        assertNotNull(tx.get().getGasPrice());
+        assertNotNull(tx.get().getBlockHash());
+        assertNotNull(tx.get().getTransactionIndex());
+        assertNotNull(tx.get().getInput());
     }
 
     @Test(expected = InvalidTxHashException.class)

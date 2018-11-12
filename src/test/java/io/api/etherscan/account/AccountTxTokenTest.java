@@ -62,6 +62,11 @@ public class AccountTxTokenTest extends Assert {
             assertNotNull(tx.getFrom());
             assertNotNull(tx.getTo());
             assertNotNull(tx.getTimeStamp());
+            assertNotNull(tx.getTokenDecimal());
+            assertNotEquals(0,(tx.getConfirmations()));
+            assertNotNull(tx.getGasUsed());
+            assertNotEquals(0,(tx.getCumulativeGasUsed()));
+            assertNotEquals(0, tx.getTransactionIndex());
         }
     }
 }

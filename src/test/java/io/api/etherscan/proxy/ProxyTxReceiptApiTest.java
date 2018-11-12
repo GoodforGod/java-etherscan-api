@@ -22,6 +22,19 @@ public class ProxyTxReceiptApiTest extends Assert {
     public void correct() {
         Optional<ReceiptProxy> infoProxy = api.proxy().txReceipt("0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
         assertTrue(infoProxy.isPresent());
+        assertNotNull(infoProxy.get().getBlockHash());
+        assertNotNull(infoProxy.get().getRoot());
+        assertNotNull(infoProxy.get().getFrom());
+        assertNotNull(infoProxy.get().getTo());
+        assertNotNull(infoProxy.get().getBlockNumber());
+        assertNotNull(infoProxy.get().getBlockHash());
+        assertNotNull(infoProxy.get().getTransactionHash());
+        assertNotNull(infoProxy.get().getTransactionIndex());
+        assertNotNull(infoProxy.get().getGasUsed());
+        assertNotNull(infoProxy.get().getCumulativeGasUsed());
+        assertNotNull(infoProxy.get().getLogs());
+        assertNotNull(infoProxy.get().getLogsBloom());
+        assertNull(infoProxy.get().getContractAddress());
     }
 
     @Test(expected = InvalidTxHashException.class)

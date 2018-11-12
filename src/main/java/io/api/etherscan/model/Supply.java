@@ -10,14 +10,6 @@ import java.math.BigInteger;
  */
 public class Supply extends Wei {
 
-    public Supply() {
-        super();
-    }
-
-    public Supply(long value) {
-        super(value);
-    }
-
     public Supply(BigInteger value) {
         super(value);
     }

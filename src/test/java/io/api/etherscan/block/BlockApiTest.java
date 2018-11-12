@@ -28,6 +28,8 @@ public class BlockApiTest extends Assert {
         assertFalse(uncles.get().getUncles().isEmpty());
         assertNotNull(uncles.get().getUncles().get(0).getBlockreward());
         assertNotNull(uncles.get().getUncles().get(0).getMiner());
+
+        assertNotEquals(0, uncles.get().hashCode());
     }
 
     @Test

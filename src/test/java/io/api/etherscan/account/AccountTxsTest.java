@@ -49,6 +49,7 @@ public class AccountTxsTest extends Assert {
         assertNotNull(txs);
         assertEquals(3, txs.size());
         assertTxs(txs);
+        assertFalse(txs.get(0).equals(txs.get(1)));
     }
 
     @Test(expected = InvalidAddressException.class)
@@ -65,10 +66,15 @@ public class AccountTxsTest extends Assert {
 
     private void assertTxs(List<Tx> txs) {
         for (Tx tx : txs) {
+            assertFalse(tx.haveError());
             assertNotNull(tx.getBlockHash());
             assertNotNull(tx.getFrom());
             assertNotNull(tx.getTo());
             assertNotNull(tx.getTimeStamp());
+            assertNotEquals(-1, (tx.getNonce()));
+            assertNotEquals(0, (tx.getTransactionIndex()));
+            assertNotEquals(0, tx.getConfirmations());
+            assertNotNull(tx.getTxreceipt_status());
         }
     }
 }

@@ -47,7 +47,13 @@ public class AccountBalanceListTest extends Assert {
         for(Balance balance : balances) {
             assertNotNull(balance.getAddress());
             assertNotEquals(0, balance.getWei());
+            assertNotEquals(0, balance.getKwei());
+            assertNotEquals(0, balance.getMwei());
+            assertNotEquals(0, balance.getEther());
+            assertNotEquals(0, balance.getGwei());
         }
+
+        assertFalse(balances.get(0).equals(balances.get(1)));
     }
 
     @Test(expected = InvalidAddressException.class)
