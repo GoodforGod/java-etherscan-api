@@ -1,6 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.*;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.ApiKeyException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.executor.impl.HttpExecutor;
@@ -54,14 +55,16 @@ public class EtherScanApi {
         if (BasicUtils.isBlank(apiKey))
             throw new ApiKeyException("API key can not be null or empty");
 
+        if(network == null)
+            throw new ApiException("Ethereum Network is set to NULL value");
+
         // EtherScan 5request\sec limit support by queue manager
         final IQueueManager masterQueue = (apiKey.equals("YourApiKeyToken"))
                 ? new FakeQueueManager()
                 : new QueueManager(5, 1);
 
         final IHttpExecutor executor = executorSupplier.get();
-        final EthNetwork usedNetwork = (network == null) ? EthNetwork.MAINNET : network;
-        final String baseUrl = "https://" + usedNetwork.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
+        final String baseUrl = "https://" + network.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
 
         this.account = new AccountApiProvider(masterQueue, baseUrl, executor);
         this.block = new BlockApiProvider(masterQueue, baseUrl, executor);

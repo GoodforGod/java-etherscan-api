@@ -127,7 +127,7 @@ public class HttpExecutor implements IHttpExecutor {
     }
 
     private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
-        return ("gzip".equals(connection.getContentEncoding()))
+        return (connection.getContentEncoding() != null && "gzip".equals(connection.getContentEncoding()))
                 ? new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8")
                 : new InputStreamReader(connection.getInputStream(), "utf-8");
     }

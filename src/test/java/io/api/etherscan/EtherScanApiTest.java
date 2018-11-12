@@ -1,6 +1,7 @@
 package io.api.etherscan;
 
 import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.ApiKeyException;
 import io.api.etherscan.model.EthNetwork;
 import org.junit.Assert;
@@ -35,7 +36,7 @@ public class EtherScanApiTest extends Assert {
         EtherScanApi api = new EtherScanApi(blankKey, network);
     }
 
-    @Test
+    @Test(expected = ApiException.class)
     public void nullNetwork() {
         EtherScanApi api = new EtherScanApi(validKey, null);
         assertNotNull(api);
