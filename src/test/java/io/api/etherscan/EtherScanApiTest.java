@@ -3,9 +3,16 @@ package io.api.etherscan;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.ApiKeyException;
+import io.api.etherscan.error.ApiTimeoutException;
+import io.api.etherscan.executor.IHttpExecutor;
+import io.api.etherscan.executor.impl.HttpExecutor;
+import io.api.etherscan.model.Block;
 import io.api.etherscan.model.EthNetwork;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * ! NO DESCRIPTION !
@@ -39,6 +46,14 @@ public class EtherScanApiTest extends Assert {
     @Test(expected = ApiException.class)
     public void nullNetwork() {
         EtherScanApi api = new EtherScanApi(validKey, null);
+        assertNotNull(api);
+    }
+
+    @Test(expected = ApiTimeoutException.class)
+    public void timeout() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(1000, 1000);
+        EtherScanApi api = new EtherScanApi(EthNetwork.KOVAN, supplier);
+        List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
         assertNotNull(api);
     }
 }

@@ -4,8 +4,6 @@
 
 Library supports all available EtherScan *API* calls for all available *Ethereum Networks*.
 
-![](https://media.giphy.com/media/1msHfmVdtuwkXww4ZC/giphy.gif)
-
 ## Dependency :rocket:
 **Maven**
 ```xml
@@ -24,7 +22,8 @@ dependencies {
 ```
 
 ## Content
-- [Overall](#overall)
+- [Ethereum Networks](#mainnet-and-testnets)
+- [Custom HttpClient](#custom-httpclient)
 - [API examples](#api-examples)
     - [Account](#account-api)
     - [Block](#block-api)
@@ -33,28 +32,48 @@ dependencies {
     - [Proxy](#proxy-api)
     - [Stats](#stats-api)
     - [Transactions](#transaction-api)
+    - [Token](#token-api)
 - [Version History](#version-history)
 
-## Api Examples
+## Mainnet and Testnets
+API support Ethereum: *[MAINNET](https://etherscan.io), [ROPSTEN](https://ropsten.etherscan.io), 
+[KOVAN](https://kovan.etherscan.io), [RINKEBY](https://rinkeby.etherscan.io)* networks.
+```java
+EtherScanApi api = new EtherScanApi(EthNetwork.MAINTNET);
+EtherScanApi api = new EtherScanApi(EthNetwork.RINKEBY);
+EtherScanApi api = new EtherScanApi("YourApiKey", EthNetwork.KOVAN);
+```
+
+## Custom HttpClient
+
+In case you need to set custom timeout, custom headers or better implementation for HttpClient, 
+just implement **IHttpExecutor** by your self or initialize it with your values.
+
+```java
+int connectionTimeout = 10000;
+int readTimeout = 7000;
+Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(connectionTimeout);
+Supplier<IHttpExecutor> supplierFull = () -> new HttpExecutor(connectionTimeout, readTimeout);
+
+
+EtherScanApi api = new EtherScanApi(EthNetwork.RINKEBY, supplier);
+EtherScanApi apiWithKey = new EtherScanApi("YourApiKey", EthNetwork.MAINNET, supplierFull);
+```
+
+## API Examples
 
 You can read about all API methods on [Etherscan](https://etherscan.io/apis)
 
 *Library support all available EtherScan API.*
 
 You can use API with you key or without key as well (Check API request\sec restrictions).
+Library support limit when used without key and will limit requests up to *5 req/sec by itself*.
 ```java
 EtherScanApi api = new EtherScanApi();
 EtherScanApi api = new EtherScanApi("YourApiKey");
 ```
 
 Below there are examples for each API category.
-
-### Mainnet and Testnets
-API support Ethereum: *[MAINNET](https://etherscan.io), [ROPSTEN](https://ropsten.etherscan.io), [KOVAN](https://kovan.etherscan.io), [RINKEBY](https://rinkeby.etherscan.io)* networks.
-```java
-EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET);
-EtherScanApi api = new EtherScanApi("YourApiKey", EthNetwork.KOVAN);
-```
 
 ### Account Api
 **Get Ether Balance for a single Address**
@@ -129,7 +148,7 @@ Optional<Boolean> status = api.txs().receiptStatus("0x513c1ba0bebf66436b5fed86ab
 ```
 
 ### Token Api
-You can read account API [here](https://etherscan.io/apis#accounts)
+You can read token API [here](https://etherscan.io/apis#tokens)
 
 Token API methods migrated to [Account](#account-api) & [Stats](#stats-api) respectfully.
 

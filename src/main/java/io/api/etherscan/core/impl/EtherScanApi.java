@@ -44,6 +44,11 @@ public class EtherScanApi {
         this(apiKey, EthNetwork.MAINNET);
     }
 
+    public EtherScanApi(final EthNetwork network,
+                        final Supplier<IHttpExecutor> executorSupplier) {
+        this("YourApiKeyToken", network, executorSupplier);
+    }
+
     public EtherScanApi(final String apiKey,
                         final EthNetwork network) {
         this(apiKey, network, DEFAULT_SUPPLIER);
@@ -75,31 +80,52 @@ public class EtherScanApi {
         this.txs = new TransactionApiProvider(masterQueue, baseUrl, executor);
     }
 
-    public IContractApi contract() {
-        return contract;
-    }
-
+    /**
+     * API for interactions with account and address
+     */
     public IAccountApi account() {
         return account;
     }
 
-    public IBlockApi block() {
-        return block;
+    /**
+     * API for verifying contract ABI
+     */
+    public IContractApi contract() {
+        return contract;
     }
 
-    public ILogsApi logs() {
-        return logs;
-    }
-
-    public IStatisticApi stats() {
-        return stats;
-    }
-
+    /**
+     * [BETA] API for interaction with tx statuses
+     */
     public ITransactionApi txs() {
         return txs;
     }
 
+    /**
+     * [BETA] API for getting block rewards and uncles
+     */
+    public IBlockApi block() {
+        return block;
+    }
+
+    /**
+     * [BETA] API for interaction with eth_getLogs
+     */
+    public ILogsApi logs() {
+        return logs;
+    }
+
+    /**
+     * API for interacting with geth/proxy etherscan
+     */
     public IProxyApi proxy() {
         return proxy;
+    }
+
+    /**
+     * API for eth price and supply statistic
+     */
+    public IStatisticApi stats() {
+        return stats;
     }
 }
