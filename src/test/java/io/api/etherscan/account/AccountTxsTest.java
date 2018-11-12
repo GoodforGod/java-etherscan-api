@@ -33,6 +33,9 @@ public class AccountTxsTest extends Assert {
         assertNotNull(txs.get(0).getCumulativeGasUsed());
         assertNotNull(txs.get(0).getGasPrice());
         assertNotNull(txs.get(0).getValue());
+        assertNotNull(txs.get(0).getContractAddress());
+        assertNotNull(txs.get(0).getInput());
+        assertNotEquals(txs.get(0).hashCode(), txs.get(1).hashCode());
     }
 
     @Test

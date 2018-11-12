@@ -1,5 +1,9 @@
 package io.api.etherscan.model.proxy;
 
+import io.api.etherscan.util.BasicUtils;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -18,6 +22,7 @@ public class BlockProxy {
     private String difficulty;
     private String totalDifficulty;
     private String timestamp;
+    private LocalDateTime _timestamp;
 
     private String miner;
     private String nonce;
@@ -63,8 +68,10 @@ public class BlockProxy {
         return totalDifficulty;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public LocalDateTime getTimeStamp() {
+        if(_timestamp == null && !BasicUtils.isEmpty(timestamp))
+            _timestamp = LocalDateTime.ofEpochSecond(BasicUtils.parseHex(timestamp).longValue(), 0, ZoneOffset.UTC);
+        return _timestamp;
     }
 
     public String getMiner() {

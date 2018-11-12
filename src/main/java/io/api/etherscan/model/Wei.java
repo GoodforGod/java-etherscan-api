@@ -12,14 +12,6 @@ public class Wei {
 
     private BigInteger result;
 
-    public Wei() {
-        this.result = BigInteger.valueOf(0);
-    }
-
-    public Wei(long value) {
-        this.result = BigInteger.valueOf(value);
-    }
-
     public Wei(BigInteger value) {
         this.result = value;
     }
@@ -59,12 +51,5 @@ public class Wei {
     @Override
     public int hashCode() {
         return result != null ? result.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "Wei{" +
-                "value=" + result +
-                '}';
     }
 }

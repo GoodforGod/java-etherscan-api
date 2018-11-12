@@ -22,6 +22,26 @@ public class ProxyBlockApiTest extends Assert {
         Optional<BlockProxy> block = api.proxy().block(5120);
         assertTrue(block.isPresent());
         assertNotNull(block.get().getHash());
+        assertNotNull(block.get().getNumber());
+        assertNotNull(block.get().getParentHash());
+        assertNotNull(block.get().getStateRoot());
+        assertNotNull(block.get().getSize());
+        assertNotNull(block.get().getDifficulty());
+        assertNotNull(block.get().getTotalDifficulty());
+        assertNotNull(block.get().getTimeStamp());
+        assertNotNull(block.get().getMiner());
+        assertNotNull(block.get().getNonce());
+        assertNotNull(block.get().getHash());
+        assertNotNull(block.get().getExtraData());
+        assertNotNull(block.get().getLogsBloom());
+        assertNotNull(block.get().getMixHash());
+        assertNotNull(block.get().getGasUsed());
+        assertNotNull(block.get().getGasLimit());
+        assertNotNull(block.get().getSha3Uncles());
+        assertNotNull(block.get().getTransactions());
+        assertNotNull(block.get().getTransactionsRoot());
+        assertNotNull(block.get().getReceiptsRoot());
+        assertNotNull(block.get().getUncles());
     }
 
     @Test
