@@ -22,11 +22,14 @@ public class ProxyTxApiTest extends Assert {
     public void correctByHash() {
         Optional<TxProxy> tx = api.proxy().tx("0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
         assertTrue(tx.isPresent());
-        assertNotNull(tx.get().getBlockHash());
-        assertNotNull(tx.get().getFrom());
-        assertNotNull(tx.get().getTo());
-        assertNotNull(tx.get().getHash());
-        assertNotNull(tx.get().getNonce());
+
+        TxProxy txProxy = tx.get();
+        assertNotNull(txProxy.getBlockHash());
+        assertNotNull(txProxy.getBlockNumber());
+        assertNotNull(txProxy.getFrom());
+        assertNotNull(txProxy.getTo());
+        assertNotNull(txProxy.getHash());
+        assertNotNull(txProxy.getNonce());
     }
 
     @Test

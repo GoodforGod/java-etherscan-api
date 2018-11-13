@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * @author GoodforGod
  * @since 13.11.2018
  */
-public class UtilTests extends Assert {
+public class BasicUtilsTests extends Assert {
 
     @Test(expected = EtherScanException.class)
     public void responseValidateEmpty() {
@@ -31,8 +32,15 @@ public class UtilTests extends Assert {
     }
 
     @Test
-    public void partitionEmpty() {
+    public void partitionNewArrayList() {
         ArrayList<String> list = new ArrayList<>();
+        List<List<String>> lists = BasicUtils.partition(list, 12);
+        assertTrue(lists.isEmpty());
+    }
+
+    @Test
+    public void partitionEmpty() {
+        List<String> list = Collections.emptyList();
         List<List<String>> lists = BasicUtils.partition(list, 12);
         assertTrue(lists.isEmpty());
     }

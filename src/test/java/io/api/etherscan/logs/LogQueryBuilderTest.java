@@ -5,6 +5,7 @@ import io.api.etherscan.error.LogQueryException;
 import io.api.etherscan.model.query.LogOp;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.query.impl.LogQueryBuilder;
+import io.api.etherscan.model.query.impl.LogTopicQuadro;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,8 +20,8 @@ public class LogQueryBuilderTest extends Assert {
     @Test
     public void singleCorrect() {
         LogQuery single = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
-            .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
-            .build();
+                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
+                .build();
 
         assertNotNull(single);
         assertNotNull(single.getParams());
@@ -107,7 +108,7 @@ public class LogQueryBuilderTest extends Assert {
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
-                .setOpTopic0_2(null)
+                .setOpTopic0_2(LogOp.AND)
                 .setOpTopic1_2(LogOp.AND)
                 .build();
 
@@ -119,10 +120,10 @@ public class LogQueryBuilderTest extends Assert {
     public void tripleInCorrectTopic2() {
         LogQuery triple = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        "null",
+                        null,
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
-                .setOpTopic0_2(null)
+                .setOpTopic0_2(LogOp.AND)
                 .setOpTopic1_2(LogOp.AND)
                 .build();
 
@@ -135,9 +136,9 @@ public class LogQueryBuilderTest extends Assert {
         LogQuery triple = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "null")
+                        null)
                 .setOpTopic0_1(LogOp.AND)
-                .setOpTopic0_2(null)
+                .setOpTopic0_2(LogOp.AND)
                 .setOpTopic1_2(LogOp.AND)
                 .build();
 
@@ -209,11 +210,13 @@ public class LogQueryBuilderTest extends Assert {
 
     @Test(expected = LogQueryException.class)
     public void quadroIncorrectOp1() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000");
+
+        topicQuadro
                 .setOpTopic0_1(null)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -221,37 +224,34 @@ public class LogQueryBuilderTest extends Assert {
                 .setOpTopic1_3(LogOp.OR)
                 .setOpTopic2_3(LogOp.OR)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)
     public void quadroIncorrectOp2() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
-                .setOpTopic0_1(LogOp.AND)
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000");
+
+        topicQuadro.setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(null)
                 .setOpTopic0_3(LogOp.AND)
                 .setOpTopic1_2(LogOp.OR)
                 .setOpTopic1_3(LogOp.OR)
                 .setOpTopic2_3(LogOp.OR)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)
     public void quadroIncorrectOp3() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000");
+
+        topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(null)
@@ -259,9 +259,6 @@ public class LogQueryBuilderTest extends Assert {
                 .setOpTopic1_3(LogOp.OR)
                 .setOpTopic2_3(LogOp.OR)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)
@@ -285,11 +282,13 @@ public class LogQueryBuilderTest extends Assert {
 
     @Test(expected = LogQueryException.class)
     public void quadroInCorrectOp4() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
+
+        topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -297,18 +296,17 @@ public class LogQueryBuilderTest extends Assert {
                 .setOpTopic1_3(LogOp.OR)
                 .setOpTopic2_3(LogOp.OR)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)
     public void quadroInCorrectOp5() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
+
+        topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -316,18 +314,17 @@ public class LogQueryBuilderTest extends Assert {
                 .setOpTopic1_3(null)
                 .setOpTopic2_3(LogOp.OR)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)
     public void quadroInCorrectOp6() {
-        LogQuery quadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        LogTopicQuadro topicQuadro = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
+
+        topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -335,9 +332,6 @@ public class LogQueryBuilderTest extends Assert {
                 .setOpTopic1_3(LogOp.OR)
                 .setOpTopic2_3(null)
                 .build();
-
-        assertNotNull(quadro);
-        assertNotNull(quadro.getParams());
     }
 
     @Test(expected = LogQueryException.class)

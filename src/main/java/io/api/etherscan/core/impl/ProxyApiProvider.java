@@ -143,7 +143,8 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
         final StringProxyTO response = postRequest(urlParams, "", StringProxyTO.class);
         if(response.getError() != null)
             throw new EtherScanException("Error occurred with code " + response.getError().getCode()
-                    + " with message " + response.getError().getMessage());
+                    + " with message " + response.getError().getMessage()
+                    + ", error id " + response.getId() + ", jsonRPC " + response.getJsonrpc());
 
         return (BasicUtils.isEmpty(response.getResult()))
                 ? Optional.empty()
