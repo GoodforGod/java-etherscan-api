@@ -6,6 +6,7 @@ import io.api.etherscan.error.ApiKeyException;
 import io.api.etherscan.error.ApiTimeoutException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.executor.impl.HttpExecutor;
+import io.api.etherscan.model.Balance;
 import io.api.etherscan.model.Block;
 import io.api.etherscan.model.EthNetwork;
 import org.junit.Assert;
@@ -47,6 +48,22 @@ public class EtherScanApiTest extends Assert {
     public void nullNetwork() {
         EtherScanApi api = new EtherScanApi(validKey, null);
         assertNotNull(api);
+    }
+
+    @Test
+    public void noTimeoutOnRead() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300);
+        EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
+    }
+
+    @Test
+    public void noTimeoutUnlimitedAwait() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(-30, -300);
+        EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
     }
 
     @Test(expected = ApiTimeoutException.class)

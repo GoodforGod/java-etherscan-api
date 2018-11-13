@@ -21,9 +21,9 @@ import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
 
 /**
  * Http client implementation
- * @see IHttpExecutor
  *
  * @author GoodforGod
+ * @see IHttpExecutor
  * @since 28.10.2018
  */
 public class HttpExecutor implements IHttpExecutor {
@@ -59,10 +59,9 @@ public class HttpExecutor implements IHttpExecutor {
     }
 
     /**
-     *
      * @param connectTimeout custom connection establish timeout in millis
-     * @param readTimeout custom read timeout in millis
-     * @param headers custom HTTP headers
+     * @param readTimeout    custom read timeout in millis
+     * @param headers        custom HTTP headers
      */
     public HttpExecutor(final int connectTimeout,
                         final int readTimeout,
@@ -88,15 +87,14 @@ public class HttpExecutor implements IHttpExecutor {
             final HttpURLConnection connection = buildConnection(urlAsString, "GET");
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
-                final String location = connection.getHeaderField("Location");
-                return get(location);
+                return get(connection.getHeaderField("Location"));
             }
 
             final String data = readData(connection);
             connection.disconnect();
             return data;
         } catch (SocketTimeoutException e) {
-            throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout+ " millis", e);
+            throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
             throw new ConnectionException(e.getLocalizedMessage(), e);
         }
@@ -117,14 +115,15 @@ public class HttpExecutor implements IHttpExecutor {
 
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
-                final String location = connection.getHeaderField("Location");
-                return post(location, dataToPost);
+                return post(connection.getHeaderField("Location"), dataToPost);
             }
 
             final String data = readData(connection);
             connection.disconnect();
             return data;
-        } catch (IOException e) {
+        } catch (SocketTimeoutException e) {
+            throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
+        } catch (Exception e) {
             throw new ConnectionException(e.getLocalizedMessage(), e);
         }
     }

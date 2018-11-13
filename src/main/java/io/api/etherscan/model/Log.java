@@ -16,11 +16,11 @@ import java.util.List;
 public class Log {
 
     private String blockNumber;
-    private long _blockNumber;
+    private Long _blockNumber;
     private String address;
     private String transactionHash;
     private String transactionIndex;
-    private long _transactionIndex;
+    private Long _transactionIndex;
     private String timeStamp;
     private LocalDateTime _timeStamp;
     private String data;
@@ -30,11 +30,11 @@ public class Log {
     private BigInteger _gasUsed;
     private List<String> topics;
     private String logIndex;
-    private long _logIndex;
+    private Long _logIndex;
 
     //<editor-fold desc="Getters">
-    public long getBlockNumber() {
-        if(!BasicUtils.isEmpty(blockNumber)){
+    public Long getBlockNumber() {
+        if(_blockNumber == null && !BasicUtils.isEmpty(blockNumber)){
             _blockNumber = BasicUtils.parseHex(blockNumber).longValue();
         }
         return _blockNumber;
@@ -48,8 +48,8 @@ public class Log {
         return transactionHash;
     }
 
-    public long getTransactionIndex() {
-        if(!BasicUtils.isEmpty(transactionIndex)){
+    public Long getTransactionIndex() {
+        if(_transactionIndex == null && !BasicUtils.isEmpty(transactionIndex)){
             _transactionIndex = BasicUtils.parseHex(transactionIndex).longValue();
         }
 
@@ -90,8 +90,8 @@ public class Log {
         return topics;
     }
 
-    public long getLogIndex() {
-        if(!BasicUtils.isEmpty(logIndex)){
+    public Long getLogIndex() {
+        if(_logIndex == null && !BasicUtils.isEmpty(logIndex)){
             _logIndex = BasicUtils.parseHex(logIndex).longValue();
         }
         return _logIndex;

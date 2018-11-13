@@ -2,6 +2,7 @@ package io.api.etherscan.model.proxy;
 
 import io.api.etherscan.util.BasicUtils;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class BlockProxy {
 
     private String number;
+    private Long _number;
     private String hash;
     private String parentHash;
     private String stateRoot;
     private String size;
+    private Long _size;
     private String difficulty;
     private String totalDifficulty;
     private String timestamp;
@@ -30,7 +33,9 @@ public class BlockProxy {
     private String logsBloom;
     private String mixHash;
     private String gasUsed;
+    private BigInteger _gasUsed;
     private String gasLimit;
+    private BigInteger _gasLimit;
 
     private String sha3Uncles;
     private List<String> uncles;
@@ -40,8 +45,10 @@ public class BlockProxy {
     private List<TxProxy> transactions;
 
     //<editor-fold desc="Getters">
-    public String getNumber() {
-        return number;
+    public Long getNumber() {
+        if(_number == null && !BasicUtils.isEmpty(number))
+            _number = BasicUtils.parseHex(number).longValue();
+        return _number;
     }
 
     public String getHash() {
@@ -56,8 +63,10 @@ public class BlockProxy {
         return stateRoot;
     }
 
-    public String getSize() {
-        return size;
+    public Long getSize() {
+        if(_size == null && !BasicUtils.isEmpty(size))
+            _size = BasicUtils.parseHex(size).longValue();
+        return _size;
     }
 
     public String getDifficulty() {
@@ -94,12 +103,16 @@ public class BlockProxy {
         return mixHash;
     }
 
-    public String getGasUsed() {
-        return gasUsed;
+    public BigInteger getGasUsed() {
+        if(_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
+            _gasUsed = BasicUtils.parseHex(gasUsed);
+        return _gasUsed;
     }
 
-    public String getGasLimit() {
-        return gasLimit;
+    public BigInteger getGasLimit() {
+        if(_gasLimit == null && !BasicUtils.isEmpty(gasLimit))
+            _gasLimit = BasicUtils.parseHex(gasLimit);
+        return _gasLimit;
     }
 
     public String getSha3Uncles() {

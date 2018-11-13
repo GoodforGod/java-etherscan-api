@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigInteger;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * Proxy API Implementation
@@ -55,6 +56,8 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     private static final String TAG_PARAM = "&tag=";
     private static final String HEX_PARAM = "&hex=";
     private static final String TO_PARAM = "&to=";
+
+    private static final Pattern EMPTY_HEX = Pattern.compile("0x0+");
 
     ProxyApiProvider(final IQueueManager queue,
                      final String baseUrl,
@@ -191,7 +194,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
         final String urlParams = ACT_STORAGEAT_PARAM + ADDRESS_PARAM + address + POSITION_PARAM + compPosition + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return (BasicUtils.isEmpty(response.getResult()))
+        return (BasicUtils.isEmpty(response.getResult()) || EMPTY_HEX.matcher(response.getResult()).matches())
                 ? Optional.empty()
                 : Optional.of(response.getResult());
     }

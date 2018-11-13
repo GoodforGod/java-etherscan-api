@@ -35,7 +35,7 @@ public class ProxyTxSendRawApiTest extends Assert {
     }
 
     public void correctParamWithEmptyExpectedResult() {
-        Optional<String> sendRaw = api.proxy().txSendRaw("0x012151");
+        Optional<String> sendRaw = api.proxy().txSendRaw("0x000000");
         assertFalse(sendRaw.isPresent());
     }
 }

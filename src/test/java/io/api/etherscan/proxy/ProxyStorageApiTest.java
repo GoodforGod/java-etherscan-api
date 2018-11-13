@@ -33,7 +33,6 @@ public class ProxyStorageApiTest extends Assert {
     @Test
     public void correctParamWithEmptyExpectedResult() {
         Optional<String> call = api.proxy().storageAt("0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd", 100);
-        assertTrue(call.isPresent());
-        assertFalse(BasicUtils.isNotHex(call.get()));
+        assertFalse(call.isPresent());
     }
 }

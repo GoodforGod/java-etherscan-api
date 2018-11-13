@@ -21,27 +21,28 @@ public class ProxyBlockApiTest extends Assert {
     public void correct() {
         Optional<BlockProxy> block = api.proxy().block(5120);
         assertTrue(block.isPresent());
-        assertNotNull(block.get().getHash());
-        assertNotNull(block.get().getNumber());
-        assertNotNull(block.get().getParentHash());
-        assertNotNull(block.get().getStateRoot());
-        assertNotNull(block.get().getSize());
-        assertNotNull(block.get().getDifficulty());
-        assertNotNull(block.get().getTotalDifficulty());
-        assertNotNull(block.get().getTimeStamp());
-        assertNotNull(block.get().getMiner());
-        assertNotNull(block.get().getNonce());
-        assertNotNull(block.get().getHash());
-        assertNotNull(block.get().getExtraData());
-        assertNotNull(block.get().getLogsBloom());
-        assertNotNull(block.get().getMixHash());
-        assertNotNull(block.get().getGasUsed());
-        assertNotNull(block.get().getGasLimit());
-        assertNotNull(block.get().getSha3Uncles());
-        assertNotNull(block.get().getTransactions());
-        assertNotNull(block.get().getTransactionsRoot());
-        assertNotNull(block.get().getReceiptsRoot());
-        assertNotNull(block.get().getUncles());
+        BlockProxy proxy = block.get();
+        assertNotNull(proxy.getHash());
+        assertNotNull(proxy.getNumber());
+        assertNotNull(proxy.getParentHash());
+        assertNotNull(proxy.getStateRoot());
+        assertNotNull(proxy.getSize());
+        assertNotNull(proxy.getDifficulty());
+        assertNotNull(proxy.getTotalDifficulty());
+        assertNotNull(proxy.getTimeStamp());
+        assertNotNull(proxy.getMiner());
+        assertNotNull(proxy.getNonce());
+        assertNotNull(proxy.getHash());
+        assertNotNull(proxy.getExtraData());
+        assertNotNull(proxy.getLogsBloom());
+        assertNotNull(proxy.getMixHash());
+        assertNotNull(proxy.getGasUsed());
+        assertNotNull(proxy.getGasLimit());
+        assertNotNull(proxy.getSha3Uncles());
+        assertNotNull(proxy.getTransactions());
+        assertNotNull(proxy.getTransactionsRoot());
+        assertNotNull(proxy.getReceiptsRoot());
+        assertNotNull(proxy.getUncles());
     }
 
     @Test
