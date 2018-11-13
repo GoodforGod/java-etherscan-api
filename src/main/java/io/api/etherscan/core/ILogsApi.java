@@ -19,6 +19,11 @@ public interface ILogsApi {
     /**
      * alternative to the native eth_getLogs
      * Read at EtherScan API description for full info!
+     * @param query build log query
+     * @return logs according to query
+     * @throws ApiException parent exception class
+     *
+     * @see io.api.etherscan.model.query.impl.LogQueryBuilder
      */
     @NotNull List<Log> logs(LogQuery query) throws ApiException;
 }

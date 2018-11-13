@@ -82,6 +82,7 @@ public class EtherScanApi {
 
     /**
      * API for interactions with account and address
+     * @return account api
      */
     public IAccountApi account() {
         return account;
@@ -89,6 +90,7 @@ public class EtherScanApi {
 
     /**
      * API for verifying contract ABI
+     * @return contract api
      */
     public IContractApi contract() {
         return contract;
@@ -96,6 +98,7 @@ public class EtherScanApi {
 
     /**
      * [BETA] API for interaction with tx statuses
+     * @return transactions api
      */
     public ITransactionApi txs() {
         return txs;
@@ -103,6 +106,7 @@ public class EtherScanApi {
 
     /**
      * [BETA] API for getting block rewards and uncles
+     * @return block api
      */
     public IBlockApi block() {
         return block;
@@ -110,6 +114,7 @@ public class EtherScanApi {
 
     /**
      * [BETA] API for interaction with eth_getLogs
+     * @return logs api
      */
     public ILogsApi logs() {
         return logs;
@@ -117,6 +122,7 @@ public class EtherScanApi {
 
     /**
      * API for interacting with geth/proxy etherscan
+     * @return proxy api
      */
     public IProxyApi proxy() {
         return proxy;
@@ -124,6 +130,7 @@ public class EtherScanApi {
 
     /**
      * API for eth price and supply statistic
+     * @return statistic api
      */
     public IStatisticApi stats() {
         return stats;

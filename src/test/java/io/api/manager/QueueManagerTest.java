@@ -46,6 +46,6 @@ public class QueueManagerTest extends Assert {
         long start = System.currentTimeMillis();
         queueManager.takeTurn();
         long end = System.currentTimeMillis();
-        assertEquals(3, (end - start) / 1000);
+        assertEquals(3, Math.round((double)(end - start)/1000));
     }
 }

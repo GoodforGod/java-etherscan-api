@@ -16,12 +16,25 @@ import java.math.BigInteger;
  */
 public interface IStatisticApi {
 
-    /** ERC20 token total Supply */
+    /**
+     * ERC20 token total Supply
+     * @param contract contract address
+     * @return token supply for specified contract
+     * @throws ApiException parent exception class
+     */
     @NotNull BigInteger supply(String contract) throws ApiException;
 
-    /** Eth total supply */
+    /**
+     * Eth total supply
+     * @return total ETH supply for moment
+     * @throws ApiException parent exception class
+     */
     @NotNull Supply supply() throws ApiException;
 
-    /** Eth last USD and BTC price */
+    /**
+     * Eth last USD and BTC price
+     * @return last usd/btc price for ETH
+     * @throws ApiException parent exception class
+     */
     @NotNull Price lastPrice() throws ApiException;
 }
