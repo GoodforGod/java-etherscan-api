@@ -24,6 +24,7 @@ public class TransactionExecApiTest extends Assert {
         assertTrue(status.isPresent());
         assertTrue(status.get().haveError());
         assertNotNull(status.get().getErrDescription());
+        assertNotNull(status.get().toString());
     }
 
     @Test(expected = InvalidTxHashException.class)

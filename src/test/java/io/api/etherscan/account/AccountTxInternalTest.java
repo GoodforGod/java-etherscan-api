@@ -24,6 +24,7 @@ public class AccountTxInternalTest extends Assert {
         assertNotNull(txs);
         assertEquals(66, txs.size());
         assertTxs(txs);
+        assertNotNull(txs.get(0).toString());
     }
 
     @Test

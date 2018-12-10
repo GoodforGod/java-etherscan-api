@@ -36,6 +36,7 @@ public class AccountTxsTest extends Assert {
         assertNotNull(txs.get(0).getContractAddress());
         assertNotNull(txs.get(0).getInput());
         assertNotEquals(txs.get(0).hashCode(), txs.get(1).hashCode());
+        assertNotNull(txs.get(0).toString());
     }
 
     @Test

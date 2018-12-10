@@ -91,6 +91,7 @@ public class AccountTokenBalanceTest extends Assert {
         assertNotNull(balance.getAddress());
         assertNotNull(balance.getContract());
         assertNotEquals(0, balance.getWei());
+        assertNotNull(balance.toString());
 
         TokenBalance balance1 = new TokenBalance("", BigInteger.ONE, "");
         assertFalse(balance.equals(balance1));

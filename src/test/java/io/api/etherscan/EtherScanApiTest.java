@@ -34,14 +34,12 @@ public class EtherScanApiTest extends Assert {
 
     @Test(expected = ApiKeyException.class)
     public void emptyKey() {
-        String emptyKey = "";
-        EtherScanApi api = new EtherScanApi(emptyKey, network);
+        new EtherScanApi("", network);
     }
 
     @Test(expected = ApiKeyException.class)
     public void blankKey() {
-        String blankKey = "         ";
-        EtherScanApi api = new EtherScanApi(blankKey, network);
+        new EtherScanApi("         ", network);
     }
 
     @Test(expected = ApiException.class)
@@ -71,6 +69,6 @@ public class EtherScanApiTest extends Assert {
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300, 300);
         EtherScanApi api = new EtherScanApi(EthNetwork.KOVAN, supplier);
         List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
-        assertNotNull(api);
+        assertNotNull(blocks);
     }
 }

@@ -43,6 +43,7 @@ public class ProxyBlockApiTest extends Assert {
         assertNotNull(proxy.getTransactionsRoot());
         assertNotNull(proxy.getReceiptsRoot());
         assertNotNull(proxy.getUncles());
+        assertNotNull(proxy.toString());
     }
 
     @Test

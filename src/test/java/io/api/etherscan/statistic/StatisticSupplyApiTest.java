@@ -24,5 +24,6 @@ public class StatisticSupplyApiTest extends Assert {
         assertNotNull(supply.asKwei());
         assertNotNull(supply.asMwei());
         assertNotNull(supply.asEther());
+        assertNotNull(supply.toString());
     }
 }

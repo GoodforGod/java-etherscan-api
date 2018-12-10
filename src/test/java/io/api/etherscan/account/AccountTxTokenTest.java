@@ -24,6 +24,7 @@ public class AccountTxTokenTest extends Assert {
         assertNotNull(txs);
         assertEquals(8, txs.size());
         assertTxs(txs);
+        assertNotNull(txs.get(0).toString());
     }
 
     @Test

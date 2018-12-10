@@ -22,6 +22,7 @@ public class ProxyBlockUncleApiTest extends Assert {
         Optional<BlockProxy> block = api.proxy().blockUncle(603183, 0);
         assertTrue(block.isPresent());
         assertNotNull(block.get().getHash());
+        assertNotNull(block.get().toString());
     }
 
     @Test
