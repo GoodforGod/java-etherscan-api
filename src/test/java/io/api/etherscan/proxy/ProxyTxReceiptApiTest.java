@@ -36,6 +36,10 @@ public class ProxyTxReceiptApiTest extends Assert {
         assertNotNull(infoProxy.get().getLogsBloom());
         assertNull(infoProxy.get().getContractAddress());
         assertNotNull(infoProxy.get().toString());
+
+        ReceiptProxy empty = new ReceiptProxy();
+        assertNotEquals(empty, infoProxy.get());
+        assertNotEquals(empty.hashCode(), infoProxy.get().hashCode());
     }
 
     @Test(expected = InvalidTxHashException.class)

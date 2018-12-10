@@ -5,7 +5,6 @@ import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.NoResponseException;
 import io.api.etherscan.error.ParseException;
 import io.api.etherscan.model.utility.StringResponseTO;
-import io.api.etherscan.util.BasicUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -62,7 +61,8 @@ public class UtilTests extends Assert {
 
     @Test
     public void isEmptyCollectionEmpty() {
-        boolean result = isEmpty(new ArrayList<>());
+        ArrayList<Object> list = new ArrayList<>();
+        boolean result = isEmpty(list);
         assertTrue(result);
     }
 
@@ -78,6 +78,18 @@ public class UtilTests extends Assert {
         assertTrue(result);
     }
 
+    @Test
+    public void isNotAddressInvalid() {
+        boolean result = isNotAddress("125125");
+        assertTrue(result);
+    }
+
+    @Test
+    public void isNotHexInvalid() {
+        boolean result = isNotHex("1215%");
+        assertTrue(result);
+    }
+
     @Test(expected = EtherScanException.class)
     public void isResponseStatusInvalidThrows() {
         StringResponseTO responseTO = new StringResponseTO();
@@ -86,7 +98,8 @@ public class UtilTests extends Assert {
 
     @Test(expected = EtherScanException.class)
     public void isResponseNullThrows() {
-        validateTxResponse(null);
+        StringResponseTO responseTO = null;
+        validateTxResponse(responseTO);
     }
 
     @Test(expected = ParseException.class)

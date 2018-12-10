@@ -5,6 +5,8 @@ import io.api.etherscan.model.Supply;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigInteger;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -25,5 +27,9 @@ public class StatisticSupplyApiTest extends Assert {
         assertNotNull(supply.asMwei());
         assertNotNull(supply.asEther());
         assertNotNull(supply.toString());
+
+        Supply empty = new Supply(BigInteger.ONE);
+        assertNotEquals(supply, empty);
+        assertNotEquals(supply.hashCode(), empty.hashCode());
     }
 }

@@ -94,12 +94,12 @@ public class AccountTokenBalanceTest extends Assert {
         assertNotNull(balance.toString());
 
         TokenBalance balance1 = new TokenBalance("", BigInteger.ONE, "");
-        assertFalse(balance.equals(balance1));
-        assertFalse(balance.hashCode() == balance1.hashCode());
+        assertNotEquals(balance, balance1);
+        assertNotEquals(balance.hashCode(), balance1.hashCode());
 
         TokenBalance balance2 = new TokenBalance("125161", balance.getWei(), balance.getContract());
-        assertFalse(balance.equals(balance2));
-        assertFalse(balance.hashCode() == balance2.hashCode());
+        assertNotEquals(balance, balance2);
+        assertNotEquals(balance.hashCode(), balance2.hashCode());
     }
 
     @Test(expected = InvalidAddressException.class)

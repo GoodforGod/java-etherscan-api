@@ -30,6 +30,8 @@ public class AccountBalanceListTest extends Assert {
         assertNotNull(balances);
         assertFalse(balances.isEmpty());
         assertEquals(2, balances.size());
+        assertNotEquals(balances.get(0), balances.get(1));
+        assertNotEquals(balances.get(0).hashCode(), balances.get(1).hashCode());
         for(Balance balance : balances) {
             assertNotNull(balance.getAddress());
             assertNotNull(balance.getGwei());

@@ -88,6 +88,9 @@ public class AccountTxInternalByHashTest extends Assert {
         assertNotEquals(-1, txs.get(0).getTraceId());
         assertTrue(BasicUtils.isEmpty(txs.get(0).getErrCode()));
         assertNotNull(txs.get(0).toString());
+
+        assertNotEquals(txs.get(0), txs.get(1));
+        assertNotEquals(txs.get(0).hashCode(), txs.get(1).hashCode());
     }
 
     @Test(expected = InvalidTxHashException.class)

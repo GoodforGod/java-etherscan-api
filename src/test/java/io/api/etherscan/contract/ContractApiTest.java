@@ -24,11 +24,15 @@ public class ContractApiTest extends Assert {
         assertTrue(abi.haveAbi());
         assertNotNull(abi.getContractAbi());
         assertNotNull(abi.toString());
+
+        Abi empty = Abi.verified("asg");
+        assertNotEquals(empty, abi);
+        assertNotEquals(empty.hashCode(), abi.hashCode());
     }
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        Abi abi = api.contract().contractAbi("0xBBbc244D798123fDe783fCc1C72d3Bb8C189413");
+        api.contract().contractAbi("0xBBbc244D798123fDe783fCc1C72d3Bb8C189413");
     }
 
     @Test
