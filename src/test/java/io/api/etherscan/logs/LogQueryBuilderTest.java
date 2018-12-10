@@ -61,6 +61,24 @@ public class LogQueryBuilderTest extends Assert {
                 .build();
     }
 
+    @Test(expected = LogQueryException.class)
+    public void tupleIncorrectTopic2() {
+        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        null)
+                .setOpTopic0_1(LogOp.AND)
+                .build();
+    }
+
+    @Test(expected = LogQueryException.class)
+    public void tupleIncorrectTopic1() {
+        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
+                .topic(null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
+                .setOpTopic0_1(LogOp.AND)
+                .build();
+    }
+
     @Test
     public void tripleCorrect() {
         LogQuery triple = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
@@ -104,7 +122,7 @@ public class LogQueryBuilderTest extends Assert {
     public void tripleInCorrectTopic2() {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        "null",
+                        null,
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(null)
@@ -117,10 +135,46 @@ public class LogQueryBuilderTest extends Assert {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "null")
+                        null)
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(null)
                 .setOpTopic1_2(LogOp.AND)
+                .build();
+    }
+
+    @Test(expected = LogQueryException.class)
+    public void tripleInCorrectOp1() {
+        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
+                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+                .setOpTopic0_1(null)
+                .setOpTopic0_2(LogOp.AND)
+                .setOpTopic1_2(LogOp.AND)
+                .build();
+    }
+
+    @Test(expected = LogQueryException.class)
+    public void tripleInCorrectOp2() {
+        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
+                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+                .setOpTopic0_1(LogOp.AND)
+                .setOpTopic0_2(null)
+                .setOpTopic1_2(LogOp.AND)
+                .build();
+    }
+
+    @Test(expected = LogQueryException.class)
+    public void tripleInCorrectOp3() {
+        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
+                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+                .setOpTopic0_1(LogOp.AND)
+                .setOpTopic0_2(LogOp.AND)
+                .setOpTopic1_2(null)
                 .build();
     }
 
@@ -160,20 +214,18 @@ public class LogQueryBuilderTest extends Assert {
     }
 
     @Test(expected = LogQueryException.class)
-    public void tupleIncorrectTopic2() {
-        LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
-                .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null)
-                .setOpTopic0_1(LogOp.AND)
-                .build();
-    }
-
-    @Test(expected = LogQueryException.class)
-    public void tupleIncorrectTopic1() {
+    public void quadroIncorrectTopic1() {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic(null,
-                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000",
+                        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
+                .setOpTopic0_2(LogOp.OR)
+                .setOpTopic0_3(LogOp.AND)
+                .setOpTopic1_2(LogOp.OR)
+                .setOpTopic1_3(LogOp.OR)
+                .setOpTopic2_3(LogOp.OR)
                 .build();
     }
 
@@ -181,7 +233,7 @@ public class LogQueryBuilderTest extends Assert {
     public void quadroIncorrectOp1() {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(null)
@@ -197,7 +249,7 @@ public class LogQueryBuilderTest extends Assert {
     public void quadroIncorrectOp2() {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
@@ -213,7 +265,7 @@ public class LogQueryBuilderTest extends Assert {
     public void quadroIncorrectOp3() {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                        null,
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000")
                 .setOpTopic0_1(LogOp.AND)
@@ -246,8 +298,8 @@ public class LogQueryBuilderTest extends Assert {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -262,8 +314,8 @@ public class LogQueryBuilderTest extends Assert {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -278,8 +330,8 @@ public class LogQueryBuilderTest extends Assert {
         LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                        "",
-                        "")
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+                        "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)

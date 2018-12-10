@@ -28,11 +28,6 @@ public class UtilTests extends Assert {
         validateTxResponse(responseTO);
     }
 
-    @Test(expected = EtherScanException.class)
-    public void responseValidateNullable() {
-        validateTxResponse(null);
-    }
-
     @Test
     public void partitionEmpty() {
         ArrayList<String> list = new ArrayList<>();

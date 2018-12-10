@@ -27,6 +27,7 @@ public class ProxyTxApiTest extends Assert {
         assertNotNull(tx.get().getTo());
         assertNotNull(tx.get().getHash());
         assertNotNull(tx.get().getNonce());
+        assertNotNull(tx.get().getBlockNumber());
         assertNotNull(tx.get().toString());
 
         TxProxy empty = new TxProxy();
