@@ -84,4 +84,21 @@ abstract class BaseTx {
     public int hashCode() {
         return hash != null ? hash.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "BaseTx{" +
+                "blockNumber=" + blockNumber +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", _timeStamp=" + _timeStamp +
+                ", hash='" + hash + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", value=" + value +
+                ", contractAddress='" + contractAddress + '\'' +
+                ", input='" + input + '\'' +
+                ", gas=" + gas +
+                ", gasUsed=" + gasUsed +
+                '}';
+    }
 }

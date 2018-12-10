@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
 
 import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
@@ -31,13 +32,12 @@ public class HttpExecutor implements IHttpExecutor {
     private static final Map<String, String> DEFAULT_HEADERS = new HashMap<>();
 
     private static final int CONNECT_TIMEOUT = 8000;
-    private static final int READ_TIMEOUT = 30000;
+    private static final int READ_TIMEOUT = 0;
 
     static {
-        DEFAULT_HEADERS.put("Accept-Language", "en;q=0.9");
+        DEFAULT_HEADERS.put("Accept-Language", "en");
         DEFAULT_HEADERS.put("Accept-Encoding", "deflate, gzip");
         DEFAULT_HEADERS.put("User-Agent", "Chrome/68.0.3440.106");
-        DEFAULT_HEADERS.put("Content-Type", "application/x-www-form-urlencoded");
         DEFAULT_HEADERS.put("Accept-Charset", "UTF-8");
     }
 
@@ -46,15 +46,14 @@ public class HttpExecutor implements IHttpExecutor {
     private final int readTimeout;
 
     public HttpExecutor() {
-        this(CONNECT_TIMEOUT, READ_TIMEOUT);
+        this(CONNECT_TIMEOUT);
     }
 
     public HttpExecutor(final int connectTimeout) {
         this(connectTimeout, READ_TIMEOUT);
     }
 
-    public HttpExecutor(final int connectTimeout,
-                        final int readTimeout) {
+    public HttpExecutor(final int connectTimeout, final int readTimeout) {
         this(connectTimeout, readTimeout, DEFAULT_HEADERS);
     }
 
@@ -142,8 +141,13 @@ public class HttpExecutor implements IHttpExecutor {
     }
 
     private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
-        return (connection.getContentEncoding() != null && "gzip".equals(connection.getContentEncoding()))
-                ? new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8")
-                : new InputStreamReader(connection.getInputStream(), "utf-8");
+        final boolean haveEncoding = connection.getContentEncoding() != null;
+
+        if (haveEncoding && "gzip".equals(connection.getContentEncoding()))
+            return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8");
+        else if (haveEncoding && "deflate".equals(connection.getContentEncoding()))
+            return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), "utf-8");
+        else
+            return new InputStreamReader(connection.getInputStream(), "utf-8");
     }
 }

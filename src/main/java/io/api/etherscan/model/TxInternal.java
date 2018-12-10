@@ -30,4 +30,14 @@ public class TxInternal extends BaseTx {
         return errCode;
     }
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "TxInternal{" +
+                "type='" + type + '\'' +
+                ", traceId=" + traceId +
+                ", isError=" + isError +
+                ", errCode='" + errCode + '\'' +
+                '}';
+    }
 }

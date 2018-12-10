@@ -21,4 +21,12 @@ public class Status {
     public String getErrDescription() {
         return errDescription;
     }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "isError=" + isError +
+                ", errDescription='" + errDescription + '\'' +
+                '}';
+    }
 }

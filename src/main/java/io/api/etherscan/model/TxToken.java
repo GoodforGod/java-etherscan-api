@@ -55,4 +55,19 @@ public class TxToken extends BaseTx {
         return confirmations;
     }
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "TxToken{" +
+                "nonce=" + nonce +
+                ", blockHash='" + blockHash + '\'' +
+                ", tokenName='" + tokenName + '\'' +
+                ", tokenSymbol='" + tokenSymbol + '\'' +
+                ", tokenDecimal='" + tokenDecimal + '\'' +
+                ", transactionIndex=" + transactionIndex +
+                ", gasPrice=" + gasPrice +
+                ", cumulativeGasUsed=" + cumulativeGasUsed +
+                ", confirmations=" + confirmations +
+                '}';
+    }
 }

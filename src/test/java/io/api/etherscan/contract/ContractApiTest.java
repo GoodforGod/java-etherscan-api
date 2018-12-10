@@ -22,6 +22,7 @@ public class ContractApiTest extends Assert {
         assertNotNull(abi);
         assertTrue(abi.isVerified());
         assertTrue(abi.haveAbi());
+        assertNotNull(abi.getContractAbi());
     }
 
     @Test(expected = InvalidAddressException.class)

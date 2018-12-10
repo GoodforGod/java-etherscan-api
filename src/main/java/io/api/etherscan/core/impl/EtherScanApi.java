@@ -10,6 +10,7 @@ import io.api.etherscan.manager.impl.FakeQueueManager;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.util.BasicUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -83,6 +84,7 @@ public class EtherScanApi {
     /**
      * API for interactions with account and address
      */
+    @NotNull
     public IAccountApi account() {
         return account;
     }
@@ -90,6 +92,7 @@ public class EtherScanApi {
     /**
      * API for verifying contract ABI
      */
+    @NotNull
     public IContractApi contract() {
         return contract;
     }
@@ -97,6 +100,7 @@ public class EtherScanApi {
     /**
      * [BETA] API for interaction with tx statuses
      */
+    @NotNull
     public ITransactionApi txs() {
         return txs;
     }
@@ -104,6 +108,7 @@ public class EtherScanApi {
     /**
      * [BETA] API for getting block rewards and uncles
      */
+    @NotNull
     public IBlockApi block() {
         return block;
     }
@@ -111,6 +116,7 @@ public class EtherScanApi {
     /**
      * [BETA] API for interaction with eth_getLogs
      */
+    @NotNull
     public ILogsApi logs() {
         return logs;
     }
@@ -118,6 +124,7 @@ public class EtherScanApi {
     /**
      * API for interacting with geth/proxy etherscan
      */
+    @NotNull
     public IProxyApi proxy() {
         return proxy;
     }
@@ -125,6 +132,7 @@ public class EtherScanApi {
     /**
      * API for eth price and supply statistic
      */
+    @NotNull
     public IStatisticApi stats() {
         return stats;
     }

@@ -31,7 +31,7 @@ public class BasicUtils {
     }
 
     public static boolean isBlank(String value) {
-        return value == null || value.isEmpty() || value.trim().isEmpty();
+        return isEmpty(value) || value.trim().isEmpty();
     }
 
     public static <T> boolean isEmpty(Collection<T> collection) {
@@ -39,8 +39,8 @@ public class BasicUtils {
     }
 
     public static BlockParam compensateBlocks(long startBlock, long endBlock) {
-        long startCompensated   = compensateMinBlock(startBlock);
-        long endCompensated     = compensateMaxBlock(endBlock);
+        long startCompensated = compensateMinBlock(startBlock);
+        long endCompensated = compensateMaxBlock(endBlock);
 
         final long startFinal = (startCompensated > endCompensated)
                 ? endCompensated
@@ -79,7 +79,7 @@ public class BasicUtils {
 
     public static BigInteger parseHex(String hex) {
         try {
-            if(BasicUtils.isEmpty(hex))
+            if (BasicUtils.isEmpty(hex))
                 return BigInteger.valueOf(0);
 
             final String formatted = (hex.length() > 2 && hex.charAt(0) == '0' && hex.charAt(1) == 'x')
@@ -93,23 +93,26 @@ public class BasicUtils {
     }
 
     public static void validateAddress(String address) {
-        if(isNotAddress(address))
+        if (isNotAddress(address))
             throw new InvalidAddressException("Address [" + address + "] is not Ethereum based.");
     }
 
     public static void validateTxHash(String txhash) {
-        if(isNotTxHash(txhash))
+        if (isNotTxHash(txhash))
             throw new InvalidTxHashException("TxHash [" + txhash + "] is not Ethereum based.");
     }
 
     public static <T extends BaseResponseTO> void validateTxResponse(T response) {
-        if(response == null)
+        if (response == null)
             throw new EtherScanException("EtherScan responded with null value");
 
-        if(response.getStatus() != 1
-                && !response.getMessage().startsWith("No tra")
-                && !response.getMessage().startsWith("No rec"))
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+        if (response.getStatus() != 1) {
+            if (response.getMessage() == null) {
+                throw new EtherScanException("Unexpected Etherscan exception, no information from server about error, code " + response.getStatus());
+            } else if (!response.getMessage().startsWith("No tra") && !response.getMessage().startsWith("No rec")) {
+                throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            }
+        }
     }
 
     public static void validateAddresses(List<String> addresses) {
@@ -121,7 +124,7 @@ public class BasicUtils {
 
     @NotNull
     public static List<List<String>> partition(List<String> list, int pairSize) {
-        if(isEmpty(list))
+        if (isEmpty(list))
             return Collections.emptyList();
 
         final List<List<String>> partitioned = new ArrayList<>();
@@ -132,14 +135,14 @@ public class BasicUtils {
         while (iterator.hasNext()) {
             temp.add(iterator.next());
 
-            if(++counter > pairSize) {
+            if (++counter > pairSize) {
                 partitioned.add(temp);
                 temp = new ArrayList<>();
                 counter = 0;
             }
         }
 
-        if(!temp.isEmpty())
+        if (!temp.isEmpty())
             partitioned.add(temp);
 
         return partitioned;

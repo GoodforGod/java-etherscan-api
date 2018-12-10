@@ -43,9 +43,10 @@ dependencies {
 API support Ethereum: *[MAINNET](https://etherscan.io), [ROPSTEN](https://ropsten.etherscan.io), 
 [KOVAN](https://kovan.etherscan.io), [RINKEBY](https://rinkeby.etherscan.io)* networks.
 ```java
-EtherScanApi api = new EtherScanApi(EthNetwork.MAINTNET);
-EtherScanApi api = new EtherScanApi(EthNetwork.RINKEBY);
-EtherScanApi api = new EtherScanApi("YourApiKey", EthNetwork.KOVAN);
+EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET); // Default
+EtherScanApi apiRinkeby = new EtherScanApi(EthNetwork.RINKEBY);
+EtherScanApi apiRopsten = new EtherScanApi(EthNetwork.ROPSTEN);
+EtherScanApi apiKovan = new EtherScanApi("YourApiKey", EthNetwork.KOVAN);
 ```
 
 ## Custom HttpClient
@@ -56,10 +57,10 @@ just implement **IHttpExecutor** by your self or initialize it with your values.
 ```java
 int connectionTimeout = 10000;
 int readTimeout = 7000;
+ 
 Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(connectionTimeout);
 Supplier<IHttpExecutor> supplierFull = () -> new HttpExecutor(connectionTimeout, readTimeout);
-
-
+ 
 EtherScanApi api = new EtherScanApi(EthNetwork.RINKEBY, supplier);
 EtherScanApi apiWithKey = new EtherScanApi("YourApiKey", EthNetwork.MAINNET, supplierFull);
 ```
@@ -70,14 +71,15 @@ You can read about all API methods on [Etherscan](https://etherscan.io/apis)
 
 *Library support all available EtherScan API.*
 
-You can use API with you key or without key as well (Check API request\sec restrictions).
-Library support limit when used without key and will limit requests up to *5 req/sec by itself*.
+You can use library *with or without* API key *([Check API request\sec restrictions when used without API key](https://ethereum.stackexchange.com/questions/34190/does-etherscan-require-the-use-of-an-api-key))*.
+
+Library will automatically limit requests up to **5 req/sec** when used *without* key.
 ```java
 EtherScanApi api = new EtherScanApi();
 EtherScanApi api = new EtherScanApi("YourApiKey");
 ```
 
-Below there are examples for each API category.
+Below are examples for each API category.
 
 ### Account Api
 **Get Ether Balance for a single Address**
@@ -121,6 +123,7 @@ LogQuery query = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70
         .setOpTopic0_2(LogOp.OR)
         .setOpTopic1_2(LogOp.AND)
         .build();
+ 
 List<Log> logs = api.logs().logs(query);
 ```
 
@@ -152,7 +155,7 @@ Optional<Boolean> status = api.txs().receiptStatus("0x513c1ba0bebf66436b5fed86ab
 ```
 
 ### Token Api
-You can read token API [here](https://etherscan.io/apis#tokens)
+You can read about token API [here](https://etherscan.io/apis#tokens)
 
 Token API methods migrated to [Account](#account-api) & [Stats](#stats-api) respectfully.
 

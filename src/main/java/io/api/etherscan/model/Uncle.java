@@ -27,4 +27,13 @@ public class Uncle {
         return unclePosition;
     }
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "Uncle{" +
+                "miner='" + miner + '\'' +
+                ", blockreward=" + blockreward +
+                ", unclePosition=" + unclePosition +
+                '}';
+    }
 }

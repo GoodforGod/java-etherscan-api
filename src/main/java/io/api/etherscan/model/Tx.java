@@ -54,4 +54,18 @@ public class Tx extends BaseTx {
         return confirmations;
     }
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "Tx{" +
+                "nonce=" + nonce +
+                ", blockHash='" + blockHash + '\'' +
+                ", transactionIndex=" + transactionIndex +
+                ", gasPrice=" + gasPrice +
+                ", cumulativeGasUsed=" + cumulativeGasUsed +
+                ", confirmations=" + confirmations +
+                ", isError='" + isError + '\'' +
+                ", txreceipt_status='" + txreceipt_status + '\'' +
+                '}';
+    }
 }

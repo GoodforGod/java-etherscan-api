@@ -38,4 +38,11 @@ public class TokenBalance extends Balance {
         result = 31 * result + (tokenContract != null ? tokenContract.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "TokenBalance{" +
+                "tokenContract='" + tokenContract + '\'' +
+                '}';
+    }
 }
