@@ -2,7 +2,6 @@ package io.api.util;
 
 import com.google.gson.Gson;
 import io.api.etherscan.error.EtherScanException;
-import io.api.etherscan.error.NoResponseException;
 import io.api.etherscan.error.ParseException;
 import io.api.etherscan.model.utility.StringResponseTO;
 import org.junit.Assert;
@@ -100,10 +99,5 @@ public class UtilTests extends Assert {
     @Test(expected = ParseException.class)
     public void isThrowParseException() {
         throw new ParseException("Test", null);
-    }
-
-    @Test(expected = NoResponseException.class)
-    public void isThrowNoResponseException() {
-        throw new NoResponseException("Test");
     }
 }

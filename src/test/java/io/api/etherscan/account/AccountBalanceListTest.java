@@ -71,7 +71,15 @@ public class AccountBalanceListTest extends Assert {
         addresses.add("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         addresses.add("C9F32CE1127e44C51cbD182D6364F3D707Fd0d47");
 
+        api.account().balances(addresses);
+    }
+
+    @Test
+    public void emptyParamList() {
+        List<String> addresses = new ArrayList<>();
         List<Balance> balances = api.account().balances(addresses);
+        assertNotNull(balances);
+        assertTrue(balances.isEmpty());
     }
 
     @Test

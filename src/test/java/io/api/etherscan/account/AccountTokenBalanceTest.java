@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -92,10 +91,6 @@ public class AccountTokenBalanceTest extends Assert {
         assertNotNull(balance.getContract());
         assertNotEquals(0, balance.getWei());
         assertNotNull(balance.toString());
-
-        TokenBalance balance1 = new TokenBalance("", BigInteger.ONE, "");
-        assertNotEquals(balance, balance1);
-        assertNotEquals(balance.hashCode(), balance1.hashCode());
 
         TokenBalance balance2 = new TokenBalance("125161", balance.getWei(), balance.getContract());
         assertNotEquals(balance, balance2);

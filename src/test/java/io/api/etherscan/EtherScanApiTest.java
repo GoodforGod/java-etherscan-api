@@ -34,7 +34,7 @@ public class EtherScanApiTest extends Assert {
 
     @Test(expected = ApiKeyException.class)
     public void emptyKey() {
-        new EtherScanApi("", network);
+        new EtherScanApi("");
     }
 
     @Test(expected = ApiKeyException.class)

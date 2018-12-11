@@ -145,9 +145,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
             throw new EtherScanException("Error occurred with code " + response.getError().getCode()
                     + " with message " + response.getError().getMessage());
 
-        return (BasicUtils.isEmpty(response.getResult()))
-                ? Optional.empty()
-                : Optional.of(response.getResult());
+        return Optional.ofNullable(response.getResult());
     }
 
     @NotNull
@@ -169,9 +167,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
         final String urlParams = ACT_CALL_PARAM + TO_PARAM + address + DATA_PARAM + data + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return (BasicUtils.isEmpty(response.getResult()))
-                ? Optional.empty()
-                : Optional.of(response.getResult());
+        return Optional.ofNullable (response.getResult());
     }
 
     @NotNull
@@ -181,9 +177,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
 
         final String urlParams = ACT_CODE_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return (BasicUtils.isEmpty(response.getResult()))
-                ? Optional.empty()
-                : Optional.of(response.getResult());
+        return Optional.ofNullable(response.getResult());
     }
 
     @NotNull
