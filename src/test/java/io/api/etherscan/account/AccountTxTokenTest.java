@@ -35,7 +35,7 @@ public class AccountTxTokenTest extends Assert {
     public void correctStartBlock() {
         List<TxToken> txs = api.account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
         assertNotNull(txs);
-        assertEquals(9, txs.size());
+        assertEquals(11, txs.size());
         assertTxs(txs);
     }
 

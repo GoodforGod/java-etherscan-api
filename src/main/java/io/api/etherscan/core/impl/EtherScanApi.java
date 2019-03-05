@@ -70,7 +70,9 @@ public class EtherScanApi {
                 : new QueueManager(5, 1);
 
         final IHttpExecutor executor = executorSupplier.get();
-        final String baseUrl = "https://" + network.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
+
+        final String ending = (EthNetwork.TOBALABA.equals(network)) ? "com" : "io";
+        final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
         this.account = new AccountApiProvider(masterQueue, baseUrl, executor);
         this.block = new BlockApiProvider(masterQueue, baseUrl, executor);

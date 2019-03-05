@@ -57,6 +57,22 @@ public class EtherScanApiTest extends Assert {
     }
 
     @Test
+    public void noTimeoutOnReadGroli() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300);
+        EtherScanApi api = new EtherScanApi(EthNetwork.GORLI, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
+    }
+
+    @Test
+    public void noTimeoutOnReadTobalala() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(30000);
+        EtherScanApi api = new EtherScanApi(EthNetwork.TOBALABA, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
+    }
+
+    @Test
     public void noTimeoutUnlimitedAwait() {
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(-30, -300);
         EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET, supplier);

@@ -71,8 +71,10 @@ public class AccountMinedBlocksTest extends Assert {
         assertBlocks(blocks);
         assertNotNull(blocks.get(0).toString());
 
-        assertNotEquals(blocks.get(0), blocks.get(1));
-        assertNotEquals(blocks.get(0).hashCode(), blocks.get(1).hashCode());
+        if(blocks.size() > 1) {
+            assertNotEquals(blocks.get(0), blocks.get(1));
+            assertNotEquals(blocks.get(0).hashCode(), blocks.get(1).hashCode());
+        }
     }
 
     @Test(expected = InvalidAddressException.class)

@@ -14,14 +14,14 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 **Gradle**
 ```groovy
 dependencies {
-    compile 'com.github.goodforgod:java-etherscan-api:1.0.0'
+    compile 'com.github.goodforgod:java-etherscan-api:1.0.1'
 }
 ```
 
@@ -40,8 +40,12 @@ dependencies {
 - [Version History](#version-history)
 
 ## Mainnet and Testnets
-API support Ethereum: *[MAINNET](https://etherscan.io), [ROPSTEN](https://ropsten.etherscan.io), 
-[KOVAN](https://kovan.etherscan.io), [RINKEBY](https://rinkeby.etherscan.io)* networks.
+API support Ethereum: *[MAINNET](https://etherscan.io),
+ [ROPSTEN](https://ropsten.etherscan.io), 
+ [KOVAN](https://kovan.etherscan.io), 
+ [RINKEBY](https://rinkeby.etherscan.io), 
+ [GORLI](https://goerli.etherscan.io), 
+ [TOBALABA](https://tobalaba.etherscan.com)* networks.
 ```java
 EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET); // Default
 EtherScanApi apiRinkeby = new EtherScanApi(EthNetwork.RINKEBY);
@@ -160,6 +164,8 @@ You can read about token API [here](https://etherscan.io/apis#tokens)
 Token API methods migrated to [Account](#account-api) & [Stats](#stats-api) respectfully.
 
 ## Version History
+
+**1.0.1** - Gorli & TOBALABA networks support.
 
 **1.0.0** - Initial project with all API functionality, for all available networks, with tests coverage for all cases.
 

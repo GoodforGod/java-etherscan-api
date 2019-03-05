@@ -10,6 +10,8 @@ public enum EthNetwork {
     MAINNET("api"),
     ROPSTEN("api-ropsten"),
     KOVAN("api-kovan"),
+    TOBALABA("api-tobalaba"),
+    GORLI("api-goerli"),
     RINKEBY("api-rinkeby");
 
     private final String domain;
