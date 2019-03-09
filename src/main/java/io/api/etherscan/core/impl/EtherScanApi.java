@@ -83,57 +83,36 @@ public class EtherScanApi {
         this.txs = new TransactionApiProvider(masterQueue, baseUrl, executor);
     }
 
-    /**
-     * API for interactions with account and address
-     */
     @NotNull
     public IAccountApi account() {
         return account;
     }
 
-    /**
-     * API for verifying contract ABI
-     */
     @NotNull
     public IContractApi contract() {
         return contract;
     }
 
-    /**
-     * [BETA] API for interaction with tx statuses
-     */
     @NotNull
     public ITransactionApi txs() {
         return txs;
     }
 
-    /**
-     * [BETA] API for getting block rewards and uncles
-     */
     @NotNull
     public IBlockApi block() {
         return block;
     }
 
-    /**
-     * [BETA] API for interaction with eth_getLogs
-     */
     @NotNull
     public ILogsApi logs() {
         return logs;
     }
 
-    /**
-     * API for interacting with geth/proxy etherscan
-     */
     @NotNull
     public IProxyApi proxy() {
         return proxy;
     }
 
-    /**
-     * API for eth price and supply statistic
-     */
     @NotNull
     public IStatisticApi stats() {
         return stats;
