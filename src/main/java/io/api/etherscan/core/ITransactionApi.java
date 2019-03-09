@@ -17,17 +17,17 @@ public interface ITransactionApi {
 
     /**
      * Check Contract Execution Status (if there was an error during contract execution)
-     * @param txhash to look for
-     * @return exec status
+     * @param txhash transaction hash
+     * @return optional status result
+     * @throws ApiException parent exception class
      */
     @NotNull Optional<Status> execStatus(String txhash) throws ApiException;
 
     /**
      * Check Transaction Receipt Status (Only applicable for Post Byzantium fork transactions)
-     * 0 = Fail, 1 = Pass
-     * empty value for pre-byzantium fork
-     * @param txhash to look for
-     * @return status as boolean
+     * @param txhash transaction hash
+     * @return 0 = Fail, 1 = Pass, empty value for pre-byzantium fork
+     * @throws ApiException parent exception class
      */
     @NotNull Optional<Boolean> receiptStatus(String txhash) throws ApiException;
 }

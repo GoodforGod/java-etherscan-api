@@ -15,8 +15,9 @@ public interface IContractApi {
 
     /**
      * Get Verified Contract Sources
-     * @param address to look for
-     * @return abi for contract
+     * @param address to verify
+     * @return ABI verified
+     * @throws ApiException parent exception class
      */
     @NotNull Abi contractAbi(String address) throws ApiException;
 }

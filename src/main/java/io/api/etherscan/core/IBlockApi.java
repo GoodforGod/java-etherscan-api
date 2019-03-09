@@ -17,8 +17,9 @@ public interface IBlockApi {
 
     /**
      * Return uncle blocks
-     * @param blockNumber block number
-     * @return uncle block
+     * @param blockNumber block number form 0 to last
+     * @return optional uncle blocks
+     * @throws ApiException parent exception class
      */
     @NotNull Optional<UncleBlock> uncles(long blockNumber) throws ApiException;
 }

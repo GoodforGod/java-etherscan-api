@@ -17,11 +17,13 @@ import java.util.List;
 public interface ILogsApi {
 
     /**
-     * Alternative to the native eth_getLogs
+     * alternative to the native eth_getLogs
      * Read at EtherScan API description for full info!
-     * @see LogQuery
-     * @param query for logs (check etherscan specs)
-     * @return logs
+     * @param query build log query
+     * @return logs according to query
+     * @throws ApiException parent exception class
+     *
+     * @see io.api.etherscan.model.query.impl.LogQueryBuilder
      */
     @NotNull List<Log> logs(LogQuery query) throws ApiException;
 }

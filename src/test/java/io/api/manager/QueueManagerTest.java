@@ -43,9 +43,9 @@ public class QueueManagerTest extends Assert {
     public void queueManagerTimeout() {
         IQueueManager queueManager = new QueueManager(1, 3);
         assertTrue(queueManager.takeTurn());
-        final long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         queueManager.takeTurn();
-        final long end = System.currentTimeMillis();
-        assertEquals(3, (end - start) / 950);
+        long end = System.currentTimeMillis();
+        assertEquals(3, Math.round((double)(end - start)/1000));
     }
 }

@@ -18,20 +18,23 @@ public interface IStatisticApi {
 
     /**
      * ERC20 token total Supply
-     * @param contract to look for
-     * @return token supply
+     * @param contract contract address
+     * @return token supply for specified contract
+     * @throws ApiException parent exception class
      */
     @NotNull BigInteger supply(String contract) throws ApiException;
 
     /**
      * Eth total supply
-     * @return ETH supply
+     * @return total ETH supply for moment
+     * @throws ApiException parent exception class
      */
     @NotNull Supply supply() throws ApiException;
 
     /**
      * Eth last USD and BTC price
-     * @return last price
+     * @return last usd/btc price for ETH
+     * @throws ApiException parent exception class
      */
     @NotNull Price lastPrice() throws ApiException;
 }

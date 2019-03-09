@@ -12,7 +12,7 @@ public interface IQueueManager {
 
     /**
      * Waits in queue for chance to take turn
-     * @return is turn available
+     * @return can or can not rake turn
      */
     boolean takeTurn();
 }
