@@ -89,4 +89,47 @@ public class ReceiptProxy {
         return logsBloom;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ReceiptProxy that = (ReceiptProxy) o;
+
+        if (blockNumber != null ? !blockNumber.equals(that.blockNumber) : that.blockNumber != null) return false;
+        if (transactionHash != null ? !transactionHash.equals(that.transactionHash) : that.transactionHash != null)
+            return false;
+        return transactionIndex != null ? transactionIndex.equals(that.transactionIndex) : that.transactionIndex == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = blockNumber != null ? blockNumber.hashCode() : 0;
+        result = 31 * result + (transactionHash != null ? transactionHash.hashCode() : 0);
+        result = 31 * result + (transactionIndex != null ? transactionIndex.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ReceiptProxy{" +
+                "root='" + root + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", blockNumber='" + blockNumber + '\'' +
+                ", _blockNumber=" + _blockNumber +
+                ", blockHash='" + blockHash + '\'' +
+                ", transactionHash='" + transactionHash + '\'' +
+                ", transactionIndex='" + transactionIndex + '\'' +
+                ", _transactionIndex=" + _transactionIndex +
+                ", gasUsed='" + gasUsed + '\'' +
+                ", _gasUsed=" + _gasUsed +
+                ", cumulativeGasUsed='" + cumulativeGasUsed + '\'' +
+                ", _cumulativeGasUsed=" + _cumulativeGasUsed +
+                ", contractAddress='" + contractAddress + '\'' +
+                ", logs=" + logs +
+                ", logsBloom='" + logsBloom + '\'' +
+                '}';
+    }
 }

@@ -30,4 +30,38 @@ public class TxInternal extends BaseTx {
         return errCode;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        TxInternal that = (TxInternal) o;
+
+        if (traceId != that.traceId) return false;
+        if (isError != that.isError) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return errCode != null ? errCode.equals(that.errCode) : that.errCode == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (int) (traceId ^ (traceId >>> 32));
+        result = 31 * result + isError;
+        result = 31 * result + (errCode != null ? errCode.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TxInternal{" +
+                "type='" + type + '\'' +
+                ", traceId=" + traceId +
+                ", isError=" + isError +
+                ", errCode='" + errCode + '\'' +
+                '}';
+    }
 }

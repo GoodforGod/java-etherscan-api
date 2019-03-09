@@ -15,12 +15,19 @@ import java.util.Optional;
  */
 public interface ITransactionApi {
 
-    /** Check Contract Execution Status (if there was an error during contract execution) */
+    /**
+     * Check Contract Execution Status (if there was an error during contract execution)
+     * @param txhash to look for
+     * @return exec status
+     */
     @NotNull Optional<Status> execStatus(String txhash) throws ApiException;
 
-    /** Check Transaction Receipt Status (Only applicable for Post Byzantium fork transactions)
+    /**
+     * Check Transaction Receipt Status (Only applicable for Post Byzantium fork transactions)
      * 0 = Fail, 1 = Pass
      * empty value for pre-byzantium fork
-     * */
+     * @param txhash to look for
+     * @return status as boolean
+     */
     @NotNull Optional<Boolean> receiptStatus(String txhash) throws ApiException;
 }

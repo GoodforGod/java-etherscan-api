@@ -37,4 +37,49 @@ public class Price {
             _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethbtc_timestamp), 0, ZoneOffset.UTC);
         return _ethbtc_timestamp;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Price price = (Price) o;
+
+        if (Double.compare(price.ethusd, ethusd) != 0) return false;
+        if (Double.compare(price.ethbtc, ethbtc) != 0) return false;
+        if (ethusd_timestamp != null ? !ethusd_timestamp.equals(price.ethusd_timestamp) : price.ethusd_timestamp != null)
+            return false;
+        if (ethbtc_timestamp != null ? !ethbtc_timestamp.equals(price.ethbtc_timestamp) : price.ethbtc_timestamp != null)
+            return false;
+        if (_ethusd_timestamp != null ? !_ethusd_timestamp.equals(price._ethusd_timestamp) : price._ethusd_timestamp != null)
+            return false;
+        return _ethbtc_timestamp != null ? _ethbtc_timestamp.equals(price._ethbtc_timestamp) : price._ethbtc_timestamp == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(ethusd);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(ethbtc);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (ethusd_timestamp != null ? ethusd_timestamp.hashCode() : 0);
+        result = 31 * result + (ethbtc_timestamp != null ? ethbtc_timestamp.hashCode() : 0);
+        result = 31 * result + (_ethusd_timestamp != null ? _ethusd_timestamp.hashCode() : 0);
+        result = 31 * result + (_ethbtc_timestamp != null ? _ethbtc_timestamp.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Price{" +
+                "ethusd=" + ethusd +
+                ", ethbtc=" + ethbtc +
+                ", ethusd_timestamp='" + ethusd_timestamp + '\'' +
+                ", ethbtc_timestamp='" + ethbtc_timestamp + '\'' +
+                ", _ethusd_timestamp=" + _ethusd_timestamp +
+                ", _ethbtc_timestamp=" + _ethbtc_timestamp +
+                '}';
+    }
 }

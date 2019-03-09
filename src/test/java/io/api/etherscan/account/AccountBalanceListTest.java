@@ -30,9 +30,18 @@ public class AccountBalanceListTest extends Assert {
         assertNotNull(balances);
         assertFalse(balances.isEmpty());
         assertEquals(2, balances.size());
+        assertNotEquals(balances.get(0), balances.get(1));
+        assertNotEquals(balances.get(0).hashCode(), balances.get(1).hashCode());
         for(Balance balance : balances) {
             assertNotNull(balance.getAddress());
+            assertNotNull(balance.getGwei());
+            assertNotNull(balance.getKwei());
+            assertNotNull(balance.getMwei());
+            assertNotNull(balance.getEther());
+            assertNotNull(balance.getGwei());
+            assertNotNull(balance.getAddress());
             assertNotEquals(0, balance.getWei());
+            assertNotNull(balance.toString());
         }
     }
 
@@ -62,7 +71,15 @@ public class AccountBalanceListTest extends Assert {
         addresses.add("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         addresses.add("C9F32CE1127e44C51cbD182D6364F3D707Fd0d47");
 
+        api.account().balances(addresses);
+    }
+
+    @Test
+    public void emptyParamList() {
+        List<String> addresses = new ArrayList<>();
         List<Balance> balances = api.account().balances(addresses);
+        assertNotNull(balances);
+        assertTrue(balances.isEmpty());
     }
 
     @Test

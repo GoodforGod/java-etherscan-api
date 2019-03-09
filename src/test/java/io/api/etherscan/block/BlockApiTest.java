@@ -19,20 +19,20 @@ public class BlockApiTest extends Assert {
 
     @Test
     public void correct() {
-        Optional<UncleBlock> uncles = api.block().uncles(2165403);
-        assertTrue(uncles.isPresent());
-        assertFalse(uncles.get().isEmpty());
-        assertNotNull(uncles.get().getBlockMiner());
-        assertNotNull(uncles.get().getUncleInclusionReward());
-        assertNotNull(uncles.get().getUncles());
-        assertFalse(uncles.get().getUncles().isEmpty());
-        assertNotNull(uncles.get().getUncles().get(0).getBlockreward());
-        assertNotNull(uncles.get().getUncles().get(0).getMiner());
-
-        assertNotEquals(0, uncles.get().hashCode());
+        Optional<UncleBlock> uncle = api.block().uncles(2165403);
+        assertTrue(uncle.isPresent());
+        assertFalse(uncle.get().isEmpty());
+        assertNotNull(uncle.get().getBlockMiner());
+        assertNotNull(uncle.get().getUncleInclusionReward());
+        assertNotNull(uncle.get().getUncles());
+        assertFalse(uncle.get().getUncles().isEmpty());
+        assertNotNull(uncle.get().getUncles().get(0).getBlockreward());
+        assertNotNull(uncle.get().getUncles().get(0).getMiner());
+        assertNotNull(uncle.get().toString());
 
         UncleBlock empty = new UncleBlock();
-        assertFalse(uncles.get().equals(empty));
+        assertNotEquals(uncle.get().hashCode(), empty.hashCode());
+        assertNotEquals(uncle.get(), empty);
         assertTrue(empty.isEmpty());
     }
 

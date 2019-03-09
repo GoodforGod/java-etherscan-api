@@ -23,5 +23,10 @@ public class StatisticPriceApiTest extends Assert {
         assertNotNull(price.usdTimestamp());
         assertNotEquals(0, price.inBtc());
         assertNotEquals(0, price.inUsd());
+        assertNotNull(price.toString());
+
+        Price empty = new Price();
+        assertNotEquals(price, empty);
+        assertNotEquals(price.hashCode(), empty.hashCode());
     }
 }

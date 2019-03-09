@@ -135,4 +135,55 @@ public class BlockProxy {
         return transactions;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BlockProxy that = (BlockProxy) o;
+
+        if (number != null ? !number.equals(that.number) : that.number != null) return false;
+        if (hash != null ? !hash.equals(that.hash) : that.hash != null) return false;
+        return parentHash != null ? parentHash.equals(that.parentHash) : that.parentHash == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = number != null ? number.hashCode() : 0;
+        result = 31 * result + (hash != null ? hash.hashCode() : 0);
+        result = 31 * result + (parentHash != null ? parentHash.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BlockProxy{" +
+                "number='" + number + '\'' +
+                ", _number=" + _number +
+                ", hash='" + hash + '\'' +
+                ", parentHash='" + parentHash + '\'' +
+                ", stateRoot='" + stateRoot + '\'' +
+                ", size='" + size + '\'' +
+                ", _size=" + _size +
+                ", difficulty='" + difficulty + '\'' +
+                ", totalDifficulty='" + totalDifficulty + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", _timestamp=" + _timestamp +
+                ", miner='" + miner + '\'' +
+                ", nonce='" + nonce + '\'' +
+                ", extraData='" + extraData + '\'' +
+                ", logsBloom='" + logsBloom + '\'' +
+                ", mixHash='" + mixHash + '\'' +
+                ", gasUsed='" + gasUsed + '\'' +
+                ", _gasUsed=" + _gasUsed +
+                ", gasLimit='" + gasLimit + '\'' +
+                ", _gasLimit=" + _gasLimit +
+                ", sha3Uncles='" + sha3Uncles + '\'' +
+                ", uncles=" + uncles +
+                ", receiptsRoot='" + receiptsRoot + '\'' +
+                ", transactionsRoot='" + transactionsRoot + '\'' +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

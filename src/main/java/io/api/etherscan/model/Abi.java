@@ -36,4 +36,30 @@ public class Abi {
     public boolean isVerified() {
         return isVerified;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Abi abi = (Abi) o;
+
+        if (isVerified != abi.isVerified) return false;
+        return contractAbi != null ? contractAbi.equals(abi.contractAbi) : abi.contractAbi == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = contractAbi != null ? contractAbi.hashCode() : 0;
+        result = 31 * result + (isVerified ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Abi{" +
+                "contractAbi='" + contractAbi + '\'' +
+                ", isVerified=" + isVerified +
+                '}';
+    }
 }

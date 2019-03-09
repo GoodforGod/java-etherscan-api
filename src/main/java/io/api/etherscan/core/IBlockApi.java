@@ -15,6 +15,10 @@ import java.util.Optional;
  */
 public interface IBlockApi {
 
-    /** Return uncle blocks */
+    /**
+     * Return uncle blocks
+     * @param blockNumber block number
+     * @return uncle block
+     */
     @NotNull Optional<UncleBlock> uncles(long blockNumber) throws ApiException;
 }

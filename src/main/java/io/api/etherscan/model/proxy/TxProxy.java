@@ -99,4 +99,49 @@ public class TxProxy {
         return _blockNumber;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TxProxy txProxy = (TxProxy) o;
+
+        if (hash != null ? !hash.equals(txProxy.hash) : txProxy.hash != null) return false;
+        if (blockHash != null ? !blockHash.equals(txProxy.blockHash) : txProxy.blockHash != null) return false;
+        return blockNumber != null ? blockNumber.equals(txProxy.blockNumber) : txProxy.blockNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hash != null ? hash.hashCode() : 0;
+        result = 31 * result + (blockHash != null ? blockHash.hashCode() : 0);
+        result = 31 * result + (blockNumber != null ? blockNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TxProxy{" +
+                "to='" + to + '\'' +
+                ", hash='" + hash + '\'' +
+                ", transactionIndex='" + transactionIndex + '\'' +
+                ", _transactionIndex=" + _transactionIndex +
+                ", from='" + from + '\'' +
+                ", v='" + v + '\'' +
+                ", input='" + input + '\'' +
+                ", s='" + s + '\'' +
+                ", r='" + r + '\'' +
+                ", nonce='" + nonce + '\'' +
+                ", _nonce=" + _nonce +
+                ", value='" + value + '\'' +
+                ", gas='" + gas + '\'' +
+                ", _gas=" + _gas +
+                ", gasPrice='" + gasPrice + '\'' +
+                ", _gasPrice=" + _gasPrice +
+                ", blockHash='" + blockHash + '\'' +
+                ", blockNumber='" + blockNumber + '\'' +
+                ", _blockNumber=" + _blockNumber +
+                '}';
+    }
 }

@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -91,14 +90,11 @@ public class AccountTokenBalanceTest extends Assert {
         assertNotNull(balance.getAddress());
         assertNotNull(balance.getContract());
         assertNotEquals(0, balance.getWei());
-
-        TokenBalance balance1 = new TokenBalance("", BigInteger.ONE, "");
-        assertFalse(balance.equals(balance1));
-        assertFalse(balance.hashCode() == balance1.hashCode());
+        assertNotNull(balance.toString());
 
         TokenBalance balance2 = new TokenBalance("125161", balance.getWei(), balance.getContract());
-        assertFalse(balance.equals(balance2));
-        assertFalse(balance.hashCode() == balance2.hashCode());
+        assertNotEquals(balance, balance2);
+        assertNotEquals(balance.hashCode(), balance2.hashCode());
     }
 
     @Test(expected = InvalidAddressException.class)

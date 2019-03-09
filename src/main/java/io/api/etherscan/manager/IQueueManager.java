@@ -12,6 +12,7 @@ public interface IQueueManager {
 
     /**
      * Waits in queue for chance to take turn
+     * @return is turn available
      */
     boolean takeTurn();
 }

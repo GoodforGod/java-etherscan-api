@@ -52,4 +52,11 @@ public class Wei {
     public int hashCode() {
         return result != null ? result.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Wei{" +
+                "result=" + result +
+                '}';
+    }
 }

@@ -21,4 +21,30 @@ public class Status {
     public String getErrDescription() {
         return errDescription;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Status status = (Status) o;
+
+        if (isError != status.isError) return false;
+        return errDescription != null ? errDescription.equals(status.errDescription) : status.errDescription == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = isError;
+        result = 31 * result + (errDescription != null ? errDescription.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "isError=" + isError +
+                ", errDescription='" + errDescription + '\'' +
+                '}';
+    }
 }

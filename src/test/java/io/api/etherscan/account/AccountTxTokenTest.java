@@ -20,17 +20,22 @@ public class AccountTxTokenTest extends Assert {
 
     @Test
     public void correct() {
-        List<TxToken> txs = api.account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        List<TxToken> txs = api.account().txsToken("0x05fBf1E3f105df6a4553f3C7f2ed93070A4BAB46");
         assertNotNull(txs);
-        assertEquals(8, txs.size());
+        assertEquals(106, txs.size());
         assertTxs(txs);
+        assertNotEquals(0, txs.get(0).getGasPrice());
+        assertNotEquals(-1, txs.get(0).getNonce());
+        assertNotNull(txs.get(0).toString());
+        assertNotEquals(txs.get(0), txs.get(1));
+        assertNotEquals(txs.get(0).hashCode(), txs.get(1).hashCode());
     }
 
     @Test
     public void correctStartBlock() {
         List<TxToken> txs = api.account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
         assertNotNull(txs);
-        assertEquals(6, txs.size());
+        assertEquals(11, txs.size());
         assertTxs(txs);
     }
 
@@ -44,7 +49,7 @@ public class AccountTxTokenTest extends Assert {
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        List<TxToken> txs = api.account().txsToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        api.account().txsToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
     }
 
     @Test
@@ -63,10 +68,10 @@ public class AccountTxTokenTest extends Assert {
             assertNotNull(tx.getTo());
             assertNotNull(tx.getTimeStamp());
             assertNotNull(tx.getTokenDecimal());
-            assertNotEquals(0,(tx.getConfirmations()));
+            assertNotEquals(-1,(tx.getConfirmations()));
             assertNotNull(tx.getGasUsed());
-            assertNotEquals(0,(tx.getCumulativeGasUsed()));
-            assertNotEquals(0, tx.getTransactionIndex());
+            assertNotEquals(-1 ,tx.getCumulativeGasUsed());
+            assertNotEquals(-1, tx.getTransactionIndex());
         }
     }
 }

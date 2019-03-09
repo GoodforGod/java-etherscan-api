@@ -1,7 +1,7 @@
 package io.api.etherscan.core.impl;
 
 import com.google.gson.Gson;
-import io.api.etherscan.error.NoResponseException;
+import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.ParseException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
@@ -51,7 +51,7 @@ abstract class BasicProvider {
         final String url = baseUrl + module + urlParameters;
         final String result = executor.get(url);
         if (BasicUtils.isEmpty(result))
-            throw new NoResponseException("Server returned null value for GET request at URL - " + url);
+            throw new EtherScanException("Server returned null value for GET request at URL - " + url);
 
         return result;
     }

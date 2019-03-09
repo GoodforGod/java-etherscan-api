@@ -26,7 +26,7 @@ public class TransactionReceiptApiTest extends Assert {
 
     @Test(expected = InvalidTxHashException.class)
     public void invalidParamWithError() {
-        Optional<Boolean> status = api.txs().receiptStatus("0x13c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76");
+        api.txs().receiptStatus("0x13c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76");
     }
 
     @Test

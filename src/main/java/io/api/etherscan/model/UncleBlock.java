@@ -53,4 +53,13 @@ public class UncleBlock extends Block {
         result = (int) (31 * result + getBlockNumber());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "UncleBlock{" +
+                "blockMiner='" + blockMiner + '\'' +
+                ", uncles=" + uncles +
+                ", uncleInclusionReward='" + uncleInclusionReward + '\'' +
+                '}';
+    }
 }

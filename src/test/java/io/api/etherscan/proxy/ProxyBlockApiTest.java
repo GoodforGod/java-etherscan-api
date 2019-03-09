@@ -43,6 +43,11 @@ public class ProxyBlockApiTest extends Assert {
         assertNotNull(proxy.getTransactionsRoot());
         assertNotNull(proxy.getReceiptsRoot());
         assertNotNull(proxy.getUncles());
+        assertNotNull(proxy.toString());
+
+        BlockProxy empty = new BlockProxy();
+        assertNotEquals(proxy, empty);
+        assertNotEquals(proxy.hashCode(), empty.hashCode());
     }
 
     @Test

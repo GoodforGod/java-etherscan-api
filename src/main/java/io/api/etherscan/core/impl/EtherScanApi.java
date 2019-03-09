@@ -10,6 +10,7 @@ import io.api.etherscan.manager.impl.FakeQueueManager;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.util.BasicUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -69,7 +70,9 @@ public class EtherScanApi {
                 : new QueueManager(5, 1);
 
         final IHttpExecutor executor = executorSupplier.get();
-        final String baseUrl = "https://" + network.getDomain() + ".etherscan.io/api" + "?apikey=" + apiKey;
+
+        final String ending = (EthNetwork.TOBALABA.equals(network)) ? "com" : "io";
+        final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
         this.account = new AccountApiProvider(masterQueue, baseUrl, executor);
         this.block = new BlockApiProvider(masterQueue, baseUrl, executor);
@@ -80,51 +83,37 @@ public class EtherScanApi {
         this.txs = new TransactionApiProvider(masterQueue, baseUrl, executor);
     }
 
-    /**
-     * API for interactions with account and address
-     */
+    @NotNull
     public IAccountApi account() {
         return account;
     }
 
-    /**
-     * API for verifying contract ABI
-     */
+    @NotNull
     public IContractApi contract() {
         return contract;
     }
 
-    /**
-     * [BETA] API for interaction with tx statuses
-     */
+    @NotNull
     public ITransactionApi txs() {
         return txs;
     }
 
-    /**
-     * [BETA] API for getting block rewards and uncles
-     */
+    @NotNull
     public IBlockApi block() {
         return block;
     }
 
-    /**
-     * [BETA] API for interaction with eth_getLogs
-     */
+    @NotNull
     public ILogsApi logs() {
         return logs;
     }
 
-    /**
-     * API for interacting with geth/proxy etherscan
-     */
+    @NotNull
     public IProxyApi proxy() {
         return proxy;
     }
 
-    /**
-     * API for eth price and supply statistic
-     */
+    @NotNull
     public IStatisticApi stats() {
         return stats;
     }

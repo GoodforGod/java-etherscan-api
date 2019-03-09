@@ -24,11 +24,16 @@ public class TransactionExecApiTest extends Assert {
         assertTrue(status.isPresent());
         assertTrue(status.get().haveError());
         assertNotNull(status.get().getErrDescription());
+        assertNotNull(status.get().toString());
+
+        Status empty = new Status();
+        assertNotEquals(empty, status.get());
+        assertNotEquals(empty.hashCode(), status.get().hashCode());
     }
 
     @Test(expected = InvalidTxHashException.class)
     public void invalidParamWithError() {
-        Optional<Status> status = api.txs().execStatus("0xb513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b");
+        api.txs().execStatus("0xb513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b");
     }
 
     @Test

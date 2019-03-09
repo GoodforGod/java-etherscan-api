@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface IContractApi {
 
-    /** Get Verified Contract Sources */
+    /**
+     * Get Verified Contract Sources
+     * @param address to look for
+     * @return abi for contract
+     */
     @NotNull Abi contractAbi(String address) throws ApiException;
 }

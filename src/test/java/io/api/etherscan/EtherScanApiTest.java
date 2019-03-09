@@ -34,14 +34,12 @@ public class EtherScanApiTest extends Assert {
 
     @Test(expected = ApiKeyException.class)
     public void emptyKey() {
-        String emptyKey = "";
-        EtherScanApi api = new EtherScanApi(emptyKey, network);
+        new EtherScanApi("");
     }
 
     @Test(expected = ApiKeyException.class)
     public void blankKey() {
-        String blankKey = "         ";
-        EtherScanApi api = new EtherScanApi(blankKey, network);
+        new EtherScanApi("         ", network);
     }
 
     @Test(expected = ApiException.class)
@@ -59,6 +57,22 @@ public class EtherScanApiTest extends Assert {
     }
 
     @Test
+    public void noTimeoutOnReadGroli() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300);
+        EtherScanApi api = new EtherScanApi(EthNetwork.GORLI, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
+    }
+
+    @Test
+    public void noTimeoutOnReadTobalala() {
+        Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(30000);
+        EtherScanApi api = new EtherScanApi(EthNetwork.TOBALABA, supplier);
+        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
+        assertNotNull(balance);
+    }
+
+    @Test
     public void noTimeoutUnlimitedAwait() {
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(-30, -300);
         EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET, supplier);
@@ -71,6 +85,6 @@ public class EtherScanApiTest extends Assert {
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300, 300);
         EtherScanApi api = new EtherScanApi(EthNetwork.KOVAN, supplier);
         List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
-        assertNotNull(api);
+        assertNotNull(blocks);
     }
 }

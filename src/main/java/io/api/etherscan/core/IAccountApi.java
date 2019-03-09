@@ -15,34 +15,61 @@ import java.util.List;
  */
 public interface IAccountApi {
 
-    /** Address ETH balance */
+    /**
+     * Address ETH balance
+     * @param address to look for
+     * @return balance
+     */
     @NotNull Balance balance(String address) throws ApiException;
 
-    /** ERC20 token balance for address */
+    /**
+     * ERC20 token balance for address
+     * @param address to look for
+     * @param contract for token
+     * @return  token balance
+     */
     @NotNull TokenBalance balance(String address, String contract) throws ApiException;
 
     /**
      * Maximum 20 address for single batch request
-     * If address > 20, then there will be more than 1 request performed
+     * If addresses more than 20, then there will be MORE than 1 request performed
+     * @param addresses to look for
+     * @return balance[0] for address[0], etc
      */
     @NotNull List<Balance> balances(List<String> addresses) throws ApiException;
 
-    /** All txs */
+    /**
+     * Find all txs
+     * @param address to look for txs
+     * @return tx info
+     */
     @NotNull List<Tx> txs(String address) throws ApiException;
     @NotNull List<Tx> txs(String address, long startBlock) throws ApiException;
     @NotNull List<Tx> txs(String address, long startBlock, long endBlock) throws ApiException;
 
-    /** All internal txs */
+    /**
+     * All internal txs
+     * @param address to look for
+     * @return internal tx
+     */
     @NotNull List<TxInternal> txsInternal(String address) throws ApiException;
     @NotNull List<TxInternal> txsInternal(String address, long startBlock) throws ApiException;
     @NotNull List<TxInternal> txsInternal(String address, long startBlock, long endBlock) throws ApiException;
     @NotNull List<TxInternal> txsInternalByHash(String txhash);
 
-    /** All token txs */
+    /**
+     * All token txs
+     * @param address to look for
+     * @return token txs
+     */
     @NotNull List<TxToken> txsToken(String address) throws ApiException;
     @NotNull List<TxToken> txsToken(String address, long startBlock) throws ApiException;
     @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock) throws ApiException;
 
-    /** All blocks mined by address */
+    /**
+     * All blocks mined by address
+     * @param address to look for
+     * @return mined blocks
+     */
     @NotNull List<Block> minedBlocks(String address) throws ApiException;
 }

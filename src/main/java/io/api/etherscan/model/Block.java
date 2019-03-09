@@ -49,4 +49,14 @@ public class Block {
     public int hashCode() {
         return (int) (blockNumber ^ (blockNumber >>> 32));
     }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "blockNumber=" + blockNumber +
+                ", blockReward=" + blockReward +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", _timeStamp=" + _timeStamp +
+                '}';
+    }
 }

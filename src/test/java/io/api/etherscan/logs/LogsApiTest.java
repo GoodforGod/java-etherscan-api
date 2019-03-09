@@ -56,11 +56,11 @@ public class LogsApiTest extends Assert {
                 .setOpTopic0_1(LogOp.OR)
                 .build();
 
-        return Arrays.asList(new Object[][] {
-                { single, 423},
-                { singleInvalidAddr, 0},
-                { tupleAnd, 1},
-                { tupleOr, 425}
+        return Arrays.asList(new Object[][]{
+                {single, 423},
+                {singleInvalidAddr, 0},
+                {tupleAnd, 1},
+                {tupleOr, 425}
         });
     }
 
@@ -68,7 +68,13 @@ public class LogsApiTest extends Assert {
     public void validateQuery() {
         List<Log> logs = api.logs().logs(query);
         assertEquals(logsSize, logs.size());
-        if(logsSize > 0) {
+
+        if (logsSize > 0) {
+            if(logsSize > 1) {
+                assertNotEquals(logs.get(0), logs.get(1));
+                assertNotEquals(logs.get(0).hashCode(), logs.get(1).hashCode());
+            }
+
             assertNotNull(logs.get(0).getAddress());
             assertNotNull(logs.get(0).getBlockNumber());
             assertNotNull(logs.get(0).getData());
@@ -79,6 +85,7 @@ public class LogsApiTest extends Assert {
             assertNotNull(logs.get(0).getTopics());
             assertNotNull(logs.get(0).getLogIndex());
             assertNotNull(logs.get(0).getGasPrice());
+            assertNotNull(logs.get(0).toString());
         }
     }
 }

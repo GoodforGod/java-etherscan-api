@@ -97,4 +97,75 @@ public class Log {
         return _logIndex;
     }
     //</editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Log log = (Log) o;
+
+        if (blockNumber != null ? !blockNumber.equals(log.blockNumber) : log.blockNumber != null) return false;
+        if (_blockNumber != null ? !_blockNumber.equals(log._blockNumber) : log._blockNumber != null) return false;
+        if (address != null ? !address.equals(log.address) : log.address != null) return false;
+        if (transactionHash != null ? !transactionHash.equals(log.transactionHash) : log.transactionHash != null)
+            return false;
+        if (transactionIndex != null ? !transactionIndex.equals(log.transactionIndex) : log.transactionIndex != null)
+            return false;
+        if (_transactionIndex != null ? !_transactionIndex.equals(log._transactionIndex) : log._transactionIndex != null)
+            return false;
+        if (timeStamp != null ? !timeStamp.equals(log.timeStamp) : log.timeStamp != null) return false;
+        if (_timeStamp != null ? !_timeStamp.equals(log._timeStamp) : log._timeStamp != null) return false;
+        if (data != null ? !data.equals(log.data) : log.data != null) return false;
+        if (gasPrice != null ? !gasPrice.equals(log.gasPrice) : log.gasPrice != null) return false;
+        if (_gasPrice != null ? !_gasPrice.equals(log._gasPrice) : log._gasPrice != null) return false;
+        if (gasUsed != null ? !gasUsed.equals(log.gasUsed) : log.gasUsed != null) return false;
+        if (_gasUsed != null ? !_gasUsed.equals(log._gasUsed) : log._gasUsed != null) return false;
+        if (topics != null ? !topics.equals(log.topics) : log.topics != null) return false;
+        if (logIndex != null ? !logIndex.equals(log.logIndex) : log.logIndex != null) return false;
+        return _logIndex != null ? _logIndex.equals(log._logIndex) : log._logIndex == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = blockNumber != null ? blockNumber.hashCode() : 0;
+        result = 31 * result + (_blockNumber != null ? _blockNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (transactionHash != null ? transactionHash.hashCode() : 0);
+        result = 31 * result + (transactionIndex != null ? transactionIndex.hashCode() : 0);
+        result = 31 * result + (_transactionIndex != null ? _transactionIndex.hashCode() : 0);
+        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
+        result = 31 * result + (_timeStamp != null ? _timeStamp.hashCode() : 0);
+        result = 31 * result + (data != null ? data.hashCode() : 0);
+        result = 31 * result + (gasPrice != null ? gasPrice.hashCode() : 0);
+        result = 31 * result + (_gasPrice != null ? _gasPrice.hashCode() : 0);
+        result = 31 * result + (gasUsed != null ? gasUsed.hashCode() : 0);
+        result = 31 * result + (_gasUsed != null ? _gasUsed.hashCode() : 0);
+        result = 31 * result + (topics != null ? topics.hashCode() : 0);
+        result = 31 * result + (logIndex != null ? logIndex.hashCode() : 0);
+        result = 31 * result + (_logIndex != null ? _logIndex.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Log{" +
+                "blockNumber='" + blockNumber + '\'' +
+                ", _blockNumber=" + _blockNumber +
+                ", address='" + address + '\'' +
+                ", transactionHash='" + transactionHash + '\'' +
+                ", transactionIndex='" + transactionIndex + '\'' +
+                ", _transactionIndex=" + _transactionIndex +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", _timeStamp=" + _timeStamp +
+                ", data='" + data + '\'' +
+                ", gasPrice='" + gasPrice + '\'' +
+                ", _gasPrice=" + _gasPrice +
+                ", gasUsed='" + gasUsed + '\'' +
+                ", _gasUsed=" + _gasUsed +
+                ", topics=" + topics +
+                ", logIndex='" + logIndex + '\'' +
+                ", _logIndex=" + _logIndex +
+                '}';
+    }
 }
