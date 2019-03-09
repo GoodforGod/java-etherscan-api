@@ -79,31 +79,16 @@ abstract class BaseTx {
 
         if (blockNumber != baseTx.blockNumber) return false;
         if (timeStamp != null ? !timeStamp.equals(baseTx.timeStamp) : baseTx.timeStamp != null) return false;
-        if (_timeStamp != null ? !_timeStamp.equals(baseTx._timeStamp) : baseTx._timeStamp != null) return false;
         if (hash != null ? !hash.equals(baseTx.hash) : baseTx.hash != null) return false;
-        if (from != null ? !from.equals(baseTx.from) : baseTx.from != null) return false;
-        if (to != null ? !to.equals(baseTx.to) : baseTx.to != null) return false;
-        if (value != null ? !value.equals(baseTx.value) : baseTx.value != null) return false;
-        if (contractAddress != null ? !contractAddress.equals(baseTx.contractAddress) : baseTx.contractAddress != null)
-            return false;
-        if (input != null ? !input.equals(baseTx.input) : baseTx.input != null) return false;
-        if (gas != null ? !gas.equals(baseTx.gas) : baseTx.gas != null) return false;
-        return gasUsed != null ? gasUsed.equals(baseTx.gasUsed) : baseTx.gasUsed == null;
+        return value != null ? value.equals(baseTx.value) : baseTx.value == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (blockNumber ^ (blockNumber >>> 32));
         result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-        result = 31 * result + (_timeStamp != null ? _timeStamp.hashCode() : 0);
         result = 31 * result + (hash != null ? hash.hashCode() : 0);
-        result = 31 * result + (from != null ? from.hashCode() : 0);
-        result = 31 * result + (to != null ? to.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (contractAddress != null ? contractAddress.hashCode() : 0);
-        result = 31 * result + (input != null ? input.hashCode() : 0);
-        result = 31 * result + (gas != null ? gas.hashCode() : 0);
-        result = 31 * result + (gasUsed != null ? gasUsed.hashCode() : 0);
         return result;
     }
 
@@ -112,7 +97,6 @@ abstract class BaseTx {
         return "BaseTx{" +
                 "blockNumber=" + blockNumber +
                 ", timeStamp='" + timeStamp + '\'' +
-                ", _timeStamp=" + _timeStamp +
                 ", hash='" + hash + '\'' +
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +

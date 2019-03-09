@@ -28,6 +28,7 @@ public class BlockApiTest extends Assert {
         assertFalse(uncle.get().getUncles().isEmpty());
         assertNotNull(uncle.get().getUncles().get(0).getBlockreward());
         assertNotNull(uncle.get().getUncles().get(0).getMiner());
+        assertNotEquals(-1, uncle.get().getUncles().get(0).getUnclePosition());
         assertNotNull(uncle.get().toString());
 
         UncleBlock empty = new UncleBlock();

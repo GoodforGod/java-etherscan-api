@@ -62,6 +62,6 @@ public class TxInternal extends BaseTx {
                 ", traceId=" + traceId +
                 ", isError=" + isError +
                 ", errCode='" + errCode + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

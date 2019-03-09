@@ -102,6 +102,6 @@ public class TxToken extends BaseTx {
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
                 ", confirmations=" + confirmations +
-                '}';
+                "} " + super.toString();
     }
 }
