@@ -18,7 +18,7 @@ import static io.api.etherscan.util.BasicUtils.*;
  * @author GoodforGod
  * @since 13.11.2018
  */
-public class UtilTests extends Assert {
+public class BasicUtilsTests extends Assert {
 
     @Test(expected = EtherScanException.class)
     public void responseValidateEmpty() {
