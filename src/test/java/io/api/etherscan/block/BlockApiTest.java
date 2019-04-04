@@ -35,6 +35,17 @@ public class BlockApiTest extends Assert {
         assertNotEquals(uncle.get().hashCode(), empty.hashCode());
         assertNotEquals(uncle.get(), empty);
         assertTrue(empty.isEmpty());
+
+        if(uncle.get().getUncles().size() > 0) {
+            assertNotEquals(-1, uncle.get().getUncles().get(0).getUnclePosition());
+            assertEquals(uncle.get().getUncles().get(0), uncle.get().getUncles().get(0));
+            assertEquals(uncle.get().getUncles().get(0).hashCode(), uncle.get().getUncles().get(0).hashCode());
+        }
+
+        if(uncle.get().getUncles().size() > 1) {
+            assertNotEquals(uncle.get().getUncles().get(1), uncle.get().getUncles().get(0));
+            assertNotEquals(uncle.get().getUncles().get(1).hashCode(), uncle.get().getUncles().get(0).hashCode());
+        }
     }
 
     @Test

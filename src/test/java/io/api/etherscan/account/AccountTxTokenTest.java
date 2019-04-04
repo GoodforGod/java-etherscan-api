@@ -27,8 +27,12 @@ public class AccountTxTokenTest extends Assert {
         assertNotEquals(0, txs.get(0).getGasPrice());
         assertNotEquals(-1, txs.get(0).getNonce());
         assertNotNull(txs.get(0).toString());
+
         assertNotEquals(txs.get(0), txs.get(1));
         assertNotEquals(txs.get(0).hashCode(), txs.get(1).hashCode());
+
+        assertEquals(txs.get(1), txs.get(1));
+        assertEquals(txs.get(1).hashCode(), txs.get(1).hashCode());
     }
 
     @Test

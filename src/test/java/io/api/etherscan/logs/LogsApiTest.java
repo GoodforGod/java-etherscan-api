@@ -86,6 +86,9 @@ public class LogsApiTest extends Assert {
             assertNotNull(logs.get(0).getLogIndex());
             assertNotNull(logs.get(0).getGasPrice());
             assertNotNull(logs.get(0).toString());
+
+            assertEquals(logs.get(0), logs.get(0));
+            assertEquals(logs.get(0).hashCode(), logs.get(0).hashCode());
         }
     }
 }
