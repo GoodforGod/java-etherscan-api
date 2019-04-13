@@ -57,40 +57,6 @@ public class TxToken extends BaseTx {
     //</editor-fold>
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        TxToken txToken = (TxToken) o;
-
-        if (nonce != txToken.nonce) return false;
-        if (transactionIndex != txToken.transactionIndex) return false;
-        if (gasPrice != txToken.gasPrice) return false;
-        if (cumulativeGasUsed != txToken.cumulativeGasUsed) return false;
-        if (confirmations != txToken.confirmations) return false;
-        if (blockHash != null ? !blockHash.equals(txToken.blockHash) : txToken.blockHash != null) return false;
-        if (tokenName != null ? !tokenName.equals(txToken.tokenName) : txToken.tokenName != null) return false;
-        if (tokenSymbol != null ? !tokenSymbol.equals(txToken.tokenSymbol) : txToken.tokenSymbol != null) return false;
-        return tokenDecimal != null ? tokenDecimal.equals(txToken.tokenDecimal) : txToken.tokenDecimal == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (int) (nonce ^ (nonce >>> 32));
-        result = 31 * result + (blockHash != null ? blockHash.hashCode() : 0);
-        result = 31 * result + (tokenName != null ? tokenName.hashCode() : 0);
-        result = 31 * result + (tokenSymbol != null ? tokenSymbol.hashCode() : 0);
-        result = 31 * result + (tokenDecimal != null ? tokenDecimal.hashCode() : 0);
-        result = 31 * result + transactionIndex;
-        result = 31 * result + (int) (gasPrice ^ (gasPrice >>> 32));
-        result = 31 * result + (int) (cumulativeGasUsed ^ (cumulativeGasUsed >>> 32));
-        result = 31 * result + (int) (confirmations ^ (confirmations >>> 32));
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "TxToken{" +
                 "nonce=" + nonce +
@@ -102,6 +68,6 @@ public class TxToken extends BaseTx {
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
                 ", confirmations=" + confirmations +
-                '}';
+                "} " + super.toString();
     }
 }

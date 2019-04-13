@@ -6,12 +6,13 @@ import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.util.BasicUtils;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -103,14 +104,16 @@ public class HttpExecutor implements IHttpExecutor {
     public String post(final String urlAsString, final String dataToPost) {
         try {
             final HttpURLConnection connection = buildConnection(urlAsString, "POST");
-            final String contentLength = (BasicUtils.isEmpty(dataToPost)) ? "0" : String.valueOf(dataToPost.length());
-            connection.setRequestProperty("content-length", contentLength);
+            final String contentLength = (BasicUtils.isBlank(dataToPost)) ? "0" : String.valueOf(dataToPost.length());
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setRequestProperty("Content-Length", contentLength);
+            connection.setFixedLengthStreamingMode(dataToPost.length());
 
             connection.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-            wr.writeBytes(dataToPost);
-            wr.flush();
-            wr.close();
+            connection.connect();
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(dataToPost.getBytes(StandardCharsets.UTF_8));
+            }
 
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
@@ -141,13 +144,13 @@ public class HttpExecutor implements IHttpExecutor {
     }
 
     private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
-        final boolean haveEncoding = connection.getContentEncoding() != null;
-
-        if (haveEncoding && "gzip".equals(connection.getContentEncoding()))
-            return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8");
-        else if (haveEncoding && "deflate".equals(connection.getContentEncoding()))
-            return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), "utf-8");
-        else
-            return new InputStreamReader(connection.getInputStream(), "utf-8");
+        switch (String.valueOf(connection.getContentEncoding())) {
+            case "gzip":
+                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8");
+            case "deflate":
+                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), "utf-8");
+            default:
+                return new InputStreamReader(connection.getInputStream(), "utf-8");
+        }
     }
 }

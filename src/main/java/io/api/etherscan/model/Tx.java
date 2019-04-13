@@ -65,13 +65,8 @@ public class Tx extends BaseTx {
 
         if (nonce != tx.nonce) return false;
         if (transactionIndex != tx.transactionIndex) return false;
-        if (confirmations != tx.confirmations) return false;
         if (blockHash != null ? !blockHash.equals(tx.blockHash) : tx.blockHash != null) return false;
-        if (gasPrice != null ? !gasPrice.equals(tx.gasPrice) : tx.gasPrice != null) return false;
-        if (cumulativeGasUsed != null ? !cumulativeGasUsed.equals(tx.cumulativeGasUsed) : tx.cumulativeGasUsed != null)
-            return false;
-        if (isError != null ? !isError.equals(tx.isError) : tx.isError != null) return false;
-        return txreceipt_status != null ? txreceipt_status.equals(tx.txreceipt_status) : tx.txreceipt_status == null;
+        return isError != null ? isError.equals(tx.isError) : tx.isError == null;
     }
 
     @Override
@@ -80,11 +75,7 @@ public class Tx extends BaseTx {
         result = 31 * result + (int) (nonce ^ (nonce >>> 32));
         result = 31 * result + (blockHash != null ? blockHash.hashCode() : 0);
         result = 31 * result + transactionIndex;
-        result = 31 * result + (gasPrice != null ? gasPrice.hashCode() : 0);
-        result = 31 * result + (cumulativeGasUsed != null ? cumulativeGasUsed.hashCode() : 0);
-        result = 31 * result + (int) (confirmations ^ (confirmations >>> 32));
         result = 31 * result + (isError != null ? isError.hashCode() : 0);
-        result = 31 * result + (txreceipt_status != null ? txreceipt_status.hashCode() : 0);
         return result;
     }
 
@@ -99,6 +90,6 @@ public class Tx extends BaseTx {
                 ", confirmations=" + confirmations +
                 ", isError='" + isError + '\'' +
                 ", txreceipt_status='" + txreceipt_status + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
