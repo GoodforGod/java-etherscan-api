@@ -14,14 +14,14 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
 **Gradle**
 ```groovy
 dependencies {
-    compile 'com.github.goodforgod:java-etherscan-api:1.0.1'
+    compile 'com.github.goodforgod:java-etherscan-api:1.0.2'
 }
 ```
 
@@ -164,6 +164,8 @@ You can read about token API [here](https://etherscan.io/apis#tokens)
 Token API methods migrated to [Account](#account-api) & [Stats](#stats-api) respectfully.
 
 ## Version History
+
+**1.0.2** - Minor http client improvements.
 
 **1.0.1** - Gorli & TOBALABA networks support.
 

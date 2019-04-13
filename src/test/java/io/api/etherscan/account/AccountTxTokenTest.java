@@ -20,14 +20,14 @@ public class AccountTxTokenTest extends Assert {
 
     @Test
     public void correct() {
-        List<TxToken> txs = api.account().txsToken("0x05fBf1E3f105df6a4553f3C7f2ed93070A4BAB46");
+        List<TxToken> txs = api.account().txsToken("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
         assertNotNull(txs);
-        assertEquals(106, txs.size());
+        assertEquals(3, txs.size());
         assertTxs(txs);
         assertNotEquals(0, txs.get(0).getGasPrice());
         assertNotEquals(-1, txs.get(0).getNonce());
-        assertNotNull(txs.get(0).toString());
 
+        assertNotNull(txs.get(0).toString());
         assertNotEquals(txs.get(0).toString(), txs.get(1).toString());
 
         assertNotEquals(txs.get(0), txs.get(1));

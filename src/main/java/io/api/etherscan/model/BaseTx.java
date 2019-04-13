@@ -73,13 +73,15 @@ abstract class BaseTx {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BaseTx)) return false;
 
         BaseTx baseTx = (BaseTx) o;
 
         if (blockNumber != baseTx.blockNumber) return false;
         if (timeStamp != null ? !timeStamp.equals(baseTx.timeStamp) : baseTx.timeStamp != null) return false;
         if (hash != null ? !hash.equals(baseTx.hash) : baseTx.hash != null) return false;
+        if (from != null ? !from.equals(baseTx.from) : baseTx.from != null) return false;
+        if (to != null ? !to.equals(baseTx.to) : baseTx.to != null) return false;
         return value != null ? value.equals(baseTx.value) : baseTx.value == null;
     }
 
@@ -88,6 +90,8 @@ abstract class BaseTx {
         int result = (int) (blockNumber ^ (blockNumber >>> 32));
         result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
         result = 31 * result + (hash != null ? hash.hashCode() : 0);
+        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (to != null ? to.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
