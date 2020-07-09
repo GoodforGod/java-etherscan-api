@@ -67,16 +67,18 @@ public class Log {
     }
 
     /**
-     *
-     * @return
+     * Return the "timeStamp" field of the event record as a long-int representing the milliseconds
+     * since the Unix epoch (1970-01-01 00:00:00).
+     * @return milliseconds between Unix epoch and `timeStamp`. If field is empty or null, returns null
      */
     public Long getTimeStampAsMillis() {
         if (BasicUtils.isEmpty(timeStamp)) {
             return null;
         }
-        return (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
+        long tsSecs = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
                 ? BasicUtils.parseHex(timeStamp).longValue()
-                : Long.parseLong(timeStamp) * 1000;
+                : Long.parseLong(timeStamp);
+        return tsSecs * 1000;
     }
 
     public String getData() {
