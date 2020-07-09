@@ -60,10 +60,23 @@ public class Log {
         if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp)) {
             long formatted = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
                     ? BasicUtils.parseHex(timeStamp).longValue()
-                    : Long.valueOf(timeStamp);
+                    : Long.parseLong(timeStamp);
             _timeStamp = LocalDateTime.ofEpochSecond(formatted, 0, ZoneOffset.UTC);
         }
         return _timeStamp;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Long getTimeStampAsMillis() {
+        if (BasicUtils.isEmpty(timeStamp)) {
+            return null;
+        }
+        return (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
+                ? BasicUtils.parseHex(timeStamp).longValue()
+                : Long.parseLong(timeStamp) * 1000;
     }
 
     public String getData() {
