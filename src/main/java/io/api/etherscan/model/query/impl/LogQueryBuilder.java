@@ -2,6 +2,7 @@ package io.api.etherscan.model.query.impl;
 
 import io.api.etherscan.core.ILogsApi;
 import io.api.etherscan.error.LogQueryException;
+import io.api.etherscan.model.query.IQueryBuilder;
 import io.api.etherscan.util.BasicUtils;
 
 /**
@@ -12,7 +13,7 @@ import io.api.etherscan.util.BasicUtils;
  * @author GoodforGod
  * @since 31.10.2018
  */
-public class LogQueryBuilder {
+public class LogQueryBuilder implements IQueryBuilder {
 
     private static final long MIN_BLOCK = 0;
     private static final long MAX_BLOCK = 99999999999L;
@@ -74,5 +75,10 @@ public class LogQueryBuilder {
             throw new LogQueryException("topic3 can not be empty or non hex.");
 
         return new LogTopicQuadro(address, startBlock, endBlock, topic0, topic1, topic2, topic3);
+    }
+
+    @Override
+    public LogQuery build() throws LogQueryException {
+        return new LogQuery("&address=" + this.address + "&fromBlock=" + this.startBlock + "&toBlock=" + this.endBlock);
     }
 }
