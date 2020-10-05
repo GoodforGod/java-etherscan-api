@@ -18,8 +18,7 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
-import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
+import static java.net.HttpURLConnection.*;
 
 /**
  * Http client implementation
@@ -88,6 +87,10 @@ public class HttpExecutor implements IHttpExecutor {
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
                 return get(connection.getHeaderField("Location"));
+            } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
+                throw new ConnectionException("Protocol error: "+connection.getResponseMessage());
+            } else if (status >=  HTTP_INTERNAL_ERROR) {
+                throw new ConnectionException("Server error: "+connection.getResponseMessage());
             }
 
             final String data = readData(connection);
