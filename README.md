@@ -1,6 +1,6 @@
 # java-etherscan-api
 
-![travis](https://travis-ci.org/GoodforGod/java-etherscan-api.svg?branch=master)
+[![travis](https://travis-ci.org/GoodforGod/java-etherscan-api.svg?branch=master)](https://travis-ci.com/GoodforGod/java-etherscan-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/808997be2e69ff1ae8fe/maintainability)](https://codeclimate.com/github/GoodforGod/java-etherscan-api/maintainability)
 [![codecov](https://codecov.io/gh/GoodforGod/java-etherscan-api/branch/master/graph/badge.svg)](https://codecov.io/gh/GoodforGod/java-etherscan-api)
 [![Jitpack](https://jitpack.io/v/GoodforGod/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
