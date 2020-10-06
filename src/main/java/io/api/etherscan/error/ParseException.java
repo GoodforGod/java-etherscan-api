@@ -13,4 +13,8 @@ public class ParseException extends ApiException {
         super(message, cause);
         this.json = json;
     }
+
+    public String getJson() {
+        return json;
+    }
 }
