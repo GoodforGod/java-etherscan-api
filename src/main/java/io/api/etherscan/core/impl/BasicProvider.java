@@ -1,11 +1,15 @@
 package io.api.etherscan.core.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.ParseException;
+import io.api.etherscan.error.RateLimitException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.util.BasicUtils;
+
+import java.util.Map;
 
 /**
  * Base provider for API Implementations
@@ -42,6 +46,19 @@ abstract class BasicProvider {
         try {
             return gson.fromJson(json, tClass);
         } catch (Exception e) {
+            if (e instanceof JsonSyntaxException) {
+                Map<String, Object> map = gson.fromJson(json, Map.class);
+                Object statusCode = map.get("status");
+                if ((statusCode instanceof String) && (statusCode.equals("0"))) {
+                    Object message = map.get("message");
+                    if ((message instanceof String) && (message.equals("NOTOK"))) {
+                        Object result = map.get("result");
+                        if ((result instanceof String) && (result.equals("Max rate limit reached"))) {
+                            throw new RateLimitException ("Max rate limit reached");
+                        }
+                    }
+                }
+            }
             throw new ParseException(e.getMessage(), e.getCause(), json);
         }
     }
