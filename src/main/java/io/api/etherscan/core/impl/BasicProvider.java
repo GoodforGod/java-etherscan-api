@@ -42,7 +42,7 @@ abstract class BasicProvider {
         try {
             return gson.fromJson(json, tClass);
         } catch (Exception e) {
-            throw new ParseException(e.getMessage(), e.getCause());
+            throw new ParseException(e.getMessage(), e.getCause(), json);
         }
     }
 
