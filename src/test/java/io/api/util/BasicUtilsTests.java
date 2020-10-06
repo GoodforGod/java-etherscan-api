@@ -98,6 +98,6 @@ public class BasicUtilsTests extends Assert {
 
     @Test(expected = ParseException.class)
     public void isThrowParseException() {
-        throw new ParseException("Test", null);
+        throw new ParseException("Test", null, null);
     }
 }
