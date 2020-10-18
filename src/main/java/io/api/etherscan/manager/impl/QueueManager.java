@@ -1,5 +1,6 @@
 package io.api.etherscan.manager.impl;
 
+import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.manager.IQueueManager;
 
 import java.util.concurrent.*;
@@ -13,6 +14,9 @@ import java.util.concurrent.*;
  * @since 30.10.2018
  */
 public class QueueManager implements IQueueManager {
+
+    public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 6);
+    public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(5, 1);
 
     private final Semaphore semaphore;
 

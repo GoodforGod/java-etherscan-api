@@ -1,10 +1,9 @@
 package io.api.etherscan.account;
 
+import io.api.ApiRunner;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.Balance;
-import io.api.etherscan.model.EthNetwork;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,12 +19,12 @@ import java.util.Collection;
  * @since 03.11.2018
  */
 @RunWith(Parameterized.class)
-public class AccountBalanceTest extends Assert {
+public class AccountBalanceTest extends ApiRunner {
 
-    private EtherScanApi api;
-    private String addressCorrect;
-    private String addressInvalid;
-    private String addressNoResponse;
+    private final EtherScanApi api;
+    private final String addressCorrect;
+    private final String addressInvalid;
+    private final String addressNoResponse;
 
     public AccountBalanceTest(EtherScanApi api, String addressCorrect, String addressInvalid, String addressNoResponse) {
         this.api = api;
@@ -36,31 +35,13 @@ public class AccountBalanceTest extends Assert {
 
     @Parameters
     public static Collection data() {
-        return Arrays.asList(new Object[][]{
+        return Arrays.asList(new Object[][] {
                 {
-                        new EtherScanApi(),
+                        getApi(),
                         "0x8d4426f94e42f721C7116E81d6688cd935cB3b4F",
                         "8d4426f94e42f721C7116E81d6688cd935cB3b4F",
                         "0x1d4426f94e42f721C7116E81d6688cd935cB3b4F"
-                },
-                {
-                        new EtherScanApi(EthNetwork.ROPSTEN),
-                        "0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
-                        "xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
-                        "0x1dbd2b932c763ba5b1b7ae3b362eac3e8d40121a"
-                },
-                {
-                        new EtherScanApi(EthNetwork.RINKEBY),
-                        "0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
-                        "xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
-                        "0x1dbd2b932c763ba5b1b7ae3b362eac3e8d40121a"
-                },
-                {
-                        new EtherScanApi(EthNetwork.KOVAN),
-                        "0xB9F36EE9df7E2A24B61b1738F4127BFDe8bA1A87",
-                        "xB9F36EE9df7E2A24B61b1738F4127BFDe8bA1A87",
-                        "0xB1F36EE9df7E2A24B61b1738F4127BFDe8bA1A87"
-                },
+                }
         });
     }
 
@@ -74,13 +55,12 @@ public class AccountBalanceTest extends Assert {
         assertNotNull(balance.getGwei());
         assertNotNull(balance.getEther());
         assertNotNull(balance.getAddress());
-        assertNotEquals(0, balance.getWei());
         assertNotNull(balance.toString());
     }
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        Balance balance = api.account().balance(addressInvalid);
+        Balance balance = getApi().account().balance(addressInvalid);
     }
 
     @Test

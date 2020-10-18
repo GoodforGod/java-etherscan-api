@@ -1,9 +1,8 @@
 package io.api.etherscan.account;
 
-import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.TxToken;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,13 +13,11 @@ import java.util.List;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class AccountTxTokenTest extends Assert {
-
-    private final EtherScanApi api = new EtherScanApi();
+public class AccountTxTokenTest extends ApiRunner {
 
     @Test
     public void correct() {
-        List<TxToken> txs = api.account().txsToken("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
+        List<TxToken> txs = getApi().account().txsToken("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
         assertNotNull(txs);
         assertEquals(3, txs.size());
         assertTxs(txs);
@@ -39,7 +36,7 @@ public class AccountTxTokenTest extends Assert {
 
     @Test
     public void correctStartBlock() {
-        List<TxToken> txs = api.account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
+        List<TxToken> txs = getApi().account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
         assertNotNull(txs);
         assertEquals(11, txs.size());
         assertTxs(txs);
@@ -47,7 +44,7 @@ public class AccountTxTokenTest extends Assert {
 
     @Test
     public void correctStartBlockEndBlock() {
-        List<TxToken> txs = api.account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
+        List<TxToken> txs = getApi().account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
         assertNotNull(txs);
         assertEquals(5, txs.size());
         assertTxs(txs);
@@ -55,12 +52,12 @@ public class AccountTxTokenTest extends Assert {
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        api.account().txsToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        getApi().account().txsToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
     }
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        List<TxToken> txs = api.account().txsToken("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        List<TxToken> txs = getApi().account().txsToken("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());
     }
@@ -74,9 +71,9 @@ public class AccountTxTokenTest extends Assert {
             assertNotNull(tx.getTo());
             assertNotNull(tx.getTimeStamp());
             assertNotNull(tx.getTokenDecimal());
-            assertNotEquals(-1,(tx.getConfirmations()));
+            assertNotEquals(-1, (tx.getConfirmations()));
             assertNotNull(tx.getGasUsed());
-            assertNotEquals(-1 ,tx.getCumulativeGasUsed());
+            assertNotEquals(-1, tx.getCumulativeGasUsed());
             assertNotEquals(-1, tx.getTransactionIndex());
         }
     }

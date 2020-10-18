@@ -1,12 +1,12 @@
 package io.api.etherscan.logs;
 
+import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.error.LogQueryException;
 import io.api.etherscan.model.query.LogOp;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.query.impl.LogQueryBuilder;
 import io.api.etherscan.model.query.impl.LogTopicQuadro;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class LogQueryBuilderTest extends Assert {
+public class LogQueryBuilderTest extends ApiRunner {
 
     @Test
     public void singleCorrect() {

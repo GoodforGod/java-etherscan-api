@@ -1,8 +1,7 @@
 package io.api.etherscan.statistic;
 
-import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.ApiRunner;
 import io.api.etherscan.model.Supply;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -13,13 +12,11 @@ import java.math.BigInteger;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class StatisticSupplyApiTest extends Assert {
-
-    private final EtherScanApi api = new EtherScanApi();
+public class StatisticSupplyApiTest extends ApiRunner {
 
     @Test
     public void correct() {
-        Supply supply = api.stats().supply();
+        Supply supply = getApi().stats().supply();
         assertNotNull(supply);
         assertNotNull(supply.getValue());
         assertNotNull(supply.asGwei());

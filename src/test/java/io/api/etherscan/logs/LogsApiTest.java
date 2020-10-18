@@ -1,11 +1,10 @@
 package io.api.etherscan.logs;
 
-import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.ApiRunner;
 import io.api.etherscan.model.Log;
 import io.api.etherscan.model.query.LogOp;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.query.impl.LogQueryBuilder;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -22,12 +21,10 @@ import java.util.List;
  * @since 03.11.2018
  */
 @RunWith(Parameterized.class)
-public class LogsApiTest extends Assert {
+public class LogsApiTest extends ApiRunner {
 
-    private final EtherScanApi api = new EtherScanApi();
-
-    private LogQuery query;
-    private int logsSize;
+    private final LogQuery query;
+    private final int logsSize;
 
     public LogsApiTest(LogQuery query, int logsSize) {
         this.query = query;
@@ -56,21 +53,21 @@ public class LogsApiTest extends Assert {
                 .setOpTopic0_1(LogOp.OR)
                 .build();
 
-        return Arrays.asList(new Object[][]{
-                {single, 423},
-                {singleInvalidAddr, 0},
-                {tupleAnd, 1},
-                {tupleOr, 425}
+        return Arrays.asList(new Object[][] {
+                { single, 423 },
+                { singleInvalidAddr, 0 },
+                { tupleAnd, 1 },
+                { tupleOr, 425 }
         });
     }
 
     @Test
     public void validateQuery() {
-        List<Log> logs = api.logs().logs(query);
+        List<Log> logs = getApi().logs().logs(query);
         assertEquals(logsSize, logs.size());
 
         if (logsSize > 0) {
-            if(logsSize > 1) {
+            if (logsSize > 1) {
                 assertNotEquals(logs.get(0), logs.get(1));
                 assertNotEquals(logs.get(0).hashCode(), logs.get(1).hashCode());
             }

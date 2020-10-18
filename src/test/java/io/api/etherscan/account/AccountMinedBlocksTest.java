@@ -1,10 +1,9 @@
 package io.api.etherscan.account;
 
+import io.api.ApiRunner;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.Block;
-import io.api.etherscan.model.EthNetwork;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,13 +20,13 @@ import java.util.List;
  * @since 03.11.2018
  */
 @RunWith(Parameterized.class)
-public class AccountMinedBlocksTest extends Assert {
+public class AccountMinedBlocksTest extends ApiRunner {
 
-    private EtherScanApi api;
-    private int blocksMined;
-    private String addressCorrect;
-    private String addressInvalid;
-    private String addressNoResponse;
+    private final EtherScanApi api;
+    private final int blocksMined;
+    private final String addressCorrect;
+    private final String addressInvalid;
+    private final String addressNoResponse;
 
     public AccountMinedBlocksTest(EtherScanApi api,
                                   int blocksMined,
@@ -43,22 +42,14 @@ public class AccountMinedBlocksTest extends Assert {
 
     @Parameters
     public static Collection data() {
-        return Arrays.asList(new Object[][]{
+        return Arrays.asList(new Object[][] {
                 {
-                        new EtherScanApi(),
+                        getApi(),
                         223,
                         "0xE4C6175183029A0f039bf2DFffa5C6e8F3cA9B23",
                         "xE4C6175183029A0f039bf2DFffa5C6e8F3cA9B23",
                         "0xE1C6175183029A0f039bf2DFffa5C6e8F3cA9B23",
-                },
-                {
-                        new EtherScanApi(EthNetwork.ROPSTEN),
-                        1,
-                        "0x0923DafEB5A5d11a83E188d5dbCdEd14f9b161a7",
-                        "00923DafEB5A5d11a83E188d5dbCdEd14f9b161a7",
-                        "0x1923DafEB5A5d11a83E188d5dbCdEd14f9b161a7",
                 }
-                // Other netWorks not presented due to 30k+ mined blocks, tests runs forever
         });
     }
 
@@ -71,7 +62,7 @@ public class AccountMinedBlocksTest extends Assert {
         assertBlocks(blocks);
         assertNotNull(blocks.get(0).toString());
 
-        if(blocks.size() > 1) {
+        if (blocks.size() > 1) {
             assertNotEquals(blocks.get(0), blocks.get(1));
             assertNotEquals(blocks.get(0).hashCode(), blocks.get(1).hashCode());
         }
@@ -79,7 +70,7 @@ public class AccountMinedBlocksTest extends Assert {
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        List<Block> txs = api.account().minedBlocks(addressInvalid);
+        List<Block> txs = getApi().account().minedBlocks(addressInvalid);
     }
 
     @Test

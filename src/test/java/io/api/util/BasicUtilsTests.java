@@ -1,10 +1,10 @@
 package io.api.util;
 
 import com.google.gson.Gson;
+import io.api.ApiRunner;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.ParseException;
 import io.api.etherscan.model.utility.StringResponseTO;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import static io.api.etherscan.util.BasicUtils.*;
  * @author GoodforGod
  * @since 13.11.2018
  */
-public class BasicUtilsTests extends Assert {
+public class BasicUtilsTests extends ApiRunner {
 
     @Test(expected = EtherScanException.class)
     public void responseValidateEmpty() {

@@ -1,8 +1,7 @@
 package io.api.etherscan.proxy;
 
-import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.ApiRunner;
 import io.api.etherscan.model.proxy.BlockProxy;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -13,13 +12,11 @@ import java.util.Optional;
  * @author GoodforGod
  * @since 13.11.2018
  */
-public class ProxyBlockUncleApiTest extends Assert {
-
-    private final EtherScanApi api = new EtherScanApi();
+public class ProxyBlockUncleApiTest extends ApiRunner {
 
     @Test
     public void correct() {
-        Optional<BlockProxy> block = api.proxy().blockUncle(603183, 0);
+        Optional<BlockProxy> block = getApi().proxy().blockUncle(603183, 0);
         assertTrue(block.isPresent());
         assertNotNull(block.get().getHash());
         assertNotNull(block.get().toString());
@@ -27,13 +24,13 @@ public class ProxyBlockUncleApiTest extends Assert {
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        Optional<BlockProxy> block = api.proxy().blockUncle(5120, 1);
+        Optional<BlockProxy> block = getApi().proxy().blockUncle(5120, 1);
         assertFalse(block.isPresent());
     }
 
     @Test
     public void correctParamNegativeNo() {
-        Optional<BlockProxy> block = api.proxy().blockUncle(-603183, 0);
+        Optional<BlockProxy> block = getApi().proxy().blockUncle(-603183, 0);
         assertFalse(block.isPresent());
     }
 }
