@@ -7,14 +7,10 @@ import io.api.etherscan.error.ParseException;
 import io.api.etherscan.error.RateLimitException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
-import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.utility.StringResponseTO;
 import io.api.etherscan.util.BasicUtils;
 
-import java.time.LocalTime;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Base provider for API Implementations
@@ -24,8 +20,6 @@ import java.util.logging.Logger;
  * @since 28.10.2018
  */
 abstract class BasicProvider {
-
-    private static final Logger logger = Logger.getLogger(QueueManager.class.getName());
 
     static final int MAX_END_BLOCK = Integer.MAX_VALUE;
     static final int MIN_START_BLOCK = 0;
@@ -76,9 +70,7 @@ abstract class BasicProvider {
     }
 
     String getRequest(final String urlParameters) {
-        logger.log(Level.SEVERE, "ASKED - " + LocalTime.now());
         queue.takeTurn();
-        logger.log(Level.SEVERE, "GRANTED - " + LocalTime.now());
         final String url = baseUrl + module + urlParameters;
         final String result = executor.get(url);
         if (BasicUtils.isEmpty(result))
@@ -88,9 +80,7 @@ abstract class BasicProvider {
     }
 
     String postRequest(final String urlParameters, final String dataToPost) {
-        logger.log(Level.SEVERE, "ASKED - " + LocalTime.now());
         queue.takeTurn();
-        logger.log(Level.SEVERE, "GRANTED - " + LocalTime.now());
         final String url = baseUrl + module + urlParameters;
         return executor.post(url, dataToPost);
     }

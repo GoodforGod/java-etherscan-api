@@ -13,6 +13,7 @@ import io.api.etherscan.model.EthNetwork;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 /**
@@ -75,9 +76,10 @@ public class EtherScanApiTest extends ApiRunner {
     }
 
     @Test(expected = ApiTimeoutException.class)
-    public void timeout() {
+    public void timeout() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300, 300);
-        EtherScanApi api = new EtherScanApi(EthNetwork.KOVAN, supplier);
+        EtherScanApi api = new EtherScanApi(getKey(), EthNetwork.KOVAN, supplier);
         List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
         assertNotNull(blocks);
     }

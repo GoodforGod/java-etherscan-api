@@ -34,8 +34,8 @@ public class ContractApiTest extends ApiRunner {
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        Abi abi = getApi().contract().contractAbi("0xBB1bc244D798123fDe783fCc1C72d3Bb8C189413");
+        Abi abi = getApi().contract().contractAbi("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413");
         assertNotNull(abi);
-        assertFalse(abi.isVerified());
+        assertTrue(abi.isVerified());
     }
 }

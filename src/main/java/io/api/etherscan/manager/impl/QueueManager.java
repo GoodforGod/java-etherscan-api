@@ -5,7 +5,7 @@ import io.api.etherscan.manager.IQueueManager;
 import java.util.concurrent.*;
 
 /**
- * Queue implementation With size and reset time as params
+ * Queue Semaphore implementation with size and reset time as params
  * 
  * @see IQueueManager
  *
@@ -14,19 +14,19 @@ import java.util.concurrent.*;
  */
 public class QueueManager implements IQueueManager {
 
-    public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 6);
-    public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(5, 1);
+    public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 7);
+    public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(2, 1);
 
     private final Semaphore semaphore;
 
-    public QueueManager(int queueSize, int queueResetTimeInSec) {
-        this(queueSize, queueResetTimeInSec, queueResetTimeInSec);
+    public QueueManager(int size, int resetInSec) {
+        this(size, resetInSec, resetInSec);
     }
 
-    public QueueManager(int queueSize, int queueResetTimeInSec, int delayInSec) {
-        this.semaphore = new Semaphore(queueSize);
+    public QueueManager(int size, int queueResetTimeInSec, int delayInSec) {
+        this.semaphore = new Semaphore(size);
         Executors.newSingleThreadScheduledExecutor()
-                .scheduleAtFixedRate(releaseLocks(queueSize), delayInSec, queueResetTimeInSec, TimeUnit.SECONDS);
+                .scheduleAtFixedRate(releaseLocks(size), delayInSec, queueResetTimeInSec, TimeUnit.SECONDS);
     }
 
     @Override

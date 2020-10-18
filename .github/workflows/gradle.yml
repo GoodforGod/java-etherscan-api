@@ -1,10 +1,6 @@
 name: Java CI
 
 on:   
-  push:
-    branches:
-    - master
-    - dev
   schedule:
   - cron: "0 12 1 * *"
   pull_request:
@@ -17,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '1.8', '11' ]
+        java: [ '11' ]
     name: Java ${{ matrix.java }} setup
 
     steps:
@@ -30,9 +26,12 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build jacocoTestReport
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
 
     - name: Analyze with SonarQube
       run: ./gradlew sonarqube
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        API_KEY: ${{ secrets.API_KEY }}

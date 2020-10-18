@@ -11,21 +11,26 @@ public class ApiRunner extends Assert {
     private static final EtherScanApi apiRopsten;
     private static final EtherScanApi apiRinkeby;
     private static final EtherScanApi apiKovan;
+    private static final String key;
 
     static {
         final String apiKey = System.getenv("API_KEY");
-        final String keyOrDefault = (apiKey == null || apiKey.isEmpty())
+        key = (apiKey == null || apiKey.isEmpty())
                 ? EtherScanApi.DEFAULT_KEY
                 : apiKey;
 
-        final QueueManager queue = keyOrDefault.equals(EtherScanApi.DEFAULT_KEY)
+        final QueueManager queue = key.equals(EtherScanApi.DEFAULT_KEY)
                 ? QueueManager.DEFAULT_KEY_QUEUE
-                : QueueManager.PERSONAL_KEY_QUEUE;
+                : new QueueManager(1, 2);
 
-        api = new EtherScanApi(keyOrDefault, EthNetwork.MAINNET, queue);
-        apiRopsten = new EtherScanApi(keyOrDefault, EthNetwork.ROPSTEN, queue);
-        apiRinkeby = new EtherScanApi(keyOrDefault, EthNetwork.RINKEBY, queue);
-        apiKovan = new EtherScanApi(keyOrDefault, EthNetwork.KOVAN, queue);
+        api = new EtherScanApi(key, EthNetwork.MAINNET, queue);
+        apiRopsten = new EtherScanApi(key, EthNetwork.ROPSTEN, queue);
+        apiRinkeby = new EtherScanApi(key, EthNetwork.RINKEBY, queue);
+        apiKovan = new EtherScanApi(key, EthNetwork.KOVAN, queue);
+    }
+
+    public static String getKey() {
+        return key;
     }
 
     public static EtherScanApi getApi() {
