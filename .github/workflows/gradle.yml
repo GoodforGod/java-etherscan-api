@@ -1,6 +1,9 @@
 name: Java CI
 
-on:   
+on:
+  push:
+    branches:
+      - master
   schedule:
   - cron: "0 12 1 * *"
   pull_request:
