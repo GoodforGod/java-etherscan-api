@@ -11,7 +11,5 @@ import io.api.etherscan.manager.IQueueManager;
 public class FakeQueueManager implements IQueueManager {
 
     @Override
-    public boolean takeTurn() {
-        return true;
-    }
+    public void takeTurn() {}
 }

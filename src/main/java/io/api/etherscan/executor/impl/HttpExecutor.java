@@ -65,8 +65,8 @@ public class HttpExecutor implements IHttpExecutor {
     public HttpExecutor(final int connectTimeout,
                         final int readTimeout,
                         final Map<String, String> headers) {
-        this.connectTimeout = (connectTimeout < 0) ? 0 : connectTimeout;
-        this.readTimeout = (readTimeout < 0) ? 0 : readTimeout;
+        this.connectTimeout = Math.max(connectTimeout, 0);
+        this.readTimeout = Math.max(readTimeout, 0);
         this.headers = headers;
     }
 
@@ -88,9 +88,9 @@ public class HttpExecutor implements IHttpExecutor {
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
                 return get(connection.getHeaderField("Location"));
             } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
-                throw new ConnectionException("Protocol error: "+connection.getResponseMessage());
-            } else if (status >=  HTTP_INTERNAL_ERROR) {
-                throw new ConnectionException("Server error: "+connection.getResponseMessage());
+                throw new ConnectionException("Protocol error: " + connection.getResponseMessage());
+            } else if (status >= HTTP_INTERNAL_ERROR) {
+                throw new ConnectionException("Server error: " + connection.getResponseMessage());
             }
 
             final String data = readData(connection);
@@ -99,7 +99,7 @@ public class HttpExecutor implements IHttpExecutor {
         } catch (SocketTimeoutException e) {
             throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
-            throw new ConnectionException(e.getLocalizedMessage(), e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -121,6 +121,10 @@ public class HttpExecutor implements IHttpExecutor {
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
                 return post(connection.getHeaderField("Location"), dataToPost);
+            } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
+                throw new ConnectionException("Protocol error: " + connection.getResponseMessage());
+            } else if (status >= HTTP_INTERNAL_ERROR) {
+                throw new ConnectionException("Server error: " + connection.getResponseMessage());
             }
 
             final String data = readData(connection);
@@ -129,7 +133,7 @@ public class HttpExecutor implements IHttpExecutor {
         } catch (SocketTimeoutException e) {
             throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
-            throw new ConnectionException(e.getLocalizedMessage(), e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -139,8 +143,6 @@ public class HttpExecutor implements IHttpExecutor {
             String inputLine;
             while ((inputLine = in.readLine()) != null)
                 content.append(inputLine);
-
-            in.close();
         }
 
         return content.toString();
@@ -149,11 +151,11 @@ public class HttpExecutor implements IHttpExecutor {
     private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
         switch (String.valueOf(connection.getContentEncoding())) {
             case "gzip":
-                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8");
+                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
             case "deflate":
-                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), "utf-8");
+                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
             default:
-                return new InputStreamReader(connection.getInputStream(), "utf-8");
+                return new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
         }
     }
 }

@@ -10,5 +10,6 @@ import io.api.etherscan.model.query.impl.LogQuery;
  * @since 31.10.2018
  */
 public interface IQueryBuilder {
+
     LogQuery build() throws LogQueryException;
 }

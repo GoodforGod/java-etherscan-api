@@ -32,7 +32,7 @@ public class ReceiptProxy {
     private List<Log> logs;
     private String logsBloom;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public String getRoot() {
         return root;
     }
@@ -46,7 +46,7 @@ public class ReceiptProxy {
     }
 
     public Long getBlockNumber() {
-        if(_blockNumber == null && !BasicUtils.isEmpty(blockNumber))
+        if (_blockNumber == null && !BasicUtils.isEmpty(blockNumber))
             _blockNumber = BasicUtils.parseHex(blockNumber).longValue();
         return _blockNumber;
     }
@@ -60,19 +60,19 @@ public class ReceiptProxy {
     }
 
     public Long getTransactionIndex() {
-        if(_transactionIndex == null && !BasicUtils.isEmpty(transactionIndex))
+        if (_transactionIndex == null && !BasicUtils.isEmpty(transactionIndex))
             _transactionIndex = BasicUtils.parseHex(transactionIndex).longValue();
         return _transactionIndex;
     }
 
     public BigInteger getGasUsed() {
-        if(_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
+        if (_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
             _gasUsed = BasicUtils.parseHex(gasUsed);
         return _gasUsed;
     }
 
     public BigInteger getCumulativeGasUsed() {
-        if(_cumulativeGasUsed == null && !BasicUtils.isEmpty(cumulativeGasUsed))
+        if (_cumulativeGasUsed == null && !BasicUtils.isEmpty(cumulativeGasUsed))
             _cumulativeGasUsed = BasicUtils.parseHex(cumulativeGasUsed);
         return _cumulativeGasUsed;
     }
@@ -88,16 +88,19 @@ public class ReceiptProxy {
     public String getLogsBloom() {
         return logsBloom;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ReceiptProxy that = (ReceiptProxy) o;
 
-        if (blockNumber != null ? !blockNumber.equals(that.blockNumber) : that.blockNumber != null) return false;
+        if (blockNumber != null ? !blockNumber.equals(that.blockNumber) : that.blockNumber != null)
+            return false;
         if (transactionHash != null ? !transactionHash.equals(that.transactionHash) : that.transactionHash != null)
             return false;
         return transactionIndex != null ? transactionIndex.equals(that.transactionIndex) : that.transactionIndex == null;

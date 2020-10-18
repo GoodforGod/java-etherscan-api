@@ -36,7 +36,7 @@ public class BlockApiProvider extends BasicProvider implements IBlockApi {
     public Optional<UncleBlock> uncles(long blockNumber) throws ApiException {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
         final String response = getRequest(urlParam);
-        if(BasicUtils.isEmpty(response) || response.contains("NOTOK"))
+        if (BasicUtils.isEmpty(response) || response.contains("NOTOK"))
             return Optional.empty();
 
         final UncleBlockResponseTO responseTO = convert(response, UncleBlockResponseTO.class);

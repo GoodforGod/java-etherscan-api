@@ -26,13 +26,13 @@ abstract class BaseTx {
     private BigInteger gas;
     private BigInteger gasUsed;
 
-    //<editor-fold desc="Getter">
+    // <editor-fold desc="Getter">
     public long getBlockNumber() {
         return blockNumber;
     }
 
     public LocalDateTime getTimeStamp() {
-        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
+        if (_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
             _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
         return _timeStamp;
     }
@@ -68,20 +68,27 @@ abstract class BaseTx {
     public BigInteger getGasUsed() {
         return gasUsed;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BaseTx)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof BaseTx))
+            return false;
 
         BaseTx baseTx = (BaseTx) o;
 
-        if (blockNumber != baseTx.blockNumber) return false;
-        if (timeStamp != null ? !timeStamp.equals(baseTx.timeStamp) : baseTx.timeStamp != null) return false;
-        if (hash != null ? !hash.equals(baseTx.hash) : baseTx.hash != null) return false;
-        if (from != null ? !from.equals(baseTx.from) : baseTx.from != null) return false;
-        if (to != null ? !to.equals(baseTx.to) : baseTx.to != null) return false;
+        if (blockNumber != baseTx.blockNumber)
+            return false;
+        if (timeStamp != null ? !timeStamp.equals(baseTx.timeStamp) : baseTx.timeStamp != null)
+            return false;
+        if (hash != null ? !hash.equals(baseTx.hash) : baseTx.hash != null)
+            return false;
+        if (from != null ? !from.equals(baseTx.from) : baseTx.from != null)
+            return false;
+        if (to != null ? !to.equals(baseTx.to) : baseTx.to != null)
+            return false;
         return value != null ? value.equals(baseTx.value) : baseTx.value == null;
     }
 

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface IEvent {
+
     static final Map<String, Class<?>> subTypes = new HashMap<>();
 
     void setLog(Log log);

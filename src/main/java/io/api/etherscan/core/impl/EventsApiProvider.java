@@ -1,13 +1,10 @@
 package io.api.etherscan.core.impl;
 
 import io.api.etherscan.core.IEventsApi;
-import io.api.etherscan.core.ILogsApi;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
-import io.api.etherscan.model.Log;
 import io.api.etherscan.model.event.IEvent;
-import io.api.etherscan.model.event.impl.Event;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.utility.LogResponseTO;
 import io.api.etherscan.util.BasicUtils;
@@ -41,8 +38,8 @@ public class EventsApiProvider extends BasicProvider implements IEventsApi {
         BasicUtils.validateTxResponse(response);
 
         if (BasicUtils.isEmpty(response.getResult())) {
-                return Collections.emptyList();
-        };
+            return Collections.emptyList();
+        } ;
         return response
                 .getResult()
                 .stream()

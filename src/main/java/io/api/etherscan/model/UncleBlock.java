@@ -16,7 +16,7 @@ public class UncleBlock extends Block {
     private List<Uncle> uncles;
     private String uncleInclusionReward;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public boolean isEmpty() {
         return getBlockNumber() == 0 && getBlockReward() == null
                 && getTimeStamp() == null
@@ -34,13 +34,16 @@ public class UncleBlock extends Block {
     public String getUncleInclusionReward() {
         return uncleInclusionReward;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
 
         UncleBlock that = (UncleBlock) o;
 

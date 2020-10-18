@@ -62,7 +62,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         final String urlParams = ACT_BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
         final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            throw new EtherScanException(response);
 
         return new Balance(address, new BigInteger(response.getResult()));
     }
@@ -76,7 +76,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         final String urlParams = ACT_TOKEN_BALANCE_PARAM + ADDRESS_PARAM + address + CONTRACT_PARAM + contract;
         final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            throw new EtherScanException(response);
 
         return new TokenBalance(address, new BigInteger(response.getResult()), contract);
     }
@@ -97,7 +97,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
             final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(batch);
             final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
             if (response.getStatus() != 1)
-                throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+                throw new EtherScanException(response);
 
             if (!BasicUtils.isEmpty(response.getResult()))
                 balances.addAll(response.getResult().stream()
@@ -138,8 +138,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     }
 
     /**
-     * Generic search for txs using offset api param
-     * To avoid 10k limit per response
+     * Generic search for txs using offset api param To avoid 10k limit per response
      *
      * @param urlParams Url params for #getRequest()
      * @param tClass    responseListTO class
@@ -147,8 +146,8 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
      * @param <R>       responseListTO type
      * @return List of T values
      */
-    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass)
-            throws ApiException {
+    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams,
+                                                                            Class<R> tClass) throws ApiException {
         final List<T> result = new ArrayList<>();
         int page = 1;
         while (true) {

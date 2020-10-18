@@ -24,12 +24,15 @@ public class Status {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Status status = (Status) o;
 
-        if (isError != status.isError) return false;
+        if (isError != status.isError)
+            return false;
         return errDescription != null ? errDescription.equals(status.errDescription) : status.errDescription == null;
     }
 

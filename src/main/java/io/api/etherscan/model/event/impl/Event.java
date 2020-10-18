@@ -1,15 +1,11 @@
 package io.api.etherscan.model.event.impl;
 
-import io.api.etherscan.error.ApiException;
-import io.api.etherscan.error.EventModelException;
 import io.api.etherscan.model.Log;
 import io.api.etherscan.model.event.IEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Base class for a higher-level API on top of {@link Log}. Each Event class has an identifying hash
+ * Base class for a higher-level API on top of {@link Log}. Each Event class has
+ * an identifying hash
  */
 public class Event implements IEvent {
 

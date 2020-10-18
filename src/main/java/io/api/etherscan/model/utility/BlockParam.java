@@ -7,6 +7,7 @@ package io.api.etherscan.model.utility;
  * @since 31.10.2018
  */
 public class BlockParam {
+
     private long startBlock;
     private long endBlock;
 

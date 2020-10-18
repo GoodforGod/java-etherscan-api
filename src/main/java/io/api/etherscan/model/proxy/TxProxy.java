@@ -32,7 +32,7 @@ public class TxProxy {
     private String blockNumber;
     private Long _blockNumber;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public String getTo() {
         return to;
     }
@@ -42,7 +42,7 @@ public class TxProxy {
     }
 
     public Long getTransactionIndex() {
-        if(_transactionIndex == null && !BasicUtils.isEmpty(transactionIndex))
+        if (_transactionIndex == null && !BasicUtils.isEmpty(transactionIndex))
             _transactionIndex = BasicUtils.parseHex(transactionIndex).longValue();
         return _transactionIndex;
     }
@@ -52,7 +52,7 @@ public class TxProxy {
     }
 
     public BigInteger getGas() {
-        if(_gas == null && !BasicUtils.isEmpty(gas))
+        if (_gas == null && !BasicUtils.isEmpty(gas))
             _gas = BasicUtils.parseHex(gas);
         return _gas;
     }
@@ -74,7 +74,7 @@ public class TxProxy {
     }
 
     public Long getNonce() {
-        if(_nonce == null && !BasicUtils.isEmpty(nonce))
+        if (_nonce == null && !BasicUtils.isEmpty(nonce))
             _nonce = BasicUtils.parseHex(nonce).longValue();
         return _nonce;
     }
@@ -84,7 +84,7 @@ public class TxProxy {
     }
 
     public BigInteger getGasPrice() {
-        if(_gasPrice == null && !BasicUtils.isEmpty(gasPrice))
+        if (_gasPrice == null && !BasicUtils.isEmpty(gasPrice))
             _gasPrice = BasicUtils.parseHex(gasPrice);
         return _gasPrice;
     }
@@ -94,21 +94,25 @@ public class TxProxy {
     }
 
     public Long getBlockNumber() {
-        if(_blockNumber == null && !BasicUtils.isEmpty(blockNumber))
+        if (_blockNumber == null && !BasicUtils.isEmpty(blockNumber))
             _blockNumber = BasicUtils.parseHex(blockNumber).longValue();
         return _blockNumber;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         TxProxy txProxy = (TxProxy) o;
 
-        if (hash != null ? !hash.equals(txProxy.hash) : txProxy.hash != null) return false;
-        if (blockHash != null ? !blockHash.equals(txProxy.blockHash) : txProxy.blockHash != null) return false;
+        if (hash != null ? !hash.equals(txProxy.hash) : txProxy.hash != null)
+            return false;
+        if (blockHash != null ? !blockHash.equals(txProxy.blockHash) : txProxy.blockHash != null)
+            return false;
         return blockNumber != null ? blockNumber.equals(txProxy.blockNumber) : txProxy.blockNumber == null;
     }
 

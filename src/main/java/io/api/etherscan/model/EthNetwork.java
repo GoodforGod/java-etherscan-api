@@ -7,6 +7,7 @@ package io.api.etherscan.model;
  * @since 28.10.2018
  */
 public enum EthNetwork {
+
     MAINNET("api"),
     ROPSTEN("api-ropsten"),
     KOVAN("api-kovan"),

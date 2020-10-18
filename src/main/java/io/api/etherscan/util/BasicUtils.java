@@ -108,9 +108,10 @@ public class BasicUtils {
 
         if (response.getStatus() != 1) {
             if (response.getMessage() == null) {
-                throw new EtherScanException("Unexpected Etherscan exception, no information from server about error, code " + response.getStatus());
+                throw new EtherScanException(
+                        "Unexpected Etherscan exception, no information from server about error, code " + response.getStatus());
             } else if (!response.getMessage().startsWith("No tra") && !response.getMessage().startsWith("No rec")) {
-                throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+                throw new EtherScanException(response);
             }
         }
     }

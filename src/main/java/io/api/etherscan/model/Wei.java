@@ -16,7 +16,7 @@ public class Wei {
         this.result = value;
     }
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public BigInteger getValue() {
         return result;
     }
@@ -36,12 +36,14 @@ public class Wei {
     public BigInteger asEther() {
         return result.divide(BigInteger.valueOf(1000000000000000L));
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Wei wei = (Wei) o;
 

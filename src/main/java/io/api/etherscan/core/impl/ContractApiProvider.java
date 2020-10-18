@@ -37,8 +37,8 @@ public class ContractApiProvider extends BasicProvider implements IContractApi {
 
         final String urlParam = ACT_ABI_PARAM + ADDRESS_PARAM + address;
         final StringResponseTO response = getRequest(urlParam, StringResponseTO.class);
-        if (response.getStatus() != 1 && !"NOTOK".equals(response.getMessage()))
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+        if (response.getStatus() != 1 && "NOTOK".equals(response.getMessage()))
+            throw new EtherScanException(response);
 
         return (response.getResult().startsWith("Contract sou"))
                 ? Abi.nonVerified()
