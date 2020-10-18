@@ -18,7 +18,7 @@ public class TxToken extends BaseTx {
     private long cumulativeGasUsed;
     private long confirmations;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public long getNonce() {
         return nonce;
     }
@@ -54,7 +54,7 @@ public class TxToken extends BaseTx {
     public long getConfirmations() {
         return confirmations;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public String toString() {

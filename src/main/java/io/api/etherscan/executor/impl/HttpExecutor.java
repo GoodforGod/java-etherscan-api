@@ -18,8 +18,7 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
-import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
+import static java.net.HttpURLConnection.*;
 
 /**
  * Http client implementation
@@ -66,8 +65,8 @@ public class HttpExecutor implements IHttpExecutor {
     public HttpExecutor(final int connectTimeout,
                         final int readTimeout,
                         final Map<String, String> headers) {
-        this.connectTimeout = (connectTimeout < 0) ? 0 : connectTimeout;
-        this.readTimeout = (readTimeout < 0) ? 0 : readTimeout;
+        this.connectTimeout = Math.max(connectTimeout, 0);
+        this.readTimeout = Math.max(readTimeout, 0);
         this.headers = headers;
     }
 
@@ -88,6 +87,10 @@ public class HttpExecutor implements IHttpExecutor {
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
                 return get(connection.getHeaderField("Location"));
+            } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
+                throw new ConnectionException("Protocol error: " + connection.getResponseMessage());
+            } else if (status >= HTTP_INTERNAL_ERROR) {
+                throw new ConnectionException("Server error: " + connection.getResponseMessage());
             }
 
             final String data = readData(connection);
@@ -118,6 +121,10 @@ public class HttpExecutor implements IHttpExecutor {
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
                 return post(connection.getHeaderField("Location"), dataToPost);
+            } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
+                throw new ConnectionException("Protocol error: " + connection.getResponseMessage());
+            } else if (status >= HTTP_INTERNAL_ERROR) {
+                throw new ConnectionException("Server error: " + connection.getResponseMessage());
             }
 
             final String data = readData(connection);

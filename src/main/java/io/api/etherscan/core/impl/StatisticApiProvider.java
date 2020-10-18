@@ -41,7 +41,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
     public Supply supply() throws ApiException {
         final StringResponseTO response = getRequest(ACT_SUPPLY_PARAM, StringResponseTO.class);
         if (response.getStatus() != 1)
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            throw new EtherScanException(response);
 
         return new Supply(new BigInteger(response.getResult()));
     }
@@ -54,7 +54,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
         final String urlParams = ACT_TOKEN_SUPPLY_PARAM + CONTRACT_ADDRESS_PARAM + contract;
         final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            throw new EtherScanException(response);
 
         return new BigInteger(response.getResult());
     }
@@ -64,7 +64,7 @@ public class StatisticApiProvider extends BasicProvider implements IStatisticApi
     public Price lastPrice() throws ApiException {
         final PriceResponseTO response = getRequest(ACT_LASTPRICE_PARAM, PriceResponseTO.class);
         if (response.getStatus() != 1)
-            throw new EtherScanException(response.getMessage() + ", with status " + response.getStatus());
+            throw new EtherScanException(response);
 
         return response.getResult();
     }

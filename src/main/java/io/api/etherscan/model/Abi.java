@@ -9,6 +9,7 @@ import io.api.etherscan.util.BasicUtils;
  * @since 31.10.2018
  */
 public class Abi {
+
     private String contractAbi;
     private boolean isVerified;
 
@@ -39,12 +40,15 @@ public class Abi {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Abi abi = (Abi) o;
 
-        if (isVerified != abi.isVerified) return false;
+        if (isVerified != abi.isVerified)
+            return false;
         return contractAbi != null ? contractAbi.equals(abi.contractAbi) : abi.contractAbi == null;
     }
 

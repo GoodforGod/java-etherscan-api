@@ -14,7 +14,7 @@ public class Uncle {
     private BigInteger blockreward;
     private int unclePosition;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public String getMiner() {
         return miner;
     }
@@ -26,17 +26,21 @@ public class Uncle {
     public int getUnclePosition() {
         return unclePosition;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Uncle uncle = (Uncle) o;
 
-        if (unclePosition != uncle.unclePosition) return false;
-        if (miner != null ? !miner.equals(uncle.miner) : uncle.miner != null) return false;
+        if (unclePosition != uncle.unclePosition)
+            return false;
+        if (miner != null ? !miner.equals(uncle.miner) : uncle.miner != null)
+            return false;
         return blockreward != null ? blockreward.equals(uncle.blockreward) : uncle.blockreward == null;
     }
 

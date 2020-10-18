@@ -1,7 +1,6 @@
 package io.api.etherscan.proxy;
 
-import io.api.etherscan.core.impl.EtherScanApi;
-import org.junit.Assert;
+import io.api.ApiRunner;
 import org.junit.Test;
 
 /**
@@ -10,13 +9,11 @@ import org.junit.Test;
  * @author GoodforGod
  * @since 13.11.2018
  */
-public class ProxyBlockLastNoApiTest extends Assert {
-
-    private final EtherScanApi api = new EtherScanApi();
+public class ProxyBlockLastNoApiTest extends ApiRunner {
 
     @Test
     public void correct() {
-        long noLast = api.proxy().blockNoLast();
+        long noLast = getApi().proxy().blockNoLast();
         assertNotEquals(0, noLast);
     }
 }

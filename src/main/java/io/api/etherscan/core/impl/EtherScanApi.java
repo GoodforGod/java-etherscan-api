@@ -15,8 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 /**
- * EtherScan full API Description
- * https://etherscan.io/apis
+ * EtherScan full API Description https://etherscan.io/apis
  *
  * @author GoodforGod
  * @since 28.10.2018
@@ -24,6 +23,8 @@ import java.util.function.Supplier;
 public class EtherScanApi {
 
     private static final Supplier<IHttpExecutor> DEFAULT_SUPPLIER = HttpExecutor::new;
+
+    public static final String DEFAULT_KEY = "YourApiKeyToken";
 
     private final IAccountApi account;
     private final IBlockApi block;
@@ -34,11 +35,11 @@ public class EtherScanApi {
     private final ITransactionApi txs;
 
     public EtherScanApi() {
-        this("YourApiKeyToken", EthNetwork.MAINNET);
+        this(DEFAULT_KEY, EthNetwork.MAINNET);
     }
 
     public EtherScanApi(final EthNetwork network) {
-        this("YourApiKeyToken", network);
+        this(DEFAULT_KEY, network);
     }
 
     public EtherScanApi(final String apiKey) {
@@ -47,7 +48,13 @@ public class EtherScanApi {
 
     public EtherScanApi(final EthNetwork network,
                         final Supplier<IHttpExecutor> executorSupplier) {
-        this("YourApiKeyToken", network, executorSupplier);
+        this(DEFAULT_KEY, network, executorSupplier);
+    }
+
+    public EtherScanApi(final String apiKey,
+                        final EthNetwork network,
+                        final IQueueManager queue) {
+        this(apiKey, network, DEFAULT_SUPPLIER, queue);
     }
 
     public EtherScanApi(final String apiKey,
@@ -58,29 +65,35 @@ public class EtherScanApi {
     public EtherScanApi(final String apiKey,
                         final EthNetwork network,
                         final Supplier<IHttpExecutor> executorSupplier) {
+        this(apiKey, network, executorSupplier,
+                DEFAULT_KEY.equals(apiKey)
+                        ? QueueManager.DEFAULT_KEY_QUEUE
+                        : new FakeQueueManager());
+    }
+
+    public EtherScanApi(final String apiKey,
+                        final EthNetwork network,
+                        final Supplier<IHttpExecutor> executorSupplier,
+                        final IQueueManager queue) {
         if (BasicUtils.isBlank(apiKey))
             throw new ApiKeyException("API key can not be null or empty");
 
-        if(network == null)
+        if (network == null)
             throw new ApiException("Ethereum Network is set to NULL value");
 
-        // EtherScan 5request\sec limit support by queue manager
-        final IQueueManager masterQueue = "YourApiKeyToken".equals(apiKey)
-                ? new FakeQueueManager()
-                : new QueueManager(5, 1);
-
+        // EtherScan 1request\5sec limit support by queue manager
         final IHttpExecutor executor = executorSupplier.get();
 
-        final String ending = (EthNetwork.TOBALABA.equals(network)) ? "com" : "io";
+        final String ending = EthNetwork.TOBALABA.equals(network) ? "com" : "io";
         final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
-        this.account = new AccountApiProvider(masterQueue, baseUrl, executor);
-        this.block = new BlockApiProvider(masterQueue, baseUrl, executor);
-        this.contract = new ContractApiProvider(masterQueue, baseUrl, executor);
-        this.logs = new LogsApiProvider(masterQueue, baseUrl, executor);
-        this.proxy = new ProxyApiProvider(masterQueue, baseUrl, executor);
-        this.stats = new StatisticApiProvider(masterQueue, baseUrl, executor);
-        this.txs = new TransactionApiProvider(masterQueue, baseUrl, executor);
+        this.account = new AccountApiProvider(queue, baseUrl, executor);
+        this.block = new BlockApiProvider(queue, baseUrl, executor);
+        this.contract = new ContractApiProvider(queue, baseUrl, executor);
+        this.logs = new LogsApiProvider(queue, baseUrl, executor);
+        this.proxy = new ProxyApiProvider(queue, baseUrl, executor);
+        this.stats = new StatisticApiProvider(queue, baseUrl, executor);
+        this.txs = new TransactionApiProvider(queue, baseUrl, executor);
     }
 
     @NotNull

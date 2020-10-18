@@ -7,6 +7,7 @@ package io.api.etherscan.model.query;
  * @since 31.10.2018
  */
 public enum LogOp {
+
     AND("and"),
     OR("or");
 

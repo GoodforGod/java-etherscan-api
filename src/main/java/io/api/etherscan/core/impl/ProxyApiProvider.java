@@ -62,7 +62,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     ProxyApiProvider(final IQueueManager queue,
                      final String baseUrl,
                      final IHttpExecutor executor) {
-        super(queue, "proxy", baseUrl,executor);
+        super(queue, "proxy", baseUrl, executor);
     }
 
     @Override
@@ -111,7 +111,8 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
         final long compBlockNo = BasicUtils.compensateMinBlock(blockNo);
         final long compIndex = (index < 1) ? 1 : index;
 
-        final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + "0x" + Long.toHexString(compIndex);
+        final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + "0x"
+                + Long.toHexString(compIndex);
         final TxProxyTO response = getRequest(urlParams, TxProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
@@ -136,12 +137,12 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     @NotNull
     public Optional<String> txSendRaw(final String hexEncodedTx) throws ApiException {
-        if(BasicUtils.isNotHex(hexEncodedTx))
+        if (BasicUtils.isNotHex(hexEncodedTx))
             throw new InvalidDataHexException("Data is not encoded in hex format - " + hexEncodedTx);
 
         final String urlParams = ACT_SEND_RAW_TX_PARAM + HEX_PARAM + hexEncodedTx;
         final StringProxyTO response = postRequest(urlParams, "", StringProxyTO.class);
-        if(response.getError() != null)
+        if (response.getError() != null)
             throw new EtherScanException("Error occurred with code " + response.getError().getCode()
                     + " with message " + response.getError().getMessage()
                     + ", error id " + response.getId() + ", jsonRPC " + response.getJsonrpc());
@@ -163,12 +164,12 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public Optional<String> call(final String address, final String data) throws ApiException {
         BasicUtils.validateAddress(address);
-        if(BasicUtils.isNotHex(data))
+        if (BasicUtils.isNotHex(data))
             throw new InvalidDataHexException("Data is not hex encoded.");
 
         final String urlParams = ACT_CALL_PARAM + TO_PARAM + address + DATA_PARAM + data + TAG_LAST_PARAM;
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
-        return Optional.ofNullable (response.getResult());
+        return Optional.ofNullable(response.getResult());
     }
 
     @NotNull
@@ -212,7 +213,7 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @NotNull
     @Override
     public BigInteger gasEstimated(final String hexData) throws ApiException {
-        if(!BasicUtils.isEmpty(hexData) && BasicUtils.isNotHex(hexData))
+        if (!BasicUtils.isEmpty(hexData) && BasicUtils.isNotHex(hexData))
             throw new InvalidDataHexException("Data is not in hex format.");
 
         final String urlParams = ACT_ESTIMATEGAS_PARAM + DATA_PARAM + hexData + GAS_PARAM + "2000000000000000";

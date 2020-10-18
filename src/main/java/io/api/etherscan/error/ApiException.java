@@ -1,8 +1,6 @@
 package io.api.etherscan.error;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */

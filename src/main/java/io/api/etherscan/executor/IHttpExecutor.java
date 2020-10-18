@@ -19,7 +19,7 @@ public interface IHttpExecutor {
     /**
      * Performs a Http POST request
      *
-     * @param url as string
+     * @param url  as string
      * @param data to post
      * @return result as string
      */

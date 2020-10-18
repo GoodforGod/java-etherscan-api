@@ -44,9 +44,9 @@ public class BlockProxy {
     private String transactionsRoot;
     private List<TxProxy> transactions;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public Long getNumber() {
-        if(_number == null && !BasicUtils.isEmpty(number))
+        if (_number == null && !BasicUtils.isEmpty(number))
             _number = BasicUtils.parseHex(number).longValue();
         return _number;
     }
@@ -64,7 +64,7 @@ public class BlockProxy {
     }
 
     public Long getSize() {
-        if(_size == null && !BasicUtils.isEmpty(size))
+        if (_size == null && !BasicUtils.isEmpty(size))
             _size = BasicUtils.parseHex(size).longValue();
         return _size;
     }
@@ -78,7 +78,7 @@ public class BlockProxy {
     }
 
     public LocalDateTime getTimeStamp() {
-        if(_timestamp == null && !BasicUtils.isEmpty(timestamp))
+        if (_timestamp == null && !BasicUtils.isEmpty(timestamp))
             _timestamp = LocalDateTime.ofEpochSecond(BasicUtils.parseHex(timestamp).longValue(), 0, ZoneOffset.UTC);
         return _timestamp;
     }
@@ -104,13 +104,13 @@ public class BlockProxy {
     }
 
     public BigInteger getGasUsed() {
-        if(_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
+        if (_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
             _gasUsed = BasicUtils.parseHex(gasUsed);
         return _gasUsed;
     }
 
     public BigInteger getGasLimit() {
-        if(_gasLimit == null && !BasicUtils.isEmpty(gasLimit))
+        if (_gasLimit == null && !BasicUtils.isEmpty(gasLimit))
             _gasLimit = BasicUtils.parseHex(gasLimit);
         return _gasLimit;
     }
@@ -134,17 +134,21 @@ public class BlockProxy {
     public List<TxProxy> getTransactions() {
         return transactions;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         BlockProxy that = (BlockProxy) o;
 
-        if (number != null ? !number.equals(that.number) : that.number != null) return false;
-        if (hash != null ? !hash.equals(that.hash) : that.hash != null) return false;
+        if (number != null ? !number.equals(that.number) : that.number != null)
+            return false;
+        if (hash != null ? !hash.equals(that.hash) : that.hash != null)
+            return false;
         return parentHash != null ? parentHash.equals(that.parentHash) : that.parentHash == null;
     }
 

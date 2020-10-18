@@ -6,6 +6,10 @@ package io.api.etherscan.error;
  */
 public class ConnectionException extends ApiException {
 
+    public ConnectionException(String message) {
+        super(message);
+    }
+
     public ConnectionException(String message, Throwable cause) {
         super(message, cause);
     }

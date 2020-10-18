@@ -21,7 +21,7 @@ public class Tx extends BaseTx {
     private String isError;
     private String txreceipt_status;
 
-    //<editor-fold desc="Getters">
+    // <editor-fold desc="Getters">
     public long getNonce() {
         return nonce;
     }
@@ -53,19 +53,25 @@ public class Tx extends BaseTx {
     public long getConfirmations() {
         return confirmations;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
 
         Tx tx = (Tx) o;
 
-        if (nonce != tx.nonce) return false;
-        if (transactionIndex != tx.transactionIndex) return false;
-        if (blockHash != null ? !blockHash.equals(tx.blockHash) : tx.blockHash != null) return false;
+        if (nonce != tx.nonce)
+            return false;
+        if (transactionIndex != tx.transactionIndex)
+            return false;
+        if (blockHash != null ? !blockHash.equals(tx.blockHash) : tx.blockHash != null)
+            return false;
         return isError != null ? isError.equals(tx.isError) : tx.isError == null;
     }
 

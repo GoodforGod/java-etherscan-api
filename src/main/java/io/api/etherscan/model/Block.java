@@ -19,13 +19,13 @@ public class Block {
     private String timeStamp;
     private LocalDateTime _timeStamp;
 
-    //<editor-fold desc="Getter">
+    // <editor-fold desc="Getter">
     public long getBlockNumber() {
         return blockNumber;
     }
 
     public LocalDateTime getTimeStamp() {
-        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
+        if (_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
             _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
         return _timeStamp;
     }
@@ -33,12 +33,14 @@ public class Block {
     public BigInteger getBlockReward() {
         return blockReward;
     }
-    //</editor-fold>
+    // </editor-fold>
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Block block = (Block) o;
 
