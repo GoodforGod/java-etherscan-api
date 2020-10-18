@@ -1,6 +1,7 @@
 package io.api.etherscan.model;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -31,8 +32,7 @@ public class TokenBalance extends Balance {
             return false;
 
         TokenBalance that = (TokenBalance) o;
-
-        return tokenContract != null ? tokenContract.equals(that.tokenContract) : that.tokenContract == null;
+        return Objects.equals(tokenContract, that.tokenContract);
     }
 
     @Override

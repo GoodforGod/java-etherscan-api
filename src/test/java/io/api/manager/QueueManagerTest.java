@@ -23,6 +23,7 @@ public class QueueManagerTest extends ApiRunner {
         fakeManager.takeTurn();
         fakeManager.takeTurn();
         fakeManager.takeTurn();
+        assertNotNull(fakeManager);
     }
 
     @Test(timeout = 3500)
@@ -30,6 +31,7 @@ public class QueueManagerTest extends ApiRunner {
         IQueueManager queueManager = new QueueManager(1, 3);
         queueManager.takeTurn();
         queueManager.takeTurn();
+        assertNotNull(queueManager);
     }
 
     @Test(timeout = 4500)
@@ -37,6 +39,7 @@ public class QueueManagerTest extends ApiRunner {
         IQueueManager queueManager = new QueueManager(1, 2, 2);
         queueManager.takeTurn();
         queueManager.takeTurn();
+        assertNotNull(queueManager);
     }
 
     @Test

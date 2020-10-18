@@ -28,13 +28,13 @@ public class Price {
 
     public LocalDateTime usdTimestamp() {
         if (_ethusd_timestamp == null)
-            _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethusd_timestamp), 0, ZoneOffset.UTC);
+            _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethusd_timestamp), 0, ZoneOffset.UTC);
         return _ethusd_timestamp;
     }
 
     public LocalDateTime btcTimestamp() {
         if (_ethbtc_timestamp == null)
-            _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethbtc_timestamp), 0, ZoneOffset.UTC);
+            _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethbtc_timestamp), 0, ZoneOffset.UTC);
         return _ethbtc_timestamp;
     }
 

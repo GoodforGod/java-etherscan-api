@@ -14,7 +14,7 @@ public abstract class BaseResponseTO {
     private String message;
 
     public int getStatus() {
-        return (BasicUtils.isEmpty(status)) ? -1 : Integer.valueOf(status);
+        return BasicUtils.isEmpty(status) ? -1 : Integer.parseInt(status);
     }
 
     public String getMessage() {

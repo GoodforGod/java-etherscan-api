@@ -1,6 +1,7 @@
 package io.api.etherscan.model;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -46,8 +47,7 @@ public class Wei {
             return false;
 
         Wei wei = (Wei) o;
-
-        return result != null ? result.equals(wei.result) : wei.result == null;
+        return Objects.equals(result, wei.result);
     }
 
     @Override

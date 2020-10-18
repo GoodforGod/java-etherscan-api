@@ -26,7 +26,7 @@ public class Block {
 
     public LocalDateTime getTimeStamp() {
         if (_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
-            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
+            _timeStamp = LocalDateTime.ofEpochSecond(Long.parseLong(timeStamp), 0, ZoneOffset.UTC);
         return _timeStamp;
     }
 

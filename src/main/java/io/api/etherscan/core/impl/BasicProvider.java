@@ -46,10 +46,8 @@ abstract class BasicProvider {
     <T> T convert(final String json, final Class<T> tClass) {
         try {
             final T t = gson.fromJson(json, tClass);
-            if (t instanceof StringResponseTO) {
-                if (((StringResponseTO) t).getResult().startsWith("Max rate limit reached")) {
-                    throw new RateLimitException(((StringResponseTO) t).getResult());
-                }
+            if (t instanceof StringResponseTO && ((StringResponseTO) t).getResult().startsWith("Max rate limit reached")) {
+                throw new RateLimitException(((StringResponseTO) t).getResult());
             }
 
             return t;

@@ -1,5 +1,7 @@
 package io.api.etherscan.model;
 
+import java.util.Objects;
+
 /**
  * Contract Execution Status
  *
@@ -33,7 +35,7 @@ public class Status {
 
         if (isError != status.isError)
             return false;
-        return errDescription != null ? errDescription.equals(status.errDescription) : status.errDescription == null;
+        return Objects.equals(errDescription, status.errDescription);
     }
 
     @Override

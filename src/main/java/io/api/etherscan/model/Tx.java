@@ -3,6 +3,7 @@ package io.api.etherscan.model;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -70,9 +71,9 @@ public class Tx extends BaseTx {
             return false;
         if (transactionIndex != tx.transactionIndex)
             return false;
-        if (blockHash != null ? !blockHash.equals(tx.blockHash) : tx.blockHash != null)
+        if (!Objects.equals(blockHash, tx.blockHash))
             return false;
-        return isError != null ? isError.equals(tx.isError) : tx.isError == null;
+        return Objects.equals(isError, tx.isError);
     }
 
     @Override

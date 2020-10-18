@@ -26,6 +26,8 @@ public class BasicUtils {
     private static final Pattern TXHASH_PATTERN = Pattern.compile("0x[a-zA-Z0-9]{64}");
     private static final Pattern HEX_PATTERN = Pattern.compile("[a-zA-Z0-9]+");
 
+    private BasicUtils() {}
+
     public static boolean isEmpty(String value) {
         return value == null || value.isEmpty();
     }
@@ -42,14 +44,8 @@ public class BasicUtils {
         long startCompensated = compensateMinBlock(startBlock);
         long endCompensated = compensateMaxBlock(endBlock);
 
-        final long startFinal = (startCompensated > endCompensated)
-                ? endCompensated
-                : startCompensated;
-
-        final long endFinal = (startCompensated > endCompensated)
-                ? startCompensated
-                : endCompensated;
-
+        final long startFinal = Math.min(startCompensated, endCompensated);
+        final long endFinal = Math.max(startCompensated, endCompensated);
         return new BlockParam(startFinal, endFinal);
     }
 

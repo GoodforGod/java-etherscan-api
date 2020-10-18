@@ -3,6 +3,7 @@ package io.api.etherscan.model;
 import io.api.etherscan.model.utility.BalanceTO;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -63,7 +64,7 @@ public class Balance {
 
         if (!balance.equals(balance1.balance))
             return false;
-        return address != null ? address.equals(balance1.address) : balance1.address == null;
+        return Objects.equals(address, balance1.address);
     }
 
     @Override

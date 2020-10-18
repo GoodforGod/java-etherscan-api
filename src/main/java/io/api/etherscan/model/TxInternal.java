@@ -1,5 +1,7 @@
 package io.api.etherscan.model;
 
+import java.util.Objects;
+
 /**
  * ! NO DESCRIPTION !
  *
@@ -44,7 +46,7 @@ public class TxInternal extends BaseTx {
 
         if (traceId != that.traceId)
             return false;
-        return errCode != null ? errCode.equals(that.errCode) : that.errCode == null;
+        return Objects.equals(errCode, that.errCode);
     }
 
     @Override

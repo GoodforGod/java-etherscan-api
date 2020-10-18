@@ -5,6 +5,7 @@ import io.api.etherscan.util.BasicUtils;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -33,7 +34,7 @@ abstract class BaseTx {
 
     public LocalDateTime getTimeStamp() {
         if (_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
-            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
+            _timeStamp = LocalDateTime.ofEpochSecond(Long.parseLong(timeStamp), 0, ZoneOffset.UTC);
         return _timeStamp;
     }
 
@@ -81,15 +82,15 @@ abstract class BaseTx {
 
         if (blockNumber != baseTx.blockNumber)
             return false;
-        if (timeStamp != null ? !timeStamp.equals(baseTx.timeStamp) : baseTx.timeStamp != null)
+        if (!Objects.equals(timeStamp, baseTx.timeStamp))
             return false;
-        if (hash != null ? !hash.equals(baseTx.hash) : baseTx.hash != null)
+        if (!Objects.equals(hash, baseTx.hash))
             return false;
-        if (from != null ? !from.equals(baseTx.from) : baseTx.from != null)
+        if (!Objects.equals(from, baseTx.from))
             return false;
-        if (to != null ? !to.equals(baseTx.to) : baseTx.to != null)
+        if (!Objects.equals(to, baseTx.to))
             return false;
-        return value != null ? value.equals(baseTx.value) : baseTx.value == null;
+        return Objects.equals(value, baseTx.value);
     }
 
     @Override

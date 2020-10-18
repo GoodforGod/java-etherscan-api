@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -124,15 +125,15 @@ public class Log {
 
         Log log = (Log) o;
 
-        if (blockNumber != null ? !blockNumber.equals(log.blockNumber) : log.blockNumber != null)
+        if (!Objects.equals(blockNumber, log.blockNumber))
             return false;
-        if (address != null ? !address.equals(log.address) : log.address != null)
+        if (!Objects.equals(address, log.address))
             return false;
-        if (transactionHash != null ? !transactionHash.equals(log.transactionHash) : log.transactionHash != null)
+        if (!Objects.equals(transactionHash, log.transactionHash))
             return false;
-        if (timeStamp != null ? !timeStamp.equals(log.timeStamp) : log.timeStamp != null)
+        if (!Objects.equals(timeStamp, log.timeStamp))
             return false;
-        return logIndex != null ? logIndex.equals(log.logIndex) : log.logIndex == null;
+        return Objects.equals(logIndex, log.logIndex);
     }
 
     @Override

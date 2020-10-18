@@ -8,8 +8,8 @@ package io.api.etherscan.model.utility;
  */
 public class BlockParam {
 
-    private long startBlock;
-    private long endBlock;
+    private final long startBlock;
+    private final long endBlock;
 
     public BlockParam(long startBlock, long endBlock) {
         this.startBlock = startBlock;
