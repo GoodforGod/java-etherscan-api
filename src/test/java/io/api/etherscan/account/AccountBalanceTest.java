@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -74,7 +75,7 @@ public class AccountBalanceTest extends Assert {
         assertNotNull(balance.getGwei());
         assertNotNull(balance.getEther());
         assertNotNull(balance.getAddress());
-        assertNotEquals(0, balance.getWei());
+        assertNotEquals(BigInteger.ZERO, balance.getWei());
         assertNotNull(balance.toString());
     }
 

@@ -7,6 +7,7 @@ import io.api.support.AddressUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class AccountBalanceListTest extends Assert {
 
-    private EtherScanApi api = new EtherScanApi();
+    private final EtherScanApi api = new EtherScanApi();
 
     @Test
     public void correct() {
@@ -40,7 +41,7 @@ public class AccountBalanceListTest extends Assert {
             assertNotNull(balance.getEther());
             assertNotNull(balance.getGwei());
             assertNotNull(balance.getAddress());
-            assertNotEquals(0, balance.getWei());
+            assertNotEquals(BigInteger.ZERO, balance.getWei());
             assertNotNull(balance.toString());
         }
     }

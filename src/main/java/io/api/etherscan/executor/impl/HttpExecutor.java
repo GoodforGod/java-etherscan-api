@@ -96,7 +96,7 @@ public class HttpExecutor implements IHttpExecutor {
         } catch (SocketTimeoutException e) {
             throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
-            throw new ConnectionException(e.getLocalizedMessage(), e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -126,7 +126,7 @@ public class HttpExecutor implements IHttpExecutor {
         } catch (SocketTimeoutException e) {
             throw new ApiTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
-            throw new ConnectionException(e.getLocalizedMessage(), e);
+            throw new ConnectionException(e.getMessage(), e);
         }
     }
 
@@ -136,8 +136,6 @@ public class HttpExecutor implements IHttpExecutor {
             String inputLine;
             while ((inputLine = in.readLine()) != null)
                 content.append(inputLine);
-
-            in.close();
         }
 
         return content.toString();
@@ -146,11 +144,11 @@ public class HttpExecutor implements IHttpExecutor {
     private InputStreamReader getStreamReader(final HttpURLConnection connection) throws IOException {
         switch (String.valueOf(connection.getContentEncoding())) {
             case "gzip":
-                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), "utf-8");
+                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
             case "deflate":
-                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), "utf-8");
+                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
             default:
-                return new InputStreamReader(connection.getInputStream(), "utf-8");
+                return new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
         }
     }
 }

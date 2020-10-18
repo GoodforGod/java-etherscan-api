@@ -65,7 +65,7 @@ public class EtherScanApi {
             throw new ApiException("Ethereum Network is set to NULL value");
 
         // EtherScan 5request\sec limit support by queue manager
-        final IQueueManager masterQueue = (apiKey.equals("YourApiKeyToken"))
+        final IQueueManager masterQueue = "YourApiKeyToken".equals(apiKey)
                 ? new FakeQueueManager()
                 : new QueueManager(5, 1);
 
