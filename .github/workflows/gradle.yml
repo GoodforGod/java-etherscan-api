@@ -1,0 +1,38 @@
+name: Java CI
+
+on:   
+  push:
+    branches:
+    - master
+    - dev
+  schedule:
+  - cron: "0 12 1 * *"
+  pull_request:
+    branches:
+    - master
+    - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '1.8', '11' ]
+    name: Java ${{ matrix.java }} setup
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+
+      with:
+        java-version: ${{ matrix.java }}
+
+    - name: Build with Gradle
+      run: ./gradlew build jacocoTestReport
+
+    - name: Analyze with SonarQube
+      run: ./gradlew sonarqube
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

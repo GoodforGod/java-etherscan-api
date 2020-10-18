@@ -1,8 +1,6 @@
 # java-etherscan-api
 
-![travis](https://travis-ci.org/GoodforGod/java-etherscan-api.svg?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/808997be2e69ff1ae8fe/maintainability)](https://codeclimate.com/github/GoodforGod/java-etherscan-api/maintainability)
-[![codecov](https://codecov.io/gh/GoodforGod/java-etherscan-api/branch/master/graph/badge.svg)](https://codecov.io/gh/GoodforGod/java-etherscan-api)
+[![Jitpack](https://jitpack.io/v/iSnow/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
 
 [Etherscan](https://etherscan.io/apis) Java API implementation.
 
@@ -14,14 +12,14 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 **Gradle**
 ```groovy
 dependencies {
-    compile 'com.github.goodforgod:java-etherscan-api:1.0.2'
+    compile 'com.github.goodforgod:java-etherscan-api:1.1.0'
 }
 ```
 
