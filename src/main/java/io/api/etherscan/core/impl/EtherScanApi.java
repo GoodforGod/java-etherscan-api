@@ -68,8 +68,7 @@ public class EtherScanApi {
         this(apiKey, network, executorSupplier,
                 DEFAULT_KEY.equals(apiKey)
                         ? QueueManager.DEFAULT_KEY_QUEUE
-                        : new FakeQueueManager()
-        );
+                        : new FakeQueueManager());
     }
 
     public EtherScanApi(final String apiKey,

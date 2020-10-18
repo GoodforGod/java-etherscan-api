@@ -8,6 +8,7 @@ import io.api.etherscan.model.event.IEvent;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.utility.LogResponseTO;
 import io.api.etherscan.util.BasicUtils;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * @see IEventsApi
  *
  */
+@Experimental
 public class EventsApiProvider extends BasicProvider implements IEventsApi {
 
     private static final String ACT_LOGS_PARAM = ACT_PREFIX + "getLogs";
@@ -30,6 +32,7 @@ public class EventsApiProvider extends BasicProvider implements IEventsApi {
         super(queue, "logs", baseUrl, executor);
     }
 
+    @Experimental
     @NotNull
     @Override
     public List<IEvent> events(final LogQuery query) throws ApiException {

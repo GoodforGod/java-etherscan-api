@@ -1,6 +1,5 @@
 package io.api.etherscan.manager.impl;
 
-import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.manager.IQueueManager;
 
 import java.util.concurrent.*;

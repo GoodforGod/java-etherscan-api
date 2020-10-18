@@ -3,6 +3,7 @@ package io.api.etherscan.core;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.event.IEvent;
 import io.api.etherscan.model.query.impl.LogQuery;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * EtherScan - API Descriptions https://etherscan.io/apis#logs
  */
+@Experimental
 public interface IEventsApi {
 
     /**
@@ -22,6 +24,7 @@ public interface IEventsApi {
      *
      * @see io.api.etherscan.model.query.impl.LogQueryBuilder
      */
+    @Experimental
     @NotNull
     List<IEvent> events(LogQuery query) throws ApiException;
 }
