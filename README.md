@@ -1,14 +1,14 @@
-# java-etherscan-api
+# Java EtherScan API 
 
-[![GitHub Action](https://github.com/goodforgod/java-etherscan-api/workflows/Java%20CI/badge.svg)](https://github.com/GoodforGod/dummymaker/actions?query=workflow%3A%22Java+CI%22)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_dummymaker)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_dummymaker)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_dummymaker)
-[![Jitpack](https://jitpack.io/v/iSnow/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
+[![GitHub Action](https://github.com/goodforgod/java-etherscan-api/workflows/Java%20CI/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3A%22Java+CI%22)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
+[![](https://jitpack.io/v/GoodforGod/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
 
-[Etherscan](https://etherscan.io/apis) Java API implementation.
+[Etherscan.io](https://etherscan.io/apis) Java API implementation.
 
-Library supports all available EtherScan *API* calls for all available *Ethereum Networks*.
+Library supports all available EtherScan *API* calls for all available *Ethereum Networks* for *etherscan.io*
 
 ## Dependency :rocket:
 **Maven**
