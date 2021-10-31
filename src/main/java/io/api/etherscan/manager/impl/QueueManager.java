@@ -12,11 +12,12 @@ import java.util.concurrent.*;
  * @author GoodforGod
  * @since 30.10.2018
  */
-public class QueueManager implements IQueueManager {
+public class QueueManager implements IQueueManager, AutoCloseable {
 
     public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 7);
-    public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(2, 1);
+    public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(5, 1100L, 1100L, 5);
 
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Semaphore semaphore;
 
     public QueueManager(int size, int resetInSec) {
@@ -24,9 +25,26 @@ public class QueueManager implements IQueueManager {
     }
 
     public QueueManager(int size, int queueResetTimeInSec, int delayInSec) {
-        this.semaphore = new Semaphore(size);
-        Executors.newSingleThreadScheduledExecutor()
-                .scheduleAtFixedRate(releaseLocks(size), delayInSec, queueResetTimeInSec, TimeUnit.SECONDS);
+        this(size, queueResetTimeInSec, delayInSec, size);
+    }
+
+    public QueueManager(int size,
+                        int queueResetTimeInSec,
+                        int delayInSec,
+                        int initialSize) {
+        this(size,
+                (long) queueResetTimeInSec * 1000,
+                (long) delayInSec * 1000,
+                initialSize);
+    }
+
+    public QueueManager(int size,
+                        long queueResetTimeInMillis,
+                        long delayInMillis,
+                        int initialSize) {
+        this.semaphore = new Semaphore(initialSize);
+        this.executorService.scheduleAtFixedRate(releaseLocks(size), delayInMillis, queueResetTimeInMillis,
+                TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -36,5 +54,10 @@ public class QueueManager implements IQueueManager {
 
     private Runnable releaseLocks(int toRelease) {
         return () -> semaphore.release(toRelease);
+    }
+
+    @Override
+    public void close() {
+        executorService.shutdown();
     }
 }

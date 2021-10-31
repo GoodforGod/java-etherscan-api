@@ -19,18 +19,18 @@ public class ProxyCodeApiTest extends ApiRunner {
     public void correct() {
         Optional<String> call = getApi().proxy().code("0xf75e354c5edc8efed9b59ee9f67a80845ade7d0c");
         assertTrue(call.isPresent());
-        assertFalse(BasicUtils.isNotHex(call.get()));
+        assertFalse(call.get(), BasicUtils.isNotHex(call.get()));
     }
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        Optional<String> call = getApi().proxy().code("0f75e354c5edc8efed9b59ee9f67a80845ade7d0c");
+        getApi().proxy().code("0f75e354c5edc8efed9b59ee9f67a80845ade7d0c");
     }
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
         Optional<String> call = getApi().proxy().code("0xf15e354c5edc8efed9b59ee9f67a80845ade7d0c");
         assertTrue(call.isPresent());
-        assertFalse(BasicUtils.isNotHex(call.get()));
+        assertFalse(call.get(), BasicUtils.isNotHex(call.get()));
     }
 }

@@ -15,4 +15,9 @@ public class FakeQueueManager implements IQueueManager {
         // no limit or await provided for fake impl so rate limit exception will be
         // thrown if too many calls
     }
+
+    @Override
+    public void close() {
+        // do nothing
+    }
 }

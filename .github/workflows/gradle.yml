@@ -33,3 +33,11 @@ jobs:
 
       - name: Test
         run: ./gradlew test jacocoTestReport
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+
+      - name: SonarQube
+        run: ./gradlew sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

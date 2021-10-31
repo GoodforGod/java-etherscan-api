@@ -7,7 +7,7 @@ package io.api.etherscan.manager;
  * @author GoodforGod
  * @since 30.10.2018
  */
-public interface IQueueManager {
+public interface IQueueManager extends AutoCloseable {
 
     /**
      * Waits in queue for chance to take turn
