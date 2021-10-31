@@ -19,6 +19,7 @@ public class QueueManager implements IQueueManager, AutoCloseable {
 
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Semaphore semaphore;
+    private final long queueResetTimeInMillis;
 
     public QueueManager(int size, int resetInSec) {
         this(size, resetInSec, resetInSec);
@@ -28,28 +29,28 @@ public class QueueManager implements IQueueManager, AutoCloseable {
         this(size, queueResetTimeInSec, delayInSec, size);
     }
 
-    public QueueManager(int size,
-                        int queueResetTimeInSec,
-                        int delayInSec,
-                        int initialSize) {
+    public QueueManager(int size, int queueResetTimeInSec, int delayInSec, int initialSize) {
         this(size,
                 (long) queueResetTimeInSec * 1000,
                 (long) delayInSec * 1000,
                 initialSize);
     }
 
-    public QueueManager(int size,
-                        long queueResetTimeInMillis,
-                        long delayInMillis,
-                        int initialSize) {
+    public QueueManager(int size, long queueResetTimeInMillis, long delayInMillis, int initialSize) {
+        this.queueResetTimeInMillis = queueResetTimeInMillis;
         this.semaphore = new Semaphore(initialSize);
         this.executorService.scheduleAtFixedRate(releaseLocks(size), delayInMillis, queueResetTimeInMillis,
                 TimeUnit.MILLISECONDS);
     }
 
+    @SuppressWarnings("java:S899")
     @Override
     public void takeTurn() {
-        semaphore.acquireUninterruptibly();
+        try {
+            semaphore.tryAcquire(queueResetTimeInMillis, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private Runnable releaseLocks(int toRelease) {

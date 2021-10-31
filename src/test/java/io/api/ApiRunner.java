@@ -3,6 +3,7 @@ package io.api;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
+import org.junit.AfterClass;
 import org.junit.Assert;
 
 public class ApiRunner extends Assert {
@@ -19,7 +20,7 @@ public class ApiRunner extends Assert {
                 ? EtherScanApi.DEFAULT_KEY
                 : key;
 
-        final QueueManager queueManager = new QueueManager(2, 2100L, 2100L, 0);
+        final QueueManager queueManager = new QueueManager(1, 1200L, 1200L, 0);
         api = new EtherScanApi(ApiRunner.apiKey, EthNetwork.MAINNET, queueManager);
         apiKovan = new EtherScanApi(ApiRunner.apiKey, EthNetwork.KOVAN, queueManager);
         apiRopsten = new EtherScanApi(ApiRunner.apiKey, EthNetwork.ROPSTEN, queueManager);
@@ -44,5 +45,13 @@ public class ApiRunner extends Assert {
 
     public static EtherScanApi getApiKovan() {
         return apiKovan;
+    }
+
+    @AfterClass
+    public static void cleanup() throws Exception {
+        api.close();
+        apiRopsten.close();
+        apiRinkeby.close();
+        apiKovan.close();
     }
 }
