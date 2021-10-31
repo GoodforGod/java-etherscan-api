@@ -16,8 +16,7 @@ import java.util.List;
 public interface ILogsApi {
 
     /**
-     * alternative to the native eth_getLogs Read at EtherScan API description for
-     * full info!
+     * alternative to the native eth_getLogs Read at EtherScan API description for full info!
      * 
      * @param query build log query
      * @return logs according to query

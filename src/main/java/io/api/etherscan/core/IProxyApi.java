@@ -36,8 +36,7 @@ public interface IProxyApi {
     Optional<BlockProxy> block(long blockNo) throws ApiException;
 
     /**
-     * Returns information about a uncle by block number
-     * eth_getUncleByBlockNumberAndIndex
+     * Returns information about a uncle by block number eth_getUncleByBlockNumberAndIndex
      * 
      * @param blockNo block number from 0 to last
      * @param index   uncle block index
@@ -59,8 +58,8 @@ public interface IProxyApi {
     Optional<TxProxy> tx(String txhash) throws ApiException;
 
     /**
-     * Returns information about a transaction by block number and transaction index
-     * position eth_getTransactionByBlockNumberAndIndex
+     * Returns information about a transaction by block number and transaction index position
+     * eth_getTransactionByBlockNumberAndIndex
      * 
      * @param blockNo block number from 0 to last
      * @param index   tx index in block
@@ -71,8 +70,8 @@ public interface IProxyApi {
     Optional<TxProxy> tx(long blockNo, long index) throws ApiException;
 
     /**
-     * Returns the number of transactions in a block from a block matching the given
-     * block number eth_getBlockTransactionCountByNumber
+     * Returns the number of transactions in a block from a block matching the given block number
+     * eth_getBlockTransactionCountByNumber
      * 
      * @param blockNo block number from 0 to last
      * @return transaction amount in block
@@ -81,8 +80,7 @@ public interface IProxyApi {
     int txCount(long blockNo) throws ApiException;
 
     /**
-     * Returns the number of transactions sent from an address
-     * eth_getTransactionCount
+     * Returns the number of transactions sent from an address eth_getTransactionCount
      * 
      * @param address eth address
      * @return transactions send amount from address
@@ -91,8 +89,8 @@ public interface IProxyApi {
     int txSendCount(String address) throws ApiException;
 
     /**
-     * Creates new message call transaction or a contract creation for signed
-     * transactions eth_sendRawTransaction
+     * Creates new message call transaction or a contract creation for signed transactions
+     * eth_sendRawTransaction
      * 
      * @param hexEncodedTx encoded hex data to send
      * @return optional string response
@@ -102,8 +100,7 @@ public interface IProxyApi {
     Optional<String> txSendRaw(String hexEncodedTx) throws ApiException;
 
     /**
-     * Returns the receipt of a transaction by transaction hash
-     * eth_getTransactionReceipt
+     * Returns the receipt of a transaction by transaction hash eth_getTransactionReceipt
      * 
      * @param txhash transaction hash
      * @return optional tx receipt
@@ -113,8 +110,8 @@ public interface IProxyApi {
     Optional<ReceiptProxy> txReceipt(String txhash) throws ApiException;
 
     /**
-     * Executes a new message call immediately without creating a transaction on the
-     * block chain eth_call
+     * Executes a new message call immediately without creating a transaction on the block chain
+     * eth_call
      * 
      * @param address to call
      * @param data    data to call address
@@ -135,8 +132,7 @@ public interface IProxyApi {
     Optional<String> code(String address) throws ApiException;
 
     /**
-     * (**experimental) Returns the value from a storage position at a given address
-     * eth_getStorageAt
+     * (**experimental) Returns the value from a storage position at a given address eth_getStorageAt
      * 
      * @param address  to get storage
      * @param position storage position
@@ -156,9 +152,8 @@ public interface IProxyApi {
     BigInteger gasPrice() throws ApiException;
 
     /**
-     * Makes a call or transaction, which won't be added to the blockchain and
-     * returns the used gas, which can be used for estimating the used gas
-     * eth_estimateGas
+     * Makes a call or transaction, which won't be added to the blockchain and returns the used gas,
+     * which can be used for estimating the used gas eth_estimateGas
      * 
      * @param hexData data to calc gas usage for
      * @return estimated gas usage

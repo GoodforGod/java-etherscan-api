@@ -68,11 +68,10 @@ public class Log {
     }
 
     /**
-     * Return the "timeStamp" field of the event record as a long-int representing
-     * the milliseconds since the Unix epoch (1970-01-01 00:00:00).
+     * Return the "timeStamp" field of the event record as a long-int representing the milliseconds
+     * since the Unix epoch (1970-01-01 00:00:00).
      * 
-     * @return milliseconds between Unix epoch and `timeStamp`. If field is empty or
-     *         null, returns null
+     * @return milliseconds between Unix epoch and `timeStamp`. If field is empty or null, returns null
      */
     public Long getTimeStampAsMillis() {
         if (BasicUtils.isEmpty(timeStamp)) {
