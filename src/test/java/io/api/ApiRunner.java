@@ -1,7 +1,6 @@
 package io.api;
 
 import io.api.etherscan.core.impl.EtherScanApi;
-import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
 import org.junit.Assert;
 
@@ -19,14 +18,10 @@ public class ApiRunner extends Assert {
                 ? EtherScanApi.DEFAULT_KEY
                 : apiKey;
 
-        final QueueManager queue = key.equals(EtherScanApi.DEFAULT_KEY)
-                ? QueueManager.DEFAULT_KEY_QUEUE
-                : new QueueManager(1, 2);
-
-        api = new EtherScanApi(key, EthNetwork.MAINNET, queue);
-        apiRopsten = new EtherScanApi(key, EthNetwork.ROPSTEN, queue);
-        apiRinkeby = new EtherScanApi(key, EthNetwork.RINKEBY, queue);
-        apiKovan = new EtherScanApi(key, EthNetwork.KOVAN, queue);
+        api = new EtherScanApi(key, EthNetwork.MAINNET);
+        apiRopsten = new EtherScanApi(key, EthNetwork.ROPSTEN);
+        apiRinkeby = new EtherScanApi(key, EthNetwork.RINKEBY);
+        apiKovan = new EtherScanApi(key, EthNetwork.KOVAN);
     }
 
     public static String getKey() {
