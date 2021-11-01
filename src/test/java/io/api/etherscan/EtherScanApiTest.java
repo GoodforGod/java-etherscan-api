@@ -79,7 +79,7 @@ public class EtherScanApiTest extends ApiRunner {
     public void timeout() throws InterruptedException {
         TimeUnit.SECONDS.sleep(5);
         Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(300, 300);
-        EtherScanApi api = new EtherScanApi(getKey(), EthNetwork.KOVAN, supplier);
+        EtherScanApi api = new EtherScanApi(getApiKey(), EthNetwork.KOVAN, supplier);
         List<Block> blocks = api.account().minedBlocks("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D");
         assertNotNull(blocks);
     }

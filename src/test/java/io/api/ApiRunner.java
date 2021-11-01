@@ -3,6 +3,7 @@ package io.api;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
+import org.junit.AfterClass;
 import org.junit.Assert;
 
 public class ApiRunner extends Assert {
@@ -11,26 +12,23 @@ public class ApiRunner extends Assert {
     private static final EtherScanApi apiRopsten;
     private static final EtherScanApi apiRinkeby;
     private static final EtherScanApi apiKovan;
-    private static final String key;
+    private static final String apiKey;
 
     static {
-        final String apiKey = System.getenv("API_KEY");
-        key = (apiKey == null || apiKey.isEmpty())
+        final String key = System.getenv("API_KEY");
+        apiKey = (key == null || key.isEmpty())
                 ? EtherScanApi.DEFAULT_KEY
-                : apiKey;
+                : key;
 
-        final QueueManager queue = key.equals(EtherScanApi.DEFAULT_KEY)
-                ? QueueManager.DEFAULT_KEY_QUEUE
-                : new QueueManager(1, 2);
-
-        api = new EtherScanApi(key, EthNetwork.MAINNET, queue);
-        apiRopsten = new EtherScanApi(key, EthNetwork.ROPSTEN, queue);
-        apiRinkeby = new EtherScanApi(key, EthNetwork.RINKEBY, queue);
-        apiKovan = new EtherScanApi(key, EthNetwork.KOVAN, queue);
+        final QueueManager queueManager = new QueueManager(1, 1200L, 1200L, 0);
+        api = new EtherScanApi(ApiRunner.apiKey, EthNetwork.MAINNET, queueManager);
+        apiKovan = new EtherScanApi(ApiRunner.apiKey, EthNetwork.KOVAN, queueManager);
+        apiRopsten = new EtherScanApi(ApiRunner.apiKey, EthNetwork.ROPSTEN, queueManager);
+        apiRinkeby = new EtherScanApi(ApiRunner.apiKey, EthNetwork.RINKEBY, queueManager);
     }
 
-    public static String getKey() {
-        return key;
+    public static String getApiKey() {
+        return apiKey;
     }
 
     public static EtherScanApi getApi() {
@@ -47,5 +45,13 @@ public class ApiRunner extends Assert {
 
     public static EtherScanApi getApiKovan() {
         return apiKovan;
+    }
+
+    @AfterClass
+    public static void cleanup() throws Exception {
+        api.close();
+        apiRopsten.close();
+        apiRinkeby.close();
+        apiKovan.close();
     }
 }

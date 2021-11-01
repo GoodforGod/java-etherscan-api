@@ -24,12 +24,12 @@ public class ProxyStorageApiTest extends ApiRunner {
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        Optional<String> call = getApi().proxy().storageAt("0xe03d9cce9d60f3e9f2597e13cd4c54c55330cfd", 0);
+        getApi().proxy().storageAt("0xe03d9cce9d60f3e9f2597e13cd4c54c55330cfd", 0);
     }
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        Optional<String> call = getApi().proxy().storageAt("0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd", 100);
+        final Optional<String> call = getApi().proxy().storageAt("0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd", 10000);
         assertFalse(call.isPresent());
     }
 }

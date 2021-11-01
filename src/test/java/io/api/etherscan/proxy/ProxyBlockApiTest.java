@@ -1,6 +1,9 @@
 package io.api.etherscan.proxy;
 
 import io.api.ApiRunner;
+import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.etherscan.manager.impl.QueueManager;
+import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.model.proxy.BlockProxy;
 import org.junit.Test;
 
@@ -14,9 +17,16 @@ import java.util.Optional;
  */
 public class ProxyBlockApiTest extends ApiRunner {
 
+    private final EtherScanApi api;
+
+    public ProxyBlockApiTest() {
+        final QueueManager queueManager = new QueueManager(1, 5100L, 5100L, 0);
+        this.api = new EtherScanApi(getApiKey(), EthNetwork.MAINNET, queueManager);
+    }
+
     @Test
     public void correct() {
-        Optional<BlockProxy> block = getApi().proxy().block(5120);
+        Optional<BlockProxy> block = api.proxy().block(5120);
         assertTrue(block.isPresent());
         BlockProxy proxy = block.get();
         assertNotNull(proxy.getHash());
@@ -49,13 +59,13 @@ public class ProxyBlockApiTest extends ApiRunner {
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        Optional<BlockProxy> block = getApi().proxy().block(99999999999L);
+        Optional<BlockProxy> block = api.proxy().block(99999999999L);
         assertFalse(block.isPresent());
     }
 
     @Test
     public void correctParamNegativeNo() {
-        Optional<BlockProxy> block = getApi().proxy().block(-1);
+        Optional<BlockProxy> block = api.proxy().block(-1);
         assertTrue(block.isPresent());
         assertNotNull(block.get().getHash());
     }

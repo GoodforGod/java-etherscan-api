@@ -41,6 +41,6 @@ public class ProxyCallApiTest extends ApiRunner {
         Optional<String> call = getApi().proxy().call("0xAEEF16DB4855E25702F8237E8f403FddcaF931C0",
                 "0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724");
         assertTrue(call.isPresent());
-        assertFalse(BasicUtils.isNotHex(call.get()));
+        assertFalse(call.get(), BasicUtils.isNotHex(call.get()));
     }
 }

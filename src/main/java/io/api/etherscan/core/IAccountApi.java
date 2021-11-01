@@ -36,8 +36,8 @@ public interface IAccountApi {
     TokenBalance balance(String address, String contract) throws ApiException;
 
     /**
-     * Maximum 20 address for single batch request If address MORE THAN 20, then
-     * there will be more than 1 request performed
+     * Maximum 20 address for single batch request If address MORE THAN 20, then there will be more than
+     * 1 request performed
      * 
      * @param addresses addresses to get balances for
      * @return list of balances

@@ -20,12 +20,13 @@ import java.util.function.Supplier;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class EtherScanApi {
+public class EtherScanApi implements AutoCloseable {
 
     private static final Supplier<IHttpExecutor> DEFAULT_SUPPLIER = HttpExecutor::new;
 
     public static final String DEFAULT_KEY = "YourApiKeyToken";
 
+    private final IQueueManager queueManager;
     private final IAccountApi account;
     private final IBlockApi block;
     private final IContractApi contract;
@@ -87,6 +88,7 @@ public class EtherScanApi {
         final String ending = EthNetwork.TOBALABA.equals(network) ? "com" : "io";
         final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
+        this.queueManager = queue;
         this.account = new AccountApiProvider(queue, baseUrl, executor);
         this.block = new BlockApiProvider(queue, baseUrl, executor);
         this.contract = new ContractApiProvider(queue, baseUrl, executor);
@@ -129,5 +131,10 @@ public class EtherScanApi {
     @NotNull
     public IStatisticApi stats() {
         return stats;
+    }
+
+    @Override
+    public void close() throws Exception {
+        queueManager.close();
     }
 }
