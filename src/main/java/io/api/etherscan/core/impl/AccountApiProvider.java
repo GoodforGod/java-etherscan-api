@@ -34,6 +34,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     private static final String ACT_TX_ACTION = ACT_PREFIX + "txlist";
     private static final String ACT_TX_INTERNAL_ACTION = ACT_PREFIX + "txlistinternal";
     private static final String ACT_TX_TOKEN_ACTION = ACT_PREFIX + "tokentx";
+    private static final String ACT_TX_NFT_TOKEN_ACTION = ACT_PREFIX + "tokennfttx";
     private static final String ACT_MINED_ACTION = ACT_PREFIX + "getminedblocks";
 
     private static final String BLOCK_TYPE_PARAM = "&blocktype=blocks";
@@ -225,6 +226,29 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
         final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
         final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
+    }
+
+
+    @Override
+    public @NotNull List<TxToken> txsNftToken(String address) throws ApiException {
+        return txsNftToken(address, MIN_START_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxToken> txsNftToken(String address, long startBlock) throws ApiException {
+        return txsNftToken(address, startBlock, MAX_END_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
+        final String urlParams = ACT_TX_NFT_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
 
         return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
     }
