@@ -230,19 +230,21 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
     }
 
-
+    @NotNull
     @Override
-    public @NotNull List<TxToken> txsNftToken(String address) throws ApiException {
+    public List<TxToken> txsNftToken(String address) throws ApiException {
         return txsNftToken(address, MIN_START_BLOCK);
     }
 
+    @NotNull
     @Override
-    public @NotNull List<TxToken> txsNftToken(String address, long startBlock) throws ApiException {
+    public List<TxToken> txsNftToken(String address, long startBlock) throws ApiException {
         return txsNftToken(address, startBlock, MAX_END_BLOCK);
     }
 
+    @NotNull
     @Override
-    public @NotNull List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException {
+    public  List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
