@@ -244,7 +244,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
 
     @NotNull
     @Override
-    public  List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException {
+    public List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
