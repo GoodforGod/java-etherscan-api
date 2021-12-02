@@ -14,7 +14,7 @@ import java.util.concurrent.*;
  */
 public class QueueManager implements IQueueManager, AutoCloseable {
 
-    public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 7);
+    public static final QueueManager DEFAULT_KEY_QUEUE = new QueueManager(1, 5200L, 5200L, 0);
     public static final QueueManager PERSONAL_KEY_QUEUE = new QueueManager(5, 1100L, 1100L, 5);
 
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
