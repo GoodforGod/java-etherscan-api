@@ -15,7 +15,7 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 **Gradle**
 ```groovy
 dependencies {
-    compile "com.github.goodforgod:java-etherscan-api:1.1.1"
+    compile "com.github.goodforgod:java-etherscan-api:1.2.0"
 }
 ```
 
@@ -24,7 +24,7 @@ dependencies {
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
