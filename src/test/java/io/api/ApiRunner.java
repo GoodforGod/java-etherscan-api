@@ -20,7 +20,10 @@ public class ApiRunner extends Assert {
                 ? EtherScanApi.DEFAULT_KEY
                 : key;
 
-        final QueueManager queueManager = new QueueManager(1, 1200L, 1200L, 0);
+        final QueueManager queueManager = (EtherScanApi.DEFAULT_KEY.equals(apiKey))
+                ? QueueManager.DEFAULT_KEY_QUEUE
+                : new QueueManager(1, 1200L, 1200L, 0);
+
         api = new EtherScanApi(ApiRunner.apiKey, EthNetwork.MAINNET, queueManager);
         apiKovan = new EtherScanApi(ApiRunner.apiKey, EthNetwork.KOVAN, queueManager);
         apiRopsten = new EtherScanApi(ApiRunner.apiKey, EthNetwork.ROPSTEN, queueManager);
