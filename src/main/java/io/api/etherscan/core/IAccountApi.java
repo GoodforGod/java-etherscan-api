@@ -93,7 +93,7 @@ public interface IAccountApi {
     List<TxInternal> txsInternalByHash(String txhash) throws ApiException;
 
     /**
-     * All token txs for given address
+     * All ERC-20 token txs for given address
      * 
      * @param address    get txs for
      * @param startBlock tx from this blockNumber
@@ -109,6 +109,24 @@ public interface IAccountApi {
 
     @NotNull
     List<TxToken> txsToken(String address) throws ApiException;
+
+    /**
+     * All ERC-721 (NFT) token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws ApiException parent exception class
+     */
+    @NotNull
+    List<TxToken> txsNftToken(String address, long startBlock, long endBlock) throws ApiException;
+
+    @NotNull
+    List<TxToken> txsNftToken(String address, long startBlock) throws ApiException;
+
+    @NotNull
+    List<TxToken> txsNftToken(String address) throws ApiException;
 
     /**
      * All blocks mined by address
