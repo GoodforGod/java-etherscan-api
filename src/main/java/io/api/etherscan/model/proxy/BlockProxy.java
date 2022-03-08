@@ -1,5 +1,6 @@
 package io.api.etherscan.model.proxy;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
@@ -16,15 +17,18 @@ import java.util.List;
 public class BlockProxy {
 
     private String number;
+    @Expose(serialize = false, deserialize = false)
     private Long _number;
     private String hash;
     private String parentHash;
     private String stateRoot;
     private String size;
+    @Expose(serialize = false, deserialize = false)
     private Long _size;
     private String difficulty;
     private String totalDifficulty;
     private String timestamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _timestamp;
 
     private String miner;
@@ -33,8 +37,10 @@ public class BlockProxy {
     private String logsBloom;
     private String mixHash;
     private String gasUsed;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasUsed;
     private String gasLimit;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasLimit;
 
     private String sha3Uncles;

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class TxInternal extends BaseTx {
 
     private String type;
-    private long traceId;
+    private String traceId;
     private int isError;
     private String errCode;
 
@@ -21,6 +21,10 @@ public class TxInternal extends BaseTx {
     }
 
     public long getTraceId() {
+        return (traceId == null) ? 0 : Long.parseLong(traceId);
+    }
+
+    public String getTraceIdAsString() {
         return traceId;
     }
 
@@ -44,7 +48,7 @@ public class TxInternal extends BaseTx {
 
         TxInternal that = (TxInternal) o;
 
-        if (traceId != that.traceId)
+        if (!Objects.equals(traceId, that.traceId))
             return false;
         return Objects.equals(errCode, that.errCode);
     }
@@ -52,7 +56,7 @@ public class TxInternal extends BaseTx {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (int) (traceId ^ (traceId >>> 32));
+        result = 31 * result + (traceId != null ? traceId.hashCode() : 0);
         result = 31 * result + (errCode != null ? errCode.hashCode() : 0);
         return result;
     }

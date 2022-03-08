@@ -29,6 +29,8 @@ public class AccountTxInternalTest extends ApiRunner {
         List<TxInternal> txs = getApi().account().txsInternal("0x2C1ba59D6F58433FB1EaEe7d20b26Ed83bDA51A3", 2558775);
         assertNotNull(txs);
         assertEquals(24, txs.size());
+        assertNotEquals(txs.get(0), txs.get(1));
+        assertNotEquals(txs.get(0).toString(), txs.get(1).toString());
         assertTxs(txs);
     }
 

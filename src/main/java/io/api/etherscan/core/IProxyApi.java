@@ -4,6 +4,7 @@ import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.proxy.BlockProxy;
 import io.api.etherscan.model.proxy.ReceiptProxy;
 import io.api.etherscan.model.proxy.TxProxy;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigInteger;
@@ -139,6 +140,7 @@ public interface IProxyApi {
      * @return optional the value at this storage position
      * @throws ApiException parent exception class
      */
+    @Experimental
     @NotNull
     Optional<String> storageAt(String address, long position) throws ApiException;
 

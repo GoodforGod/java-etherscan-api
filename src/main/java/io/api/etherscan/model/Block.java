@@ -1,5 +1,6 @@
 package io.api.etherscan.model;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ public class Block {
     private long blockNumber;
     private BigInteger blockReward;
     private String timeStamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _timeStamp;
 
     // <editor-fold desc="Getter">

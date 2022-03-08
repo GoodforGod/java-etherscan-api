@@ -63,7 +63,7 @@ public class AccountTxInternalByHashTest extends ApiRunner {
         assertNotNull(txs.get(0).getType());
         assertFalse(txs.get(0).haveError());
         assertFalse(txs.get(0).haveError());
-        assertNotEquals(-1, txs.get(0).getTraceId());
+        assertNotEquals("-1", txs.get(0).getTraceIdAsString());
         assertTrue(BasicUtils.isEmpty(txs.get(0).getErrCode()));
         assertNotNull(txs.get(0).toString());
 

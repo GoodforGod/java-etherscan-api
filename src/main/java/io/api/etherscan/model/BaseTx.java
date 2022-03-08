@@ -1,5 +1,6 @@
 package io.api.etherscan.model;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ abstract class BaseTx {
 
     private long blockNumber;
     private String timeStamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _timeStamp;
     private String hash;
     private String from;
