@@ -1,6 +1,6 @@
 package io.api.etherscan.core.impl;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.error.EtherScanException;
 import io.api.etherscan.error.ParseException;
@@ -10,6 +10,9 @@ import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.utility.StringResponseTO;
 import io.api.etherscan.util.BasicUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 /**
@@ -40,7 +43,22 @@ abstract class BasicProvider {
         this.module = "&module=" + module;
         this.baseUrl = baseUrl;
         this.executor = executor;
-        this.gson = new Gson();
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class,
+                        (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context) -> new JsonPrimitive(
+                                src.format(DateTimeFormatter.ISO_DATE_TIME)))
+                .registerTypeAdapter(LocalDate.class,
+                        (JsonSerializer<LocalDate>) (src, typeOfSrc,
+                                                     context) -> new JsonPrimitive(src.format(DateTimeFormatter.ISO_DATE)))
+                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, context) -> {
+                    String datetime = json.getAsJsonPrimitive().getAsString();
+                    return LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME);
+                })
+                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, type, context) -> {
+                    String datetime = json.getAsJsonPrimitive().getAsString();
+                    return LocalDate.parse(datetime, DateTimeFormatter.ISO_DATE);
+                }).create();
+
     }
 
     <T> T convert(final String json, final Class<T> tClass) {
