@@ -1,5 +1,7 @@
 package io.api.etherscan.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -15,7 +17,9 @@ public class Price {
     private double ethbtc;
     private String ethusd_timestamp;
     private String ethbtc_timestamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _ethusd_timestamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _ethbtc_timestamp;
 
     public double inUsd() {

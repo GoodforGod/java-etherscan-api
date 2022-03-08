@@ -1,5 +1,6 @@
 package io.api.etherscan.model.proxy;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
@@ -15,6 +16,7 @@ public class TxProxy {
     private String to;
     private String hash;
     private String transactionIndex;
+    @Expose(serialize = false, deserialize = false)
     private Long _transactionIndex;
     private String from;
     private String v;
@@ -22,14 +24,18 @@ public class TxProxy {
     private String s;
     private String r;
     private String nonce;
+    @Expose(serialize = false, deserialize = false)
     private Long _nonce;
     private String value;
     private String gas;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gas;
     private String gasPrice;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasPrice;
     private String blockHash;
     private String blockNumber;
+    @Expose(serialize = false, deserialize = false)
     private Long _blockNumber;
 
     // <editor-fold desc="Getters">

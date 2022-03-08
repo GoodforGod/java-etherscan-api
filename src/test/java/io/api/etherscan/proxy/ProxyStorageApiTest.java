@@ -2,7 +2,6 @@ package io.api.etherscan.proxy;
 
 import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
-import io.api.etherscan.util.BasicUtils;
 import org.junit.Test;
 
 import java.util.Optional;

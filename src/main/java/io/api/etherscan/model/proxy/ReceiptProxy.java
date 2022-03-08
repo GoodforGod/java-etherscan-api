@@ -1,5 +1,6 @@
 package io.api.etherscan.model.proxy;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.model.Log;
 import io.api.etherscan.util.BasicUtils;
 
@@ -18,14 +19,18 @@ public class ReceiptProxy {
     private String from;
     private String to;
     private String blockNumber;
+    @Expose(serialize = false, deserialize = false)
     private Long _blockNumber;
     private String blockHash;
     private String transactionHash;
     private String transactionIndex;
+    @Expose(serialize = false, deserialize = false)
     private Long _transactionIndex;
     private String gasUsed;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasUsed;
     private String cumulativeGasUsed;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _cumulativeGasUsed;
     private String contractAddress;
 

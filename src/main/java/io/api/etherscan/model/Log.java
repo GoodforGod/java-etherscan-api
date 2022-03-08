@@ -1,5 +1,6 @@
 package io.api.etherscan.model;
 
+import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
@@ -17,20 +18,26 @@ import java.util.Objects;
 public class Log {
 
     private String blockNumber;
+    @Expose(serialize = false, deserialize = false)
     private Long _blockNumber;
     private String address;
     private String transactionHash;
     private String transactionIndex;
+    @Expose(serialize = false, deserialize = false)
     private Long _transactionIndex;
     private String timeStamp;
+    @Expose(serialize = false, deserialize = false)
     private LocalDateTime _timeStamp;
     private String data;
     private String gasPrice;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasPrice;
     private String gasUsed;
+    @Expose(serialize = false, deserialize = false)
     private BigInteger _gasUsed;
     private List<String> topics;
     private String logIndex;
+    @Expose(serialize = false, deserialize = false)
     private Long _logIndex;
 
     // <editor-fold desc="Getters">
