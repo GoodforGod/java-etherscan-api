@@ -20,7 +20,11 @@ public class TxInternal extends BaseTx {
         return type;
     }
 
-    public String getTraceId() {
+    public long getTraceId() {
+        return Long.parseLong(traceId);
+    }
+
+    public String getTraceIdAsString() {
         return traceId;
     }
 
