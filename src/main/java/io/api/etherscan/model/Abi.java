@@ -3,8 +3,6 @@ package io.api.etherscan.model;
 import io.api.etherscan.util.BasicUtils;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
@@ -49,13 +47,19 @@ public class Abi {
 
         if (isVerified != abi.isVerified)
             return false;
-        return contractAbi != null ? contractAbi.equals(abi.contractAbi) : abi.contractAbi == null;
+        return contractAbi != null
+                ? contractAbi.equals(abi.contractAbi)
+                : abi.contractAbi == null;
     }
 
     @Override
     public int hashCode() {
-        int result = contractAbi != null ? contractAbi.hashCode() : 0;
-        result = 31 * result + (isVerified ? 1 : 0);
+        int result = contractAbi != null
+                ? contractAbi.hashCode()
+                : 0;
+        result = 31 * result + (isVerified
+                ? 1
+                : 0);
         return result;
     }
 

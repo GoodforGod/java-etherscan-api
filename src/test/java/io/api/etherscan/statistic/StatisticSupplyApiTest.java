@@ -2,20 +2,17 @@ package io.api.etherscan.statistic;
 
 import io.api.ApiRunner;
 import io.api.etherscan.model.Supply;
-import org.junit.Test;
-
 import java.math.BigInteger;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class StatisticSupplyApiTest extends ApiRunner {
+class StatisticSupplyApiTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         Supply supply = getApi().stats().supply();
         assertNotNull(supply);
         assertNotNull(supply.getValue());

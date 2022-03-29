@@ -8,16 +8,14 @@ import io.api.etherscan.model.Log;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.utility.LogResponseTO;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Logs API Implementation
  *
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */

@@ -41,7 +41,9 @@ public class Status {
     @Override
     public int hashCode() {
         int result = isError;
-        result = 31 * result + (errDescription != null ? errDescription.hashCode() : 0);
+        result = 31 * result + (errDescription != null
+                ? errDescription.hashCode()
+                : 0);
         return result;
     }
 

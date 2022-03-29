@@ -3,8 +3,6 @@ package io.api.etherscan.model;
 import java.math.BigInteger;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */

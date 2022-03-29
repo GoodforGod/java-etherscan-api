@@ -10,7 +10,6 @@ import io.api.etherscan.model.query.LogOp;
  *
  * @see LogQueryBuilder
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
@@ -22,8 +21,11 @@ public class LogTopicTuple extends BaseLogQuery implements IQueryBuilder {
 
     private LogOp topic0_1_opr;
 
-    LogTopicTuple(String address, long startBlock, long endBlock,
-                  String topic0, String topic1) {
+    LogTopicTuple(String address,
+                  long startBlock,
+                  long endBlock,
+                  String topic0,
+                  String topic1) {
         this.address = address;
         this.startBlock = startBlock;
         this.endBlock = endBlock;

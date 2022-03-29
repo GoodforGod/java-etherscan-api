@@ -3,9 +3,8 @@ package io.api.etherscan.core;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.Price;
 import io.api.etherscan.model.Supply;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan - API Descriptions https://etherscan.io/apis#stats

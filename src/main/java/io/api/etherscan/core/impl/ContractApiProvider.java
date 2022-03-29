@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
  * Contract API Implementation
  *
  * @see IContractApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */

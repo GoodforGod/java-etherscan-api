@@ -10,9 +10,8 @@ import io.api.etherscan.manager.impl.FakeQueueManager;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.function.Supplier;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan full API Description https://etherscan.io/apis
@@ -85,7 +84,9 @@ public class EtherScanApi implements AutoCloseable {
         // EtherScan 1request\5sec limit support by queue manager
         final IHttpExecutor executor = executorSupplier.get();
 
-        final String ending = EthNetwork.TOBALABA.equals(network) ? "com" : "io";
+        final String ending = EthNetwork.TOBALABA.equals(network)
+                ? "com"
+                : "io";
         final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
         this.queueManager = queue;

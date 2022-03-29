@@ -1,13 +1,10 @@
 package io.api.etherscan.model;
 
 import io.api.etherscan.model.utility.BalanceTO;
-
 import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -70,7 +67,9 @@ public class Balance {
     @Override
     public int hashCode() {
         int result = balance.hashCode();
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (address != null
+                ? address.hashCode()
+                : 0);
         return result;
     }
 

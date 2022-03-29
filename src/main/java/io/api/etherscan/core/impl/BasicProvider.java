@@ -9,7 +9,6 @@ import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.utility.StringResponseTO;
 import io.api.etherscan.util.BasicUtils;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;

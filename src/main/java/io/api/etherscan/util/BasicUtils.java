@@ -5,11 +5,10 @@ import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.error.InvalidTxHashException;
 import io.api.etherscan.model.utility.BaseResponseTO;
 import io.api.etherscan.model.utility.BlockParam;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Basic utils for library

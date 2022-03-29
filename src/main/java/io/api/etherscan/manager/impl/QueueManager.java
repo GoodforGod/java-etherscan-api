@@ -1,14 +1,12 @@
 package io.api.etherscan.manager.impl;
 
 import io.api.etherscan.manager.IQueueManager;
-
 import java.util.concurrent.*;
 
 /**
  * Queue Semaphore implementation with size and reset time as params
  * 
  * @see IQueueManager
- *
  * @author GoodforGod
  * @since 30.10.2018
  */

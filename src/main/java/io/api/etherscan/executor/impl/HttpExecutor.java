@@ -1,10 +1,11 @@
 package io.api.etherscan.executor.impl;
 
+import static java.net.HttpURLConnection.*;
+
 import io.api.etherscan.error.ApiTimeoutException;
 import io.api.etherscan.error.ConnectionException;
 import io.api.etherscan.executor.IHttpExecutor;
 import io.api.etherscan.util.BasicUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
-
-import static java.net.HttpURLConnection.*;
 
 /**
  * Http client implementation
@@ -107,7 +106,9 @@ public class HttpExecutor implements IHttpExecutor {
     public String post(final String urlAsString, final String dataToPost) {
         try {
             final HttpURLConnection connection = buildConnection(urlAsString, "POST");
-            final String contentLength = (BasicUtils.isBlank(dataToPost)) ? "0" : String.valueOf(dataToPost.length());
+            final String contentLength = (BasicUtils.isBlank(dataToPost))
+                    ? "0"
+                    : String.valueOf(dataToPost.length());
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.setRequestProperty("Content-Length", contentLength);
             connection.setFixedLengthStreamingMode(dataToPost.length());

@@ -1,13 +1,10 @@
 package io.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */
@@ -17,9 +14,9 @@ public class Price {
     private double ethbtc;
     private String ethusd_timestamp;
     private String ethbtc_timestamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _ethusd_timestamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _ethbtc_timestamp;
 
     public double inUsd() {
@@ -55,9 +52,13 @@ public class Price {
             return false;
         if (Double.compare(price.ethbtc, ethbtc) != 0)
             return false;
-        if (ethusd_timestamp != null ? !ethusd_timestamp.equals(price.ethusd_timestamp) : price.ethusd_timestamp != null)
+        if (ethusd_timestamp != null
+                ? !ethusd_timestamp.equals(price.ethusd_timestamp)
+                : price.ethusd_timestamp != null)
             return false;
-        return (ethbtc_timestamp != null ? !ethbtc_timestamp.equals(price.ethbtc_timestamp) : price.ethbtc_timestamp != null);
+        return (ethbtc_timestamp != null
+                ? !ethbtc_timestamp.equals(price.ethbtc_timestamp)
+                : price.ethbtc_timestamp != null);
     }
 
     @Override
@@ -68,8 +69,12 @@ public class Price {
         result = (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(ethbtc);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (ethusd_timestamp != null ? ethusd_timestamp.hashCode() : 0);
-        result = 31 * result + (ethbtc_timestamp != null ? ethbtc_timestamp.hashCode() : 0);
+        result = 31 * result + (ethusd_timestamp != null
+                ? ethusd_timestamp.hashCode()
+                : 0);
+        result = 31 * result + (ethbtc_timestamp != null
+                ? ethbtc_timestamp.hashCode()
+                : 0);
         return result;
     }
 

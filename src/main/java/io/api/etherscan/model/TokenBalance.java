@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
@@ -38,7 +36,9 @@ public class TokenBalance extends Balance {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (tokenContract != null ? tokenContract.hashCode() : 0);
+        result = 31 * result + (tokenContract != null
+                ? tokenContract.hashCode()
+                : 0);
         return result;
     }
 

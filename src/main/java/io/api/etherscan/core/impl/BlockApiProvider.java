@@ -7,15 +7,13 @@ import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.UncleBlock;
 import io.api.etherscan.model.utility.UncleBlockResponseTO;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block API Implementation
  *
  * @see IBlockApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */

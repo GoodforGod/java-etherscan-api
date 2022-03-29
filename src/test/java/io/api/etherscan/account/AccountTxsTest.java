@@ -3,20 +3,17 @@ package io.api.etherscan.account;
 import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.Tx;
-import org.junit.Test;
-
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class AccountTxsTest extends ApiRunner {
+class AccountTxsTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         List<Tx> txs = getApi().account().txs("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         assertNotNull(txs);
         assertEquals(5, txs.size());
@@ -39,7 +36,7 @@ public class AccountTxsTest extends ApiRunner {
     }
 
     @Test
-    public void correctStartBlock() {
+    void correctStartBlock() {
         List<Tx> txs = getApi().account().txs("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9", 3892842);
         assertNotNull(txs);
         assertEquals(4, txs.size());
@@ -47,21 +44,21 @@ public class AccountTxsTest extends ApiRunner {
     }
 
     @Test
-    public void correctStartBlockEndBlock() {
+    void correctStartBlockEndBlock() {
         List<Tx> txs = getApi().account().txs("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9", 3892842, 3945741);
         assertNotNull(txs);
         assertEquals(3, txs.size());
         assertTxs(txs);
-        assertFalse(txs.get(0).equals(txs.get(1)));
-    }
-
-    @Test(expected = InvalidAddressException.class)
-    public void invalidParamWithError() {
-        List<Tx> txs = getApi().account().txs("9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
+        assertNotEquals(txs.get(0), txs.get(1));
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
+    void invalidParamWithError() {
+        assertThrows(InvalidAddressException.class, () -> getApi().account().txs("9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9"));
+    }
+
+    @Test
+    void correctParamWithEmptyExpectedResult() {
         List<Tx> txs = getApi().account().txs("0x9321cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());

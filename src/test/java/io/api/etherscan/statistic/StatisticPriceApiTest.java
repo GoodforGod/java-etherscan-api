@@ -2,18 +2,16 @@ package io.api.etherscan.statistic;
 
 import io.api.ApiRunner;
 import io.api.etherscan.model.Price;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class StatisticPriceApiTest extends ApiRunner {
+class StatisticPriceApiTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         Price price = getApi().stats().lastPrice();
         assertNotNull(price);
         assertNotNull(price.btcTimestamp());

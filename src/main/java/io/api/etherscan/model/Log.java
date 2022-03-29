@@ -2,7 +2,6 @@ package io.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -10,34 +9,32 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
 public class Log {
 
     private String blockNumber;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _blockNumber;
     private String address;
     private String transactionHash;
     private String transactionIndex;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _transactionIndex;
     private String timeStamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _timeStamp;
     private String data;
     private String gasPrice;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gasPrice;
     private String gasUsed;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gasUsed;
     private List<String> topics;
     private String logIndex;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _logIndex;
 
     // <editor-fold desc="Getters">
@@ -144,11 +141,21 @@ public class Log {
 
     @Override
     public int hashCode() {
-        int result = blockNumber != null ? blockNumber.hashCode() : 0;
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (transactionHash != null ? transactionHash.hashCode() : 0);
-        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-        result = 31 * result + (logIndex != null ? logIndex.hashCode() : 0);
+        int result = blockNumber != null
+                ? blockNumber.hashCode()
+                : 0;
+        result = 31 * result + (address != null
+                ? address.hashCode()
+                : 0);
+        result = 31 * result + (transactionHash != null
+                ? transactionHash.hashCode()
+                : 0);
+        result = 31 * result + (timeStamp != null
+                ? timeStamp.hashCode()
+                : 0);
+        result = 31 * result + (logIndex != null
+                ? logIndex.hashCode()
+                : 0);
         return result;
     }
 

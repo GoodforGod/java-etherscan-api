@@ -2,12 +2,9 @@ package io.api.etherscan.model.proxy;
 
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
@@ -16,7 +13,7 @@ public class TxProxy {
     private String to;
     private String hash;
     private String transactionIndex;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _transactionIndex;
     private String from;
     private String v;
@@ -24,18 +21,18 @@ public class TxProxy {
     private String s;
     private String r;
     private String nonce;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _nonce;
     private String value;
     private String gas;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gas;
     private String gasPrice;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gasPrice;
     private String blockHash;
     private String blockNumber;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _blockNumber;
 
     // <editor-fold desc="Getters">
@@ -115,18 +112,30 @@ public class TxProxy {
 
         TxProxy txProxy = (TxProxy) o;
 
-        if (hash != null ? !hash.equals(txProxy.hash) : txProxy.hash != null)
+        if (hash != null
+                ? !hash.equals(txProxy.hash)
+                : txProxy.hash != null)
             return false;
-        if (blockHash != null ? !blockHash.equals(txProxy.blockHash) : txProxy.blockHash != null)
+        if (blockHash != null
+                ? !blockHash.equals(txProxy.blockHash)
+                : txProxy.blockHash != null)
             return false;
-        return blockNumber != null ? blockNumber.equals(txProxy.blockNumber) : txProxy.blockNumber == null;
+        return blockNumber != null
+                ? blockNumber.equals(txProxy.blockNumber)
+                : txProxy.blockNumber == null;
     }
 
     @Override
     public int hashCode() {
-        int result = hash != null ? hash.hashCode() : 0;
-        result = 31 * result + (blockHash != null ? blockHash.hashCode() : 0);
-        result = 31 * result + (blockNumber != null ? blockNumber.hashCode() : 0);
+        int result = hash != null
+                ? hash.hashCode()
+                : 0;
+        result = 31 * result + (blockHash != null
+                ? blockHash.hashCode()
+                : 0);
+        result = 31 * result + (blockNumber != null
+                ? blockNumber.hashCode()
+                : 0);
         return result;
     }
 

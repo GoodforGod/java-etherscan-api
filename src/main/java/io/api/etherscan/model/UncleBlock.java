@@ -1,12 +1,9 @@
 package io.api.etherscan.model;
 
 import io.api.etherscan.util.BasicUtils;
-
 import java.util.List;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */

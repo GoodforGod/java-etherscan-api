@@ -2,20 +2,17 @@ package io.api.etherscan.block;
 
 import io.api.ApiRunner;
 import io.api.etherscan.model.UncleBlock;
-import org.junit.Test;
-
 import java.util.Optional;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class BlockApiTest extends ApiRunner {
+class BlockApiTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         Optional<UncleBlock> uncle = getApi().block().uncles(2165403);
         assertTrue(uncle.isPresent());
         assertFalse(uncle.get().isEmpty());
@@ -46,14 +43,14 @@ public class BlockApiTest extends ApiRunner {
     }
 
     @Test
-    public void correctNoUncles() {
+    void correctNoUncles() {
         Optional<UncleBlock> uncles = getApi().block().uncles(34);
         assertTrue(uncles.isPresent());
         assertTrue(uncles.get().getUncles().isEmpty());
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
+    void correctParamWithEmptyExpectedResult() {
         Optional<UncleBlock> uncles = getApi().block().uncles(99999999934L);
         assertFalse(uncles.isPresent());
     }

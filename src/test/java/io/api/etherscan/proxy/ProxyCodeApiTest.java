@@ -3,34 +3,31 @@ package io.api.etherscan.proxy;
 import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.util.BasicUtils;
-import org.junit.Test;
-
 import java.util.Optional;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class ProxyCodeApiTest extends ApiRunner {
+class ProxyCodeApiTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         Optional<String> call = getApi().proxy().code("0xf75e354c5edc8efed9b59ee9f67a80845ade7d0c");
         assertTrue(call.isPresent());
-        assertFalse(call.get(), BasicUtils.isNotHex(call.get()));
-    }
-
-    @Test(expected = InvalidAddressException.class)
-    public void invalidParamWithError() {
-        getApi().proxy().code("0f75e354c5edc8efed9b59ee9f67a80845ade7d0c");
+        assertFalse(BasicUtils.isNotHex(call.get()), call.get());
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
+    void invalidParamWithError() {
+        assertThrows(InvalidAddressException.class, () -> getApi().proxy().code("0f75e354c5edc8efed9b59ee9f67a80845ade7d0c"));
+    }
+
+    @Test
+    void correctParamWithEmptyExpectedResult() {
         Optional<String> call = getApi().proxy().code("0xf15e354c5edc8efed9b59ee9f67a80845ade7d0c");
         assertTrue(call.isPresent());
-        assertFalse(call.get(), BasicUtils.isNotHex(call.get()));
+        assertFalse(BasicUtils.isNotHex(call.get()), call.get());
     }
 }

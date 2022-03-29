@@ -4,22 +4,19 @@ import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.Balance;
 import io.api.support.AddressUtil;
-import org.junit.Test;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class AccountBalanceListTest extends ApiRunner {
+class AccountBalanceListTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         List<String> addresses = new ArrayList<>();
         addresses.add("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         addresses.add("0xC9F32CE1127e44C51cbD182D6364F3D707Fd0d47");
@@ -44,7 +41,7 @@ public class AccountBalanceListTest extends ApiRunner {
     }
 
     @Test
-    public void correctMoreThat20Addresses() {
+    void correctMoreThat20Addresses() {
         List<String> addresses = AddressUtil.genRealAddresses();
 
         List<Balance> balances = getApi().account().balances(addresses);
@@ -58,17 +55,17 @@ public class AccountBalanceListTest extends ApiRunner {
         assertNotEquals(balances.get(0), balances.get(1));
     }
 
-    @Test(expected = InvalidAddressException.class)
-    public void invalidParamWithError() {
+    @Test
+    void invalidParamWithError() {
         List<String> addresses = new ArrayList<>();
         addresses.add("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         addresses.add("C9F32CE1127e44C51cbD182D6364F3D707Fd0d47");
 
-        getApi().account().balances(addresses);
+        assertThrows(InvalidAddressException.class, () -> getApi().account().balances(addresses));
     }
 
     @Test
-    public void emptyParamList() {
+    void emptyParamList() {
         List<String> addresses = new ArrayList<>();
         List<Balance> balances = getApi().account().balances(addresses);
         assertNotNull(balances);
@@ -76,7 +73,7 @@ public class AccountBalanceListTest extends ApiRunner {
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
+    void correctParamWithEmptyExpectedResult() {
         List<String> addresses = new ArrayList<>();
         addresses.add("0x1327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         addresses.add("0xC1F32CE1127e44C51cbD182D6364F3D707Fd0d47");

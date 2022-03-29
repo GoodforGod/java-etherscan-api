@@ -2,33 +2,30 @@ package io.api.etherscan.model.proxy;
 
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
 public class BlockProxy {
 
     private String number;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _number;
     private String hash;
     private String parentHash;
     private String stateRoot;
     private String size;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private Long _size;
     private String difficulty;
     private String totalDifficulty;
     private String timestamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _timestamp;
 
     private String miner;
@@ -37,10 +34,10 @@ public class BlockProxy {
     private String logsBloom;
     private String mixHash;
     private String gasUsed;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gasUsed;
     private String gasLimit;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private BigInteger _gasLimit;
 
     private String sha3Uncles;
@@ -151,18 +148,30 @@ public class BlockProxy {
 
         BlockProxy that = (BlockProxy) o;
 
-        if (number != null ? !number.equals(that.number) : that.number != null)
+        if (number != null
+                ? !number.equals(that.number)
+                : that.number != null)
             return false;
-        if (hash != null ? !hash.equals(that.hash) : that.hash != null)
+        if (hash != null
+                ? !hash.equals(that.hash)
+                : that.hash != null)
             return false;
-        return parentHash != null ? parentHash.equals(that.parentHash) : that.parentHash == null;
+        return parentHash != null
+                ? parentHash.equals(that.parentHash)
+                : that.parentHash == null;
     }
 
     @Override
     public int hashCode() {
-        int result = number != null ? number.hashCode() : 0;
-        result = 31 * result + (hash != null ? hash.hashCode() : 0);
-        result = 31 * result + (parentHash != null ? parentHash.hashCode() : 0);
+        int result = number != null
+                ? number.hashCode()
+                : 0;
+        result = 31 * result + (hash != null
+                ? hash.hashCode()
+                : 0);
+        result = 31 * result + (parentHash != null
+                ? parentHash.hashCode()
+                : 0);
         return result;
     }
 

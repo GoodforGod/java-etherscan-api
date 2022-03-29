@@ -9,7 +9,6 @@ import io.api.etherscan.model.query.IQueryBuilder;
  *
  * @see LogQueryBuilder
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 31.10.2018
  */

@@ -2,15 +2,12 @@ package io.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -18,7 +15,7 @@ abstract class BaseTx {
 
     private long blockNumber;
     private String timeStamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _timeStamp;
     private String hash;
     private String from;
@@ -98,11 +95,21 @@ abstract class BaseTx {
     @Override
     public int hashCode() {
         int result = (int) (blockNumber ^ (blockNumber >>> 32));
-        result = 31 * result + (timeStamp != null ? timeStamp.hashCode() : 0);
-        result = 31 * result + (hash != null ? hash.hashCode() : 0);
-        result = 31 * result + (from != null ? from.hashCode() : 0);
-        result = 31 * result + (to != null ? to.hashCode() : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (timeStamp != null
+                ? timeStamp.hashCode()
+                : 0);
+        result = 31 * result + (hash != null
+                ? hash.hashCode()
+                : 0);
+        result = 31 * result + (from != null
+                ? from.hashCode()
+                : 0);
+        result = 31 * result + (to != null
+                ? to.hashCode()
+                : 0);
+        result = 31 * result + (value != null
+                ? value.hashCode()
+                : 0);
         return result;
     }
 

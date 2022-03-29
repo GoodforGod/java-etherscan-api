@@ -8,19 +8,17 @@ import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.model.*;
 import io.api.etherscan.model.utility.*;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Account API Implementation
  *
  * @see IAccountApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -148,7 +146,8 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
      * @return List of T values
      */
     private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams,
-                                                                            Class<R> tClass) throws ApiException {
+                                                                            Class<R> tClass)
+            throws ApiException {
         final List<T> result = new ArrayList<>();
         int page = 1;
         while (true) {

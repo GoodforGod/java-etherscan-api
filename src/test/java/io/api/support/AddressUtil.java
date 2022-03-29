@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
 public class AddressUtil {
 
-    public static List<String> genFakeAddresses(int size) {
+    static List<String> genFakeAddresses(int size) {
         final List<String> addresses = new ArrayList<>();
         for (int i = 0; i < size; i++)
             addresses.add("0x9327cb34984c" + ThreadLocalRandom.current().nextInt(1000, 9999) + "ec1EA0eAE98Ccf80A74f95B9");

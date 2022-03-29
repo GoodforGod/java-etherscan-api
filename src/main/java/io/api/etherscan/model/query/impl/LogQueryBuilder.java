@@ -9,7 +9,6 @@ import io.api.etherscan.util.BasicUtils;
  * Builder for The Event Log API
  *
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 31.10.2018
  */

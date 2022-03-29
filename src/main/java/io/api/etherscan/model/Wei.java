@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */
@@ -52,7 +50,9 @@ public class Wei {
 
     @Override
     public int hashCode() {
-        return result != null ? result.hashCode() : 0;
+        return result != null
+                ? result.hashCode()
+                : 0;
     }
 
     @Override

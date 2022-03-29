@@ -8,9 +8,8 @@ import io.api.etherscan.model.Status;
 import io.api.etherscan.model.utility.ReceiptStatusResponseTO;
 import io.api.etherscan.model.utility.StatusResponseTO;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Transaction API Implementation

@@ -1,13 +1,10 @@
 package io.api.etherscan.model;
 
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -80,9 +77,13 @@ public class Tx extends BaseTx {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (int) (nonce ^ (nonce >>> 32));
-        result = 31 * result + (blockHash != null ? blockHash.hashCode() : 0);
+        result = 31 * result + (blockHash != null
+                ? blockHash.hashCode()
+                : 0);
         result = 31 * result + transactionIndex;
-        result = 31 * result + (isError != null ? isError.hashCode() : 0);
+        result = 31 * result + (isError != null
+                ? isError.hashCode()
+                : 0);
         return result;
     }
 

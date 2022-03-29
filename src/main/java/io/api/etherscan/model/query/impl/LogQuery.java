@@ -4,12 +4,10 @@ import io.api.etherscan.core.ILogsApi;
 
 /**
  * Final builded container for The Event Log API
- *
  * EtherScan - API Descriptions https://etherscan.io/apis#logs
  *
  * @see LogQueryBuilder
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 31.10.2018
  */

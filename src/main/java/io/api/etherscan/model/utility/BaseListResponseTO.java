@@ -3,8 +3,6 @@ package io.api.etherscan.model.utility;
 import java.util.List;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 30.10.2018
  */

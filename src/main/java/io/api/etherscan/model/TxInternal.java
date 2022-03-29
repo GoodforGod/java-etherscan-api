@@ -3,8 +3,6 @@ package io.api.etherscan.model;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 29.10.2018
  */
@@ -21,7 +19,9 @@ public class TxInternal extends BaseTx {
     }
 
     public long getTraceId() {
-        return (traceId == null) ? 0 : Long.parseLong(traceId);
+        return (traceId == null)
+                ? 0
+                : Long.parseLong(traceId);
     }
 
     public String getTraceIdAsString() {
@@ -56,8 +56,12 @@ public class TxInternal extends BaseTx {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (traceId != null ? traceId.hashCode() : 0);
-        result = 31 * result + (errCode != null ? errCode.hashCode() : 0);
+        result = 31 * result + (traceId != null
+                ? traceId.hashCode()
+                : 0);
+        result = 31 * result + (errCode != null
+                ? errCode.hashCode()
+                : 0);
         return result;
     }
 

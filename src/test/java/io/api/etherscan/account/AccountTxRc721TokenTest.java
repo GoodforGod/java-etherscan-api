@@ -3,18 +3,17 @@ package io.api.etherscan.account;
 import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
 import io.api.etherscan.model.TxToken;
-import org.junit.Test;
-
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author NGuggs
  * @since 11.28.2021
  */
-public class AccountTxRc721TokenTest extends ApiRunner {
+class AccountTxRc721TokenTest extends ApiRunner {
 
     @Test
-    public void correct() {
+    void correct() {
         List<TxToken> txs = getApi().account().txsNftToken("0x1a1ebe0d86f72884c3fd484ae1e796e08f8ffa67");
         assertNotNull(txs);
         assertEquals(16, txs.size());
@@ -33,7 +32,7 @@ public class AccountTxRc721TokenTest extends ApiRunner {
     }
 
     @Test
-    public void correctStartBlock() {
+    void correctStartBlock() {
         List<TxToken> txs = getApi().account().txsNftToken("0x1a1ebe0d86f72884c3fd484ae1e796e08f8ffa67", 4762071);
         System.out.println(txs);
         assertNotNull(txs);
@@ -42,7 +41,7 @@ public class AccountTxRc721TokenTest extends ApiRunner {
     }
 
     @Test
-    public void correctStartBlockEndBlock() {
+    void correctStartBlockEndBlock() {
         List<TxToken> txs = getApi().account().txsNftToken("0x1a1ebe0d86f72884c3fd484ae1e796e08f8ffa67", 4761862, 4761934);
         System.out.println(txs);
         assertNotNull(txs);
@@ -50,13 +49,14 @@ public class AccountTxRc721TokenTest extends ApiRunner {
         assertTxs(txs);
     }
 
-    @Test(expected = InvalidAddressException.class)
-    public void invalidParamWithError() {
-        getApi().account().txsNftToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+    @Test
+    void invalidParamWithError() {
+        assertThrows(InvalidAddressException.class,
+                () -> getApi().account().txsNftToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7"));
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
+    void correctParamWithEmptyExpectedResult() {
         List<TxToken> txs = getApi().account().txsNftToken("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());

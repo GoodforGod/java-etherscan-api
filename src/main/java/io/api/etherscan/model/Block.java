@@ -2,14 +2,11 @@ package io.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -18,7 +15,7 @@ public class Block {
     private long blockNumber;
     private BigInteger blockReward;
     private String timeStamp;
-    @Expose(serialize = false, deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private LocalDateTime _timeStamp;
 
     // <editor-fold desc="Getter">

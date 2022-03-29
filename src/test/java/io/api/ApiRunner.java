@@ -3,10 +3,10 @@ package io.api;
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.manager.impl.QueueManager;
 import io.api.etherscan.model.EthNetwork;
-import org.junit.AfterClass;
-import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 
-public class ApiRunner extends Assert {
+public class ApiRunner extends Assertions {
 
     private static final EtherScanApi api;
     private static final EtherScanApi apiRopsten;
@@ -50,7 +50,7 @@ public class ApiRunner extends Assert {
         return apiKovan;
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanup() throws Exception {
         api.close();
         apiRopsten.close();

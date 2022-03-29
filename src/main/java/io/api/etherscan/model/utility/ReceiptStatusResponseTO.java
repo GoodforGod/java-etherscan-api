@@ -1,8 +1,6 @@
 package io.api.etherscan.model.utility;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */

@@ -5,34 +5,19 @@ import io.api.etherscan.model.Log;
 import io.api.etherscan.model.query.LogOp;
 import io.api.etherscan.model.query.impl.LogQuery;
 import io.api.etherscan.model.query.impl.LogQueryBuilder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-@RunWith(Parameterized.class)
-public class LogsApiTest extends ApiRunner {
+class LogsApiTest extends ApiRunner {
 
-    private final LogQuery query;
-    private final int logsSize;
-
-    public LogsApiTest(LogQuery query, int logsSize) {
-        this.query = query;
-        this.logsSize = logsSize;
-    }
-
-    @Parameters
-    public static Collection data() {
+    static Stream<Arguments> source() {
         LogQuery single = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
                 .build();
@@ -53,16 +38,16 @@ public class LogsApiTest extends ApiRunner {
                 .setOpTopic0_1(LogOp.OR)
                 .build();
 
-        return Arrays.asList(new Object[][] {
-                { single, 423 },
-                { singleInvalidAddr, 0 },
-                { tupleAnd, 1 },
-                { tupleOr, 425 }
-        });
+        return Stream.of(
+                Arguments.of(single, 423),
+                Arguments.of(singleInvalidAddr, 0),
+                Arguments.of(tupleAnd, 1),
+                Arguments.of(tupleOr, 425));
     }
 
-    @Test
-    public void validateQuery() {
+    @ParameterizedTest
+    @MethodSource("source")
+    void validateQuery(LogQuery query, int logsSize) {
         List<Log> logs = getApi().logs().logs(query);
         assertEquals(logsSize, logs.size());
 

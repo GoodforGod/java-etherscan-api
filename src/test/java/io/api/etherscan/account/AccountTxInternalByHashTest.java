@@ -5,56 +5,23 @@ import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.error.InvalidTxHashException;
 import io.api.etherscan.model.TxInternal;
 import io.api.etherscan.util.BasicUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-@RunWith(Parameterized.class)
-public class AccountTxInternalByHashTest extends ApiRunner {
+class AccountTxInternalByHashTest extends ApiRunner {
 
-    private final EtherScanApi api;
-    private final int txAmount;
-    private final String validTx;
-    private final String invalidTx;
-    private final String emptyTx;
-
-    public AccountTxInternalByHashTest(EtherScanApi api, int txAmount, String validTx, String invalidTx, String emptyTx) {
-        this.api = api;
-        this.txAmount = txAmount;
-        this.validTx = validTx;
-        this.invalidTx = invalidTx;
-        this.emptyTx = emptyTx;
-    }
-
-    @Parameters
-    public static Collection data() {
-        return Arrays.asList(new Object[][] {
-                {
-                        getApi(),
-                        1,
-                        "0x1b513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b",
-                        "0xb513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b",
-                        "0x2b513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b",
-                }
-        });
-    }
+    private final EtherScanApi api = getApi();
 
     @Test
-    public void correct() {
-        List<TxInternal> txs = api.account().txsInternalByHash(validTx);
+    void correct() {
+        List<TxInternal> txs = api.account()
+                .txsInternalByHash("0x1b513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b");
         assertNotNull(txs);
-        assertEquals(txAmount, txs.size());
+        assertEquals(1, txs.size());
         assertTxs(txs);
         assertNotNull(txs.get(0).getFrom());
         assertNotNull(txs.get(0).getTimeStamp());
@@ -73,14 +40,16 @@ public class AccountTxInternalByHashTest extends ApiRunner {
         }
     }
 
-    @Test(expected = InvalidTxHashException.class)
-    public void invalidParamWithError() {
-        List<TxInternal> txs = api.account().txsInternalByHash(invalidTx);
+    @Test
+    void invalidParamWithError() {
+        assertThrows(InvalidTxHashException.class,
+                () -> api.account().txsInternalByHash("0xb513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b"));
     }
 
     @Test
-    public void correctParamWithEmptyExpectedResult() {
-        List<TxInternal> txs = api.account().txsInternalByHash(emptyTx);
+    void correctParamWithEmptyExpectedResult() {
+        List<TxInternal> txs = api.account()
+                .txsInternalByHash("0x2b513dd971aad228eb31f54489803639de167309ac72de68ecdaeb022a7ab42b");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());
     }

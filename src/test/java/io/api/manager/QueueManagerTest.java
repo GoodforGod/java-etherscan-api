@@ -4,18 +4,17 @@ import io.api.ApiRunner;
 import io.api.etherscan.manager.IQueueManager;
 import io.api.etherscan.manager.impl.FakeQueueManager;
 import io.api.etherscan.manager.impl.QueueManager;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
-public class QueueManagerTest extends ApiRunner {
+class QueueManagerTest extends ApiRunner {
 
     @Test
-    public void fakeManager() {
+    void fakeManager() {
         IQueueManager fakeManager = new FakeQueueManager();
         fakeManager.takeTurn();
         fakeManager.takeTurn();
@@ -26,16 +25,18 @@ public class QueueManagerTest extends ApiRunner {
         assertNotNull(fakeManager);
     }
 
-    @Test(timeout = 3500)
-    public void queueManager() {
+    @Test
+    @Timeout(3500)
+    void queueManager() {
         IQueueManager queueManager = new QueueManager(1, 3);
         queueManager.takeTurn();
         queueManager.takeTurn();
         assertNotNull(queueManager);
     }
 
-    @Test(timeout = 4500)
-    public void queueManagerWithDelay() {
+    @Test
+    @Timeout(4500)
+    void queueManagerWithDelay() {
         IQueueManager queueManager = new QueueManager(1, 2, 2);
         queueManager.takeTurn();
         queueManager.takeTurn();
@@ -43,7 +44,7 @@ public class QueueManagerTest extends ApiRunner {
     }
 
     @Test
-    public void queueManagerTimeout() {
+    void queueManagerTimeout() {
         IQueueManager queueManager = new QueueManager(1, 3);
         queueManager.takeTurn();
         long start = System.currentTimeMillis();

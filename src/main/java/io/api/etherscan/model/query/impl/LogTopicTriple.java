@@ -10,7 +10,6 @@ import io.api.etherscan.model.query.LogOp;
  *
  * @see LogQueryBuilder
  * @see ILogsApi
- *
  * @author GoodforGod
  * @since 31.10.2018
  */
@@ -22,8 +21,12 @@ public class LogTopicTriple extends BaseLogQuery implements IQueryBuilder {
 
     private LogOp topic0_1_opr, topic1_2_opr, topic0_2_opr;
 
-    LogTopicTriple(String address, long startBlock, long endBlock,
-                   String topic0, String topic1, String topic2) {
+    LogTopicTriple(String address,
+                   long startBlock,
+                   long endBlock,
+                   String topic0,
+                   String topic1,
+                   String topic2) {
         this.address = address;
         this.startBlock = startBlock;
         this.endBlock = endBlock;

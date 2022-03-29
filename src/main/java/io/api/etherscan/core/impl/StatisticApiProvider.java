@@ -10,15 +10,13 @@ import io.api.etherscan.model.Supply;
 import io.api.etherscan.model.utility.PriceResponseTO;
 import io.api.etherscan.model.utility.StringResponseTO;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Statistic API Implementation
  *
  * @see IStatisticApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */

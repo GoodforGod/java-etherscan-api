@@ -14,17 +14,15 @@ import io.api.etherscan.model.proxy.utility.StringProxyTO;
 import io.api.etherscan.model.proxy.utility.TxInfoProxyTO;
 import io.api.etherscan.model.proxy.utility.TxProxyTO;
 import io.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Proxy API Implementation
  *
  * @see IProxyApi
- *
  * @author GoodforGod
  * @since 28.10.2018
  */
@@ -109,7 +107,9 @@ public class ProxyApiProvider extends BasicProvider implements IProxyApi {
     @Override
     public Optional<TxProxy> tx(final long blockNo, final long index) throws ApiException {
         final long compBlockNo = BasicUtils.compensateMinBlock(blockNo);
-        final long compIndex = (index < 1) ? 1 : index;
+        final long compIndex = (index < 1)
+                ? 1
+                : index;
 
         final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + "0x"
                 + Long.toHexString(compIndex);

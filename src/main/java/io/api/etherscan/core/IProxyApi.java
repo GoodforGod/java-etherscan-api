@@ -4,11 +4,10 @@ import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.proxy.BlockProxy;
 import io.api.etherscan.model.proxy.ReceiptProxy;
 import io.api.etherscan.model.proxy.TxProxy;
-import org.jetbrains.annotations.ApiStatus.Experimental;
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigInteger;
 import java.util.Optional;
+import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan - API Descriptions https://etherscan.io/apis#proxy

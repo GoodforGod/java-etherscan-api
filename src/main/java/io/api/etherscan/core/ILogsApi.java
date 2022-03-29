@@ -3,9 +3,8 @@ package io.api.etherscan.core;
 import io.api.etherscan.error.ApiException;
 import io.api.etherscan.model.Log;
 import io.api.etherscan.model.query.impl.LogQuery;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan - API Descriptions https://etherscan.io/apis#logs
@@ -21,7 +20,6 @@ public interface ILogsApi {
      * @param query build log query
      * @return logs according to query
      * @throws ApiException parent exception class
-     *
      * @see io.api.etherscan.model.query.impl.LogQueryBuilder
      */
     @NotNull

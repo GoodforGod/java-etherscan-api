@@ -3,13 +3,10 @@ package io.api.etherscan.model.proxy;
 import com.google.gson.annotations.Expose;
 import io.api.etherscan.model.Log;
 import io.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.util.List;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author GoodforGod
  * @since 03.11.2018
  */
@@ -104,18 +101,30 @@ public class ReceiptProxy {
 
         ReceiptProxy that = (ReceiptProxy) o;
 
-        if (blockNumber != null ? !blockNumber.equals(that.blockNumber) : that.blockNumber != null)
+        if (blockNumber != null
+                ? !blockNumber.equals(that.blockNumber)
+                : that.blockNumber != null)
             return false;
-        if (transactionHash != null ? !transactionHash.equals(that.transactionHash) : that.transactionHash != null)
+        if (transactionHash != null
+                ? !transactionHash.equals(that.transactionHash)
+                : that.transactionHash != null)
             return false;
-        return transactionIndex != null ? transactionIndex.equals(that.transactionIndex) : that.transactionIndex == null;
+        return transactionIndex != null
+                ? transactionIndex.equals(that.transactionIndex)
+                : that.transactionIndex == null;
     }
 
     @Override
     public int hashCode() {
-        int result = blockNumber != null ? blockNumber.hashCode() : 0;
-        result = 31 * result + (transactionHash != null ? transactionHash.hashCode() : 0);
-        result = 31 * result + (transactionIndex != null ? transactionIndex.hashCode() : 0);
+        int result = blockNumber != null
+                ? blockNumber.hashCode()
+                : 0;
+        result = 31 * result + (transactionHash != null
+                ? transactionHash.hashCode()
+                : 0);
+        result = 31 * result + (transactionIndex != null
+                ? transactionIndex.hashCode()
+                : 0);
         return result;
     }
 
