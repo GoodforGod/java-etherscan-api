@@ -2,7 +2,10 @@ package io.api.etherscan.manager.impl;
 
 import io.api.etherscan.manager.IQueueManager;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Queue Semaphore implementation with size and reset time as params
@@ -54,7 +57,13 @@ public class QueueManager implements IQueueManager, AutoCloseable {
     }
 
     private Runnable releaseLocks(int toRelease) {
-        return () -> semaphore.release(toRelease);
+        return () -> {
+            int availablePermits = semaphore.availablePermits();
+            int neededPermits = toRelease - availablePermits;
+            if (neededPermits > 0) {
+                semaphore.release(neededPermits);
+            }
+        };
     }
 
     @Override
