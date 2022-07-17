@@ -35,6 +35,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     private static final String ACT_TX_INTERNAL_ACTION = ACT_PREFIX + "txlistinternal";
     private static final String ACT_TX_TOKEN_ACTION = ACT_PREFIX + "tokentx";
     private static final String ACT_TX_NFT_TOKEN_ACTION = ACT_PREFIX + "tokennfttx";
+    private static final String ACT_TX_1155_TOKEN_ACTION = ACT_PREFIX + "token1155tx";
     private static final String ACT_MINED_ACTION = ACT_PREFIX + "getminedblocks";
 
     private static final String BLOCK_TYPE_PARAM = "&blocktype=blocks";
@@ -264,5 +265,71 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         final String urlParams = ACT_MINED_ACTION + offsetParam + BLOCK_TYPE_PARAM + ADDRESS_PARAM + address;
 
         return getRequestUsingOffset(urlParams, BlockResponseTO.class);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc20> erc20Transfers(String address) throws ApiException {
+        return erc20Transfers(address, MIN_START_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc20> erc20Transfers(String address, long startBlock) throws ApiException {
+        return erc20Transfers(address, startBlock, MAX_END_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc20> erc20Transfers(String address, long startBlock, long endBlock) throws ApiException {
+        return getTokenTransfers(address, startBlock, endBlock, ACT_TX_TOKEN_ACTION, TxErc20ResponseTO.class);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc721> erc721Transfers(String address) throws ApiException {
+        return erc721Transfers(address, MIN_START_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc721> erc721Transfers(String address, long startBlock) throws ApiException {
+        return erc721Transfers(address, startBlock, MAX_END_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc721> erc721Transfers(String address, long startBlock, long endBlock) throws ApiException {
+        return getTokenTransfers(address, startBlock, endBlock, ACT_TX_NFT_TOKEN_ACTION, TxErc721ResponseTO.class);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc1155> erc1155Transfers(String address) throws ApiException {
+        return erc1155Transfers(address, MIN_START_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc1155> erc1155Transfers(String address, long startBlock) throws ApiException {
+        return erc1155Transfers(address, startBlock, MAX_END_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxErc1155> erc1155Transfers(String address, long startBlock, long endBlock) throws ApiException {
+        return getTokenTransfers(address, startBlock, endBlock, ACT_TX_1155_TOKEN_ACTION, TxErc1155ResponseTO.class);
+    }
+
+    @NotNull
+    private <T extends BaseTxToken, R extends BaseListResponseTO<T>> List<T> getTokenTransfers(String address, long startBlock, long endBlock, String tokenAction, Class<R> responseTOClass) throws ApiException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
+        final String urlParams = tokenAction + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, responseTOClass);
     }
 }

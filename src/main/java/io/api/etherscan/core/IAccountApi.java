@@ -137,4 +137,59 @@ public interface IAccountApi {
      */
     @NotNull
     List<Block> minedBlocks(String address) throws ApiException;
+
+    @NotNull
+    List<TxErc20> erc20Transfers(String address) throws ApiException;
+
+    @NotNull
+    List<TxErc20> erc20Transfers(String address, long startBlock) throws ApiException;
+
+    /**
+     * All ERC-20 token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws ApiException parent exception class
+     */
+    @NotNull
+    List<TxErc20> erc20Transfers(String address, long startBlock, long endBlock) throws ApiException;
+
+    @NotNull
+    List<TxErc721> erc721Transfers(String address) throws ApiException;
+
+    @NotNull
+    List<TxErc721> erc721Transfers(String address, long startBlock) throws ApiException;
+
+    /**
+     * All ERC-721 (NFT) token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws ApiException parent exception class
+     */
+    @NotNull
+    List<TxErc721> erc721Transfers(String address, long startBlock, long endBlock) throws ApiException;
+
+    @NotNull
+    List<TxErc1155> erc1155Transfers(String address) throws ApiException;
+
+    @NotNull
+    List<TxErc1155> erc1155Transfers(String address, long startBlock) throws ApiException;
+
+    /**
+     * All ERC-1155 token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws ApiException parent exception class
+     */
+    @NotNull
+    List<TxErc1155> erc1155Transfers(String address, long startBlock, long endBlock) throws ApiException;
+
 }

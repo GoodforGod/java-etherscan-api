@@ -2,7 +2,7 @@ package io.api.etherscan.account;
 
 import io.api.ApiRunner;
 import io.api.etherscan.error.InvalidAddressException;
-import io.api.etherscan.model.TxToken;
+import io.api.etherscan.model.TxErc20;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class AccountTxTokenTest extends ApiRunner {
 
     @Test
     public void correct() {
-        List<TxToken> txs = getApi().account().txsToken("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
+        List<TxErc20> txs = getApi().account().erc20Transfers("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
         assertNotNull(txs);
         assertEquals(3, txs.size());
         assertTxs(txs);
@@ -36,7 +36,7 @@ public class AccountTxTokenTest extends ApiRunner {
 
     @Test
     public void correctStartBlock() {
-        List<TxToken> txs = getApi().account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
+        List<TxErc20> txs = getApi().account().erc20Transfers("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
         assertNotNull(txs);
         assertEquals(11, txs.size());
         assertTxs(txs);
@@ -44,7 +44,7 @@ public class AccountTxTokenTest extends ApiRunner {
 
     @Test
     public void correctStartBlockEndBlock() {
-        List<TxToken> txs = getApi().account().txsToken("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
+        List<TxErc20> txs = getApi().account().erc20Transfers("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
         assertNotNull(txs);
         assertEquals(5, txs.size());
         assertTxs(txs);
@@ -52,18 +52,18 @@ public class AccountTxTokenTest extends ApiRunner {
 
     @Test(expected = InvalidAddressException.class)
     public void invalidParamWithError() {
-        getApi().account().txsToken("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        getApi().account().erc20Transfers("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
     }
 
     @Test
     public void correctParamWithEmptyExpectedResult() {
-        List<TxToken> txs = getApi().account().txsToken("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        List<TxErc20> txs = getApi().account().erc20Transfers("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());
     }
 
-    private void assertTxs(List<TxToken> txs) {
-        for (TxToken tx : txs) {
+    private void assertTxs(List<TxErc20> txs) {
+        for (TxErc20 tx : txs) {
             assertNotNull(tx.getBlockHash());
             assertNotNull(tx.getTokenName());
             assertNotNull(tx.getTokenSymbol());
