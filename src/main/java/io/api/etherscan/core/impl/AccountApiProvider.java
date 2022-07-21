@@ -232,6 +232,32 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
 
     @NotNull
     @Override
+    public List<TxToken> txsToken(final String address, final String contractAddress) throws ApiException {
+        return txsToken(address, contractAddress, MIN_START_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxToken> txsToken(final String address, final String contractAddress, final long startBlock) throws ApiException {
+        return txsToken(address, contractAddress, startBlock, MAX_END_BLOCK);
+    }
+
+    @NotNull
+    @Override
+    public List<TxToken> txsToken(final String address, final String contractAddress, final long startBlock, final long endBlock) throws ApiException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
+        final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address
+                + CONTRACT_PARAM + contractAddress + blockParam + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
+    }
+
+    @NotNull
+    @Override
     public List<TxToken> txsNftToken(String address) throws ApiException {
         return txsNftToken(address, MIN_START_BLOCK);
     }
