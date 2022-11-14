@@ -34,6 +34,7 @@ public class EtherScanApi implements AutoCloseable {
     private final IProxyApi proxy;
     private final IStatisticApi stats;
     private final ITransactionApi txs;
+    private final IGasTrackerApi gastracker;
 
     public EtherScanApi() {
         this(DEFAULT_KEY, EthNetwork.MAINNET);
@@ -96,6 +97,7 @@ public class EtherScanApi implements AutoCloseable {
         this.proxy = new ProxyApiProvider(queue, baseUrl, executor);
         this.stats = new StatisticApiProvider(queue, baseUrl, executor);
         this.txs = new TransactionApiProvider(queue, baseUrl, executor);
+        this.gastracker = new GasTrackerApiProvider(queue, baseUrl, executor);
     }
 
     @NotNull
@@ -131,6 +133,11 @@ public class EtherScanApi implements AutoCloseable {
     @NotNull
     public IStatisticApi stats() {
         return stats;
+    }
+
+    @NotNull
+    public IGasTrackerApi gastracker() {
+        return gastracker;
     }
 
     @Override
