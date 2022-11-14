@@ -77,6 +77,7 @@ abstract class BasicProvider {
     String getRequest(final String urlParameters) {
         queue.takeTurn();
         final String url = baseUrl + module + urlParameters;
+        System.out.println("Url generated: " + url);
         final String result = executor.get(url);
         if (BasicUtils.isEmpty(result))
             throw new EtherScanException("Server returned null value for GET request at URL - " + url);
