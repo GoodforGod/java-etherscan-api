@@ -88,6 +88,7 @@ public class EtherScanApi implements AutoCloseable {
 
         final String ending = EthNetwork.TOBALABA.equals(network) ? "com" : "io";
         final String baseUrl = "https://" + network.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
+        final String mainnetBaseUrl = "https://" + EthNetwork.MAINNET.getDomain() + ".etherscan." + ending + "/api" + "?apikey=" + apiKey;
 
         this.queueManager = queue;
         this.account = new AccountApiProvider(queue, baseUrl, executor);
@@ -97,7 +98,7 @@ public class EtherScanApi implements AutoCloseable {
         this.proxy = new ProxyApiProvider(queue, baseUrl, executor);
         this.stats = new StatisticApiProvider(queue, baseUrl, executor);
         this.txs = new TransactionApiProvider(queue, baseUrl, executor);
-        this.gastracker = new GasTrackerApiProvider(queue, baseUrl, executor);
+        this.gastracker = new GasTrackerApiProvider(queue, mainnetBaseUrl, executor);
     }
 
     @NotNull
