@@ -1,5 +1,6 @@
 # Java EtherScan API 
 
+[![Minimum required Java version](https://img.shields.io/badge/Java-1.8%2B-blue?logo=openjdk)](https://openjdk.org/projects/jdk8/)
 [![GitHub Action](https://github.com/goodforgod/java-etherscan-api/workflows/Java%20CI/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3A%22Java+CI%22)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
@@ -14,7 +15,7 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 
 **Gradle**
 ```groovy
-implementation "com.github.goodforgod:java-etherscan-api:1.3.1"
+implementation "com.github.goodforgod:java-etherscan-api:2.0.0-SNAPSHOT"
 ```
 
 **Maven**
@@ -22,7 +23,7 @@ implementation "com.github.goodforgod:java-etherscan-api:1.3.1"
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.3.1</version>
+    <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
