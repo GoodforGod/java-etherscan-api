@@ -32,14 +32,14 @@ abstract class BasicProvider {
     private final RequestQueueManager queue;
     private final Gson gson;
 
-    BasicProvider(RequestQueueManager queue,
+    BasicProvider(RequestQueueManager requestQueueManager,
                   String module,
                   String baseUrl,
-                  EthHttpClient executor) {
-        this.queue = queue;
+                  EthHttpClient ethHttpClient) {
+        this.queue = requestQueueManager;
         this.module = "&module=" + module;
         this.baseUrl = baseUrl;
-        this.executor = executor;
+        this.executor = ethHttpClient;
         this.gson = new GsonConfiguration().builder().create();
     }
 

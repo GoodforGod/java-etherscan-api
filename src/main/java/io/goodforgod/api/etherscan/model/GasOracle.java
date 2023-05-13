@@ -1,15 +1,14 @@
-package io.api.etherscan.model;
+package io.goodforgod.api.etherscan.model;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author Abhay Gupta
  * @since 14.11.2022
  */
 public class GasOracle {
+
     private Long LastBlock;
     private Integer SafeGasPrice;
     private Integer ProposeGasPrice;
@@ -43,10 +42,14 @@ public class GasOracle {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         GasOracle gasOracle = (GasOracle) o;
-        return LastBlock.equals(gasOracle.LastBlock) && SafeGasPrice.equals(gasOracle.SafeGasPrice) && ProposeGasPrice.equals(gasOracle.ProposeGasPrice) && FastGasPrice.equals(gasOracle.FastGasPrice) && suggestBaseFee.equals(gasOracle.suggestBaseFee) && gasUsedRatio.equals(gasOracle.gasUsedRatio);
+        return LastBlock.equals(gasOracle.LastBlock) && SafeGasPrice.equals(gasOracle.SafeGasPrice)
+                && ProposeGasPrice.equals(gasOracle.ProposeGasPrice) && FastGasPrice.equals(gasOracle.FastGasPrice)
+                && suggestBaseFee.equals(gasOracle.suggestBaseFee) && gasUsedRatio.equals(gasOracle.gasUsedRatio);
     }
 
     @Override

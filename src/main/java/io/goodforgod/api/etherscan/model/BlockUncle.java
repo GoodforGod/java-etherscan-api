@@ -1,7 +1,6 @@
 package io.goodforgod.api.etherscan.model;
 
 import io.goodforgod.api.etherscan.util.BasicUtils;
-
 import java.math.BigInteger;
 import java.util.List;
 

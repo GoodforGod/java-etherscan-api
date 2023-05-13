@@ -34,6 +34,10 @@ public interface EtherScanAPI extends AutoCloseable {
     @NotNull
     StatisticAPI stats();
 
+    @NotNull
+    GasTrackerAPI gasTracker();
+
+    @NotNull
     static Builder builder() {
         return new EthScanAPIBuilder();
     }

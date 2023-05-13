@@ -234,19 +234,20 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address, final String contractAddress) throws ApiException {
-        return txsToken(address, contractAddress, MIN_START_BLOCK);
+    public List<TxERC20> txsERC20(String address, String contractAddress) throws EtherScanException {
+        return txsERC20(address, contractAddress, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address, final String contractAddress, final long startBlock) throws ApiException {
-        return txsToken(address, contractAddress, startBlock, MAX_END_BLOCK);
+    public List<TxERC20> txsERC20(String address, String contractAddress, long startBlock) throws EtherScanException {
+        return txsERC20(address, contractAddress, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxToken> txsToken(final String address, final String contractAddress, final long startBlock, final long endBlock) throws ApiException {
+    public List<TxERC20> txsERC20(String address, String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -255,7 +256,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address
                 + CONTRACT_PARAM + contractAddress + blockParam + SORT_ASC_PARAM;
 
-        return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
+        return getRequestUsingOffset(urlParams, TxERC20ResponseTO.class);
     }
 
     @NotNull

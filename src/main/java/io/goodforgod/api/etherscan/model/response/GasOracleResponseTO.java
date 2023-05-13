@@ -1,10 +1,8 @@
-package io.api.etherscan.model.utility;
+package io.goodforgod.api.etherscan.model.response;
 
-import io.api.etherscan.model.GasOracle;
+import io.goodforgod.api.etherscan.model.GasOracle;
 
 /**
- * ! NO DESCRIPTION !
- *
  * @author Abhay Gupta
  * @since 14.11.2022
  */

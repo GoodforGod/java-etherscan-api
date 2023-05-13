@@ -2,10 +2,8 @@ package io.goodforgod.api.etherscan.account;
 
 import io.goodforgod.api.etherscan.ApiRunner;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidAddressException;
-import io.goodforgod.api.etherscan.model.TxERC20;
-import java.util.List;
-
 import io.goodforgod.api.etherscan.model.TxERC721;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**

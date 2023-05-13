@@ -3,10 +3,9 @@ package io.goodforgod.api.etherscan.manager;
 import io.goodforgod.api.etherscan.ApiRunner;
 import io.goodforgod.api.etherscan.manager.impl.FakeRequestQueueManager;
 import io.goodforgod.api.etherscan.manager.impl.SemaphoreRequestQueueManager;
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-
-import java.time.Duration;
 
 /**
  * @author GoodforGod
@@ -38,7 +37,8 @@ class SemaphoreRequestQueueManagerTest extends ApiRunner {
     @Test
     @Timeout(4500)
     void queueManagerWithDelay() {
-        RequestQueueManager requestQueueManager = new SemaphoreRequestQueueManager(1, Duration.ofSeconds(2), Duration.ofSeconds(2));
+        RequestQueueManager requestQueueManager = new SemaphoreRequestQueueManager(1, Duration.ofSeconds(2),
+                Duration.ofSeconds(2));
         requestQueueManager.takeTurn();
         requestQueueManager.takeTurn();
         assertNotNull(requestQueueManager);
