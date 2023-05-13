@@ -12,9 +12,10 @@ import java.time.Duration;
  */
 public interface RequestQueueManager extends AutoCloseable {
 
-    RequestQueueManager DEFAULT_KEY_QUEUE = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5050L),
+    RequestQueueManager DEFAULT = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5050L),
             Duration.ofMillis(5050L), 0);
-    RequestQueueManager PERSONAL_KEY_QUEUE = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1050L),
+
+    RequestQueueManager PERSONAL = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1050L),
             Duration.ofMillis(1050L), 5);
 
     /**

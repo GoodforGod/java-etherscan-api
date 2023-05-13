@@ -23,7 +23,7 @@ public class ApiRunner extends Assertions {
                 : key;
 
         final RequestQueueManager queueManager = (DEFAULT_KEY.equals(apiKey))
-                ? RequestQueueManager.DEFAULT_KEY_QUEUE
+                ? RequestQueueManager.DEFAULT
                 : new SemaphoreRequestQueueManager(1, Duration.ofMillis(1200L), Duration.ofMillis(1200L), 0);
 
         api = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.MAINNET).withQueue(queueManager)

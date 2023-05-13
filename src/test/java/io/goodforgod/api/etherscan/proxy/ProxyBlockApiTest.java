@@ -17,7 +17,7 @@ class ProxyBlockApiTest extends ApiRunner {
     private final EtherScanAPI api;
 
     ProxyBlockApiTest() {
-        final RequestQueueManager queueManager = RequestQueueManager.DEFAULT_KEY_QUEUE;
+        final RequestQueueManager queueManager = RequestQueueManager.DEFAULT;
         this.api = EtherScanAPI.builder().withApiKey(getApiKey()).withNetwork(EthNetworks.MAINNET).withQueue(queueManager)
                 .build();
     }

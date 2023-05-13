@@ -20,7 +20,7 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
     private String apiKey = DEFAULT_KEY;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
-    private RequestQueueManager queueManager = RequestQueueManager.DEFAULT_KEY_QUEUE;
+    private RequestQueueManager queueManager = RequestQueueManager.DEFAULT;
     private Supplier<EthHttpClient> ethHttpClientSupplier = DEFAULT_SUPPLIER;
 
     @NotNull
