@@ -1,11 +1,13 @@
 package io.goodforgod.api.etherscan;
 
+import com.google.gson.Gson;
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
-import io.goodforgod.api.etherscan.executor.impl.UrlEthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
+import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.manager.impl.FakeRequestQueueManager;
 import io.goodforgod.api.etherscan.util.BasicUtils;
+import io.goodforgod.gson.configuration.GsonConfiguration;
 import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,10 +20,19 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
     private static final Supplier<EthHttpClient> DEFAULT_SUPPLIER = UrlEthHttpClient::new;
     private static final String DEFAULT_KEY = "YourApiKeyToken";
 
+    private final Gson gson = new GsonConfiguration().builder().create();
+
     private String apiKey = DEFAULT_KEY;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
     private RequestQueueManager queueManager = RequestQueueManager.DEFAULT;
     private Supplier<EthHttpClient> ethHttpClientSupplier = DEFAULT_SUPPLIER;
+    private Supplier<Converter> converterSupplier = () -> new Converter() {
+
+        @Override
+        public <T> @NotNull T fromJson(@NotNull String json, @NotNull Class<T> type) {
+            return gson.fromJson(json, type);
+        }
+    };
 
     @NotNull
     @Override
@@ -64,8 +75,15 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
         return this;
     }
 
+    @NotNull
+    @Override
+    public EtherScanAPI.Builder withConverter(@NotNull Supplier<Converter> converterSupplier) {
+        this.converterSupplier = converterSupplier;
+        return this;
+    }
+
     @Override
     public @NotNull EtherScanAPI build() {
-        return new EtherScanAPIProvider(apiKey, ethNetwork, ethHttpClientSupplier, queueManager);
+        return new EtherScanAPIProvider(apiKey, ethNetwork, queueManager, ethHttpClientSupplier.get(), converterSupplier.get());
     }
 }

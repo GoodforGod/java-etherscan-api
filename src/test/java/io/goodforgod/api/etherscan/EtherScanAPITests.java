@@ -2,8 +2,8 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
 import io.goodforgod.api.etherscan.error.EtherScanTimeoutException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
-import io.goodforgod.api.etherscan.executor.impl.UrlEthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
+import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.model.Balance;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Test;
 class EtherScanAPITests extends ApiRunner {
 
     private final EthNetworks network = EthNetworks.KOVAN;
-    private final String validKey = "YourKey";
 
     @Test
     void validKey() {
+        String validKey = "YourKey";
         EtherScanAPI api = EtherScanAPI.builder().withApiKey(validKey).withNetwork(network).build();
         assertNotNull(api);
     }

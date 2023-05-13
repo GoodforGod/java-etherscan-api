@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.Log;
 import io.goodforgod.api.etherscan.model.query.LogQuery;
@@ -24,8 +24,9 @@ final class LogsAPIProvider extends BasicProvider implements LogsAPI {
 
     LogsAPIProvider(RequestQueueManager queue,
                     String baseUrl,
-                    EthHttpClient executor) {
-        super(queue, "logs", baseUrl, executor);
+                    EthHttpClient executor,
+                    Converter converter) {
+        super(queue, "logs", baseUrl, executor, converter);
     }
 
     @NotNull

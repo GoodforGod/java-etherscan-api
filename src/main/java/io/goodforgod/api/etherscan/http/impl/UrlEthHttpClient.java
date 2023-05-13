@@ -1,17 +1,17 @@
-package io.goodforgod.api.etherscan.executor.impl;
+package io.goodforgod.api.etherscan.http.impl;
 
 import static java.net.HttpURLConnection.*;
 
 import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
 import io.goodforgod.api.etherscan.error.EtherScanTimeoutException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
-import io.goodforgod.api.etherscan.util.BasicUtils;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -71,8 +71,8 @@ public final class UrlEthHttpClient implements EthHttpClient {
         this.headers = Collections.unmodifiableMap(headers);
     }
 
-    private HttpURLConnection buildConnection(String urlAsString, String method) throws IOException {
-        final URL url = new URL(urlAsString);
+    private HttpURLConnection buildConnection(URI uri, String method) throws IOException {
+        final URL url = uri.toURL();
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(method);
         connection.setConnectTimeout(connectTimeout);
@@ -82,12 +82,12 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public String get(final String urlAsString) {
+    public String get(URI uri) {
         try {
-            final HttpURLConnection connection = buildConnection(urlAsString, "GET");
+            final HttpURLConnection connection = buildConnection(uri, "GET");
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
-                return get(connection.getHeaderField("Location"));
+                return get(URI.create(connection.getHeaderField("Location")));
             } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
                 throw new EtherScanConnectionException("Protocol error: " + connection.getResponseMessage());
             } else if (status >= HTTP_INTERNAL_ERROR) {
@@ -105,25 +105,23 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public String post(String urlAsString, String dataToPost) {
+    public String post(URI uri, byte[] body) {
         try {
-            final HttpURLConnection connection = buildConnection(urlAsString, "POST");
-            final String contentLength = (BasicUtils.isBlank(dataToPost))
-                    ? "0"
-                    : String.valueOf(dataToPost.length());
+            final HttpURLConnection connection = buildConnection(uri, "POST");
+            final int contentLength = body.length;
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            connection.setRequestProperty("Content-Length", contentLength);
-            connection.setFixedLengthStreamingMode(dataToPost.length());
+            connection.setRequestProperty("Content-Length", String.valueOf(contentLength));
+            connection.setFixedLengthStreamingMode(body.length);
 
             connection.setDoOutput(true);
             connection.connect();
             try (OutputStream os = connection.getOutputStream()) {
-                os.write(dataToPost.getBytes(StandardCharsets.UTF_8));
+                os.write(body);
             }
 
             final int status = connection.getResponseCode();
             if (status == HTTP_MOVED_TEMP || status == HTTP_MOVED_PERM) {
-                return post(connection.getHeaderField("Location"), dataToPost);
+                return post(URI.create(connection.getHeaderField("Location")), body);
             } else if ((status >= HTTP_BAD_REQUEST) && (status < HTTP_INTERNAL_ERROR)) {
                 throw new EtherScanConnectionException("Protocol error: " + connection.getResponseMessage());
             } else if (status >= HTTP_INTERNAL_ERROR) {

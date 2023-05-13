@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.Status;
 import io.goodforgod.api.etherscan.model.response.ReceiptStatusResponseTO;
@@ -26,8 +26,9 @@ final class TransactionAPIProvider extends BasicProvider implements TransactionA
 
     TransactionAPIProvider(RequestQueueManager queue,
                            String baseUrl,
-                           EthHttpClient executor) {
-        super(queue, "transaction", baseUrl, executor);
+                           EthHttpClient executor,
+                           Converter converter) {
+        super(queue, "transaction", baseUrl, executor, converter);
     }
 
     @NotNull

@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.Abi;
 import io.goodforgod.api.etherscan.model.response.StringResponseTO;
@@ -24,8 +24,9 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
 
     ContractAPIProvider(RequestQueueManager requestQueueManager,
                         String baseUrl,
-                        EthHttpClient executor) {
-        super(requestQueueManager, "contract", baseUrl, executor);
+                        EthHttpClient executor,
+                        Converter converter) {
+        super(requestQueueManager, "contract", baseUrl, executor, converter);
     }
 
     @NotNull

@@ -1,8 +1,7 @@
 package io.goodforgod.api.etherscan;
 
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
-import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,21 +24,21 @@ final class EtherScanAPIProvider implements EtherScanAPI {
 
     EtherScanAPIProvider(String apiKey,
                          EthNetwork network,
-                         Supplier<EthHttpClient> executorSupplier,
-                         RequestQueueManager queue) {
+                         RequestQueueManager queue,
+                         EthHttpClient ethHttpClient,
+                         Converter converter) {
         // EtherScan 1request\5sec limit support by queue manager
-        final EthHttpClient ethHttpClient = executorSupplier.get();
         final String baseUrl = network.domain() + "?apikey=" + apiKey;
 
         this.requestQueueManager = queue;
-        this.account = new AccountAPIProvider(queue, baseUrl, ethHttpClient);
-        this.block = new BlockAPIProvider(queue, baseUrl, ethHttpClient);
-        this.contract = new ContractAPIProvider(queue, baseUrl, ethHttpClient);
-        this.logs = new LogsAPIProvider(queue, baseUrl, ethHttpClient);
-        this.proxy = new ProxyAPIProvider(queue, baseUrl, ethHttpClient);
-        this.stats = new StatisticAPIProvider(queue, baseUrl, ethHttpClient);
-        this.txs = new TransactionAPIProvider(queue, baseUrl, ethHttpClient);
-        this.gasTracker = new GasTrackerAPIProvider(queue, baseUrl, ethHttpClient);
+        this.account = new AccountAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.block = new BlockAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.contract = new ContractAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.logs = new LogsAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.proxy = new ProxyAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.stats = new StatisticAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.txs = new TransactionAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.gasTracker = new GasTrackerAPIProvider(queue, baseUrl, ethHttpClient, converter);
     }
 
     @NotNull

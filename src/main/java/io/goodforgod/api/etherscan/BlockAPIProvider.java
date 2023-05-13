@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.BlockUncle;
 import io.goodforgod.api.etherscan.model.response.UncleBlockResponseTO;
@@ -24,8 +24,9 @@ final class BlockAPIProvider extends BasicProvider implements BlockAPI {
 
     BlockAPIProvider(RequestQueueManager requestQueueManager,
                      String baseUrl,
-                     EthHttpClient executor) {
-        super(requestQueueManager, "block", baseUrl, executor);
+                     EthHttpClient executor,
+                     Converter converter) {
+        super(requestQueueManager, "block", baseUrl, executor, converter);
     }
 
     @NotNull

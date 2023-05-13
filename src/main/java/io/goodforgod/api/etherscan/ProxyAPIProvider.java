@@ -3,7 +3,7 @@ package io.goodforgod.api.etherscan;
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidDataHexException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.proxy.BlockProxy;
 import io.goodforgod.api.etherscan.model.proxy.ReceiptProxy;
@@ -56,10 +56,11 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     private static final Pattern EMPTY_HEX = Pattern.compile("0x0+");
 
-    ProxyAPIProvider(final RequestQueueManager queue,
-                     final String baseUrl,
-                     final EthHttpClient executor) {
-        super(queue, "proxy", baseUrl, executor);
+    ProxyAPIProvider(RequestQueueManager queue,
+                     String baseUrl,
+                     EthHttpClient executor,
+                     Converter converter) {
+        super(queue, "proxy", baseUrl, executor, converter);
     }
 
     @Override

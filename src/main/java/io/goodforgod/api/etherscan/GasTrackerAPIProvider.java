@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.GasEstimate;
 import io.goodforgod.api.etherscan.model.GasOracle;
@@ -27,8 +27,9 @@ final class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI
 
     GasTrackerAPIProvider(RequestQueueManager queue,
                           String baseUrl,
-                          EthHttpClient ethHttpClient) {
-        super(queue, "gastracker", baseUrl, ethHttpClient);
+                          EthHttpClient ethHttpClient,
+                          Converter converter) {
+        super(queue, "gastracker", baseUrl, ethHttpClient, converter);
     }
 
     @Override

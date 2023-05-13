@@ -3,6 +3,7 @@ package io.goodforgod.api.etherscan.model;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -62,6 +63,24 @@ public class TxErc20 extends BaseTx {
         return confirmations;
     }
     // </editor-fold>
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof TxErc20))
+            return false;
+        if (!super.equals(o))
+            return false;
+        TxErc20 txErc20 = (TxErc20) o;
+        return Objects.equals(tokenName, txErc20.tokenName) && Objects.equals(tokenSymbol, txErc20.tokenSymbol)
+                && Objects.equals(tokenDecimal, txErc20.tokenDecimal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tokenName, tokenSymbol, tokenDecimal);
+    }
 
     @Override
     public String toString() {

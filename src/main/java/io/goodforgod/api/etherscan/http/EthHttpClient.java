@@ -1,4 +1,7 @@
-package io.goodforgod.api.etherscan.executor;
+package io.goodforgod.api.etherscan.http;
+
+import java.net.URI;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Http Client interface
@@ -11,17 +14,19 @@ public interface EthHttpClient {
     /**
      * Performs a Http GET request
      *
-     * @param url as string
+     * @param uri as string
      * @return result as string
      */
-    String get(String url);
+    @NotNull
+    String get(@NotNull URI uri);
 
     /**
      * Performs a Http POST request
      *
-     * @param url  as string
-     * @param data to post
+     * @param uri  as string
+     * @param body to post
      * @return result as string
      */
-    String post(String url, String data);
+    @NotNull
+    String post(@NotNull URI uri, byte[] body);
 }

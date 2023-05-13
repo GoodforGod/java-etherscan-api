@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.Price;
 import io.goodforgod.api.etherscan.model.Supply;
@@ -27,10 +27,11 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
 
     private static final String CONTRACT_ADDRESS_PARAM = "&contractaddress=";
 
-    StatisticAPIProvider(final RequestQueueManager queue,
-                         final String baseUrl,
-                         final EthHttpClient executor) {
-        super(queue, "stats", baseUrl, executor);
+    StatisticAPIProvider(RequestQueueManager queue,
+                         String baseUrl,
+                         EthHttpClient executor,
+                         Converter converter) {
+        super(queue, "stats", baseUrl, executor, converter);
     }
 
     @NotNull

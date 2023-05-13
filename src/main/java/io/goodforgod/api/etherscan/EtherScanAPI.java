@@ -1,6 +1,6 @@
 package io.goodforgod.api.etherscan;
 
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
@@ -58,6 +58,9 @@ public interface EtherScanAPI extends AutoCloseable {
 
         @NotNull
         Builder withHttpClient(@NotNull Supplier<EthHttpClient> httpClientSupplier);
+
+        @NotNull
+        Builder withConverter(@NotNull Supplier<Converter> converterSupplier);
 
         @NotNull
         EtherScanAPI build();

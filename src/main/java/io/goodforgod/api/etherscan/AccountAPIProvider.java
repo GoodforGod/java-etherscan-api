@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
-import io.goodforgod.api.etherscan.executor.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.*;
 import io.goodforgod.api.etherscan.model.response.*;
@@ -49,8 +49,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     AccountAPIProvider(RequestQueueManager requestQueueManager,
                        String baseUrl,
-                       EthHttpClient executor) {
-        super(requestQueueManager, "account", baseUrl, executor);
+                       EthHttpClient executor,
+                       Converter converter) {
+        super(requestQueueManager, "account", baseUrl, executor, converter);
     }
 
     @NotNull
