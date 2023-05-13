@@ -38,10 +38,10 @@ class LogsApiTest extends ApiRunner {
                 .build();
 
         return Stream.of(
-                Arguments.of(single, 423),
+                Arguments.of(single, 424),
                 Arguments.of(singleInvalidAddr, 0),
                 Arguments.of(tupleAnd, 1),
-                Arguments.of(tupleOr, 425));
+                Arguments.of(tupleOr, 426));
     }
 
     @ParameterizedTest

@@ -21,6 +21,7 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     private final long startBlock, endBlock;
 
     LogQueryBuilderImpl(String address, long startBlock, long endBlock) {
+        BasicUtils.validateAddress(address);
         this.address = address;
         this.startBlock = startBlock;
         this.endBlock = endBlock;

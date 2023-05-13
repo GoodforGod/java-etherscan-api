@@ -31,8 +31,8 @@ public final class SemaphoreRequestQueueManager implements RequestQueueManager, 
     public SemaphoreRequestQueueManager(int size, Duration queueResetTimeIn, Duration delayIn, int initialSize) {
         this.semaphore = new Semaphore(initialSize);
         this.queueResetTimeInMillis = queueResetTimeIn.toMillis();
-        this.executorService.scheduleAtFixedRate(releaseLocks(size + 1), delayIn.toMillis(), queueResetTimeInMillis,
-                TimeUnit.MILLISECONDS);
+        this.executorService.scheduleAtFixedRate(releaseLocks(size + 1),
+                delayIn.toMillis(), queueResetTimeInMillis, TimeUnit.MILLISECONDS);
     }
 
     @SuppressWarnings("java:S899")

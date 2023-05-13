@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan;
 
+import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
-import io.goodforgod.api.etherscan.error.EtherScanTimeoutException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.model.Balance;
@@ -70,7 +70,7 @@ class EtherScanAPITests extends ApiRunner {
         Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
         EtherScanAPI api = EtherScanAPI.builder().withApiKey(getApiKey()).withNetwork(EthNetworks.KOVAN).withHttpClient(supplier)
                 .build();
-        assertThrows(EtherScanTimeoutException.class,
+        assertThrows(EtherScanConnectionException.class,
                 () -> api.account().blocksMined("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D"));
     }
 }
