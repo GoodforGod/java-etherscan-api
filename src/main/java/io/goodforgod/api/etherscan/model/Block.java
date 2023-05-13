@@ -12,11 +12,11 @@ import java.time.ZoneOffset;
  */
 public class Block {
 
-    private long blockNumber;
-    private BigInteger blockReward;
-    private String timeStamp;
+    long blockNumber;
+    BigInteger blockReward;
+    String timeStamp;
     @Expose(deserialize = false, serialize = false)
-    private LocalDateTime _timeStamp;
+    LocalDateTime _timeStamp;
 
     // <editor-fold desc="Getter">
     public long getBlockNumber() {
@@ -59,5 +59,46 @@ public class Block {
                 ", timeStamp='" + timeStamp + '\'' +
                 ", _timeStamp=" + _timeStamp +
                 '}';
+    }
+
+    public static BlockBuilder builder() {
+        return new BlockBuilder();
+    }
+
+    public static class BlockBuilder {
+
+        private long blockNumber;
+        private BigInteger blockReward;
+        private LocalDateTime timeStamp;
+
+        BlockBuilder() {}
+
+        public static BlockBuilder aBlock() {
+            return new BlockBuilder();
+        }
+
+        public BlockBuilder withBlockNumber(long blockNumber) {
+            this.blockNumber = blockNumber;
+            return this;
+        }
+
+        public BlockBuilder withBlockReward(BigInteger blockReward) {
+            this.blockReward = blockReward;
+            return this;
+        }
+
+        public BlockBuilder withTimeStamp(LocalDateTime timeStamp) {
+            this.timeStamp = timeStamp;
+            return this;
+        }
+
+        public Block build() {
+            Block block = new Block();
+            block.blockNumber = this.blockNumber;
+            block.blockReward = this.blockReward;
+            block._timeStamp = this.timeStamp;
+            block.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            return block;
+        }
     }
 }

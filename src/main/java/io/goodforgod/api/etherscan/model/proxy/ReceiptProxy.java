@@ -149,4 +149,107 @@ public class ReceiptProxy {
                 ", logsBloom='" + logsBloom + '\'' +
                 '}';
     }
+
+    public static ReceiptProxyBuilder builder() {
+        return new ReceiptProxyBuilder();
+    }
+
+    public static final class ReceiptProxyBuilder {
+
+        private String root;
+        private String from;
+        private String to;
+        private Long blockNumber;
+        private String blockHash;
+        private String transactionHash;
+        private Long transactionIndex;
+        private BigInteger gasUsed;
+        private BigInteger cumulativeGasUsed;
+        private String contractAddress;
+        private List<Log> logs;
+        private String logsBloom;
+
+        private ReceiptProxyBuilder() {}
+
+        public ReceiptProxyBuilder withRoot(String root) {
+            this.root = root;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withFrom(String from) {
+            this.from = from;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withTo(String to) {
+            this.to = to;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withBlockNumber(Long blockNumber) {
+            this.blockNumber = blockNumber;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withBlockHash(String blockHash) {
+            this.blockHash = blockHash;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withTransactionHash(String transactionHash) {
+            this.transactionHash = transactionHash;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withTransactionIndex(Long transactionIndex) {
+            this.transactionIndex = transactionIndex;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withGasUsed(BigInteger gasUsed) {
+            this.gasUsed = gasUsed;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+            this.cumulativeGasUsed = cumulativeGasUsed;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withContractAddress(String contractAddress) {
+            this.contractAddress = contractAddress;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withLogs(List<Log> logs) {
+            this.logs = logs;
+            return this;
+        }
+
+        public ReceiptProxyBuilder withLogsBloom(String logsBloom) {
+            this.logsBloom = logsBloom;
+            return this;
+        }
+
+        public ReceiptProxy build() {
+            ReceiptProxy receiptProxy = new ReceiptProxy();
+            receiptProxy.logsBloom = this.logsBloom;
+            receiptProxy.transactionHash = this.transactionHash;
+            receiptProxy.blockNumber = String.valueOf(this.blockNumber);
+            receiptProxy.from = this.from;
+            receiptProxy._transactionIndex = this.transactionIndex;
+            receiptProxy.blockHash = this.blockHash;
+            receiptProxy.root = this.root;
+            receiptProxy.contractAddress = this.contractAddress;
+            receiptProxy.gasUsed = String.valueOf(this.gasUsed);
+            receiptProxy._gasUsed = this.gasUsed;
+            receiptProxy.logs = this.logs;
+            receiptProxy.cumulativeGasUsed = String.valueOf(this.cumulativeGasUsed);
+            receiptProxy.to = this.to;
+            receiptProxy.transactionIndex = String.valueOf(this.transactionIndex);
+            receiptProxy._blockNumber = this.blockNumber;
+            receiptProxy._cumulativeGasUsed = this.cumulativeGasUsed;
+            return receiptProxy;
+        }
+    }
 }

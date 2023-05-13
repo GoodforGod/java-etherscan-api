@@ -8,8 +8,8 @@ import io.goodforgod.api.etherscan.util.BasicUtils;
  */
 public class Abi {
 
-    private String contractAbi;
-    private boolean isVerified;
+    private final String contractAbi;
+    private final boolean isVerified;
 
     private Abi(String contractAbi, boolean isVerified) {
         this.contractAbi = contractAbi;
@@ -69,5 +69,31 @@ public class Abi {
                 "contractAbi='" + contractAbi + '\'' +
                 ", isVerified=" + isVerified +
                 '}';
+    }
+
+    public static AbiBuilder builder() {
+        return new AbiBuilder();
+    }
+
+    public static final class AbiBuilder {
+
+        private String contractAbi;
+        private boolean isVerified;
+
+        private AbiBuilder() {}
+
+        public AbiBuilder withContractAbi(String contractAbi) {
+            this.contractAbi = contractAbi;
+            return this;
+        }
+
+        public AbiBuilder withIsVerified(boolean isVerified) {
+            this.isVerified = isVerified;
+            return this;
+        }
+
+        public Abi build() {
+            return new Abi(contractAbi, isVerified);
+        }
     }
 }

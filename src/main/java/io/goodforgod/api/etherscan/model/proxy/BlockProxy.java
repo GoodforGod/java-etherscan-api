@@ -205,4 +205,164 @@ public class BlockProxy {
                 ", transactions=" + transactions +
                 '}';
     }
+
+    public static BlockProxyBuilder builder() {
+        return new BlockProxyBuilder();
+    }
+
+    public static final class BlockProxyBuilder {
+
+        private Long number;
+        private String hash;
+        private String parentHash;
+        private String stateRoot;
+        private Long size;
+        private String difficulty;
+        private String totalDifficulty;
+        private LocalDateTime timestamp;
+        private String miner;
+        private String nonce;
+        private String extraData;
+        private String logsBloom;
+        private String mixHash;
+        private BigInteger gasUsed;
+        private BigInteger gasLimit;
+        private String sha3Uncles;
+        private List<String> uncles;
+        private String receiptsRoot;
+        private String transactionsRoot;
+        private List<TxProxy> transactions;
+
+        private BlockProxyBuilder() {}
+
+        public BlockProxyBuilder withNumber(Long number) {
+            this.number = number;
+            return this;
+        }
+
+        public BlockProxyBuilder withHash(String hash) {
+            this.hash = hash;
+            return this;
+        }
+
+        public BlockProxyBuilder withParentHash(String parentHash) {
+            this.parentHash = parentHash;
+            return this;
+        }
+
+        public BlockProxyBuilder withStateRoot(String stateRoot) {
+            this.stateRoot = stateRoot;
+            return this;
+        }
+
+        public BlockProxyBuilder withSize(Long size) {
+            this.size = size;
+            return this;
+        }
+
+        public BlockProxyBuilder withDifficulty(String difficulty) {
+            this.difficulty = difficulty;
+            return this;
+        }
+
+        public BlockProxyBuilder withTotalDifficulty(String totalDifficulty) {
+            this.totalDifficulty = totalDifficulty;
+            return this;
+        }
+
+        public BlockProxyBuilder withTimestamp(LocalDateTime timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public BlockProxyBuilder withMiner(String miner) {
+            this.miner = miner;
+            return this;
+        }
+
+        public BlockProxyBuilder withNonce(String nonce) {
+            this.nonce = nonce;
+            return this;
+        }
+
+        public BlockProxyBuilder withExtraData(String extraData) {
+            this.extraData = extraData;
+            return this;
+        }
+
+        public BlockProxyBuilder withLogsBloom(String logsBloom) {
+            this.logsBloom = logsBloom;
+            return this;
+        }
+
+        public BlockProxyBuilder withMixHash(String mixHash) {
+            this.mixHash = mixHash;
+            return this;
+        }
+
+        public BlockProxyBuilder withGasUsed(BigInteger gasUsed) {
+            this.gasUsed = gasUsed;
+            return this;
+        }
+
+        public BlockProxyBuilder withGasLimit(BigInteger gasLimit) {
+            this.gasLimit = gasLimit;
+            return this;
+        }
+
+        public BlockProxyBuilder withSha3Uncles(String sha3Uncles) {
+            this.sha3Uncles = sha3Uncles;
+            return this;
+        }
+
+        public BlockProxyBuilder withUncles(List<String> uncles) {
+            this.uncles = uncles;
+            return this;
+        }
+
+        public BlockProxyBuilder withReceiptsRoot(String receiptsRoot) {
+            this.receiptsRoot = receiptsRoot;
+            return this;
+        }
+
+        public BlockProxyBuilder withTransactionsRoot(String transactionsRoot) {
+            this.transactionsRoot = transactionsRoot;
+            return this;
+        }
+
+        public BlockProxyBuilder withTransactions(List<TxProxy> transactions) {
+            this.transactions = transactions;
+            return this;
+        }
+
+        public BlockProxy build() {
+            BlockProxy blockProxy = new BlockProxy();
+            blockProxy.mixHash = this.mixHash;
+            blockProxy.totalDifficulty = this.totalDifficulty;
+            blockProxy.nonce = this.nonce;
+            blockProxy._gasUsed = this.gasUsed;
+            blockProxy.uncles = this.uncles;
+            blockProxy.transactionsRoot = this.transactionsRoot;
+            blockProxy.number = String.valueOf(this.number);
+            blockProxy.logsBloom = this.logsBloom;
+            blockProxy.receiptsRoot = this.receiptsRoot;
+            blockProxy._gasLimit = this.gasLimit;
+            blockProxy.hash = this.hash;
+            blockProxy.parentHash = this.parentHash;
+            blockProxy._size = this.size;
+            blockProxy.gasLimit = String.valueOf(this.gasLimit);
+            blockProxy.difficulty = this.difficulty;
+            blockProxy.gasUsed = String.valueOf(this.gasUsed);
+            blockProxy.size = String.valueOf(this.size);
+            blockProxy.extraData = this.extraData;
+            blockProxy.stateRoot = this.stateRoot;
+            blockProxy._timestamp = this.timestamp;
+            blockProxy.sha3Uncles = this.sha3Uncles;
+            blockProxy.miner = this.miner;
+            blockProxy.timestamp = String.valueOf(this.timestamp.toEpochSecond(ZoneOffset.UTC));
+            blockProxy.transactions = this.transactions;
+            blockProxy._number = this.number;
+            return blockProxy;
+        }
+    }
 }

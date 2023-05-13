@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Wei {
 
-    private BigInteger result;
+    private final BigInteger result;
 
     public Wei(BigInteger value) {
         this.result = value;

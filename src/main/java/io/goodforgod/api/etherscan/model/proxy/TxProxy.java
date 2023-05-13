@@ -163,4 +163,122 @@ public class TxProxy {
                 ", _blockNumber=" + _blockNumber +
                 '}';
     }
+
+    public static TxProxyBuilder builder() {
+        return new TxProxyBuilder();
+    }
+
+    public static final class TxProxyBuilder {
+
+        private String to;
+        private String hash;
+        private Long transactionIndex;
+        private String from;
+        private String v;
+        private String input;
+        private String s;
+        private String r;
+        private Long nonce;
+        private String value;
+        private BigInteger gas;
+        private BigInteger gasPrice;
+        private String blockHash;
+        private Long blockNumber;
+
+        private TxProxyBuilder() {}
+
+        public TxProxyBuilder withTo(String to) {
+            this.to = to;
+            return this;
+        }
+
+        public TxProxyBuilder withHash(String hash) {
+            this.hash = hash;
+            return this;
+        }
+
+        public TxProxyBuilder withTransactionIndex(Long transactionIndex) {
+            this.transactionIndex = transactionIndex;
+            return this;
+        }
+
+        public TxProxyBuilder withFrom(String from) {
+            this.from = from;
+            return this;
+        }
+
+        public TxProxyBuilder withV(String v) {
+            this.v = v;
+            return this;
+        }
+
+        public TxProxyBuilder withInput(String input) {
+            this.input = input;
+            return this;
+        }
+
+        public TxProxyBuilder withS(String s) {
+            this.s = s;
+            return this;
+        }
+
+        public TxProxyBuilder withR(String r) {
+            this.r = r;
+            return this;
+        }
+
+        public TxProxyBuilder withNonce(Long nonce) {
+            this.nonce = nonce;
+            return this;
+        }
+
+        public TxProxyBuilder withValue(String value) {
+            this.value = value;
+            return this;
+        }
+
+        public TxProxyBuilder withGas(BigInteger gas) {
+            this.gas = gas;
+            return this;
+        }
+
+        public TxProxyBuilder withGasPrice(BigInteger gasPrice) {
+            this.gasPrice = gasPrice;
+            return this;
+        }
+
+        public TxProxyBuilder withBlockHash(String blockHash) {
+            this.blockHash = blockHash;
+            return this;
+        }
+
+        public TxProxyBuilder withBlockNumber(Long blockNumber) {
+            this.blockNumber = blockNumber;
+            return this;
+        }
+
+        public TxProxy build() {
+            TxProxy txProxy = new TxProxy();
+            txProxy.input = this.input;
+            txProxy.gas = String.valueOf(this.gas);
+            txProxy._gas = this.gas;
+            txProxy.s = this.s;
+            txProxy.blockHash = this.blockHash;
+            txProxy.to = this.to;
+            txProxy.r = this.r;
+            txProxy.transactionIndex = String.valueOf(this.transactionIndex);
+            txProxy._nonce = this.nonce;
+            txProxy.value = this.value;
+            txProxy.v = this.v;
+            txProxy.from = this.from;
+            txProxy.nonce = String.valueOf(this.nonce);
+            txProxy._gasPrice = this.gasPrice;
+            txProxy._transactionIndex = this.transactionIndex;
+            txProxy.blockNumber = String.valueOf(this.blockNumber);
+            txProxy._blockNumber = this.blockNumber;
+            txProxy.hash = this.hash;
+            txProxy.gasPrice = String.valueOf(this.gasPrice);
+            return txProxy;
+        }
+    }
 }

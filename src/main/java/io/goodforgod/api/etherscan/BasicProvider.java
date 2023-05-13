@@ -1,6 +1,6 @@
 package io.goodforgod.api.etherscan;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanParseException;
 import io.goodforgod.api.etherscan.error.EtherScanRateLimitException;

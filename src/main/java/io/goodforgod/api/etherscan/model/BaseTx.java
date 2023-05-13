@@ -13,18 +13,18 @@ import java.util.Objects;
  */
 abstract class BaseTx {
 
-    private long blockNumber;
-    private String timeStamp;
+    long blockNumber;
+    String timeStamp;
     @Expose(deserialize = false, serialize = false)
-    private LocalDateTime _timeStamp;
-    private String hash;
-    private String from;
-    private String to;
-    private BigInteger value;
-    private String contractAddress;
-    private String input;
-    private BigInteger gas;
-    private BigInteger gasUsed;
+    LocalDateTime _timeStamp;
+    String hash;
+    String from;
+    String to;
+    BigInteger value;
+    String contractAddress;
+    String input;
+    BigInteger gas;
+    BigInteger gasUsed;
 
     // <editor-fold desc="Getter">
     public long getBlockNumber() {

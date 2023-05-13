@@ -87,4 +87,49 @@ public class Price {
                 ", ethbtc_timestamp='" + ethbtc_timestamp + '\'' +
                 '}';
     }
+
+    public static PriceBuilder builder() {
+        return new PriceBuilder();
+    }
+
+    public static final class PriceBuilder {
+
+        private double ethusd;
+        private double ethbtc;
+        private LocalDateTime ethusdTimestamp;
+        private LocalDateTime ethbtcTimestamp;
+
+        private PriceBuilder() {}
+
+        public PriceBuilder withEthusd(double ethusd) {
+            this.ethusd = ethusd;
+            return this;
+        }
+
+        public PriceBuilder withEthbtc(double ethbtc) {
+            this.ethbtc = ethbtc;
+            return this;
+        }
+
+        public PriceBuilder withEthusdTimestamp(LocalDateTime ethusdTimestamp) {
+            this.ethusdTimestamp = ethusdTimestamp;
+            return this;
+        }
+
+        public PriceBuilder withEthbtcTimestamp(LocalDateTime ethbtcTimestamp) {
+            this.ethbtcTimestamp = ethbtcTimestamp;
+            return this;
+        }
+
+        public Price build() {
+            Price price = new Price();
+            price.ethbtc = this.ethbtc;
+            price.ethbtc_timestamp = String.valueOf(this.ethbtcTimestamp.toEpochSecond(ZoneOffset.UTC));
+            price._ethbtc_timestamp = this.ethbtcTimestamp;
+            price.ethusd = this.ethusd;
+            price.ethusd_timestamp = String.valueOf(this.ethusdTimestamp.toEpochSecond(ZoneOffset.UTC));
+            price._ethusd_timestamp = this.ethusdTimestamp;
+            return price;
+        }
+    }
 }

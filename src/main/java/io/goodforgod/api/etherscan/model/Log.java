@@ -74,7 +74,7 @@ public class Log {
     /**
      * Return the "timeStamp" field of the event record as a long-int representing the milliseconds
      * since the Unix epoch (1970-01-01 00:00:00).
-     * 
+     *
      * @return milliseconds between Unix epoch and `timeStamp`. If field is empty or null, returns null
      */
     public Long getTimeStampAsMillis() {
@@ -179,5 +179,96 @@ public class Log {
                 ", logIndex='" + logIndex + '\'' +
                 ", _logIndex=" + _logIndex +
                 '}';
+    }
+
+    public static LogBuilder builder() {
+        return new LogBuilder();
+    }
+
+    public static final class LogBuilder {
+
+        private Long blockNumber;
+        private String address;
+        private String transactionHash;
+        private Long transactionIndex;
+        private LocalDateTime timeStamp;
+        private String data;
+        private BigInteger gasPrice;
+        private BigInteger gasUsed;
+        private List<String> topics;
+        private Long logIndex;
+
+        private LogBuilder() {}
+
+        public LogBuilder withBlockNumber(Long blockNumber) {
+            this.blockNumber = blockNumber;
+            return this;
+        }
+
+        public LogBuilder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public LogBuilder withTransactionHash(String transactionHash) {
+            this.transactionHash = transactionHash;
+            return this;
+        }
+
+        public LogBuilder withTransactionIndex(Long transactionIndex) {
+            this.transactionIndex = transactionIndex;
+            return this;
+        }
+
+        public LogBuilder withTimeStamp(LocalDateTime timeStamp) {
+            this.timeStamp = timeStamp;
+            return this;
+        }
+
+        public LogBuilder withData(String data) {
+            this.data = data;
+            return this;
+        }
+
+        public LogBuilder withGasPrice(BigInteger gasPrice) {
+            this.gasPrice = gasPrice;
+            return this;
+        }
+
+        public LogBuilder withGasUsed(BigInteger gasUsed) {
+            this.gasUsed = gasUsed;
+            return this;
+        }
+
+        public LogBuilder withTopics(List<String> topics) {
+            this.topics = topics;
+            return this;
+        }
+
+        public LogBuilder withLogIndex(Long logIndex) {
+            this.logIndex = logIndex;
+            return this;
+        }
+
+        public Log build() {
+            Log log = new Log();
+            log.address = this.address;
+            log.gasPrice = String.valueOf(this.gasPrice);
+            log._gasPrice = this.gasPrice;
+            log._logIndex = this.logIndex;
+            log._transactionIndex = this.transactionIndex;
+            log._gasUsed = this.gasUsed;
+            log.blockNumber = String.valueOf(this.blockNumber);
+            log.transactionIndex = String.valueOf(this.transactionIndex);
+            log.timeStamp = String.valueOf(this.timeStamp);
+            log.data = this.data;
+            log.gasUsed = String.valueOf(this.gasUsed);
+            log._timeStamp = this.timeStamp;
+            log.logIndex = String.valueOf(this.logIndex);
+            log._blockNumber = this.blockNumber;
+            log.topics = this.topics;
+            log.transactionHash = this.transactionHash;
+            return log;
+        }
     }
 }

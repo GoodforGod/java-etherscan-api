@@ -2,7 +2,10 @@ package io.goodforgod.api.etherscan.manager.impl;
 
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import java.time.Duration;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Queue Semaphore implementation with size and reset time as params

@@ -68,4 +68,61 @@ public class GasOracle {
                 ", gasUsedRatio='" + gasUsedRatio + '\'' +
                 '}';
     }
+
+    public static GasOracleBuilder builder() {
+        return new GasOracleBuilder();
+    }
+
+    public static final class GasOracleBuilder {
+
+        private Long LastBlock;
+        private Integer SafeGasPrice;
+        private Integer ProposeGasPrice;
+        private Integer FastGasPrice;
+        private Double suggestBaseFee;
+        private String gasUsedRatio;
+
+        private GasOracleBuilder() {}
+
+        public GasOracleBuilder withLastBlock(Long LastBlock) {
+            this.LastBlock = LastBlock;
+            return this;
+        }
+
+        public GasOracleBuilder withSafeGasPrice(Integer SafeGasPrice) {
+            this.SafeGasPrice = SafeGasPrice;
+            return this;
+        }
+
+        public GasOracleBuilder withProposeGasPrice(Integer ProposeGasPrice) {
+            this.ProposeGasPrice = ProposeGasPrice;
+            return this;
+        }
+
+        public GasOracleBuilder withFastGasPrice(Integer FastGasPrice) {
+            this.FastGasPrice = FastGasPrice;
+            return this;
+        }
+
+        public GasOracleBuilder withSuggestBaseFee(Double suggestBaseFee) {
+            this.suggestBaseFee = suggestBaseFee;
+            return this;
+        }
+
+        public GasOracleBuilder withGasUsedRatio(String gasUsedRatio) {
+            this.gasUsedRatio = gasUsedRatio;
+            return this;
+        }
+
+        public GasOracle build() {
+            GasOracle gasOracle = new GasOracle();
+            gasOracle.ProposeGasPrice = this.ProposeGasPrice;
+            gasOracle.LastBlock = this.LastBlock;
+            gasOracle.suggestBaseFee = this.suggestBaseFee;
+            gasOracle.SafeGasPrice = this.SafeGasPrice;
+            gasOracle.FastGasPrice = this.FastGasPrice;
+            gasOracle.gasUsedRatio = this.gasUsedRatio;
+            return gasOracle;
+        }
+    }
 }

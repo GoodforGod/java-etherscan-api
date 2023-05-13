@@ -99,7 +99,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
             if (!BasicUtils.isEmpty(response.getResult()))
                 balances.addAll(response.getResult().stream()
-                        .map(Balance::of)
+                        .map(r -> new Balance(r.getAccount(), new BigInteger(r.getBalance())))
                         .collect(Collectors.toList()));
         }
 

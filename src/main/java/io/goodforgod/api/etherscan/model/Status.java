@@ -54,4 +54,33 @@ public class Status {
                 ", errDescription='" + errDescription + '\'' +
                 '}';
     }
+
+    public static StatusBuilder builder() {
+        return new StatusBuilder();
+    }
+
+    public static final class StatusBuilder {
+
+        private int isError;
+        private String errDescription;
+
+        private StatusBuilder() {}
+
+        public StatusBuilder withIsError(int isError) {
+            this.isError = isError;
+            return this;
+        }
+
+        public StatusBuilder withErrDescription(String errDescription) {
+            this.errDescription = errDescription;
+            return this;
+        }
+
+        public Status build() {
+            Status status = new Status();
+            status.isError = this.isError;
+            status.errDescription = this.errDescription;
+            return status;
+        }
+    }
 }
