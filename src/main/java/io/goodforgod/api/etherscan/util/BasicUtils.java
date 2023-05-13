@@ -20,7 +20,7 @@ public final class BasicUtils {
 
     private BasicUtils() {}
 
-    private static final int MAX_END_BLOCK = 999999999;
+    private static final int MAX_END_BLOCK = Integer.MAX_VALUE;
     private static final int MIN_START_BLOCK = 0;
 
     private static final Pattern ADDRESS_PATTERN = Pattern.compile("0x[a-zA-Z0-9]{40}");

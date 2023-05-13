@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan.account;
 
 import io.goodforgod.api.etherscan.ApiRunner;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidAddressException;
-import io.goodforgod.api.etherscan.model.TxERC20;
+import io.goodforgod.api.etherscan.model.TxErc20;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
  * @author GoodforGod
  * @since 03.11.2018
  */
-class AccountTxERC20Test extends ApiRunner {
+class AccountTxErc20Test extends ApiRunner {
 
     @Test
     void correct() {
-        List<TxERC20> txs = getApi().account().txsERC20("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
+        List<TxErc20> txs = getApi().account().txsErc20("0xE376F69ED2218076682e2b3B7b9099eC50aD68c4");
         assertNotNull(txs);
         assertEquals(3, txs.size());
         assertTxs(txs);
@@ -33,7 +33,7 @@ class AccountTxERC20Test extends ApiRunner {
 
     @Test
     void correctStartBlock() {
-        List<TxERC20> txs = getApi().account().txsERC20("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
+        List<TxErc20> txs = getApi().account().txsErc20("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167);
         assertNotNull(txs);
         assertEquals(11, txs.size());
         assertTxs(txs);
@@ -41,7 +41,7 @@ class AccountTxERC20Test extends ApiRunner {
 
     @Test
     void correctStartBlockEndBlock() {
-        List<TxERC20> txs = getApi().account().txsERC20("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
+        List<TxErc20> txs = getApi().account().txsErc20("0x36ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7", 5578167, 5813576);
         assertNotNull(txs);
         assertEquals(5, txs.size());
         assertTxs(txs);
@@ -50,18 +50,18 @@ class AccountTxERC20Test extends ApiRunner {
     @Test
     void invalidParamWithError() {
         assertThrows(EtherScanInvalidAddressException.class,
-                () -> getApi().account().txsERC20("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7"));
+                () -> getApi().account().txsErc20("0x6ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7"));
     }
 
     @Test
     void correctParamWithEmptyExpectedResult() {
-        List<TxERC20> txs = getApi().account().txsERC20("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
+        List<TxErc20> txs = getApi().account().txsErc20("0x31ec53A8fBa6358d59B3C4476D82cc60A2B0FaD7");
         assertNotNull(txs);
         assertTrue(txs.isEmpty());
     }
 
-    private void assertTxs(List<TxERC20> txs) {
-        for (TxERC20 tx : txs) {
+    private void assertTxs(List<TxErc20> txs) {
+        for (TxErc20 tx : txs) {
             assertNotNull(tx.getBlockHash());
             assertNotNull(tx.getTokenName());
             assertNotNull(tx.getTokenSymbol());

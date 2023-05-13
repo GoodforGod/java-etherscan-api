@@ -30,8 +30,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     private static final String ACT_BALANCE_MULTI_ACTION = ACT_PREFIX + "balancemulti";
     private static final String ACT_TX_ACTION = ACT_PREFIX + "txlist";
     private static final String ACT_TX_INTERNAL_ACTION = ACT_PREFIX + "txlistinternal";
-    private static final String ACT_TX_TOKEN_ACTION = ACT_PREFIX + "tokentx";
-    private static final String ACT_TX_NFT_TOKEN_ACTION = ACT_PREFIX + "tokennfttx";
+    private static final String ACT_TX_ERC20_ACTION = ACT_PREFIX + "tokentx";
+    private static final String ACT_TX_ERC721_ACTION = ACT_PREFIX + "tokennfttx";
+    private static final String ACT_TX_ERC1155_ACTION = ACT_PREFIX + "token1155tx";
     private static final String ACT_MINED_ACTION = ACT_PREFIX + "getminedblocks";
 
     private static final String BLOCK_TYPE_PARAM = "&blocktype=blocks";
@@ -145,8 +146,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
      * @param <R>       responseListTO type
      * @return List of T values
      */
-    private <T, R extends BaseListResponseTO> List<T> getRequestUsingOffset(final String urlParams,
-                                                                            Class<R> tClass)
+    private <T, R extends BaseListResponseTO<T>> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass)
             throws EtherScanException {
         final List<T> result = new ArrayList<>();
         int page = 1;
@@ -208,81 +208,153 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address) throws EtherScanException {
-        return txsERC20(address, MIN_START_BLOCK);
+    public List<TxErc20> txsErc20(String address) throws EtherScanException {
+        return txsErc20(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address, long startBlock) throws EtherScanException {
-        return txsERC20(address, startBlock, MAX_END_BLOCK);
+    public List<TxErc20> txsErc20(String address, long startBlock) throws EtherScanException {
+        return txsErc20(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address, long startBlock, long endBlock) throws EtherScanException {
+    public List<TxErc20> txsErc20(String address, long startBlock, long endBlock) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
-        final String urlParams = ACT_TX_TOKEN_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX
+        final String urlParams = ACT_TX_ERC20_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX
                 + ADDRESS_PARAM + address
                 + START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end()
                 + SORT_ASC_PARAM;
 
-        return getRequestUsingOffset(urlParams, TxERC20ResponseTO.class);
+        return getRequestUsingOffset(urlParams, TxErc20ResponseTO.class);
     }
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address, String contractAddress) throws EtherScanException {
-        return txsERC20(address, contractAddress, MIN_START_BLOCK);
+    public List<TxErc20> txsErc20(String address, String contractAddress) throws EtherScanException {
+        return txsErc20(address, contractAddress, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address, String contractAddress, long startBlock) throws EtherScanException {
-        return txsERC20(address, contractAddress, startBlock, MAX_END_BLOCK);
+    public List<TxErc20> txsErc20(String address, String contractAddress, long startBlock) throws EtherScanException {
+        return txsErc20(address, contractAddress, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC20> txsERC20(String address, String contractAddress, long startBlock, long endBlock)
+    public List<TxErc20> txsErc20(String address, String contractAddress, long startBlock, long endBlock)
             throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
         final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
         final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
-        final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address
+        final String urlParams = ACT_TX_ERC20_ACTION + offsetParam + ADDRESS_PARAM + address
                 + CONTRACT_PARAM + contractAddress + blockParam + SORT_ASC_PARAM;
 
-        return getRequestUsingOffset(urlParams, TxERC20ResponseTO.class);
+        return getRequestUsingOffset(urlParams, TxErc20ResponseTO.class);
     }
 
     @NotNull
     @Override
-    public List<TxERC721> txsERC721(String address) throws EtherScanException {
-        return txsERC721(address, MIN_START_BLOCK);
+    public List<TxErc721> txsErc721(String address) throws EtherScanException {
+        return txsErc721(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC721> txsERC721(String address, long startBlock) throws EtherScanException {
-        return txsERC721(address, startBlock, MAX_END_BLOCK);
+    public List<TxErc721> txsErc721(String address, long startBlock) throws EtherScanException {
+        return txsErc721(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxERC721> txsERC721(String address, long startBlock, long endBlock) throws EtherScanException {
+    public List<TxErc721> txsErc721(String address, long startBlock, long endBlock) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
-        final String urlParams = ACT_TX_NFT_TOKEN_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX
+        final String urlParams = ACT_TX_ERC721_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX
                 + ADDRESS_PARAM + address
                 + START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end()
                 + SORT_ASC_PARAM;
 
-        return getRequestUsingOffset(urlParams, TxERC20ResponseTO.class);
+        return getRequestUsingOffset(urlParams, TxErc721ResponseTO.class);
+    }
+
+    @Override
+    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
+        final String urlParams = ACT_TX_ERC721_ACTION + offsetParam + ADDRESS_PARAM + address
+                + CONTRACT_PARAM + contractAddress + blockParam + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, TxErc721ResponseTO.class);
+    }
+
+    @Override
+    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress, long startBlock) throws EtherScanException {
+        return txsErc721(address, contractAddress, startBlock, MAX_END_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress) throws EtherScanException {
+        return txsErc721(address, contractAddress, MIN_START_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address, long startBlock, long endBlock) throws EtherScanException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String urlParams = ACT_TX_ERC1155_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX
+                + ADDRESS_PARAM + address
+                + START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end()
+                + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, TxErc1155ResponseTO.class);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address, long startBlock) throws EtherScanException {
+        return txsErc1155(address, startBlock, MAX_END_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address) throws EtherScanException {
+        return txsErc1155(address, MIN_START_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException {
+        BasicUtils.validateAddress(address);
+        final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
+
+        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
+        final String urlParams = ACT_TX_ERC1155_ACTION + offsetParam + ADDRESS_PARAM + address
+                + CONTRACT_PARAM + contractAddress + blockParam + SORT_ASC_PARAM;
+
+        return getRequestUsingOffset(urlParams, TxErc1155ResponseTO.class);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock)
+            throws EtherScanException {
+        return txsErc1155(address, contractAddress, startBlock, MAX_END_BLOCK);
+    }
+
+    @Override
+    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress) throws EtherScanException {
+        return txsErc1155(address, contractAddress, MIN_START_BLOCK);
     }
 
     @NotNull

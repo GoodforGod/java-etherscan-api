@@ -8,8 +8,9 @@ import java.time.ZoneOffset;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class TxERC20 extends BaseTx {
+public class TxErc20 extends BaseTx {
 
+    private BigInteger value;
     private long nonce;
     private String blockHash;
     private String tokenName;
@@ -27,6 +28,10 @@ public class TxERC20 extends BaseTx {
 
     public String getBlockHash() {
         return blockHash;
+    }
+
+    public BigInteger getValue() {
+        return value;
     }
 
     public String getTokenName() {
@@ -63,6 +68,7 @@ public class TxERC20 extends BaseTx {
         return "TxERC20{" +
                 "nonce=" + nonce +
                 ", blockHash='" + blockHash + '\'' +
+                ", value='" + value + '\'' +
                 ", tokenName='" + tokenName + '\'' +
                 ", tokenSymbol='" + tokenSymbol + '\'' +
                 ", tokenDecimal='" + tokenDecimal + '\'' +
@@ -196,8 +202,8 @@ public class TxERC20 extends BaseTx {
             return this;
         }
 
-        public TxERC20 build() {
-            TxERC20 txERC20 = new TxERC20();
+        public TxErc20 build() {
+            TxErc20 txERC20 = new TxErc20();
             txERC20.gas = this.gas;
             txERC20.tokenName = this.tokenName;
             txERC20.hash = this.hash;

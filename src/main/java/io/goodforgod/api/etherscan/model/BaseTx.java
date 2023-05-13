@@ -20,7 +20,6 @@ abstract class BaseTx {
     String hash;
     String from;
     String to;
-    BigInteger value;
     String contractAddress;
     String input;
     BigInteger gas;
@@ -49,10 +48,6 @@ abstract class BaseTx {
         return to;
     }
 
-    public BigInteger getValue() {
-        return value;
-    }
-
     public String getContractAddress() {
         return contractAddress;
     }
@@ -76,41 +71,16 @@ abstract class BaseTx {
             return true;
         if (!(o instanceof BaseTx))
             return false;
-
         BaseTx baseTx = (BaseTx) o;
-
-        if (blockNumber != baseTx.blockNumber)
-            return false;
-        if (!Objects.equals(timeStamp, baseTx.timeStamp))
-            return false;
-        if (!Objects.equals(hash, baseTx.hash))
-            return false;
-        if (!Objects.equals(from, baseTx.from))
-            return false;
-        if (!Objects.equals(to, baseTx.to))
-            return false;
-        return Objects.equals(value, baseTx.value);
+        return blockNumber == baseTx.blockNumber && Objects.equals(timeStamp, baseTx.timeStamp)
+                && Objects.equals(hash, baseTx.hash) && Objects.equals(from, baseTx.from) && Objects.equals(to, baseTx.to)
+                && Objects.equals(contractAddress, baseTx.contractAddress) && Objects.equals(input, baseTx.input)
+                && Objects.equals(gas, baseTx.gas) && Objects.equals(gasUsed, baseTx.gasUsed);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (blockNumber ^ (blockNumber >>> 32));
-        result = 31 * result + (timeStamp != null
-                ? timeStamp.hashCode()
-                : 0);
-        result = 31 * result + (hash != null
-                ? hash.hashCode()
-                : 0);
-        result = 31 * result + (from != null
-                ? from.hashCode()
-                : 0);
-        result = 31 * result + (to != null
-                ? to.hashCode()
-                : 0);
-        result = 31 * result + (value != null
-                ? value.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(blockNumber, timeStamp, hash, from, to, contractAddress, input, gas, gasUsed);
     }
 
     @Override
@@ -121,7 +91,6 @@ abstract class BaseTx {
                 ", hash='" + hash + '\'' +
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
-                ", value=" + value +
                 ", contractAddress='" + contractAddress + '\'' +
                 ", input='" + input + '\'' +
                 ", gas=" + gas +

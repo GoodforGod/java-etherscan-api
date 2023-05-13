@@ -12,6 +12,7 @@ import java.util.Objects;
  */
 public class Tx extends BaseTx {
 
+    private BigInteger value;
     private long nonce;
     private String blockHash;
     private int transactionIndex;
@@ -22,6 +23,10 @@ public class Tx extends BaseTx {
     private String txreceipt_status;
 
     // <editor-fold desc="Getters">
+    public BigInteger getValue() {
+        return value;
+    }
+
     public long getNonce() {
         return nonce;
     }
@@ -59,40 +64,28 @@ public class Tx extends BaseTx {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Tx))
             return false;
         if (!super.equals(o))
             return false;
-
         Tx tx = (Tx) o;
-
-        if (nonce != tx.nonce)
-            return false;
-        if (transactionIndex != tx.transactionIndex)
-            return false;
-        if (!Objects.equals(blockHash, tx.blockHash))
-            return false;
-        return Objects.equals(isError, tx.isError);
+        return nonce == tx.nonce && transactionIndex == tx.transactionIndex && confirmations == tx.confirmations
+                && Objects.equals(value, tx.value) && Objects.equals(blockHash, tx.blockHash)
+                && Objects.equals(gasPrice, tx.gasPrice) && Objects.equals(cumulativeGasUsed, tx.cumulativeGasUsed)
+                && Objects.equals(isError, tx.isError) && Objects.equals(txreceipt_status, tx.txreceipt_status);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (int) (nonce ^ (nonce >>> 32));
-        result = 31 * result + (blockHash != null
-                ? blockHash.hashCode()
-                : 0);
-        result = 31 * result + transactionIndex;
-        result = 31 * result + (isError != null
-                ? isError.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(super.hashCode(), value, nonce, blockHash, transactionIndex, gasPrice, cumulativeGasUsed,
+                confirmations, isError, txreceipt_status);
     }
 
     @Override
     public String toString() {
         return "Tx{" +
                 "nonce=" + nonce +
+                ", value='" + value + '\'' +
                 ", blockHash='" + blockHash + '\'' +
                 ", transactionIndex=" + transactionIndex +
                 ", gasPrice=" + gasPrice +

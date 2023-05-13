@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface EthNetwork {
 
+    /**
+     * @return URI for network domain like <a href="https://api.etherscan.io/api">EtherScan API</a>
+     */
     @NotNull
     URI domain();
 }

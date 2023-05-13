@@ -11,12 +11,17 @@ import java.util.Objects;
  */
 public class TxInternal extends BaseTx {
 
+    private BigInteger value;
     private String type;
     private String traceId;
     private int isError;
     private String errCode;
 
     // <editor-fold desc="Getters">
+    public BigInteger getValue() {
+        return value;
+    }
+
     public String getType() {
         return type;
     }
@@ -48,24 +53,14 @@ public class TxInternal extends BaseTx {
             return false;
         if (!super.equals(o))
             return false;
-
         TxInternal that = (TxInternal) o;
-
-        if (!Objects.equals(traceId, that.traceId))
-            return false;
-        return Objects.equals(errCode, that.errCode);
+        return isError == that.isError && Objects.equals(value, that.value) && Objects.equals(type, that.type)
+                && Objects.equals(traceId, that.traceId) && Objects.equals(errCode, that.errCode);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (traceId != null
-                ? traceId.hashCode()
-                : 0);
-        result = 31 * result + (errCode != null
-                ? errCode.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(super.hashCode(), value, type, traceId, isError, errCode);
     }
 
     @Override
@@ -73,6 +68,7 @@ public class TxInternal extends BaseTx {
         return "TxInternal{" +
                 "type='" + type + '\'' +
                 ", traceId=" + traceId +
+                ", value=" + value +
                 ", isError=" + isError +
                 ", errCode='" + errCode + '\'' +
                 "} " + super.toString();

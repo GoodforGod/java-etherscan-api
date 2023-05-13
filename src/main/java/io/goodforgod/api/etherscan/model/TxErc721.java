@@ -8,10 +8,11 @@ import java.time.ZoneOffset;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class TxERC721 extends BaseTx {
+public class TxErc721 extends BaseTx {
 
     private long nonce;
     private String blockHash;
+    private String tokenID;
     private String tokenName;
     private String tokenSymbol;
     private String tokenDecimal;
@@ -27,6 +28,10 @@ public class TxERC721 extends BaseTx {
 
     public String getBlockHash() {
         return blockHash;
+    }
+
+    public String getTokenID() {
+        return tokenID;
     }
 
     public String getTokenName() {
@@ -63,6 +68,7 @@ public class TxERC721 extends BaseTx {
         return "TxERC721{" +
                 "nonce=" + nonce +
                 ", blockHash='" + blockHash + '\'' +
+                ", tokenID='" + tokenID + '\'' +
                 ", tokenName='" + tokenName + '\'' +
                 ", tokenSymbol='" + tokenSymbol + '\'' +
                 ", tokenDecimal='" + tokenDecimal + '\'' +
@@ -84,13 +90,13 @@ public class TxERC721 extends BaseTx {
         private String hash;
         private String from;
         private String to;
-        private BigInteger value;
         private String contractAddress;
         private String input;
         private BigInteger gas;
         private BigInteger gasUsed;
         private long nonce;
         private String blockHash;
+        private String tokenID;
         private String tokenName;
         private String tokenSymbol;
         private String tokenDecimal;
@@ -126,11 +132,6 @@ public class TxERC721 extends BaseTx {
             return this;
         }
 
-        public TxERC721Builder withValue(BigInteger value) {
-            this.value = value;
-            return this;
-        }
-
         public TxERC721Builder withContractAddress(String contractAddress) {
             this.contractAddress = contractAddress;
             return this;
@@ -158,6 +159,11 @@ public class TxERC721 extends BaseTx {
 
         public TxERC721Builder withBlockHash(String blockHash) {
             this.blockHash = blockHash;
+            return this;
+        }
+
+        public TxERC721Builder withTokenID(String tokenID) {
+            this.tokenID = tokenID;
             return this;
         }
 
@@ -196,8 +202,8 @@ public class TxERC721 extends BaseTx {
             return this;
         }
 
-        public TxERC721 build() {
-            TxERC721 txERC721 = new TxERC721();
+        public TxErc721 build() {
+            TxErc721 txERC721 = new TxErc721();
             txERC721.gas = this.gas;
             txERC721.tokenName = this.tokenName;
             txERC721.hash = this.hash;
@@ -207,7 +213,7 @@ public class TxERC721 extends BaseTx {
             txERC721.gasPrice = this.gasPrice;
             txERC721.contractAddress = this.contractAddress;
             txERC721.cumulativeGasUsed = this.cumulativeGasUsed;
-            txERC721.value = this.value;
+            txERC721.tokenID = this.tokenID;
             txERC721.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
             txERC721.blockNumber = this.blockNumber;
             txERC721._timeStamp = this.timeStamp;
