@@ -1,8 +1,6 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
-import io.goodforgod.api.etherscan.manager.impl.SemaphoreRequestQueueManager;
-import java.time.Duration;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 
@@ -18,14 +16,11 @@ public class ApiRunner extends Assertions {
 
     static {
         final String key = System.getenv("API_KEY");
+        final RequestQueueManager queueManager = RequestQueueManager.DEFAULT;
+
         apiKey = (key == null || key.isEmpty())
                 ? DEFAULT_KEY
                 : key;
-
-        final RequestQueueManager queueManager = (DEFAULT_KEY.equals(apiKey))
-                ? RequestQueueManager.DEFAULT
-                : new SemaphoreRequestQueueManager(1, Duration.ofMillis(1200L), Duration.ofMillis(1200L), 0);
-
         api = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.MAINNET).withQueue(queueManager)
                 .build();
         apiKovan = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.KOVAN).withQueue(queueManager)

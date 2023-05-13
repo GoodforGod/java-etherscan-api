@@ -37,6 +37,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
 
       - name: SonarQube
+        if: matrix.java == '17'
         run: ./gradlew sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
