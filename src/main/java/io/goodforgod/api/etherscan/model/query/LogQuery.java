@@ -7,7 +7,7 @@ import io.goodforgod.api.etherscan.LogsAPI;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Final builded container for The Event Log API
+ * Final built container for The Event Log API
  * EtherScan - API Descriptions <a href="https://etherscan.io/apis#logs">...</a>
  *
  * @see LogQueryBuilderImpl
@@ -21,7 +21,7 @@ public interface LogQuery {
     String params();
 
     @NotNull
-    static Builder builder(String address) {
+    static Builder builder(@NotNull String address) {
         return new LogQueryBuilderImpl(address, MIN_BLOCK, MAX_BLOCK);
     }
 
@@ -34,16 +34,16 @@ public interface LogQuery {
         LogQuery.Builder withBlockTo(long endBlock);
 
         @NotNull
-        LogTopicSingle withTopic(String topic0);
+        LogTopicSingle withTopic(@NotNull String topic0);
 
         @NotNull
-        LogTopicTuple withTopic(String topic0, String topic1);
+        LogTopicTuple withTopic(@NotNull String topic0, @NotNull String topic1);
 
         @NotNull
-        LogTopicTriple withTopic(String topic0, String topic1, String topic2);
+        LogTopicTriple withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2);
 
         @NotNull
-        LogTopicQuadro withTopic(String topic0, String topic1, String topic2, String topic3);
+        LogTopicQuadro withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2, @NotNull String topic3);
 
         @NotNull
         LogQuery build();

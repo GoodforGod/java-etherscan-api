@@ -37,14 +37,14 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     }
 
     @Override
-    public @NotNull LogTopicSingle withTopic(String topic0) {
+    public @NotNull LogTopicSingle withTopic(@NotNull String topic0) {
         if (BasicUtils.isNotHex(topic0))
             throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
         return new LogTopicSingle(address, startBlock, endBlock, topic0);
     }
 
     @Override
-    public @NotNull LogTopicTuple withTopic(String topic0, String topic1) {
+    public @NotNull LogTopicTuple withTopic(@NotNull String topic0, @NotNull String topic1) {
         if (BasicUtils.isNotHex(topic0))
             throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
@@ -53,7 +53,7 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     }
 
     @Override
-    public @NotNull LogTopicTriple withTopic(String topic0, String topic1, String topic2) {
+    public @NotNull LogTopicTriple withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2) {
         if (BasicUtils.isNotHex(topic0))
             throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
@@ -64,7 +64,8 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     }
 
     @Override
-    public @NotNull LogTopicQuadro withTopic(String topic0, String topic1, String topic2, String topic3) {
+    public @NotNull LogTopicQuadro
+            withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2, @NotNull String topic3) {
         if (BasicUtils.isNotHex(topic0))
             throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
