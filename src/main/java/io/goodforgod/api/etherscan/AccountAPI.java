@@ -110,6 +110,25 @@ public interface AccountAPI {
     List<TxERC20> txsERC20(String address) throws EtherScanException;
 
     /**
+     * All ERC-20 token txs for given address and contract address
+     *
+     * @param address    get txs for
+     * @param contractAddress contract address to get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws ApiException parent exception class
+     */
+    @NotNull
+    List<TxToken> txsToken(String address, String contractAddress, long startBlock, long endBlock) throws ApiException;
+
+    @NotNull
+    List<TxToken> txsToken(String address, String contractAddress, long startBlock) throws ApiException;
+
+    @NotNull
+    List<TxToken> txsToken(String address, String contractAddress) throws ApiException;
+
+    /**
      * All ERC-721 (NFT) token txs for given address
      *
      * @param address    get txs for
