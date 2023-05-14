@@ -5,7 +5,6 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
-[![](https://jitpack.io/v/GoodforGod/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
 
 [Etherscan.io](https://etherscan.io/apis) Java API implementation.
 
@@ -15,7 +14,7 @@ Library supports all available EtherScan *API* calls for all available *Ethereum
 
 **Gradle**
 ```groovy
-implementation "com.github.goodforgod:java-etherscan-api:2.0.0-SNAPSHOT"
+implementation "com.github.goodforgod:java-etherscan-api:2.0.0"
 ```
 
 **Maven**
@@ -23,7 +22,7 @@ implementation "com.github.goodforgod:java-etherscan-api:2.0.0-SNAPSHOT"
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -41,9 +40,9 @@ implementation "com.github.goodforgod:java-etherscan-api:2.0.0-SNAPSHOT"
     - [Token](#token-api)
 - [Version History](#version-history)
 
-## Mainnet and Testnets
+## MainNet and TestNets
 
-API support Ethereum [default networks](https://docs.etherscan.io/getting-started/endpoint-urls):
+API support all Ethereum [default networks](https://docs.etherscan.io/getting-started/endpoint-urls):
 - [Mainnet](https://api.etherscan.io/)
 - [Goerli](https://api-goerli.etherscan.io/)
 - [Sepolia](https://api-sepolia.etherscan.io/)
@@ -121,8 +120,8 @@ Abi abi = api.contract().contractAbi("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413
 **Get event logs for single topic**
 ```java
 EtherScanAPI api = EtherScanAPI.build();
-LogQuery query = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
-           .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
+LogQuery query = LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+           .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
            .build();
 List<Log> logs = api.logs().logs(query);
 ```
@@ -163,7 +162,7 @@ Optional<BlockProxy> block = api.proxy().block(15215);
 **Statistic about last price**
 ```java
 EtherScanAPI api = EtherScanAPI.build();
-Price price = api.stats().lastPrice();
+Price price = api.stats().priceLast();
 ```
 
 ### Transaction API
