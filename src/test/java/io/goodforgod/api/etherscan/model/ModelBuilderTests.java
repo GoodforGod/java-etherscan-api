@@ -168,6 +168,31 @@ class ModelBuilderTests extends Assertions {
         assertTrue(value.haveError());
         assertEquals("1", value.getTo());
         assertEquals("1", value.getFrom());
+
+        Tx value2 = Tx.builder()
+                .withBlockHash("1")
+                .withBlockNumber(1L)
+                .withConfirmations(1L)
+                .withContractAddress("1")
+                .withFrom("1")
+                .withTo("1")
+                .withCumulativeGasUsed(Wei.ofWei(BigInteger.ONE))
+                .withGas(Wei.ofWei(BigInteger.ONE))
+                .withGasPrice(Wei.ofWei(BigInteger.ONE))
+                .withGasUsed(Wei.ofWei(BigInteger.ONE))
+                .withHash("1")
+                .withInput("1")
+                .withIsError("1")
+                .withNonce(1L)
+                .withTimeStamp(timestamp)
+                .withValue(BigInteger.ONE)
+                .withTransactionIndex(1)
+                .withTxReceiptStatus("1")
+                .build();
+
+        assertEquals(value, value2);
+        assertEquals(value.hashCode(), value2.hashCode());
+        assertEquals(value.toString(), value2.toString());
     }
 
     @Test
@@ -258,6 +283,32 @@ class ModelBuilderTests extends Assertions {
         assertNotNull(value);
         assertEquals("1", value.getTo());
         assertEquals("1", value.getFrom());
+
+        TxErc1155 value2 = TxErc1155.builder()
+                .withBlockHash("1")
+                .withBlockNumber(1L)
+                .withConfirmations(1L)
+                .withContractAddress("1")
+                .withFrom("1")
+                .withTo("1")
+                .withCumulativeGasUsed(Wei.ofWei(BigInteger.ONE))
+                .withGas(Wei.ofWei(BigInteger.ONE))
+                .withGasPrice(Wei.ofWei(BigInteger.ONE))
+                .withGasUsed(Wei.ofWei(BigInteger.ONE))
+                .withHash("1")
+                .withInput("1")
+                .withTokenName("1")
+                .withTokenSymbol("1")
+                .withTokenDecimal("1")
+                .withTokenID("1")
+                .withNonce(1L)
+                .withTimeStamp(timestamp)
+                .withTransactionIndex(1)
+                .build();
+
+        assertEquals(value, value2);
+        assertEquals(value.hashCode(), value2.hashCode());
+        assertEquals(value.toString(), value2.toString());
     }
 
     @Test
@@ -283,6 +334,27 @@ class ModelBuilderTests extends Assertions {
         assertNotNull(value);
         assertEquals("1", value.getTo());
         assertEquals("1", value.getFrom());
+
+        TxInternal value2 = TxInternal.builder()
+                .withBlockNumber(1L)
+                .withContractAddress("1")
+                .withFrom("1")
+                .withTo("1")
+                .withValue(BigInteger.ONE)
+                .withGas(Wei.ofWei(BigInteger.ONE))
+                .withGasUsed(Wei.ofWei(BigInteger.ONE))
+                .withHash("1")
+                .withInput("1")
+                .withTimeStamp(timestamp)
+                .withErrCode("1")
+                .withIsError(1)
+                .withTraceId("1")
+                .withType("1")
+                .build();
+
+        assertEquals(value, value2);
+        assertEquals(value.hashCode(), value2.hashCode());
+        assertEquals(value.toString(), value2.toString());
     }
 
     @Test

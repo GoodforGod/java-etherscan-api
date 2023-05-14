@@ -64,28 +64,26 @@ public class Log {
 
     public LocalDateTime getTimeStamp() {
         if (_timeStamp == null && !BasicUtils.isEmpty(timeStamp)) {
-            long formatted = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
-                    ? BasicUtils.parseHex(timeStamp).longValue()
-                    : Long.parseLong(timeStamp);
+            long formatted = getTimeStampAsSeconds();
             _timeStamp = LocalDateTime.ofEpochSecond(formatted, 0, ZoneOffset.UTC);
         }
         return _timeStamp;
     }
 
     /**
-     * Return the "timeStamp" field of the event record as a long-int representing the milliseconds
+     * Return the "timeStamp" field of the event record as a long-int representing the seconds
      * since the Unix epoch (1970-01-01 00:00:00).
      *
      * @return milliseconds between Unix epoch and `timeStamp`. If field is empty or null, returns null
      */
-    public Long getTimeStampAsMillis() {
+    public Long getTimeStampAsSeconds() {
         if (BasicUtils.isEmpty(timeStamp)) {
             return null;
         }
-        long tsSecs = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
+
+        return (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
                 ? BasicUtils.parseHex(timeStamp).longValue()
                 : Long.parseLong(timeStamp);
-        return tsSecs * 1000;
     }
 
     public String getData() {
