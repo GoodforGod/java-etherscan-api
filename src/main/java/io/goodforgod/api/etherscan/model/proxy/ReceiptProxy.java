@@ -243,14 +243,18 @@ public class ReceiptProxy {
             receiptProxy.blockHash = this.blockHash;
             receiptProxy.root = this.root;
             receiptProxy.contractAddress = this.contractAddress;
-            receiptProxy.gasUsed = String.valueOf(this.gasUsed);
-            receiptProxy._gasUsed = this.gasUsed;
+            if (this.gasUsed != null) {
+                receiptProxy.gasUsed = String.valueOf(this.gasUsed);
+                receiptProxy._gasUsed = this.gasUsed;
+            }
             receiptProxy.logs = this.logs;
-            receiptProxy.cumulativeGasUsed = String.valueOf(this.cumulativeGasUsed);
             receiptProxy.to = this.to;
+            if (this.cumulativeGasUsed != null) {
+                receiptProxy.cumulativeGasUsed = String.valueOf(this.cumulativeGasUsed);
+                receiptProxy._cumulativeGasUsed = this.cumulativeGasUsed;
+            }
             receiptProxy.transactionIndex = String.valueOf(this.transactionIndex);
             receiptProxy._blockNumber = this.blockNumber;
-            receiptProxy._cumulativeGasUsed = this.cumulativeGasUsed;
             return receiptProxy;
         }
     }

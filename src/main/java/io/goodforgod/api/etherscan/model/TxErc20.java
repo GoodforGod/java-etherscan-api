@@ -237,10 +237,12 @@ public class TxErc20 extends BaseTx {
             txERC20.nonce = this.nonce;
             txERC20.confirmations = this.confirmations;
             txERC20.value = this.value;
-            txERC20.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                txERC20.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                txERC20._timeStamp = this.timeStamp;
+            }
             txERC20.blockHash = this.blockHash;
             txERC20.blockNumber = this.blockNumber;
-            txERC20._timeStamp = this.timeStamp;
             txERC20.gasPrice = this.gasPrice;
             txERC20.to = this.to;
             txERC20.input = this.input;

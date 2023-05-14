@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -38,31 +39,16 @@ public class BlockUncle extends Block {
         public boolean equals(Object o) {
             if (this == o)
                 return true;
-            if (o == null || getClass() != o.getClass())
+            if (!(o instanceof Uncle))
                 return false;
-
             Uncle uncle = (Uncle) o;
-            if (unclePosition != uncle.unclePosition)
-                return false;
-            if (miner != null
-                    ? !miner.equals(uncle.miner)
-                    : uncle.miner != null)
-                return false;
-            return blockreward != null
-                    ? blockreward.equals(uncle.blockreward)
-                    : uncle.blockreward == null;
+            return unclePosition == uncle.unclePosition && Objects.equals(miner, uncle.miner)
+                    && Objects.equals(blockreward, uncle.blockreward);
         }
 
         @Override
         public int hashCode() {
-            int result = miner != null
-                    ? miner.hashCode()
-                    : 0;
-            result = 31 * result + (blockreward != null
-                    ? blockreward.hashCode()
-                    : 0);
-            result = 31 * result + unclePosition;
-            return result;
+            return Objects.hash(miner, blockreward, unclePosition);
         }
 
         @Override
@@ -140,27 +126,6 @@ public class BlockUncle extends Block {
     // </editor-fold>
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        if (!super.equals(o))
-            return false;
-
-        BlockUncle that = (BlockUncle) o;
-
-        return getBlockNumber() != 0 && getBlockNumber() == that.getBlockNumber();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = (int) (31 * result + getBlockNumber());
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "UncleBlock{" +
                 "blockMiner='" + blockMiner + '\'' +
@@ -223,8 +188,10 @@ public class BlockUncle extends Block {
             blockUncle.blockNumber = this.blockNumber;
             blockUncle.blockReward = this.blockReward;
             blockUncle.blockMiner = this.blockMiner;
-            blockUncle._timeStamp = this.timeStamp;
-            blockUncle.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                blockUncle._timeStamp = this.timeStamp;
+                blockUncle.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            }
             return blockUncle;
         }
     }

@@ -235,9 +235,11 @@ public class TxErc1155 extends BaseTx {
             txERC721.contractAddress = this.contractAddress;
             txERC721.cumulativeGasUsed = this.cumulativeGasUsed;
             txERC721.tokenID = this.tokenID;
-            txERC721.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                txERC721.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                txERC721._timeStamp = this.timeStamp;
+            }
             txERC721.blockNumber = this.blockNumber;
-            txERC721._timeStamp = this.timeStamp;
             txERC721.tokenValue = this.tokenValue;
             txERC721.transactionIndex = this.transactionIndex;
             txERC721.to = this.to;

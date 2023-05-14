@@ -228,10 +228,12 @@ public class Tx extends BaseTx {
             tx.value = this.value;
             tx.transactionIndex = this.transactionIndex;
             tx.confirmations = this.confirmations;
-            tx.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                tx.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                tx._timeStamp = this.timeStamp;
+            }
             tx.nonce = this.nonce;
             tx.blockNumber = this.blockNumber;
-            tx._timeStamp = this.timeStamp;
             tx.to = this.to;
             tx.input = this.input;
             tx.cumulativeGasUsed = this.cumulativeGasUsed;

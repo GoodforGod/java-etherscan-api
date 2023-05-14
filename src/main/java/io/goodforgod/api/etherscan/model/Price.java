@@ -3,6 +3,7 @@ package io.goodforgod.api.etherscan.model;
 import com.google.gson.annotations.Expose;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -30,14 +31,16 @@ public class Price {
     }
 
     public LocalDateTime usdTimestamp() {
-        if (_ethusd_timestamp == null)
+        if (_ethusd_timestamp == null && ethusd_timestamp != null) {
             _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethusd_timestamp), 0, ZoneOffset.UTC);
+        }
         return _ethusd_timestamp;
     }
 
     public LocalDateTime btcTimestamp() {
-        if (_ethbtc_timestamp == null)
+        if (_ethbtc_timestamp == null && ethbtc_timestamp != null) {
             _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethbtc_timestamp), 0, ZoneOffset.UTC);
+        }
         return _ethbtc_timestamp;
     }
 
@@ -45,39 +48,17 @@ public class Price {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Price))
             return false;
-
         Price price = (Price) o;
-
-        if (Double.compare(price.ethusd, ethusd) != 0)
-            return false;
-        if (Double.compare(price.ethbtc, ethbtc) != 0)
-            return false;
-        if (ethusd_timestamp != null
-                ? !ethusd_timestamp.equals(price.ethusd_timestamp)
-                : price.ethusd_timestamp != null)
-            return false;
-        return (ethbtc_timestamp != null
-                ? !ethbtc_timestamp.equals(price.ethbtc_timestamp)
-                : price.ethbtc_timestamp != null);
+        return Double.compare(price.ethusd, ethusd) == 0 && Double.compare(price.ethbtc, ethbtc) == 0
+                && Objects.equals(ethusd_timestamp, price.ethusd_timestamp)
+                && Objects.equals(ethbtc_timestamp, price.ethbtc_timestamp);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(ethusd);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(ethbtc);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (ethusd_timestamp != null
-                ? ethusd_timestamp.hashCode()
-                : 0);
-        result = 31 * result + (ethbtc_timestamp != null
-                ? ethbtc_timestamp.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(ethusd, ethbtc, ethusd_timestamp, ethbtc_timestamp);
     }
 
     @Override
@@ -126,11 +107,15 @@ public class Price {
         public Price build() {
             Price price = new Price();
             price.ethbtc = this.ethbtc;
-            price.ethbtc_timestamp = String.valueOf(this.ethbtcTimestamp.toEpochSecond(ZoneOffset.UTC));
-            price._ethbtc_timestamp = this.ethbtcTimestamp;
             price.ethusd = this.ethusd;
-            price.ethusd_timestamp = String.valueOf(this.ethusdTimestamp.toEpochSecond(ZoneOffset.UTC));
-            price._ethusd_timestamp = this.ethusdTimestamp;
+            if (this.ethbtcTimestamp != null) {
+                price.ethbtc_timestamp = String.valueOf(this.ethbtcTimestamp.toEpochSecond(ZoneOffset.UTC));
+                price._ethbtc_timestamp = this.ethbtcTimestamp;
+            }
+            if (this.ethusdTimestamp != null) {
+                price.ethusd_timestamp = String.valueOf(this.ethusdTimestamp.toEpochSecond(ZoneOffset.UTC));
+                price._ethusd_timestamp = this.ethusdTimestamp;
+            }
             return price;
         }
     }

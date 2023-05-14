@@ -5,6 +5,7 @@ import io.goodforgod.api.etherscan.util.BasicUtils;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -40,17 +41,15 @@ public class Block {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Block))
             return false;
-
         Block block = (Block) o;
-
         return blockNumber == block.blockNumber;
     }
 
     @Override
     public int hashCode() {
-        return (int) (blockNumber ^ (blockNumber >>> 32));
+        return Objects.hash(blockNumber);
     }
 
     @Override
@@ -98,8 +97,10 @@ public class Block {
             Block block = new Block();
             block.blockNumber = this.blockNumber;
             block.blockReward = this.blockReward;
-            block._timeStamp = this.timeStamp;
-            block.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                block._timeStamp = this.timeStamp;
+                block.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            }
             return block;
         }
     }

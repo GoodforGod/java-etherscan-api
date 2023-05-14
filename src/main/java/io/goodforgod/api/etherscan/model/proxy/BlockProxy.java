@@ -342,26 +342,32 @@ public class BlockProxy {
             blockProxy.mixHash = this.mixHash;
             blockProxy.totalDifficulty = this.totalDifficulty;
             blockProxy.nonce = this.nonce;
-            blockProxy._gasUsed = this.gasUsed;
             blockProxy.uncles = this.uncles;
             blockProxy.transactionsRoot = this.transactionsRoot;
             blockProxy.number = String.valueOf(this.number);
             blockProxy.logsBloom = this.logsBloom;
             blockProxy.receiptsRoot = this.receiptsRoot;
-            blockProxy._gasLimit = this.gasLimit;
             blockProxy.hash = this.hash;
             blockProxy.parentHash = this.parentHash;
             blockProxy._size = this.size;
-            blockProxy.gasLimit = String.valueOf(this.gasLimit);
             blockProxy.difficulty = this.difficulty;
-            blockProxy.gasUsed = String.valueOf(this.gasUsed);
+            if (this.gasLimit != null) {
+                blockProxy.gasLimit = String.valueOf(this.gasLimit);
+                blockProxy._gasLimit = this.gasLimit;
+            }
+            if (this.gasUsed != null) {
+                blockProxy.gasUsed = String.valueOf(this.gasUsed);
+                blockProxy._gasUsed = this.gasUsed;
+            }
             blockProxy.size = String.valueOf(this.size);
             blockProxy.extraData = this.extraData;
             blockProxy.stateRoot = this.stateRoot;
-            blockProxy._timestamp = this.timestamp;
             blockProxy.sha3Uncles = this.sha3Uncles;
             blockProxy.miner = this.miner;
-            blockProxy.timestamp = String.valueOf(this.timestamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timestamp != null) {
+                blockProxy.timestamp = String.valueOf(this.timestamp.toEpochSecond(ZoneOffset.UTC));
+                blockProxy._timestamp = this.timestamp;
+            }
             blockProxy.transactions = this.transactions;
             blockProxy._number = this.number;
             return blockProxy;

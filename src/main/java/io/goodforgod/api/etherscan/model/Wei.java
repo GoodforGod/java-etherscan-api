@@ -45,18 +45,15 @@ public class Wei {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Wei))
             return false;
-
         Wei wei = (Wei) o;
         return Objects.equals(result, wei.result);
     }
 
     @Override
     public int hashCode() {
-        return result != null
-                ? result.hashCode()
-                : 0;
+        return Objects.hash(result);
     }
 
     @Override

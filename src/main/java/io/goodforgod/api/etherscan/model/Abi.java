@@ -1,6 +1,7 @@
 package io.goodforgod.api.etherscan.model;
 
 import io.goodforgod.api.etherscan.util.BasicUtils;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -40,27 +41,15 @@ public class Abi {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Abi))
             return false;
-
         Abi abi = (Abi) o;
-
-        if (isVerified != abi.isVerified)
-            return false;
-        return contractAbi != null
-                ? contractAbi.equals(abi.contractAbi)
-                : abi.contractAbi == null;
+        return isVerified == abi.isVerified && Objects.equals(contractAbi, abi.contractAbi);
     }
 
     @Override
     public int hashCode() {
-        int result = contractAbi != null
-                ? contractAbi.hashCode()
-                : 0;
-        result = 31 * result + (isVerified
-                ? 1
-                : 0);
-        return result;
+        return Objects.hash(contractAbi, isVerified);
     }
 
     @Override

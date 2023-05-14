@@ -179,10 +179,12 @@ public class TxInternal extends BaseTx {
             txInternal.from = this.from;
             txInternal.contractAddress = this.contractAddress;
             txInternal.value = this.value;
-            txInternal.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+            if (this.timeStamp != null) {
+                txInternal.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                txInternal._timeStamp = this.timeStamp;
+            }
             txInternal.errCode = this.errCode;
             txInternal.blockNumber = this.blockNumber;
-            txInternal._timeStamp = this.timeStamp;
             txInternal.isError = this.isError;
             txInternal.to = this.to;
             txInternal.input = this.input;

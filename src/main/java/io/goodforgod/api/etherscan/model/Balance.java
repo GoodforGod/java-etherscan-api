@@ -48,23 +48,15 @@ public class Balance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Balance))
             return false;
-
         Balance balance1 = (Balance) o;
-
-        if (!balance.equals(balance1.balance))
-            return false;
-        return Objects.equals(address, balance1.address);
+        return Objects.equals(balance, balance1.balance) && Objects.equals(address, balance1.address);
     }
 
     @Override
     public int hashCode() {
-        int result = balance.hashCode();
-        result = 31 * result + (address != null
-                ? address.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(balance, address);
     }
 
     @Override

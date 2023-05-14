@@ -262,8 +262,10 @@ public class TxProxy {
         public TxProxy build() {
             TxProxy txProxy = new TxProxy();
             txProxy.input = this.input;
-            txProxy.gas = String.valueOf(this.gas);
-            txProxy._gas = this.gas;
+            if (this.gas != null) {
+                txProxy.gas = String.valueOf(this.gas);
+                txProxy._gas = this.gas;
+            }
             txProxy.s = this.s;
             txProxy.blockHash = this.blockHash;
             txProxy.to = this.to;
@@ -274,12 +276,14 @@ public class TxProxy {
             txProxy.v = this.v;
             txProxy.from = this.from;
             txProxy.nonce = String.valueOf(this.nonce);
-            txProxy._gasPrice = this.gasPrice;
             txProxy._transactionIndex = this.transactionIndex;
             txProxy.blockNumber = String.valueOf(this.blockNumber);
             txProxy._blockNumber = this.blockNumber;
             txProxy.hash = this.hash;
-            txProxy.gasPrice = String.valueOf(this.gasPrice);
+            if (this.gasPrice != null) {
+                txProxy.gasPrice = String.valueOf(this.gasPrice);
+                txProxy._gasPrice = this.gasPrice;
+            }
             return txProxy;
         }
     }

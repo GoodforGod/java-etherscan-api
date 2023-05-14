@@ -125,40 +125,17 @@ public class Log {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Log))
             return false;
-
         Log log = (Log) o;
-
-        if (!Objects.equals(blockNumber, log.blockNumber))
-            return false;
-        if (!Objects.equals(address, log.address))
-            return false;
-        if (!Objects.equals(transactionHash, log.transactionHash))
-            return false;
-        if (!Objects.equals(timeStamp, log.timeStamp))
-            return false;
-        return Objects.equals(logIndex, log.logIndex);
+        return Objects.equals(blockNumber, log.blockNumber) && Objects.equals(address, log.address)
+                && Objects.equals(transactionHash, log.transactionHash) && Objects.equals(transactionIndex, log.transactionIndex)
+                && Objects.equals(logIndex, log.logIndex);
     }
 
     @Override
     public int hashCode() {
-        int result = blockNumber != null
-                ? blockNumber.hashCode()
-                : 0;
-        result = 31 * result + (address != null
-                ? address.hashCode()
-                : 0);
-        result = 31 * result + (transactionHash != null
-                ? transactionHash.hashCode()
-                : 0);
-        result = 31 * result + (timeStamp != null
-                ? timeStamp.hashCode()
-                : 0);
-        result = 31 * result + (logIndex != null
-                ? logIndex.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(blockNumber, address, transactionHash, transactionIndex, logIndex);
     }
 
     @Override
@@ -255,17 +232,23 @@ public class Log {
         public Log build() {
             Log log = new Log();
             log.address = this.address;
-            log.gasPrice = String.valueOf(this.gasPrice);
-            log._gasPrice = this.gasPrice;
+            if (this.gasPrice != null) {
+                log.gasPrice = String.valueOf(this.gasPrice);
+                log._gasPrice = this.gasPrice;
+            }
             log._logIndex = this.logIndex;
             log._transactionIndex = this.transactionIndex;
-            log._gasUsed = this.gasUsed;
             log.blockNumber = String.valueOf(this.blockNumber);
             log.transactionIndex = String.valueOf(this.transactionIndex);
-            log.timeStamp = String.valueOf(this.timeStamp);
+            if (this.timeStamp != null) {
+                log.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                log._timeStamp = this.timeStamp;
+            }
             log.data = this.data;
-            log.gasUsed = String.valueOf(this.gasUsed);
-            log._timeStamp = this.timeStamp;
+            if (this.gasUsed != null) {
+                log.gasUsed = String.valueOf(this.gasUsed);
+                log._gasUsed = this.gasUsed;
+            }
             log.logIndex = String.valueOf(this.logIndex);
             log._blockNumber = this.blockNumber;
             log.topics = this.topics;
