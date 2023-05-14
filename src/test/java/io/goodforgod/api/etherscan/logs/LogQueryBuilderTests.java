@@ -1,8 +1,8 @@
 package io.goodforgod.api.etherscan.logs;
 
 import io.goodforgod.api.etherscan.ApiRunner;
-import io.goodforgod.api.etherscan.error.ErtherScanLogQueryException;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidAddressException;
+import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
 import io.goodforgod.api.etherscan.model.query.*;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void singleInCorrectTopic() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic("6516=")
                 .build());
     }
@@ -51,7 +51,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tupleInCorrectOp() {
-        assertThrows(ErtherScanLogQueryException.class,
+        assertThrows(EtherScanLogQueryException.class,
                 () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c").withBlockFrom(379224)
                         .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                                 "0x72657075746174696f6e00000000000000000000000000000000000000000000")
@@ -76,7 +76,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tripleInCorrectOp() {
-        assertThrows(ErtherScanLogQueryException.class,
+        assertThrows(EtherScanLogQueryException.class,
                 () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c").withBlockFrom(379224).withBlockTo(400000)
                         .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                                 "0x72657075746174696f6e00000000000000000000000000000000000000000000",
@@ -89,7 +89,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tripleInCorrectTopic1() {
-        assertThrows(ErtherScanLogQueryException.class,
+        assertThrows(EtherScanLogQueryException.class,
                 () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c").withBlockFrom(379224).withBlockTo(400000)
                         .withTopic(null,
                                 "0x72657075746174696f6e00000000000000000000000000000000000000000000",
@@ -102,7 +102,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tripleInCorrectTopic2() {
-        assertThrows(ErtherScanLogQueryException.class,
+        assertThrows(EtherScanLogQueryException.class,
                 () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c").withBlockFrom(379224).withBlockTo(400000)
                         .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                                 null,
@@ -115,7 +115,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tripleInCorrectTopic3() {
-        assertThrows(ErtherScanLogQueryException.class,
+        assertThrows(EtherScanLogQueryException.class,
                 () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c").withBlockFrom(379224).withBlockTo(400000)
                         .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                                 "0x72657075746174696f6e00000000000000000000000000000000000000000000",
@@ -147,7 +147,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void quadroIncorrectTopic2() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         null,
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
@@ -163,7 +163,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tupleIncorrectTopic2() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         null)
                 .setOpTopic0_1(LogOp.AND)
@@ -172,7 +172,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void tupleIncorrectTopic1() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic(null,
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
                 .setOpTopic0_1(LogOp.AND)
@@ -187,7 +187,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro
                 .setOpTopic0_1(null)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -205,7 +205,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro.setOpTopic0_1(LogOp.AND)
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro.setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(null)
                 .setOpTopic0_3(LogOp.AND)
                 .setOpTopic1_2(LogOp.OR)
@@ -222,7 +222,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(null)
@@ -234,7 +234,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void quadroInCorrectAgainTopic() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
@@ -256,7 +256,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -274,7 +274,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -292,7 +292,7 @@ class LogQueryBuilderTests extends ApiRunner {
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545");
 
-        assertThrows(ErtherScanLogQueryException.class, () -> topicQuadro
+        assertThrows(EtherScanLogQueryException.class, () -> topicQuadro
                 .setOpTopic0_1(LogOp.AND)
                 .setOpTopic0_2(LogOp.OR)
                 .setOpTopic0_3(LogOp.AND)
@@ -304,7 +304,7 @@ class LogQueryBuilderTests extends ApiRunner {
 
     @Test
     void quadroInCorrectTopic() {
-        assertThrows(ErtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        assertThrows(EtherScanLogQueryException.class, () -> LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
                 .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
                         "0x72657075746174696f6e00000000000000000000000000000000000000000000",
                         "",

@@ -3,7 +3,7 @@ package io.goodforgod.api.etherscan.model.query;
 import static io.goodforgod.api.etherscan.model.query.LogQueryParams.*;
 
 import io.goodforgod.api.etherscan.LogsAPI;
-import io.goodforgod.api.etherscan.error.ErtherScanLogQueryException;
+import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -71,17 +71,17 @@ public final class LogTopicQuadro implements LogTopicBuilder {
     @Override
     public @NotNull LogQuery build() {
         if (topic0_1_opr == null)
-            throw new ErtherScanLogQueryException("topic0_1_opr can not be null.");
+            throw new EtherScanLogQueryException("topic0_1_opr can not be null.");
         if (topic0_2_opr == null)
-            throw new ErtherScanLogQueryException("topic0_2_opr can not be null.");
+            throw new EtherScanLogQueryException("topic0_2_opr can not be null.");
         if (topic0_3_opr == null)
-            throw new ErtherScanLogQueryException("topic0_3_opr can not be null.");
+            throw new EtherScanLogQueryException("topic0_3_opr can not be null.");
         if (topic1_2_opr == null)
-            throw new ErtherScanLogQueryException("topic1_2_opr can not be null.");
+            throw new EtherScanLogQueryException("topic1_2_opr can not be null.");
         if (topic2_3_opr == null)
-            throw new ErtherScanLogQueryException("topic2_3_opr can not be null.");
+            throw new EtherScanLogQueryException("topic2_3_opr can not be null.");
         if (topic1_3_opr == null)
-            throw new ErtherScanLogQueryException("topic1_3_opr can not be null.");
+            throw new EtherScanLogQueryException("topic1_3_opr can not be null.");
 
         return new LogQueryImpl(ADDRESS_PARAM + address
                 + FROM_BLOCK_PARAM + startBlock + TO_BLOCK_PARAM + endBlock

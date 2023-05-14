@@ -9,15 +9,23 @@ import io.goodforgod.api.etherscan.model.response.StringResponseTO;
  */
 public class EtherScanResponseException extends EtherScanException {
 
+    private final transient BaseResponseTO response;
+
     public EtherScanResponseException(BaseResponseTO response) {
-        this(response.getMessage() + ", with status: " + response.getStatus());
+        this(response, response.getMessage() + ", with status: " + response.getStatus());
     }
 
     public EtherScanResponseException(StringResponseTO response) {
-        this(response.getResult() + ", with status: " + response.getStatus() + ", with message: " + response.getMessage());
+        this(response,
+                response.getResult() + ", with status: " + response.getStatus() + ", with message: " + response.getMessage());
     }
 
-    public EtherScanResponseException(String message) {
+    public EtherScanResponseException(BaseResponseTO response, String message) {
         super(message);
+        this.response = response;
+    }
+
+    public BaseResponseTO getResponse() {
+        return response;
     }
 }

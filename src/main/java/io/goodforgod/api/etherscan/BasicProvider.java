@@ -20,6 +20,8 @@ import java.util.Map;
  */
 abstract class BasicProvider {
 
+    private static final String MAX_RATE_LIMIT_REACHED = "Max rate limit reached";
+
     static final int MAX_END_BLOCK = Integer.MAX_VALUE;
     static final int MIN_START_BLOCK = 0;
 
@@ -46,17 +48,26 @@ abstract class BasicProvider {
     <T> T convert(byte[] json, Class<T> tClass) {
         try {
             final T t = converter.fromJson(json, tClass);
-            if (t instanceof StringResponseTO && ((StringResponseTO) t).getResult().startsWith("Max rate limit reached")) {
+            if (t instanceof StringResponseTO && ((StringResponseTO) t).getResult().startsWith(MAX_RATE_LIMIT_REACHED)) {
                 throw new EtherScanRateLimitException(((StringResponseTO) t).getResult());
             }
 
             return t;
         } catch (Exception e) {
+            final StringResponseTO response = converter.fromJson(json, StringResponseTO.class);
+            if (response.getResult() != null && response.getStatus() == 0) {
+                if (response.getResult().startsWith(MAX_RATE_LIMIT_REACHED)) {
+                    throw new EtherScanRateLimitException(response.getResult());
+                } else {
+                    throw new EtherScanResponseException(response);
+                }
+            }
+
             final String jsonAsString = new String(json, StandardCharsets.UTF_8);
             try {
                 final Map<String, Object> map = converter.fromJson(json, Map.class);
                 final Object result = map.get("result");
-                if (result instanceof String && ((String) result).startsWith("Max rate limit reached"))
+                if (result instanceof String && ((String) result).startsWith(MAX_RATE_LIMIT_REACHED))
                     throw new EtherScanRateLimitException(((String) result));
 
                 throw new EtherScanParseException(e.getMessage() + ", for response: " + jsonAsString, e.getCause(), jsonAsString);
@@ -72,8 +83,15 @@ abstract class BasicProvider {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
         final byte[] result = executor.get(uri);
-        if (result.length == 0)
-            throw new EtherScanResponseException("Server returned null value for GET request at URL - " + uri);
+        if (result.length == 0) {
+            final StringResponseTO emptyResponse = StringResponseTO.builder()
+                    .withStatus("0")
+                    .withMessage("Server returned null value for GET request at URL - " + uri)
+                    .withResult("")
+                    .build();
+
+            throw new EtherScanResponseException(emptyResponse, "Server returned null value for GET request at URL - " + uri);
+        }
 
         return result;
     }

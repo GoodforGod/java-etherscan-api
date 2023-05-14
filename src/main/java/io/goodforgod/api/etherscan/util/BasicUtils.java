@@ -5,6 +5,7 @@ import io.goodforgod.api.etherscan.error.EtherScanInvalidTxHashException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
 import io.goodforgod.api.etherscan.model.response.BaseResponseTO;
 import io.goodforgod.api.etherscan.model.response.BlockParam;
+import io.goodforgod.api.etherscan.model.response.StringResponseTO;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -98,12 +99,17 @@ public final class BasicUtils {
     }
 
     public static <T extends BaseResponseTO> void validateTxResponse(T response) {
-        if (response == null)
-            throw new EtherScanResponseException("EtherScan responded with null value");
+        if (response == null) {
+            final StringResponseTO emptyResponse = StringResponseTO.builder()
+                    .withStatus("0")
+                    .withMessage("EtherScan responded with null value")
+                    .build();
+            throw new EtherScanResponseException(emptyResponse, "EtherScan responded with null value");
+        }
 
         if (response.getStatus() != 1) {
             if (response.getMessage() == null) {
-                throw new EtherScanResponseException(
+                throw new EtherScanResponseException(response,
                         "Unexpected Etherscan exception, no information from server about error, code " + response.getStatus());
             } else if (!response.getMessage().startsWith("No tra") && !response.getMessage().startsWith("No rec")) {
                 throw new EtherScanResponseException(response);

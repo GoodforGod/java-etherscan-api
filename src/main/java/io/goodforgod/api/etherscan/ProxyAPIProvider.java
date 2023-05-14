@@ -13,6 +13,7 @@ import io.goodforgod.api.etherscan.model.proxy.utility.BlockProxyTO;
 import io.goodforgod.api.etherscan.model.proxy.utility.StringProxyTO;
 import io.goodforgod.api.etherscan.model.proxy.utility.TxInfoProxyTO;
 import io.goodforgod.api.etherscan.model.proxy.utility.TxProxyTO;
+import io.goodforgod.api.etherscan.model.response.StringResponseTO;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -142,10 +143,17 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
         final String urlParams = ACT_SEND_RAW_TX_PARAM + HEX_PARAM + hexEncodedTx;
         final StringProxyTO response = postRequest(urlParams, "", StringProxyTO.class);
-        if (response.getError() != null)
-            throw new EtherScanResponseException("Error occurred with code " + response.getError().getCode()
+        if (response.getError() != null) {
+            final StringResponseTO responseError = StringResponseTO.builder()
+                    .withStatus("0")
+                    .withMessage(response.getError().getMessage())
+                    .withResult(response.getError().getCode())
+                    .build();
+
+            throw new EtherScanResponseException(responseError, "Error occurred with code " + response.getError().getCode()
                     + " with message " + response.getError().getMessage()
                     + ", error id " + response.getId() + ", jsonRPC " + response.getJsonrpc());
+        }
 
         return Optional.ofNullable(response.getResult());
     }

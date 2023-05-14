@@ -8,8 +8,8 @@ import io.goodforgod.api.etherscan.util.BasicUtils;
  */
 public abstract class BaseResponseTO {
 
-    private String status;
-    private String message;
+    String status;
+    String message;
 
     public int getStatus() {
         return BasicUtils.isEmpty(status)

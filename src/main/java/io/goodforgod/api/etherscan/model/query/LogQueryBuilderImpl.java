@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan.model.query;
 
 import io.goodforgod.api.etherscan.LogsAPI;
-import io.goodforgod.api.etherscan.error.ErtherScanLogQueryException;
+import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,27 +40,27 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     @Override
     public @NotNull LogTopicSingle withTopic(@NotNull String topic0) {
         if (BasicUtils.isNotHex(topic0))
-            throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic0 can not be empty or non hex.");
         return new LogTopicSingle(address, startBlock, endBlock, topic0);
     }
 
     @Override
     public @NotNull LogTopicTuple withTopic(@NotNull String topic0, @NotNull String topic1) {
         if (BasicUtils.isNotHex(topic0))
-            throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
-            throw new ErtherScanLogQueryException("topic1 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic1 can not be empty or non hex.");
         return new LogTopicTuple(address, startBlock, endBlock, topic0, topic1);
     }
 
     @Override
     public @NotNull LogTopicTriple withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2) {
         if (BasicUtils.isNotHex(topic0))
-            throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
-            throw new ErtherScanLogQueryException("topic1 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic1 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic2))
-            throw new ErtherScanLogQueryException("topic2 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic2 can not be empty or non hex.");
         return new LogTopicTriple(address, startBlock, endBlock, topic0, topic1, topic2);
     }
 
@@ -68,19 +68,19 @@ final class LogQueryBuilderImpl implements LogQuery.Builder {
     public @NotNull LogTopicQuadro
             withTopic(@NotNull String topic0, @NotNull String topic1, @NotNull String topic2, @NotNull String topic3) {
         if (BasicUtils.isNotHex(topic0))
-            throw new ErtherScanLogQueryException("topic0 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic0 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic1))
-            throw new ErtherScanLogQueryException("topic1 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic1 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic2))
-            throw new ErtherScanLogQueryException("topic2 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic2 can not be empty or non hex.");
         if (BasicUtils.isNotHex(topic3))
-            throw new ErtherScanLogQueryException("topic3 can not be empty or non hex.");
+            throw new EtherScanLogQueryException("topic3 can not be empty or non hex.");
 
         return new LogTopicQuadro(address, startBlock, endBlock, topic0, topic1, topic2, topic3);
     }
 
     @Override
-    public @NotNull LogQuery build() throws ErtherScanLogQueryException {
+    public @NotNull LogQuery build() throws EtherScanLogQueryException {
         return new LogQueryImpl("&address=" + this.address + "&fromBlock=" + this.startBlock + "&toBlock=" + this.endBlock);
     }
 }
