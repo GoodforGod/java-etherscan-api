@@ -7,6 +7,7 @@ import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import io.goodforgod.gson.configuration.GsonConfiguration;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,8 +29,9 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
     private Supplier<Converter> converterSupplier = () -> new Converter() {
 
         @Override
-        public <T> @NotNull T fromJson(@NotNull String json, @NotNull Class<T> type) {
-            return gson.fromJson(json, type);
+        public <T> @NotNull T fromJson(byte[] jsonAsByteArray, @NotNull Class<T> type) {
+            final String jsonAsString = new String(jsonAsByteArray, StandardCharsets.UTF_8);
+            return gson.fromJson(jsonAsString, type);
         }
     };
 

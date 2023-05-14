@@ -11,6 +11,10 @@ public class Wei {
 
     private final BigInteger result;
 
+    public Wei(int value) {
+        this.result = BigInteger.valueOf(value);
+    }
+
     public Wei(long value) {
         this.result = BigInteger.valueOf(value);
     }

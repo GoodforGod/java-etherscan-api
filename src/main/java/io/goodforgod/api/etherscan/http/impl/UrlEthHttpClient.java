@@ -5,15 +5,11 @@ import static java.net.HttpURLConnection.*;
 import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
 import io.goodforgod.api.etherscan.error.EtherScanTimeoutException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
@@ -83,7 +79,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public @NotNull String get(@NotNull URI uri) {
+    public byte[] get(@NotNull URI uri) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "GET");
             final int status = connection.getResponseCode();
@@ -95,7 +91,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
                 throw new EtherScanConnectionException("Server error: " + connection.getResponseMessage());
             }
 
-            final String data = readData(connection);
+            final byte[] data = readData(connection);
             connection.disconnect();
             return data;
         } catch (SocketTimeoutException e) {
@@ -106,7 +102,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public @NotNull String post(@NotNull URI uri, byte[] body) {
+    public byte[] post(@NotNull URI uri, byte[] body) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "POST");
             final int contentLength = body.length;
@@ -129,7 +125,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
                 throw new EtherScanConnectionException("Server error: " + connection.getResponseMessage());
             }
 
-            final String data = readData(connection);
+            final byte[] data = readData(connection);
             connection.disconnect();
             return data;
         } catch (SocketTimeoutException e) {
@@ -139,25 +135,29 @@ public final class UrlEthHttpClient implements EthHttpClient {
         }
     }
 
-    private String readData(HttpURLConnection connection) throws IOException {
-        final StringBuilder content = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(getStreamReader(connection))) {
-            String inputLine;
-            while ((inputLine = in.readLine()) != null)
-                content.append(inputLine);
-        }
+    private byte[] readData(HttpURLConnection connection) throws IOException {
+        try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+            try (InputStream in = getStreamReader(connection)) {
+                byte[] data = new byte[256];
+                int nRead;
+                while ((nRead = in.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+            }
 
-        return content.toString();
+            buffer.flush();
+            return buffer.toByteArray();
+        }
     }
 
-    private InputStreamReader getStreamReader(HttpURLConnection connection) throws IOException {
+    private InputStream getStreamReader(HttpURLConnection connection) throws IOException {
         switch (String.valueOf(connection.getContentEncoding())) {
             case "gzip":
-                return new InputStreamReader(new GZIPInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
+                return new GZIPInputStream(connection.getInputStream());
             case "deflate":
-                return new InputStreamReader(new InflaterInputStream(connection.getInputStream()), StandardCharsets.UTF_8);
+                return new InflaterInputStream(connection.getInputStream());
             default:
-                return new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
+                return connection.getInputStream();
         }
     }
 }

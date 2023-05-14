@@ -9,5 +9,5 @@ import org.jetbrains.annotations.NotNull;
 public interface Converter {
 
     @NotNull
-    <T> T fromJson(@NotNull String json, @NotNull Class<T> type);
+    <T> T fromJson(byte[] jsonAsByteArray, @NotNull Class<T> type);
 }

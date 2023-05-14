@@ -252,6 +252,7 @@ class ModelBuilderTests extends Assertions {
                 .withContractAddress("1")
                 .withFrom("1")
                 .withTo("1")
+                .withValue(BigInteger.ONE)
                 .withGas(BigInteger.ONE)
                 .withGasUsed(BigInteger.ONE)
                 .withHash("1")

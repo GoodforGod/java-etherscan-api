@@ -33,11 +33,15 @@ final class BlockAPIProvider extends BasicProvider implements BlockAPI {
     @Override
     public Optional<BlockUncle> uncles(long blockNumber) throws EtherScanException {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
-        final String response = getRequest(urlParam);
-        if (BasicUtils.isEmpty(response) || response.contains("NOTOK"))
+        final byte[] response = getRequest(urlParam);
+        if (response.length == 0)
             return Optional.empty();
 
         final UncleBlockResponseTO responseTO = convert(response, UncleBlockResponseTO.class);
+        if (responseTO.getMessage().equals("NOTOK")) {
+            return Optional.empty();
+        }
+
         BasicUtils.validateTxResponse(responseTO);
         return (responseTO.getResult() == null || responseTO.getResult().isEmpty())
                 ? Optional.empty()
