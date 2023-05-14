@@ -1,6 +1,5 @@
 package io.goodforgod.api.etherscan.model;
 
-import java.math.BigInteger;
 import java.util.Objects;
 
 /**
@@ -11,7 +10,7 @@ public class TokenBalance extends Balance {
 
     private final String tokenContract;
 
-    public TokenBalance(String address, BigInteger balance, String tokenContract) {
+    public TokenBalance(String address, Wei balance, String tokenContract) {
         super(address, balance);
         this.tokenContract = tokenContract;
     }

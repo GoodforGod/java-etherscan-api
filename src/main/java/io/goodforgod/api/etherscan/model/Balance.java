@@ -1,6 +1,5 @@
 package io.goodforgod.api.etherscan.model;
 
-import java.math.BigInteger;
 import java.util.Objects;
 
 /**
@@ -13,9 +12,9 @@ public class Balance {
     private final Wei balance;
     private final String address;
 
-    public Balance(String address, BigInteger balance) {
+    public Balance(String address, Wei balance) {
         this.address = address;
-        this.balance = new Wei(balance);
+        this.balance = balance;
     }
 
     // <editor-fold desc="Getters">

@@ -19,12 +19,12 @@ class AccountTokenBalanceTests extends ApiRunner {
         TokenBalance balance = api.account().balance("0x5d807e7F124EC2103a59c5249187f772c0b8D6b2",
                 "0x5EaC95ad5b287cF44E058dCf694419333b796123");
         assertNotNull(balance);
-        assertNotNull(balance.getWei());
+        assertNotNull(balance.getBalanceInWei());
         assertNotNull(balance.getAddress());
         assertNotNull(balance.getContract());
         assertNotNull(balance.toString());
 
-        TokenBalance balance2 = new TokenBalance("125161", balance.getWei(), balance.getContract());
+        TokenBalance balance2 = new TokenBalance("125161", balance.getBalanceInWei(), balance.getContract());
         assertNotEquals(balance, balance2);
         assertNotEquals(balance.hashCode(), balance2.hashCode());
     }
@@ -48,9 +48,9 @@ class AccountTokenBalanceTests extends ApiRunner {
         TokenBalance balance = api.account().balance("0x1d807e7F124EC2103a59c5249187f772c0b8D6b2",
                 "0x5EaC95ad5b287cF44E058dCf694419333b796123");
         assertNotNull(balance);
-        assertNotNull(balance.getWei());
+        assertNotNull(balance.getBalanceInWei());
         assertNotNull(balance.getAddress());
         assertNotNull(balance.getContract());
-        assertEquals(0, balance.getWei().intValue());
+        assertEquals(0, balance.getBalanceInWei().asWei().intValue());
     }
 }
