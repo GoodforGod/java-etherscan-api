@@ -27,8 +27,8 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
     private final Gson gson = new GsonConfiguration().builder().create();
 
     private String apiKey = DEFAULT_KEY;
+    private RequestQueueManager queueManager;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
-    private RequestQueueManager queueManager = RequestQueueManager.ANONYMOUS;
     private Supplier<EthHttpClient> ethHttpClientSupplier = DEFAULT_SUPPLIER;
     private Supplier<Converter> converterSupplier = () -> new Converter() {
 
@@ -49,9 +49,6 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
             throw new EtherScanKeyException("API key can not be null or empty");
 
         this.apiKey = apiKey;
-        if (!DEFAULT_KEY.equals(apiKey)) {
-            queueManager = RequestQueueManager.UNLIMITED;
-        }
         return this;
     }
 
@@ -92,6 +89,16 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
     @Override
     public @NotNull EtherScanAPI build() {
-        return new EtherScanAPIProvider(apiKey, ethNetwork, queueManager, ethHttpClientSupplier.get(), converterSupplier.get());
+        RequestQueueManager requestQueueManager;
+        if (queueManager != null) {
+            requestQueueManager = queueManager;
+        } else if (DEFAULT_KEY.equals(apiKey)) {
+            requestQueueManager = RequestQueueManager.anonymous();
+        } else {
+            requestQueueManager = RequestQueueManager.planFree();
+        }
+
+        return new EtherScanAPIProvider(apiKey, ethNetwork, requestQueueManager, ethHttpClientSupplier.get(),
+                converterSupplier.get());
     }
 }

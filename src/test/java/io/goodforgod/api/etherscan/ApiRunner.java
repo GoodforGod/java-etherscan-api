@@ -20,18 +20,14 @@ public class ApiRunner extends Assertions {
                 .orElse(DEFAULT_KEY);
 
         final RequestQueueManager queueManager = (DEFAULT_KEY.equals(API_KEY))
-                ? RequestQueueManager.ANONYMOUS
-                : RequestQueueManager.FREE_PLAN;
+                ? RequestQueueManager.anonymous()
+                : RequestQueueManager.planFree();
 
         API = EtherScanAPI.builder()
                 .withApiKey(ApiRunner.API_KEY)
                 .withNetwork(EthNetworks.MAINNET)
                 .withQueue(queueManager)
                 .build();
-    }
-
-    public static String getApiKey() {
-        return API_KEY;
     }
 
     public static EtherScanAPI getApi() {

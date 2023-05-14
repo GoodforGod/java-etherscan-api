@@ -24,7 +24,7 @@ class AccountTxsTests extends ApiRunner {
         assertNotNull(txs.get(0).getTo());
         assertNotNull(txs.get(0).getBlockHash());
         assertNotNull(txs.get(0).getGas());
-        assertNotNull(txs.get(0).getCumulativeGasUsed());
+        assertNotNull(txs.get(0).getGasUsedCumulative());
         assertNotNull(txs.get(0).getGasPrice());
         assertNotNull(txs.get(0).getValue());
         assertNotNull(txs.get(0).getContractAddress());
@@ -75,7 +75,7 @@ class AccountTxsTests extends ApiRunner {
             assertNotEquals(-1, (tx.getNonce()));
             assertNotEquals(0, (tx.getTransactionIndex()));
             assertNotEquals(0, tx.getConfirmations());
-            assertNotNull(tx.getTxreceipt_status());
+            assertNotNull(tx.getTxReceiptStatus());
         }
     }
 }

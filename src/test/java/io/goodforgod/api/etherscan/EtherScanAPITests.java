@@ -68,7 +68,6 @@ class EtherScanAPITests extends ApiRunner {
         TimeUnit.SECONDS.sleep(5);
         Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
         EtherScanAPI api = EtherScanAPI.builder()
-                .withApiKey(getApiKey())
                 .withNetwork(() -> URI.create("https://api-unknown.etherscan.io/api"))
                 .withHttpClient(supplier)
                 .build();

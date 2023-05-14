@@ -84,8 +84,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     @NotNull
     @Override
     public List<Balance> balances(List<String> addresses) throws EtherScanException {
-        if (BasicUtils.isEmpty(addresses))
+        if (BasicUtils.isEmpty(addresses)) {
             return Collections.emptyList();
+        }
 
         BasicUtils.validateAddresses(addresses);
 
@@ -96,13 +97,15 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         for (final List<String> batch : addressesAsBatches) {
             final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(batch);
             final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
-            if (response.getStatus() != 1)
+            if (response.getStatus() != 1) {
                 throw new EtherScanResponseException(response);
+            }
 
-            if (!BasicUtils.isEmpty(response.getResult()))
+            if (!BasicUtils.isEmpty(response.getResult())) {
                 balances.addAll(response.getResult().stream()
                         .map(r -> new Balance(r.getAccount(), Wei.ofWei(new BigInteger(r.getBalance()))))
                         .collect(Collectors.toList()));
+            }
         }
 
         return balances;

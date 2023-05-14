@@ -16,18 +16,33 @@ public interface RequestQueueManager extends AutoCloseable {
     /**
      * Is used by default when no API KEY is provided
      */
-    RequestQueueManager ANONYMOUS = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5015L));
+    static RequestQueueManager anonymous() {
+        return new SemaphoreRequestQueueManager(1, Duration.ofMillis(5005L));
+    }
 
     /**
      * Is available for all registered free API KEYs
      * <a href="https://docs.etherscan.io/getting-started/viewing-api-usage-statistics">Free API KEY</a>
      */
-    RequestQueueManager FREE_PLAN = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1015L));
-    RequestQueueManager STANDARD_PLAN = new SemaphoreRequestQueueManager(10, Duration.ofMillis(1015L));
-    RequestQueueManager ADVANCED_PLAN = new SemaphoreRequestQueueManager(20, Duration.ofMillis(1015L));
-    RequestQueueManager PROFESSIONAL_PLAN = new SemaphoreRequestQueueManager(30, Duration.ofMillis(1015L));
+    static RequestQueueManager planFree() {
+        return new SemaphoreRequestQueueManager(5, Duration.ofMillis(1005L));
+    }
 
-    RequestQueueManager UNLIMITED = new FakeRequestQueueManager();
+    static RequestQueueManager planStandard() {
+        return new SemaphoreRequestQueueManager(10, Duration.ofMillis(1005L));
+    }
+
+    static RequestQueueManager planAdvanced() {
+        return new SemaphoreRequestQueueManager(20, Duration.ofMillis(1005L));
+    }
+
+    static RequestQueueManager planProfessional() {
+        return new SemaphoreRequestQueueManager(30, Duration.ofMillis(1005L));
+    }
+
+    static RequestQueueManager unlimited() {
+        return new FakeRequestQueueManager();
+    }
 
     /**
      * Waits in queue for chance to take turn

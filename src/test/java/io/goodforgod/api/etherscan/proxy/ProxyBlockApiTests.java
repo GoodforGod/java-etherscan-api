@@ -1,9 +1,6 @@
 package io.goodforgod.api.etherscan.proxy;
 
 import io.goodforgod.api.etherscan.ApiRunner;
-import io.goodforgod.api.etherscan.EthNetworks;
-import io.goodforgod.api.etherscan.EtherScanAPI;
-import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.proxy.BlockProxy;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -14,17 +11,9 @@ import org.junit.jupiter.api.Test;
  */
 class ProxyBlockApiTests extends ApiRunner {
 
-    private final EtherScanAPI api;
-
-    ProxyBlockApiTests() {
-        final RequestQueueManager queueManager = RequestQueueManager.ANONYMOUS;
-        this.api = EtherScanAPI.builder().withApiKey(getApiKey()).withNetwork(EthNetworks.MAINNET).withQueue(queueManager)
-                .build();
-    }
-
     @Test
     void correct() {
-        Optional<BlockProxy> block = api.proxy().block(5120);
+        Optional<BlockProxy> block = getApi().proxy().block(5120);
         assertTrue(block.isPresent());
         BlockProxy proxy = block.get();
         assertNotNull(proxy.getHash());
@@ -57,13 +46,13 @@ class ProxyBlockApiTests extends ApiRunner {
 
     @Test
     void correctParamWithEmptyExpectedResult() {
-        Optional<BlockProxy> block = api.proxy().block(99999999999L);
+        Optional<BlockProxy> block = getApi().proxy().block(99999999999L);
         assertFalse(block.isPresent());
     }
 
     @Test
     void correctParamNegativeNo() {
-        Optional<BlockProxy> block = api.proxy().block(-1);
+        Optional<BlockProxy> block = getApi().proxy().block(-1);
         assertTrue(block.isPresent());
         assertNotNull(block.get().getHash());
     }

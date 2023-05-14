@@ -75,7 +75,7 @@ class AccountTxRc1155TokenTests extends ApiRunner {
         assertNotNull(tx.getTokenValue());
         assertNotEquals(-1, (tx.getConfirmations()));
         assertNotNull(tx.getGasUsed());
-        assertNotEquals(-1, tx.getCumulativeGasUsed());
+        assertNotEquals(-1, tx.getGasUsedCumulative());
         assertNotEquals(-1, tx.getTransactionIndex());
     }
 }
