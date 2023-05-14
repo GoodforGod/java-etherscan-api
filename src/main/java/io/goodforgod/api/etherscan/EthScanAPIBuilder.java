@@ -2,11 +2,15 @@ package io.goodforgod.api.etherscan;
 
 import com.google.gson.Gson;
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
+import io.goodforgod.api.etherscan.error.EtherScanParseException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import io.goodforgod.gson.configuration.GsonConfiguration;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
@@ -30,8 +34,11 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
         @Override
         public <T> @NotNull T fromJson(byte[] jsonAsByteArray, @NotNull Class<T> type) {
-            final String jsonAsString = new String(jsonAsByteArray, StandardCharsets.UTF_8);
-            return gson.fromJson(jsonAsString, type);
+            try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(jsonAsByteArray))) {
+                return gson.fromJson(isr, type);
+            } catch (IOException e) {
+                throw new EtherScanParseException(e.getMessage(), e, new String(jsonAsByteArray, StandardCharsets.UTF_8));
+            }
         }
     };
 
