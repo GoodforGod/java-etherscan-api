@@ -71,7 +71,7 @@ class AccountTxErc20Tests extends ApiRunner {
             assertNotNull(tx.getTokenDecimal());
             assertNotEquals(-1, (tx.getConfirmations()));
             assertNotNull(tx.getGasUsed());
-            assertNotEquals(-1, tx.getGasUsedCumulative());
+            assertNotEquals(-1, tx.getGasUsedCumulative().asWei().intValue());
             assertNotEquals(-1, tx.getTransactionIndex());
         }
     }

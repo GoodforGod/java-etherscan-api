@@ -1,8 +1,12 @@
 package io.goodforgod.api.etherscan.model;
 
+import io.goodforgod.api.etherscan.model.proxy.BlockProxy;
+import io.goodforgod.api.etherscan.model.proxy.ReceiptProxy;
+import io.goodforgod.api.etherscan.model.proxy.TxProxy;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -84,8 +88,8 @@ class ModelBuilderTests extends Assertions {
                 .withAddress("1")
                 .withBlockNumber(1L)
                 .withData("1")
-                .withGasPrice(BigInteger.ONE)
-                .withGasUsed(BigInteger.ONE)
+                .withGasPrice(Wei.ofWei(1))
+                .withGasUsed(Wei.ofWei(1))
                 .withLogIndex(1L)
                 .withTimeStamp(timestamp)
                 .withTransactionHash("1")
@@ -267,5 +271,101 @@ class ModelBuilderTests extends Assertions {
         assertNotNull(value);
         assertEquals("1", value.getTo());
         assertEquals("1", value.getFrom());
+    }
+
+    @Test
+    void ethSupplyBuilder() {
+        EthSupply value = EthSupply.builder()
+                .withBurntFees(Wei.ofWei(1))
+                .withEth2Staking(Wei.ofWei(1))
+                .withEthSupply(Wei.ofWei(1))
+                .withWithdrawnTotal(Wei.ofWei(1))
+                .build();
+
+        assertNotNull(value);
+        assertEquals(BigInteger.valueOf(1), value.getTotal().asWei());
+
+        EthSupply valueEmpty = EthSupply.builder()
+                .build();
+        assertNotNull(valueEmpty);
+        assertEquals(BigInteger.ZERO, valueEmpty.getTotal().asWei());
+    }
+
+    @Test
+    void receiptProxyBuilder() {
+        LocalDateTime timestamp = LocalDateTime.now();
+        ReceiptProxy value = ReceiptProxy.builder()
+                .withBlockHash("1")
+                .withBlockNumber(1L)
+                .withContractAddress("1")
+                .withCumulativeGasUsed(Wei.ofWei(1))
+                .withFrom("1")
+                .withTo("1")
+                .withGasUsed(Wei.ofWei(1))
+                .withRoot("1")
+                .withLogsBloom("1")
+                .withTransactionHash("1")
+                .withTransactionIndex(1L)
+                .withLogs(Arrays.asList(Log.builder()
+                        .withTopics(Arrays.asList("1"))
+                        .withTransactionIndex(1L)
+                        .withTransactionHash("1")
+                        .withTimeStamp(timestamp)
+                        .withLogIndex(1L)
+                        .withGasUsed(Wei.ofWei(1))
+                        .withGasPrice(Wei.ofWei(1))
+                        .withData("1")
+                        .withAddress("1")
+                        .build()))
+                .build();
+
+        assertNotNull(value);
+        assertEquals(BigInteger.valueOf(1), value.getGasUsed().asWei());
+    }
+
+    @Test
+    void blockProxyBuilder() {
+        LocalDateTime timestamp = LocalDateTime.now();
+        BlockProxy value = BlockProxy.builder()
+                .withGasUsed(Wei.ofWei(1))
+                .withLogsBloom("1")
+                .withDifficulty("1")
+                .withExtraData("1")
+                .withGasLimit(Wei.ofWei(1))
+                .withHash("1")
+                .withMiner("1")
+                .withMixHash("1")
+                .withNonce("1")
+                .withNumber(1L)
+                .withParentHash("1")
+                .withReceiptsRoot("1")
+                .withSha3Uncles("1")
+                .withSize(1L)
+                .withStateRoot("1")
+                .withTimestamp(timestamp)
+                .withTotalDifficulty("1")
+                .withTransactionsRoot("1")
+                .withUncles(Arrays.asList("1"))
+                .withTransactions(Arrays.asList(TxProxy.builder()
+                        .withBlockHash("1")
+                        .withBlockNumber(1L)
+                        .withFrom("1")
+                        .withGas(Wei.ofWei(1))
+                        .withGasPrice(Wei.ofWei(1))
+                        .withHash("1")
+                        .withInput("1")
+                        .withNonce(1L)
+                        .withR("1")
+                        .withS("1")
+                        .withTo("1")
+                        .withTransactionIndex(1L)
+                        .withV("1")
+                        .withValue("1")
+                        .withV("1")
+                        .build()))
+                .build();
+
+        assertNotNull(value);
+        assertEquals(BigInteger.valueOf(1), value.getGasUsed().asWei());
     }
 }

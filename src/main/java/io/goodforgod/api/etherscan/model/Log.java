@@ -2,7 +2,6 @@ package io.goodforgod.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -28,10 +27,10 @@ public class Log {
     private String data;
     private String gasPrice;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gasPrice;
+    private Wei _gasPrice;
     private String gasUsed;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gasUsed;
+    private Wei _gasUsed;
     private List<String> topics;
     private String logIndex;
     @Expose(deserialize = false, serialize = false)
@@ -93,17 +92,17 @@ public class Log {
         return data;
     }
 
-    public BigInteger getGasPrice() {
+    public Wei getGasPrice() {
         if (!BasicUtils.isEmpty(gasPrice)) {
-            _gasPrice = BasicUtils.parseHex(gasPrice);
+            _gasPrice = Wei.ofWei(BasicUtils.parseHex(gasPrice));
         }
 
         return _gasPrice;
     }
 
-    public BigInteger getGasUsed() {
+    public Wei getGasUsed() {
         if (!BasicUtils.isEmpty(gasUsed)) {
-            _gasUsed = BasicUtils.parseHex(gasUsed);
+            _gasUsed = Wei.ofWei(BasicUtils.parseHex(gasUsed));
         }
 
         return _gasUsed;
@@ -172,8 +171,8 @@ public class Log {
         private Long transactionIndex;
         private LocalDateTime timeStamp;
         private String data;
-        private BigInteger gasPrice;
-        private BigInteger gasUsed;
+        private Wei gasPrice;
+        private Wei gasUsed;
         private List<String> topics;
         private Long logIndex;
 
@@ -209,12 +208,12 @@ public class Log {
             return this;
         }
 
-        public LogBuilder withGasPrice(BigInteger gasPrice) {
+        public LogBuilder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public LogBuilder withGasUsed(BigInteger gasUsed) {
+        public LogBuilder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -233,7 +232,6 @@ public class Log {
             Log log = new Log();
             log.address = this.address;
             if (this.gasPrice != null) {
-                log.gasPrice = String.valueOf(this.gasPrice);
                 log._gasPrice = this.gasPrice;
             }
             log._logIndex = this.logIndex;
@@ -246,7 +244,6 @@ public class Log {
             }
             log.data = this.data;
             if (this.gasUsed != null) {
-                log.gasUsed = String.valueOf(this.gasUsed);
                 log._gasUsed = this.gasUsed;
             }
             log.logIndex = String.valueOf(this.logIndex);

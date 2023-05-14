@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * Please Add Description Here.
- *
  * @author Anton Kurako (GoodforGod)
  * @since 14.05.2023
  */
@@ -100,10 +98,26 @@ public class EthSupply {
 
         public EthSupply build() {
             EthSupply ethSupply = new EthSupply();
-            ethSupply.BurntFees = this.burntFees.toString();
-            ethSupply.Eth2Staking = this.eth2Staking.toString();
-            ethSupply.EthSupply = this.ethSupply.toString();
-            ethSupply.WithdrawnTotal = this.withdrawnTotal.toString();
+            if (this.burntFees != null) {
+                ethSupply.BurntFees = this.burntFees.toString();
+            } else {
+                ethSupply.BurntFees = BigInteger.ZERO.toString();
+            }
+            if (this.eth2Staking != null) {
+                ethSupply.Eth2Staking = this.eth2Staking.toString();
+            } else {
+                ethSupply.Eth2Staking = BigInteger.ZERO.toString();
+            }
+            if (this.ethSupply != null) {
+                ethSupply.EthSupply = this.ethSupply.toString();
+            } else {
+                ethSupply.EthSupply = BigInteger.ZERO.toString();
+            }
+            if (this.withdrawnTotal != null) {
+                ethSupply.WithdrawnTotal = this.withdrawnTotal.toString();
+            } else {
+                ethSupply.WithdrawnTotal = BigInteger.ZERO.toString();
+            }
             return ethSupply;
         }
     }

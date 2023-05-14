@@ -16,7 +16,7 @@ class StatisticTokenSupplyApiTests extends ApiRunner {
     void correct() {
         Wei supply = getApi().stats().supply("0x57d90b64a1a57749b0f932f1a3395792e12e7055");
         assertNotNull(supply);
-        assertNotEquals(BigInteger.ZERO, supply);
+        assertNotEquals(BigInteger.ZERO, supply.asWei());
     }
 
     @Test

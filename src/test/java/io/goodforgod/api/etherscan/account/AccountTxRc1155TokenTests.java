@@ -18,7 +18,7 @@ class AccountTxRc1155TokenTests extends ApiRunner {
         assertNotNull(txs);
         assertFalse(txs.isEmpty());
         assertTxs(txs);
-        assertNotEquals(0, txs.get(0).getGasPrice());
+        assertNotEquals(0, txs.get(0).getGasPrice().asWei().intValue());
         assertNotEquals(-1, txs.get(0).getNonce());
 
         assertNotNull(txs.get(0).toString());
@@ -75,7 +75,7 @@ class AccountTxRc1155TokenTests extends ApiRunner {
         assertNotNull(tx.getTokenValue());
         assertNotEquals(-1, (tx.getConfirmations()));
         assertNotNull(tx.getGasUsed());
-        assertNotEquals(-1, tx.getGasUsedCumulative());
+        assertNotEquals(-1, tx.getGasUsedCumulative().asWei().intValue());
         assertNotEquals(-1, tx.getTransactionIndex());
     }
 }
