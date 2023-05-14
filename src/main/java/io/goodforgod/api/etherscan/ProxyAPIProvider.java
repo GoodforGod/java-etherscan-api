@@ -208,8 +208,8 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
     public Wei gasPrice() throws EtherScanException {
         final StringProxyTO response = getRequest(ACT_GASPRICE_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? new Wei(0)
-                : new Wei(BasicUtils.parseHex(response.getResult()));
+                ? Wei.ofWei(0)
+                : Wei.ofWei(BasicUtils.parseHex(response.getResult()));
     }
 
     @NotNull
@@ -227,7 +227,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         final String urlParams = ACT_ESTIMATEGAS_PARAM + DATA_PARAM + hexData + GAS_PARAM + "2000000000000000";
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? new Wei(0)
-                : new Wei(BasicUtils.parseHex(response.getResult()));
+                ? Wei.ofWei(0)
+                : Wei.ofWei(BasicUtils.parseHex(response.getResult()));
     }
 }

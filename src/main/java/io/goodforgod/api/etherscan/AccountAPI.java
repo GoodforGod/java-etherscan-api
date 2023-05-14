@@ -6,7 +6,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * EtherScan - API Descriptions <a href="https://etherscan.io/apis#accounts">...</a>
+ * EtherScan - API Descriptions <a href="https://docs.etherscan.io/api-endpoints/accounts">...</a>
  *
  * @author GoodforGod
  * @since 28.10.2018

@@ -65,16 +65,16 @@ class ModelBuilderTests extends Assertions {
     @Test
     void gasOracleBuilder() {
         GasOracle value = GasOracle.builder()
-                .withFastGasPrice(new Wei(1000000000))
-                .withProposeGasPrice(new Wei(1000000000))
-                .withSafeGasPrice(new Wei(1000000000))
+                .withFastGasPrice(Wei.ofWei(1000000000))
+                .withProposeGasPrice(Wei.ofWei(1000000000))
+                .withSafeGasPrice(Wei.ofWei(1000000000))
                 .withGasUsedRatio(Collections.singletonList(new BigDecimal(1)))
                 .withLastBlock(1L)
                 .withSuggestBaseFee(1.0)
                 .build();
 
         assertNotNull(value);
-        assertEquals(new Wei(1000000000), value.getFastGasPriceInWei());
+        assertEquals(Wei.ofWei(1000000000), value.getFastGasPriceInWei());
     }
 
     @Test

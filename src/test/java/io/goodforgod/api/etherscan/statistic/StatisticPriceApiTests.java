@@ -12,7 +12,7 @@ class StatisticPriceApiTests extends ApiRunner {
 
     @Test
     void correct() {
-        Price price = getApi().stats().lastPrice();
+        Price price = getApi().stats().priceLast();
         assertNotNull(price);
         assertNotNull(price.btcTimestamp());
         assertNotNull(price.usdTimestamp());

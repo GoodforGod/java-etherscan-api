@@ -1,7 +1,7 @@
 package io.goodforgod.api.etherscan.statistic;
 
 import io.goodforgod.api.etherscan.ApiRunner;
-import io.goodforgod.api.etherscan.model.Supply;
+import io.goodforgod.api.etherscan.model.Wei;
 import java.math.BigInteger;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class StatisticSupplyApiTests extends ApiRunner {
 
     @Test
     void correct() {
-        Supply supply = getApi().stats().supply();
+        Wei supply = getApi().stats().supply();
         assertNotNull(supply);
         assertNotNull(supply.asWei());
         assertNotNull(supply.asGwei());
@@ -22,7 +22,7 @@ class StatisticSupplyApiTests extends ApiRunner {
         assertNotNull(supply.asEther());
         assertNotNull(supply.toString());
 
-        Supply empty = new Supply(BigInteger.ONE);
+        Wei empty = Wei.ofWei(BigInteger.ONE);
         assertNotEquals(supply, empty);
         assertNotEquals(supply.hashCode(), empty.hashCode());
     }

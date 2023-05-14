@@ -64,7 +64,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
-        return new Balance(address, new Wei(new BigInteger(response.getResult())));
+        return new Balance(address, Wei.ofWei(new BigInteger(response.getResult())));
     }
 
     @NotNull
@@ -78,7 +78,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
-        return new TokenBalance(address, new Wei(new BigInteger(response.getResult())), contract);
+        return new TokenBalance(address, Wei.ofWei(new BigInteger(response.getResult())), contract);
     }
 
     @NotNull
@@ -101,7 +101,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
             if (!BasicUtils.isEmpty(response.getResult()))
                 balances.addAll(response.getResult().stream()
-                        .map(r -> new Balance(r.getAccount(), new Wei(new BigInteger(r.getBalance()))))
+                        .map(r -> new Balance(r.getAccount(), Wei.ofWei(new BigInteger(r.getBalance()))))
                         .collect(Collectors.toList()));
         }
 

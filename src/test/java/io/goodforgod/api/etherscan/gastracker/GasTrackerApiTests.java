@@ -14,7 +14,7 @@ class GasTrackerApiTests extends ApiRunner {
 
     @Test
     void estimate() {
-        GasEstimate estimate = getApi().gasTracker().estimate(new Wei(123));
+        GasEstimate estimate = getApi().gasTracker().estimate(Wei.ofWei(123));
         assertNotNull(estimate);
         assertNotNull(estimate.getDuration());
     }

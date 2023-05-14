@@ -27,15 +27,15 @@ public class GasOracle {
     }
 
     public Wei getSafeGasPriceInWei() {
-        return new Wei(BigInteger.valueOf(SafeGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofWei(BigInteger.valueOf(SafeGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
     public Wei getProposeGasPriceInWei() {
-        return new Wei(BigInteger.valueOf(ProposeGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofWei(BigInteger.valueOf(ProposeGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
     public Wei getFastGasPriceInWei() {
-        return new Wei(BigInteger.valueOf(FastGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofWei(BigInteger.valueOf(FastGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
     public Double getSuggestBaseFee() {

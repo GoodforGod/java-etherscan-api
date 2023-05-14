@@ -10,7 +10,8 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * EtherScan - API Descriptions <a href="https://etherscan.io/apis#proxy">...</a>
+ * EtherScan - API Descriptions
+ * <a href="https://docs.etherscan.io/api-endpoints/geth-parity-proxy">...</a>
  *
  * @author GoodforGod
  * @since 30.10.2018

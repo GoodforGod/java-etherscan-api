@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * EtherScan - API Descriptions <a href="https://etherscan.io/apis#logs">...</a>
+ * EtherScan - API Descriptions <a href="https://docs.etherscan.io/api-endpoints/logs">...</a>
  *
  * @author GoodforGod
  * @since 30.10.2018

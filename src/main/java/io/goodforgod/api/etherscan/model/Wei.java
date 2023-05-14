@@ -11,16 +11,32 @@ public class Wei {
 
     private final BigInteger result;
 
-    public Wei(int value) {
-        this.result = BigInteger.valueOf(value);
-    }
-
-    public Wei(long value) {
-        this.result = BigInteger.valueOf(value);
-    }
-
-    public Wei(BigInteger value) {
+    private Wei(BigInteger value) {
         this.result = value;
+    }
+
+    public static Wei ofWei(int value) {
+        return new Wei(BigInteger.valueOf(value));
+    }
+
+    public static Wei ofWei(long value) {
+        return new Wei(BigInteger.valueOf(value));
+    }
+
+    public static Wei ofWei(BigInteger value) {
+        return new Wei(value);
+    }
+
+    public static Wei ofEther(int value) {
+        return new Wei(BigInteger.valueOf(value).multiply(BigInteger.valueOf(1_000_000_000_000_000L)));
+    }
+
+    public static Wei ofEther(long value) {
+        return new Wei(BigInteger.valueOf(value).multiply(BigInteger.valueOf(1_000_000_000_000_000L)));
+    }
+
+    public static Wei ofEther(BigInteger value) {
+        return new Wei(value.multiply(BigInteger.valueOf(1_000_000_000_000_000L)));
     }
 
     // <editor-fold desc="Getters">
@@ -29,19 +45,19 @@ public class Wei {
     }
 
     public BigInteger asKwei() {
-        return result.divide(BigInteger.valueOf(1000));
+        return result.divide(BigInteger.valueOf(1_000));
     }
 
     public BigInteger asMwei() {
-        return result.divide(BigInteger.valueOf(1000000));
+        return result.divide(BigInteger.valueOf(1_000_000));
     }
 
     public BigInteger asGwei() {
-        return result.divide(BigInteger.valueOf(1000000000));
+        return result.divide(BigInteger.valueOf(1_000_000_000));
     }
 
     public BigInteger asEther() {
-        return result.divide(BigInteger.valueOf(1000000000000000L));
+        return result.divide(BigInteger.valueOf(1_000_000_000_000_000L));
     }
     // </editor-fold>
 
@@ -62,8 +78,6 @@ public class Wei {
 
     @Override
     public String toString() {
-        return "Wei{" +
-                "result=" + result +
-                '}';
+        return result.toString();
     }
 }
