@@ -34,7 +34,7 @@ final class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI
 
     @Override
     public @NotNull GasEstimate estimate(@NotNull Wei wei) throws EtherScanException {
-        final String urlParams = ACT_GAS_ESTIMATE_PARAM + GASPRICE_PARAM + wei.getValue().toString();
+        final String urlParams = ACT_GAS_ESTIMATE_PARAM + GASPRICE_PARAM + wei.asWei().toString();
         final GasEstimateResponseTO response = getRequest(urlParams, GasEstimateResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);

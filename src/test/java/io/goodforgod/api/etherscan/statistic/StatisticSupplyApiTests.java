@@ -15,7 +15,7 @@ class StatisticSupplyApiTests extends ApiRunner {
     void correct() {
         Supply supply = getApi().stats().supply();
         assertNotNull(supply);
-        assertNotNull(supply.getValue());
+        assertNotNull(supply.asWei());
         assertNotNull(supply.asGwei());
         assertNotNull(supply.asKwei());
         assertNotNull(supply.asMwei());

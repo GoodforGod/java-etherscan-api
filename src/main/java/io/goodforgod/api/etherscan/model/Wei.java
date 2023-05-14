@@ -20,7 +20,7 @@ public class Wei {
     }
 
     // <editor-fold desc="Getters">
-    public BigInteger getValue() {
+    public BigInteger asWei() {
         return result;
     }
 

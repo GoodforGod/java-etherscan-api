@@ -1,10 +1,10 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
+import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.model.proxy.BlockProxy;
 import io.goodforgod.api.etherscan.model.proxy.ReceiptProxy;
 import io.goodforgod.api.etherscan.model.proxy.TxProxy;
-import java.math.BigInteger;
 import java.util.Optional;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
@@ -150,7 +150,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    BigInteger gasPrice() throws EtherScanException;
+    Wei gasPrice() throws EtherScanException;
 
     /**
      * Makes a call or transaction, which won't be added to the blockchain and returns the used gas,
@@ -161,8 +161,8 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    BigInteger gasEstimated(String hexData) throws EtherScanException;
+    Wei gasEstimated(String hexData) throws EtherScanException;
 
     @NotNull
-    BigInteger gasEstimated() throws EtherScanException;
+    Wei gasEstimated() throws EtherScanException;
 }

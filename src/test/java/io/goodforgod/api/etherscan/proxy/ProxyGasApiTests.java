@@ -2,7 +2,7 @@ package io.goodforgod.api.etherscan.proxy;
 
 import io.goodforgod.api.etherscan.ApiRunner;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidDataHexException;
-import java.math.BigInteger;
+import io.goodforgod.api.etherscan.model.Wei;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -13,23 +13,23 @@ class ProxyGasApiTests extends ApiRunner {
 
     @Test
     void correctPrice() {
-        BigInteger price = getApi().proxy().gasPrice();
+        Wei price = getApi().proxy().gasPrice();
         assertNotNull(price);
-        assertNotEquals(0, price.intValue());
+        assertNotEquals(0, price.asWei().intValue());
     }
 
     @Test
     void correctEstimated() {
-        BigInteger price = getApi().proxy().gasEstimated();
+        Wei price = getApi().proxy().gasEstimated();
         assertNotNull(price);
-        assertNotEquals(0, price.intValue());
+        assertNotEquals(0, price.asWei().intValue());
     }
 
     @Test
     void correctEstimatedWithData() {
         String dataCustom = "606060405260728060106000396000f360606040526000606060405260728060106000396000f360606040526000";
-        BigInteger price = getApi().proxy().gasEstimated();
-        BigInteger priceCustom = getApi().proxy().gasEstimated(dataCustom);
+        Wei price = getApi().proxy().gasEstimated();
+        Wei priceCustom = getApi().proxy().gasEstimated(dataCustom);
         assertNotNull(price);
         assertNotNull(priceCustom);
         assertNotEquals(price, priceCustom);

@@ -5,6 +5,7 @@ import io.goodforgod.api.etherscan.error.EtherScanInvalidDataHexException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
+import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.model.proxy.BlockProxy;
 import io.goodforgod.api.etherscan.model.proxy.ReceiptProxy;
 import io.goodforgod.api.etherscan.model.proxy.TxProxy;
@@ -13,7 +14,6 @@ import io.goodforgod.api.etherscan.model.proxy.utility.StringProxyTO;
 import io.goodforgod.api.etherscan.model.proxy.utility.TxInfoProxyTO;
 import io.goodforgod.api.etherscan.model.proxy.utility.TxProxyTO;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import java.math.BigInteger;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import org.jetbrains.annotations.NotNull;
@@ -197,29 +197,29 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public BigInteger gasPrice() throws EtherScanException {
+    public Wei gasPrice() throws EtherScanException {
         final StringProxyTO response = getRequest(ACT_GASPRICE_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? BigInteger.valueOf(-1)
-                : BasicUtils.parseHex(response.getResult());
+                ? new Wei(0)
+                : new Wei(BasicUtils.parseHex(response.getResult()));
     }
 
     @NotNull
     @Override
-    public BigInteger gasEstimated() throws EtherScanException {
+    public Wei gasEstimated() throws EtherScanException {
         return gasEstimated("606060405260728060106000396000f360606040526000");
     }
 
     @NotNull
     @Override
-    public BigInteger gasEstimated(String hexData) throws EtherScanException {
+    public Wei gasEstimated(String hexData) throws EtherScanException {
         if (!BasicUtils.isEmpty(hexData) && BasicUtils.isNotHex(hexData))
             throw new EtherScanInvalidDataHexException("Data is not in hex format.");
 
         final String urlParams = ACT_ESTIMATEGAS_PARAM + DATA_PARAM + hexData + GAS_PARAM + "2000000000000000";
         final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
-                ? BigInteger.valueOf(-1)
-                : BasicUtils.parseHex(response.getResult());
+                ? new Wei(0)
+                : new Wei(BasicUtils.parseHex(response.getResult()));
     }
 }

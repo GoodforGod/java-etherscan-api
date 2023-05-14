@@ -29,13 +29,9 @@ class AccountBalanceListTests extends ApiRunner {
         assertNotEquals(balances.get(0).hashCode(), balances.get(1).hashCode());
         for (Balance balance : balances) {
             assertNotNull(balance.getAddress());
-            assertNotNull(balance.getGwei());
-            assertNotNull(balance.getKwei());
-            assertNotNull(balance.getMwei());
-            assertNotNull(balance.getEther());
-            assertNotNull(balance.getGwei());
+            assertNotNull(balance.getBalanceInWei());
             assertNotNull(balance.getAddress());
-            assertNotEquals(BigInteger.ZERO, balance.getWei());
+            assertNotEquals(BigInteger.ZERO, balance.getBalanceInWei().asWei());
             assertNotNull(balance.toString());
         }
     }
@@ -84,7 +80,7 @@ class AccountBalanceListTests extends ApiRunner {
         assertEquals(2, balances.size());
         for (Balance balance : balances) {
             assertNotNull(balance.getAddress());
-            assertEquals(0, balance.getWei().intValue());
+            assertEquals(0, balance.getBalanceInWei().asWei().intValue());
         }
     }
 }

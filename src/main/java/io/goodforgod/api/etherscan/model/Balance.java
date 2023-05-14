@@ -23,24 +23,8 @@ public class Balance {
         return address;
     }
 
-    public BigInteger getWei() {
-        return balance.getValue();
-    }
-
-    public BigInteger getKwei() {
-        return balance.asKwei();
-    }
-
-    public BigInteger getMwei() {
-        return balance.asMwei();
-    }
-
-    public BigInteger getGwei() {
-        return balance.asGwei();
-    }
-
-    public BigInteger getEther() {
-        return balance.asEther();
+    public Wei getBalanceInWei() {
+        return balance;
     }
     // </editor-fold>
 

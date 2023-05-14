@@ -16,13 +16,13 @@ public interface RequestQueueManager extends AutoCloseable {
     /**
      * Is used by default when no API KEY is provided
      */
-    RequestQueueManager ANONYMOUS = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5005L));
+    RequestQueueManager ANONYMOUS = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5010L));
 
     /**
      * Is available for all registered free API KEYs
      * <a href="https://docs.etherscan.io/getting-started/viewing-api-usage-statistics">Free API KEY</a>
      */
-    RequestQueueManager FREE_PLAN = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1005L));
+    RequestQueueManager FREE_PLAN = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1010L));
 
     RequestQueueManager UNLIMITED = new FakeRequestQueueManager();
 
