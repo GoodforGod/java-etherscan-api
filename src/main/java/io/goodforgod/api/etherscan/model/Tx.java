@@ -22,6 +22,8 @@ public class Tx extends BaseTx {
     private String isError;
     private String txreceipt_status;
 
+    protected Tx() {}
+
     // <editor-fold desc="Getters">
     public BigInteger getValue() {
         return value;

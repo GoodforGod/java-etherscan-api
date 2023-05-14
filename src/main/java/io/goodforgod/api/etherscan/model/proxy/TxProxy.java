@@ -35,6 +35,8 @@ public class TxProxy {
     @Expose(deserialize = false, serialize = false)
     private Long _blockNumber;
 
+    protected TxProxy() {}
+
     // <editor-fold desc="Getters">
     public String getTo() {
         return to;

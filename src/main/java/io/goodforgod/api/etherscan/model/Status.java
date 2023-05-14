@@ -16,6 +16,8 @@ public class Status {
     private int isError;
     private String errDescription;
 
+    protected Status() {}
+
     public boolean haveError() {
         return isError == 1;
     }

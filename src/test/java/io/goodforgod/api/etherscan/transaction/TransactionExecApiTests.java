@@ -20,7 +20,7 @@ class TransactionExecApiTests extends ApiRunner {
         assertNotNull(status.get().getErrDescription());
         assertNotNull(status.get().toString());
 
-        Status empty = new Status();
+        Status empty = Status.builder().build();
         assertNotEquals(empty, status.get());
         assertNotEquals(empty.hashCode(), status.get().hashCode());
     }

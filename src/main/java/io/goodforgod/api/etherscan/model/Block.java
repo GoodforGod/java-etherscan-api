@@ -18,6 +18,8 @@ public class Block {
     @Expose(deserialize = false, serialize = false)
     LocalDateTime _timeStamp;
 
+    protected Block() {}
+
     // <editor-fold desc="Getter">
     public long getBlockNumber() {
         return blockNumber;

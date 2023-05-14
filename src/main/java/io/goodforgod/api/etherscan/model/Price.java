@@ -19,6 +19,8 @@ public class Price {
     @Expose(deserialize = false, serialize = false)
     private LocalDateTime _ethbtc_timestamp;
 
+    protected Price() {}
+
     public double inUsd() {
         return ethusd;
     }
@@ -101,22 +103,22 @@ public class Price {
 
         private PriceBuilder() {}
 
-        public PriceBuilder withEthusd(double ethusd) {
+        public PriceBuilder withEthUsd(double ethusd) {
             this.ethusd = ethusd;
             return this;
         }
 
-        public PriceBuilder withEthbtc(double ethbtc) {
+        public PriceBuilder withEthBtc(double ethbtc) {
             this.ethbtc = ethbtc;
             return this;
         }
 
-        public PriceBuilder withEthusdTimestamp(LocalDateTime ethusdTimestamp) {
+        public PriceBuilder withEthUsdTimestamp(LocalDateTime ethusdTimestamp) {
             this.ethusdTimestamp = ethusdTimestamp;
             return this;
         }
 
-        public PriceBuilder withEthbtcTimestamp(LocalDateTime ethbtcTimestamp) {
+        public PriceBuilder withEthBtcTimestamp(LocalDateTime ethbtcTimestamp) {
             this.ethbtcTimestamp = ethbtcTimestamp;
             return this;
         }

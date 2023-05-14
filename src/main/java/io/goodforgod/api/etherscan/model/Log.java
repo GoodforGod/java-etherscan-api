@@ -37,6 +37,8 @@ public class Log {
     @Expose(deserialize = false, serialize = false)
     private Long _logIndex;
 
+    protected Log() {}
+
     // <editor-fold desc="Getters">
     public Long getBlockNumber() {
         if (_blockNumber == null && !BasicUtils.isEmpty(blockNumber)) {

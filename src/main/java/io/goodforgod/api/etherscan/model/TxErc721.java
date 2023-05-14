@@ -18,9 +18,11 @@ public class TxErc721 extends BaseTx {
     private String tokenSymbol;
     private String tokenDecimal;
     private int transactionIndex;
-    private long gasPrice;
-    private long cumulativeGasUsed;
+    private BigInteger gasPrice;
+    private BigInteger cumulativeGasUsed;
     private long confirmations;
+
+    protected TxErc721() {}
 
     // <editor-fold desc="Getters">
     public long getNonce() {
@@ -51,11 +53,11 @@ public class TxErc721 extends BaseTx {
         return transactionIndex;
     }
 
-    public long getGasPrice() {
+    public BigInteger getGasPrice() {
         return gasPrice;
     }
 
-    public long getCumulativeGasUsed() {
+    public BigInteger getCumulativeGasUsed() {
         return cumulativeGasUsed;
     }
 
@@ -120,8 +122,8 @@ public class TxErc721 extends BaseTx {
         private String tokenSymbol;
         private String tokenDecimal;
         private int transactionIndex;
-        private long gasPrice;
-        private long cumulativeGasUsed;
+        private BigInteger gasPrice;
+        private BigInteger cumulativeGasUsed;
         private long confirmations;
 
         private TxERC721Builder() {}
@@ -206,12 +208,12 @@ public class TxErc721 extends BaseTx {
             return this;
         }
 
-        public TxERC721Builder withGasPrice(long gasPrice) {
+        public TxERC721Builder withGasPrice(BigInteger gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public TxERC721Builder withCumulativeGasUsed(long cumulativeGasUsed) {
+        public TxERC721Builder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }

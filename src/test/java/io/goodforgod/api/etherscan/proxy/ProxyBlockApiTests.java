@@ -50,7 +50,7 @@ class ProxyBlockApiTests extends ApiRunner {
         assertNotNull(proxy.getUncles());
         assertNotNull(proxy.toString());
 
-        BlockProxy empty = new BlockProxy();
+        BlockProxy empty = BlockProxy.builder().build();
         assertNotEquals(proxy, empty);
         assertNotEquals(proxy.hashCode(), empty.hashCode());
     }

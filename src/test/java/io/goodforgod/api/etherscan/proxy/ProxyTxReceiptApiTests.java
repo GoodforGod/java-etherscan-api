@@ -32,7 +32,7 @@ class ProxyTxReceiptApiTests extends ApiRunner {
         assertNull(infoProxy.get().getContractAddress());
         assertNotNull(infoProxy.get().toString());
 
-        ReceiptProxy empty = new ReceiptProxy();
+        ReceiptProxy empty = ReceiptProxy.builder().build();
         assertNotEquals(empty, infoProxy.get());
         assertNotEquals(empty.hashCode(), infoProxy.get().hashCode());
     }

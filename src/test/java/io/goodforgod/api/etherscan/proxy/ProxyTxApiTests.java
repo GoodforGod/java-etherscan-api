@@ -24,7 +24,7 @@ class ProxyTxApiTests extends ApiRunner {
         assertNotNull(tx.get().getBlockNumber());
         assertNotNull(tx.get().toString());
 
-        TxProxy empty = new TxProxy();
+        TxProxy empty = TxProxy.builder().build();
         assertNotEquals(tx.get(), empty);
         assertNotEquals(tx.get().hashCode(), empty.hashCode());
     }

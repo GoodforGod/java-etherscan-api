@@ -17,6 +17,8 @@ public class TxInternal extends BaseTx {
     private int isError;
     private String errCode;
 
+    protected TxInternal() {}
+
     // <editor-fold desc="Getters">
     public BigInteger getValue() {
         return value;
@@ -102,7 +104,7 @@ public class TxInternal extends BaseTx {
             return this;
         }
 
-        public TxInternalBuilder with_timeStamp(LocalDateTime timeStamp) {
+        public TxInternalBuilder withTimeStamp(LocalDateTime timeStamp) {
             this.timeStamp = timeStamp;
             return this;
         }

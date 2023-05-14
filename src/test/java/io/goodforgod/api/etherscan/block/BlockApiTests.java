@@ -25,7 +25,7 @@ class BlockApiTests extends ApiRunner {
         assertNotEquals(-1, uncle.get().getUncles().get(0).getUnclePosition());
         assertNotNull(uncle.get().toString());
 
-        BlockUncle empty = new BlockUncle();
+        BlockUncle empty = BlockUncle.builder().build();
         assertNotEquals(uncle.get().hashCode(), empty.hashCode());
         assertNotEquals(uncle.get(), empty);
         assertTrue(empty.isEmpty());

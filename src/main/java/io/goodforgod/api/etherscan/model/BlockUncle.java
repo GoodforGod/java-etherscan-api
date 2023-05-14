@@ -18,6 +18,8 @@ public class BlockUncle extends Block {
         private BigInteger blockreward;
         private int unclePosition;
 
+        private Uncle() {}
+
         // <editor-fold desc="Getters">
         public String getMiner() {
             return miner;
@@ -112,6 +114,10 @@ public class BlockUncle extends Block {
     private String blockMiner;
     private List<Uncle> uncles;
     private String uncleInclusionReward;
+
+    protected BlockUncle() {
+        super();
+    }
 
     // <editor-fold desc="Getters">
     public boolean isEmpty() {

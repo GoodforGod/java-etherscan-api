@@ -47,6 +47,8 @@ public class BlockProxy {
     private String transactionsRoot;
     private List<TxProxy> transactions;
 
+    protected BlockProxy() {}
+
     // <editor-fold desc="Getters">
     public Long getNumber() {
         if (_number == null && !BasicUtils.isEmpty(number))

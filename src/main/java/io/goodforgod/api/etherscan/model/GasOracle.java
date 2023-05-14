@@ -1,7 +1,11 @@
 package io.goodforgod.api.etherscan.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Abhay Gupta
@@ -16,28 +20,32 @@ public class GasOracle {
     private Double suggestBaseFee;
     private String gasUsedRatio;
 
+    protected GasOracle() {}
+
     public Long getLastBlock() {
         return LastBlock;
     }
 
-    public BigInteger getSafeGasPriceInWei() {
-        return BigInteger.valueOf(SafeGasPrice).multiply(BigInteger.TEN.pow(9));
+    public Wei getSafeGasPriceInWei() {
+        return new Wei(BigInteger.valueOf(SafeGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
-    public BigInteger getProposeGasPriceInWei() {
-        return BigInteger.valueOf(ProposeGasPrice).multiply(BigInteger.TEN.pow(9));
+    public Wei getProposeGasPriceInWei() {
+        return new Wei(BigInteger.valueOf(ProposeGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
-    public BigInteger getFastGasPriceInWei() {
-        return BigInteger.valueOf(FastGasPrice).multiply(BigInteger.TEN.pow(9));
+    public Wei getFastGasPriceInWei() {
+        return new Wei(BigInteger.valueOf(FastGasPrice).multiply(BigInteger.TEN.pow(9)));
     }
 
     public Double getSuggestBaseFee() {
         return suggestBaseFee;
     }
 
-    public String getGasUsedRatio() {
-        return gasUsedRatio;
+    public List<BigDecimal> getGasUsedRatio() {
+        return Arrays.stream(gasUsedRatio.split(","))
+                .map(BigDecimal::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -75,32 +83,32 @@ public class GasOracle {
 
     public static final class GasOracleBuilder {
 
-        private Long LastBlock;
-        private Integer SafeGasPrice;
-        private Integer ProposeGasPrice;
-        private Integer FastGasPrice;
+        private Long lastBlock;
+        private Wei safeGasPrice;
+        private Wei proposeGasPrice;
+        private Wei fastGasPrice;
         private Double suggestBaseFee;
-        private String gasUsedRatio;
+        private List<BigDecimal> gasUsedRatio;
 
         private GasOracleBuilder() {}
 
-        public GasOracleBuilder withLastBlock(Long LastBlock) {
-            this.LastBlock = LastBlock;
+        public GasOracleBuilder withLastBlock(Long lastBlock) {
+            this.lastBlock = lastBlock;
             return this;
         }
 
-        public GasOracleBuilder withSafeGasPrice(Integer SafeGasPrice) {
-            this.SafeGasPrice = SafeGasPrice;
+        public GasOracleBuilder withSafeGasPrice(Wei safeGasPrice) {
+            this.safeGasPrice = safeGasPrice;
             return this;
         }
 
-        public GasOracleBuilder withProposeGasPrice(Integer ProposeGasPrice) {
-            this.ProposeGasPrice = ProposeGasPrice;
+        public GasOracleBuilder withProposeGasPrice(Wei proposeGasPrice) {
+            this.proposeGasPrice = proposeGasPrice;
             return this;
         }
 
-        public GasOracleBuilder withFastGasPrice(Integer FastGasPrice) {
-            this.FastGasPrice = FastGasPrice;
+        public GasOracleBuilder withFastGasPrice(Wei fastGasPrice) {
+            this.fastGasPrice = fastGasPrice;
             return this;
         }
 
@@ -109,19 +117,29 @@ public class GasOracle {
             return this;
         }
 
-        public GasOracleBuilder withGasUsedRatio(String gasUsedRatio) {
+        public GasOracleBuilder withGasUsedRatio(List<BigDecimal> gasUsedRatio) {
             this.gasUsedRatio = gasUsedRatio;
             return this;
         }
 
         public GasOracle build() {
             GasOracle gasOracle = new GasOracle();
-            gasOracle.ProposeGasPrice = this.ProposeGasPrice;
-            gasOracle.LastBlock = this.LastBlock;
+            gasOracle.LastBlock = this.lastBlock;
             gasOracle.suggestBaseFee = this.suggestBaseFee;
-            gasOracle.SafeGasPrice = this.SafeGasPrice;
-            gasOracle.FastGasPrice = this.FastGasPrice;
-            gasOracle.gasUsedRatio = this.gasUsedRatio;
+            if (this.proposeGasPrice != null) {
+                gasOracle.ProposeGasPrice = this.proposeGasPrice.asGwei().intValue();
+            }
+            if (this.safeGasPrice != null) {
+                gasOracle.SafeGasPrice = this.safeGasPrice.asGwei().intValue();
+            }
+            if (this.fastGasPrice != null) {
+                gasOracle.FastGasPrice = this.fastGasPrice.asGwei().intValue();
+            }
+            if (this.gasUsedRatio != null) {
+                gasOracle.gasUsedRatio = this.gasUsedRatio.stream()
+                        .map(BigDecimal::toString)
+                        .collect(Collectors.joining(", "));
+            }
             return gasOracle;
         }
     }

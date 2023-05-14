@@ -20,7 +20,7 @@ class StatisticPriceApiTests extends ApiRunner {
         assertNotEquals(0.0, price.inUsd());
         assertNotNull(price.toString());
 
-        Price empty = new Price();
+        Price empty = Price.builder().build();
         assertNotEquals(price, empty);
         assertNotEquals(price.hashCode(), empty.hashCode());
     }

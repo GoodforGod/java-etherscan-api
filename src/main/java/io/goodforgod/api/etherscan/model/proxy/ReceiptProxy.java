@@ -34,6 +34,8 @@ public class ReceiptProxy {
     private List<Log> logs;
     private String logsBloom;
 
+    protected ReceiptProxy() {}
+
     // <editor-fold desc="Getters">
     public String getRoot() {
         return root;
