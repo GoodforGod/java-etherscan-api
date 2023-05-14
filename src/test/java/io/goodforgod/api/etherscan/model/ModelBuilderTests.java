@@ -79,6 +79,18 @@ class ModelBuilderTests extends Assertions {
 
         assertNotNull(value);
         assertEquals(Wei.ofWei(1000000000), value.getFastGasPriceInWei());
+
+        GasOracle value2 = GasOracle.builder()
+                .withFastGasPrice(Wei.ofWei(1000000000))
+                .withProposeGasPrice(Wei.ofWei(1000000000))
+                .withSafeGasPrice(Wei.ofWei(1000000000))
+                .withGasUsedRatio(Collections.singletonList(new BigDecimal(1)))
+                .withLastBlock(1L)
+                .withSuggestBaseFee(1.0)
+                .build();
+        assertEquals(value, value2);
+        assertEquals(value.hashCode(), value2.hashCode());
+        assertEquals(value.toString(), value2.toString());
     }
 
     @Test
@@ -289,6 +301,16 @@ class ModelBuilderTests extends Assertions {
                 .build();
         assertNotNull(valueEmpty);
         assertEquals(BigInteger.ZERO, valueEmpty.getTotal().asWei());
+
+        EthSupply value2 = EthSupply.builder()
+                .withBurntFees(Wei.ofWei(1))
+                .withEth2Staking(Wei.ofWei(1))
+                .withEthSupply(Wei.ofWei(1))
+                .withWithdrawnTotal(Wei.ofWei(1))
+                .build();
+        assertEquals(value, value2);
+        assertEquals(value.hashCode(), value2.hashCode());
+        assertEquals(value.toString(), value2.toString());
     }
 
     @Test
@@ -367,5 +389,14 @@ class ModelBuilderTests extends Assertions {
 
         assertNotNull(value);
         assertEquals(BigInteger.valueOf(1), value.getGasUsed().asWei());
+    }
+
+    @Test
+    void gasEstimate() {
+        GasEstimate gas1 = new GasEstimate(1);
+        GasEstimate gas2 = new GasEstimate(1);
+        assertEquals(gas1, gas2);
+        assertEquals(gas1.hashCode(), gas2.hashCode());
+        assertEquals(gas1.toString(), gas2.toString());
     }
 }

@@ -40,8 +40,6 @@ public class GasEstimate {
 
     @Override
     public String toString() {
-        return "GasEstimate{" +
-                "duration=" + duration +
-                '}';
+        return duration.toString();
     }
 }
