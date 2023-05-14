@@ -2,8 +2,8 @@ package io.goodforgod.api.etherscan.model.proxy;
 
 import com.google.gson.annotations.Expose;
 import io.goodforgod.api.etherscan.model.Log;
+import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -25,10 +25,10 @@ public class ReceiptProxy {
     private Long _transactionIndex;
     private String gasUsed;
     @Expose(serialize = false, deserialize = false)
-    private BigInteger _gasUsed;
+    private Wei _gasUsed;
     private String cumulativeGasUsed;
     @Expose(serialize = false, deserialize = false)
-    private BigInteger _cumulativeGasUsed;
+    private Wei _cumulativeGasUsed;
     private String contractAddress;
 
     private List<Log> logs;
@@ -69,15 +69,15 @@ public class ReceiptProxy {
         return _transactionIndex;
     }
 
-    public BigInteger getGasUsed() {
+    public Wei getGasUsed() {
         if (_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
-            _gasUsed = BasicUtils.parseHex(gasUsed);
+            _gasUsed = Wei.ofWei(BasicUtils.parseHex(gasUsed));
         return _gasUsed;
     }
 
-    public BigInteger getCumulativeGasUsed() {
+    public Wei getCumulativeGasUsed() {
         if (_cumulativeGasUsed == null && !BasicUtils.isEmpty(cumulativeGasUsed))
-            _cumulativeGasUsed = BasicUtils.parseHex(cumulativeGasUsed);
+            _cumulativeGasUsed = Wei.ofWei(BasicUtils.parseHex(cumulativeGasUsed));
         return _cumulativeGasUsed;
     }
 
@@ -165,8 +165,8 @@ public class ReceiptProxy {
         private String blockHash;
         private String transactionHash;
         private Long transactionIndex;
-        private BigInteger gasUsed;
-        private BigInteger cumulativeGasUsed;
+        private Wei gasUsed;
+        private Wei cumulativeGasUsed;
         private String contractAddress;
         private List<Log> logs;
         private String logsBloom;
@@ -208,12 +208,12 @@ public class ReceiptProxy {
             return this;
         }
 
-        public ReceiptProxyBuilder withGasUsed(BigInteger gasUsed) {
+        public ReceiptProxyBuilder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
 
-        public ReceiptProxyBuilder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+        public ReceiptProxyBuilder withCumulativeGasUsed(Wei cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }
@@ -244,13 +244,11 @@ public class ReceiptProxy {
             receiptProxy.root = this.root;
             receiptProxy.contractAddress = this.contractAddress;
             if (this.gasUsed != null) {
-                receiptProxy.gasUsed = String.valueOf(this.gasUsed);
                 receiptProxy._gasUsed = this.gasUsed;
             }
             receiptProxy.logs = this.logs;
             receiptProxy.to = this.to;
             if (this.cumulativeGasUsed != null) {
-                receiptProxy.cumulativeGasUsed = String.valueOf(this.cumulativeGasUsed);
                 receiptProxy._cumulativeGasUsed = this.cumulativeGasUsed;
             }
             receiptProxy.transactionIndex = String.valueOf(this.transactionIndex);

@@ -53,12 +53,12 @@ public class TxErc1155 extends BaseTx {
         return transactionIndex;
     }
 
-    public BigInteger getGasPrice() {
-        return gasPrice;
+    public Wei getGasPrice() {
+        return Wei.ofWei(gasPrice);
     }
 
-    public BigInteger getCumulativeGasUsed() {
-        return cumulativeGasUsed;
+    public Wei getGasUsedCumulative() {
+        return Wei.ofWei(cumulativeGasUsed);
     }
 
     public long getConfirmations() {
@@ -113,8 +113,6 @@ public class TxErc1155 extends BaseTx {
         private String to;
         private String contractAddress;
         private String input;
-        private BigInteger gas;
-        private BigInteger gasUsed;
         private long nonce;
         private String blockHash;
         private String tokenID;
@@ -122,8 +120,10 @@ public class TxErc1155 extends BaseTx {
         private String tokenSymbol;
         private String tokenValue;
         private int transactionIndex;
-        private BigInteger gasPrice;
-        private BigInteger cumulativeGasUsed;
+        private Wei gas;
+        private Wei gasUsed;
+        private Wei gasPrice;
+        private Wei cumulativeGasUsed;
         private long confirmations;
 
         private TxErc1155Builder() {}
@@ -163,12 +163,12 @@ public class TxErc1155 extends BaseTx {
             return this;
         }
 
-        public TxErc1155Builder withGas(BigInteger gas) {
+        public TxErc1155Builder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxErc1155Builder withGasUsed(BigInteger gasUsed) {
+        public TxErc1155Builder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -208,12 +208,12 @@ public class TxErc1155 extends BaseTx {
             return this;
         }
 
-        public TxErc1155Builder withGasPrice(BigInteger gasPrice) {
+        public TxErc1155Builder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public TxErc1155Builder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+        public TxErc1155Builder withCumulativeGasUsed(Wei cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }
@@ -224,30 +224,38 @@ public class TxErc1155 extends BaseTx {
         }
 
         public TxErc1155 build() {
-            TxErc1155 txERC721 = new TxErc1155();
-            txERC721.gas = this.gas;
-            txERC721.tokenName = this.tokenName;
-            txERC721.hash = this.hash;
-            txERC721.gasUsed = this.gasUsed;
-            txERC721.nonce = this.nonce;
-            txERC721.from = this.from;
-            txERC721.gasPrice = this.gasPrice;
-            txERC721.contractAddress = this.contractAddress;
-            txERC721.cumulativeGasUsed = this.cumulativeGasUsed;
-            txERC721.tokenID = this.tokenID;
-            if (this.timeStamp != null) {
-                txERC721.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
-                txERC721._timeStamp = this.timeStamp;
+            TxErc1155 txERC1155 = new TxErc1155();
+            txERC1155.tokenName = this.tokenName;
+            txERC1155.hash = this.hash;
+            txERC1155.nonce = this.nonce;
+            txERC1155.from = this.from;
+            if (this.gas != null) {
+                txERC1155.gas = this.gas.asWei();
             }
-            txERC721.blockNumber = this.blockNumber;
-            txERC721.tokenValue = this.tokenValue;
-            txERC721.transactionIndex = this.transactionIndex;
-            txERC721.to = this.to;
-            txERC721.confirmations = this.confirmations;
-            txERC721.input = this.input;
-            txERC721.blockHash = this.blockHash;
-            txERC721.tokenSymbol = this.tokenSymbol;
-            return txERC721;
+            if (this.gasUsed != null) {
+                txERC1155.gasUsed = this.gasUsed.asWei();
+            }
+            if (this.gasPrice != null) {
+                txERC1155.gasPrice = this.gasPrice.asWei();
+            }
+            if (this.cumulativeGasUsed != null) {
+                txERC1155.cumulativeGasUsed = this.cumulativeGasUsed.asWei();
+            }
+            txERC1155.contractAddress = this.contractAddress;
+            txERC1155.tokenID = this.tokenID;
+            if (this.timeStamp != null) {
+                txERC1155.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));
+                txERC1155._timeStamp = this.timeStamp;
+            }
+            txERC1155.blockNumber = this.blockNumber;
+            txERC1155.tokenValue = this.tokenValue;
+            txERC1155.transactionIndex = this.transactionIndex;
+            txERC1155.to = this.to;
+            txERC1155.confirmations = this.confirmations;
+            txERC1155.input = this.input;
+            txERC1155.blockHash = this.blockHash;
+            txERC1155.tokenSymbol = this.tokenSymbol;
+            return txERC1155;
         }
     }
 }

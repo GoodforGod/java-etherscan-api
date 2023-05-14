@@ -41,20 +41,20 @@ public class Tx extends BaseTx {
         return transactionIndex;
     }
 
-    public BigInteger getGasPrice() {
-        return gasPrice;
+    public Wei getGasPrice() {
+        return Wei.ofWei(gasPrice);
     }
 
     public boolean haveError() {
         return !BasicUtils.isEmpty(isError) && !isError.equals("0");
     }
 
-    public String getTxreceipt_status() {
+    public String getTxReceiptStatus() {
         return txreceipt_status;
     }
 
-    public BigInteger getCumulativeGasUsed() {
-        return cumulativeGasUsed;
+    public Wei getGasUsedCumulative() {
+        return Wei.ofWei(cumulativeGasUsed);
     }
 
     public long getConfirmations() {
@@ -112,16 +112,16 @@ public class Tx extends BaseTx {
         private BigInteger value;
         private String contractAddress;
         private String input;
-        private BigInteger gas;
-        private BigInteger gasUsed;
+        private Wei gas;
+        private Wei gasUsed;
         private long nonce;
         private String blockHash;
         private int transactionIndex;
-        private BigInteger gasPrice;
-        private BigInteger cumulativeGasUsed;
+        private Wei gasPrice;
+        private Wei cumulativeGasUsed;
         private long confirmations;
         private String isError;
-        private String txreceiptStatus;
+        private String txReceiptStatus;
 
         private TxBuilder() {}
 
@@ -165,12 +165,12 @@ public class Tx extends BaseTx {
             return this;
         }
 
-        public TxBuilder withGas(BigInteger gas) {
+        public TxBuilder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxBuilder withGasUsed(BigInteger gasUsed) {
+        public TxBuilder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -190,12 +190,12 @@ public class Tx extends BaseTx {
             return this;
         }
 
-        public TxBuilder withGasPrice(BigInteger gasPrice) {
+        public TxBuilder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public TxBuilder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+        public TxBuilder withCumulativeGasUsed(Wei cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }
@@ -210,20 +210,30 @@ public class Tx extends BaseTx {
             return this;
         }
 
-        public TxBuilder withTxreceiptStatus(String txreceiptStatus) {
-            this.txreceiptStatus = txreceiptStatus;
+        public TxBuilder withTxReceiptStatus(String txReceiptStatus) {
+            this.txReceiptStatus = txReceiptStatus;
             return this;
         }
 
         public Tx build() {
             Tx tx = new Tx();
-            tx.gas = this.gas;
             tx.isError = this.isError;
             tx.blockHash = this.blockHash;
             tx.hash = this.hash;
-            tx.gasUsed = this.gasUsed;
+            if (this.gas != null) {
+                tx.gas = this.gas.asWei();
+            }
+            if (this.gasUsed != null) {
+                tx.gasUsed = this.gasUsed.asWei();
+            }
+            if (this.gasPrice != null) {
+                tx.gasPrice = this.gasPrice.asWei();
+            }
+            if (this.cumulativeGasUsed != null) {
+                tx.cumulativeGasUsed = this.cumulativeGasUsed.asWei();
+            }
             tx.from = this.from;
-            tx.txreceipt_status = this.txreceiptStatus;
+            tx.txreceipt_status = this.txReceiptStatus;
             tx.contractAddress = this.contractAddress;
             tx.value = this.value;
             tx.transactionIndex = this.transactionIndex;
@@ -236,8 +246,6 @@ public class Tx extends BaseTx {
             tx.blockNumber = this.blockNumber;
             tx.to = this.to;
             tx.input = this.input;
-            tx.cumulativeGasUsed = this.cumulativeGasUsed;
-            tx.gasPrice = this.gasPrice;
             return tx;
         }
     }

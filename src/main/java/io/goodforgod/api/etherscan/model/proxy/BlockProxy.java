@@ -1,8 +1,8 @@
 package io.goodforgod.api.etherscan.model.proxy;
 
 import com.google.gson.annotations.Expose;
+import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -35,10 +35,10 @@ public class BlockProxy {
     private String mixHash;
     private String gasUsed;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gasUsed;
+    private Wei _gasUsed;
     private String gasLimit;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gasLimit;
+    private Wei _gasLimit;
 
     private String sha3Uncles;
     private List<String> uncles;
@@ -108,15 +108,15 @@ public class BlockProxy {
         return mixHash;
     }
 
-    public BigInteger getGasUsed() {
+    public Wei getGasUsed() {
         if (_gasUsed == null && !BasicUtils.isEmpty(gasUsed))
-            _gasUsed = BasicUtils.parseHex(gasUsed);
+            _gasUsed = Wei.ofWei(BasicUtils.parseHex(gasUsed));
         return _gasUsed;
     }
 
-    public BigInteger getGasLimit() {
+    public Wei getGasLimit() {
         if (_gasLimit == null && !BasicUtils.isEmpty(gasLimit))
-            _gasLimit = BasicUtils.parseHex(gasLimit);
+            _gasLimit = Wei.ofWei(BasicUtils.parseHex(gasLimit));
         return _gasLimit;
     }
 
@@ -227,8 +227,8 @@ public class BlockProxy {
         private String extraData;
         private String logsBloom;
         private String mixHash;
-        private BigInteger gasUsed;
-        private BigInteger gasLimit;
+        private Wei gasUsed;
+        private Wei gasLimit;
         private String sha3Uncles;
         private List<String> uncles;
         private String receiptsRoot;
@@ -302,12 +302,12 @@ public class BlockProxy {
             return this;
         }
 
-        public BlockProxyBuilder withGasUsed(BigInteger gasUsed) {
+        public BlockProxyBuilder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
 
-        public BlockProxyBuilder withGasLimit(BigInteger gasLimit) {
+        public BlockProxyBuilder withGasLimit(Wei gasLimit) {
             this.gasLimit = gasLimit;
             return this;
         }
@@ -352,11 +352,9 @@ public class BlockProxy {
             blockProxy._size = this.size;
             blockProxy.difficulty = this.difficulty;
             if (this.gasLimit != null) {
-                blockProxy.gasLimit = String.valueOf(this.gasLimit);
                 blockProxy._gasLimit = this.gasLimit;
             }
             if (this.gasUsed != null) {
-                blockProxy.gasUsed = String.valueOf(this.gasUsed);
                 blockProxy._gasUsed = this.gasUsed;
             }
             blockProxy.size = String.valueOf(this.size);

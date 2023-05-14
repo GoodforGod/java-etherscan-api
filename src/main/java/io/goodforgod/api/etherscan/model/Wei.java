@@ -1,6 +1,8 @@
 package io.goodforgod.api.etherscan.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -39,25 +41,29 @@ public class Wei {
         return new Wei(value.multiply(BigInteger.valueOf(1_000_000_000_000_000L)));
     }
 
+    public static Wei ofEther(BigDecimal value) {
+        return new Wei(value.multiply(BigDecimal.valueOf(1_000_000_000_000_000L)).toBigInteger());
+    }
+
     // <editor-fold desc="Getters">
     public BigInteger asWei() {
         return result;
     }
 
-    public BigInteger asKwei() {
-        return result.divide(BigInteger.valueOf(1_000));
+    public BigDecimal asKwei() {
+        return new BigDecimal(result).divide(BigDecimal.valueOf(1_000), RoundingMode.HALF_UP);
     }
 
-    public BigInteger asMwei() {
-        return result.divide(BigInteger.valueOf(1_000_000));
+    public BigDecimal asMwei() {
+        return new BigDecimal(result).divide(BigDecimal.valueOf(1_000_000), RoundingMode.HALF_UP);
     }
 
-    public BigInteger asGwei() {
-        return result.divide(BigInteger.valueOf(1_000_000_000));
+    public BigDecimal asGwei() {
+        return new BigDecimal(result).divide(BigDecimal.valueOf(1_000_000_000), RoundingMode.HALF_UP);
     }
 
-    public BigInteger asEther() {
-        return result.divide(BigInteger.valueOf(1_000_000_000_000_000L));
+    public BigDecimal asEther() {
+        return new BigDecimal(result).divide(BigDecimal.valueOf(1_000_000_000_000_000L), RoundingMode.HALF_UP);
     }
     // </editor-fold>
 

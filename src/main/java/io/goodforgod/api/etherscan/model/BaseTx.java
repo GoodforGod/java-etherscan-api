@@ -56,12 +56,12 @@ abstract class BaseTx {
         return input;
     }
 
-    public BigInteger getGas() {
-        return gas;
+    public Wei getGas() {
+        return Wei.ofWei(gas);
     }
 
-    public BigInteger getGasUsed() {
-        return gasUsed;
+    public Wei getGasUsed() {
+        return Wei.ofWei(gasUsed);
     }
     // </editor-fold>
 

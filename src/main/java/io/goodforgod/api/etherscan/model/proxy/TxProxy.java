@@ -1,8 +1,8 @@
 package io.goodforgod.api.etherscan.model.proxy;
 
 import com.google.gson.annotations.Expose;
+import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import java.math.BigInteger;
 
 /**
  * @author GoodforGod
@@ -26,10 +26,10 @@ public class TxProxy {
     private String value;
     private String gas;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gas;
+    private Wei _gas;
     private String gasPrice;
     @Expose(deserialize = false, serialize = false)
-    private BigInteger _gasPrice;
+    private Wei _gasPrice;
     private String blockHash;
     private String blockNumber;
     @Expose(deserialize = false, serialize = false)
@@ -56,9 +56,9 @@ public class TxProxy {
         return from;
     }
 
-    public BigInteger getGas() {
+    public Wei getGas() {
         if (_gas == null && !BasicUtils.isEmpty(gas))
-            _gas = BasicUtils.parseHex(gas);
+            _gas = Wei.ofWei(BasicUtils.parseHex(gas));
         return _gas;
     }
 
@@ -88,9 +88,9 @@ public class TxProxy {
         return value;
     }
 
-    public BigInteger getGasPrice() {
+    public Wei getGasPrice() {
         if (_gasPrice == null && !BasicUtils.isEmpty(gasPrice))
-            _gasPrice = BasicUtils.parseHex(gasPrice);
+            _gasPrice = Wei.ofWei(BasicUtils.parseHex(gasPrice));
         return _gasPrice;
     }
 
@@ -182,8 +182,8 @@ public class TxProxy {
         private String r;
         private Long nonce;
         private String value;
-        private BigInteger gas;
-        private BigInteger gasPrice;
+        private Wei gas;
+        private Wei gasPrice;
         private String blockHash;
         private Long blockNumber;
 
@@ -239,12 +239,12 @@ public class TxProxy {
             return this;
         }
 
-        public TxProxyBuilder withGas(BigInteger gas) {
+        public TxProxyBuilder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxProxyBuilder withGasPrice(BigInteger gasPrice) {
+        public TxProxyBuilder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
@@ -263,7 +263,6 @@ public class TxProxy {
             TxProxy txProxy = new TxProxy();
             txProxy.input = this.input;
             if (this.gas != null) {
-                txProxy.gas = String.valueOf(this.gas);
                 txProxy._gas = this.gas;
             }
             txProxy.s = this.s;
@@ -281,7 +280,6 @@ public class TxProxy {
             txProxy._blockNumber = this.blockNumber;
             txProxy.hash = this.hash;
             if (this.gasPrice != null) {
-                txProxy.gasPrice = String.valueOf(this.gasPrice);
                 txProxy._gasPrice = this.gasPrice;
             }
             return txProxy;

@@ -53,12 +53,12 @@ public class TxErc721 extends BaseTx {
         return transactionIndex;
     }
 
-    public BigInteger getGasPrice() {
-        return gasPrice;
+    public Wei getGasPrice() {
+        return Wei.ofWei(gasPrice);
     }
 
-    public BigInteger getCumulativeGasUsed() {
-        return cumulativeGasUsed;
+    public Wei getGasUsedCumulative() {
+        return Wei.ofWei(cumulativeGasUsed);
     }
 
     public long getConfirmations() {
@@ -113,8 +113,6 @@ public class TxErc721 extends BaseTx {
         private String to;
         private String contractAddress;
         private String input;
-        private BigInteger gas;
-        private BigInteger gasUsed;
         private long nonce;
         private String blockHash;
         private String tokenID;
@@ -122,8 +120,10 @@ public class TxErc721 extends BaseTx {
         private String tokenSymbol;
         private String tokenDecimal;
         private int transactionIndex;
-        private BigInteger gasPrice;
-        private BigInteger cumulativeGasUsed;
+        private Wei gas;
+        private Wei gasUsed;
+        private Wei gasPrice;
+        private Wei cumulativeGasUsed;
         private long confirmations;
 
         private TxERC721Builder() {}
@@ -163,12 +163,12 @@ public class TxErc721 extends BaseTx {
             return this;
         }
 
-        public TxERC721Builder withGas(BigInteger gas) {
+        public TxERC721Builder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxERC721Builder withGasUsed(BigInteger gasUsed) {
+        public TxERC721Builder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -208,12 +208,12 @@ public class TxErc721 extends BaseTx {
             return this;
         }
 
-        public TxERC721Builder withGasPrice(BigInteger gasPrice) {
+        public TxERC721Builder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public TxERC721Builder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+        public TxERC721Builder withCumulativeGasUsed(Wei cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }
@@ -225,15 +225,23 @@ public class TxErc721 extends BaseTx {
 
         public TxErc721 build() {
             TxErc721 txERC721 = new TxErc721();
-            txERC721.gas = this.gas;
             txERC721.tokenName = this.tokenName;
             txERC721.hash = this.hash;
-            txERC721.gasUsed = this.gasUsed;
             txERC721.nonce = this.nonce;
             txERC721.from = this.from;
-            txERC721.gasPrice = this.gasPrice;
+            if (this.gas != null) {
+                txERC721.gas = this.gas.asWei();
+            }
+            if (this.gasUsed != null) {
+                txERC721.gasUsed = this.gasUsed.asWei();
+            }
+            if (this.gasPrice != null) {
+                txERC721.gasPrice = this.gasPrice.asWei();
+            }
+            if (this.cumulativeGasUsed != null) {
+                txERC721.cumulativeGasUsed = this.cumulativeGasUsed.asWei();
+            }
             txERC721.contractAddress = this.contractAddress;
-            txERC721.cumulativeGasUsed = this.cumulativeGasUsed;
             txERC721.tokenID = this.tokenID;
             if (this.timeStamp != null) {
                 txERC721.timeStamp = String.valueOf(this.timeStamp.toEpochSecond(ZoneOffset.UTC));

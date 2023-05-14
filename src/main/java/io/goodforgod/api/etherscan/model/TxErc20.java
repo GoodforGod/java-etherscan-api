@@ -53,12 +53,12 @@ public class TxErc20 extends BaseTx {
         return transactionIndex;
     }
 
-    public BigInteger getGasPrice() {
-        return gasPrice;
+    public Wei getGasPrice() {
+        return Wei.ofWei(gasPrice);
     }
 
-    public BigInteger getCumulativeGasUsed() {
-        return cumulativeGasUsed;
+    public Wei getGasUsedCumulative() {
+        return Wei.ofWei(cumulativeGasUsed);
     }
 
     public long getConfirmations() {
@@ -114,16 +114,16 @@ public class TxErc20 extends BaseTx {
         private BigInteger value;
         private String contractAddress;
         private String input;
-        private BigInteger gas;
-        private BigInteger gasUsed;
+        private Wei gas;
+        private Wei gasUsed;
         private long nonce;
         private String blockHash;
         private String tokenName;
         private String tokenSymbol;
         private String tokenDecimal;
         private int transactionIndex;
-        private BigInteger gasPrice;
-        private BigInteger cumulativeGasUsed;
+        private Wei gasPrice;
+        private Wei cumulativeGasUsed;
         private long confirmations;
 
         private TxERC20Builder() {}
@@ -168,12 +168,12 @@ public class TxErc20 extends BaseTx {
             return this;
         }
 
-        public TxERC20Builder withGas(BigInteger gas) {
+        public TxERC20Builder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxERC20Builder withGasUsed(BigInteger gasUsed) {
+        public TxERC20Builder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -208,12 +208,12 @@ public class TxErc20 extends BaseTx {
             return this;
         }
 
-        public TxERC20Builder withGasPrice(BigInteger gasPrice) {
+        public TxERC20Builder withGasPrice(Wei gasPrice) {
             this.gasPrice = gasPrice;
             return this;
         }
 
-        public TxERC20Builder withCumulativeGasUsed(BigInteger cumulativeGasUsed) {
+        public TxERC20Builder withCumulativeGasUsed(Wei cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
             return this;
         }
@@ -225,11 +225,20 @@ public class TxErc20 extends BaseTx {
 
         public TxErc20 build() {
             TxErc20 txERC20 = new TxErc20();
-            txERC20.gas = this.gas;
             txERC20.tokenName = this.tokenName;
             txERC20.hash = this.hash;
-            txERC20.gasUsed = this.gasUsed;
-            txERC20.cumulativeGasUsed = this.cumulativeGasUsed;
+            if (this.gas != null) {
+                txERC20.gas = this.gas.asWei();
+            }
+            if (this.gasUsed != null) {
+                txERC20.gasUsed = this.gasUsed.asWei();
+            }
+            if (this.gasPrice != null) {
+                txERC20.gasPrice = this.gasPrice.asWei();
+            }
+            if (this.cumulativeGasUsed != null) {
+                txERC20.cumulativeGasUsed = this.cumulativeGasUsed.asWei();
+            }
             txERC20.from = this.from;
             txERC20.tokenSymbol = this.tokenSymbol;
             txERC20.transactionIndex = this.transactionIndex;
@@ -243,7 +252,6 @@ public class TxErc20 extends BaseTx {
             }
             txERC20.blockHash = this.blockHash;
             txERC20.blockNumber = this.blockNumber;
-            txERC20.gasPrice = this.gasPrice;
             txERC20.to = this.to;
             txERC20.input = this.input;
             txERC20.tokenDecimal = this.tokenDecimal;

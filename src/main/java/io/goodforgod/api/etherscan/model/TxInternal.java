@@ -90,8 +90,8 @@ public class TxInternal extends BaseTx {
         private BigInteger value;
         private String contractAddress;
         private String input;
-        private BigInteger gas;
-        private BigInteger gasUsed;
+        private Wei gas;
+        private Wei gasUsed;
         private String type;
         private String traceId;
         private int isError;
@@ -139,12 +139,12 @@ public class TxInternal extends BaseTx {
             return this;
         }
 
-        public TxInternalBuilder withGas(BigInteger gas) {
+        public TxInternalBuilder withGas(Wei gas) {
             this.gas = gas;
             return this;
         }
 
-        public TxInternalBuilder withGasUsed(BigInteger gasUsed) {
+        public TxInternalBuilder withGasUsed(Wei gasUsed) {
             this.gasUsed = gasUsed;
             return this;
         }
@@ -171,9 +171,13 @@ public class TxInternal extends BaseTx {
 
         public TxInternal build() {
             TxInternal txInternal = new TxInternal();
-            txInternal.gas = this.gas;
             txInternal.hash = this.hash;
-            txInternal.gasUsed = this.gasUsed;
+            if (this.gas != null) {
+                txInternal.gas = this.gas.asWei();
+            }
+            if (this.gasUsed != null) {
+                txInternal.gasUsed = this.gasUsed.asWei();
+            }
             txInternal.traceId = this.traceId;
             txInternal.type = this.type;
             txInternal.from = this.from;
