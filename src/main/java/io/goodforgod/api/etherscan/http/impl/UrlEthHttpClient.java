@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Http client implementation
@@ -82,7 +83,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public String get(URI uri) {
+    public @NotNull String get(@NotNull URI uri) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "GET");
             final int status = connection.getResponseCode();
@@ -105,7 +106,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public String post(URI uri, byte[] body) {
+    public @NotNull String post(@NotNull URI uri, byte[] body) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "POST");
             final int contentLength = body.length;

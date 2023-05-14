@@ -1,5 +1,6 @@
 package io.goodforgod.api.etherscan.manager;
 
+import io.goodforgod.api.etherscan.manager.impl.FakeRequestQueueManager;
 import io.goodforgod.api.etherscan.manager.impl.SemaphoreRequestQueueManager;
 import java.time.Duration;
 
@@ -12,8 +13,18 @@ import java.time.Duration;
  */
 public interface RequestQueueManager extends AutoCloseable {
 
-    RequestQueueManager DEFAULT = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5005L));
-    RequestQueueManager PERSONAL = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1005L));
+    /**
+     * Is used by default when no API KEY is provided
+     */
+    RequestQueueManager ANONYMOUS = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5005L));
+
+    /**
+     * Is available for all registered free API KEYs
+     * <a href="https://docs.etherscan.io/getting-started/viewing-api-usage-statistics">Free API KEY</a>
+     */
+    RequestQueueManager FREE_PLAN = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1005L));
+
+    RequestQueueManager UNLIMITED = new FakeRequestQueueManager();
 
     /**
      * Waits in queue for chance to take turn

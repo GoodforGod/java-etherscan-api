@@ -5,7 +5,6 @@ import io.goodforgod.api.etherscan.error.EtherScanKeyException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
-import io.goodforgod.api.etherscan.manager.impl.FakeRequestQueueManager;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import io.goodforgod.gson.configuration.GsonConfiguration;
 import java.util.function.Supplier;
@@ -24,7 +23,7 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
     private String apiKey = DEFAULT_KEY;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
-    private RequestQueueManager queueManager = RequestQueueManager.DEFAULT;
+    private RequestQueueManager queueManager = RequestQueueManager.ANONYMOUS;
     private Supplier<EthHttpClient> ethHttpClientSupplier = DEFAULT_SUPPLIER;
     private Supplier<Converter> converterSupplier = () -> new Converter() {
 
@@ -42,7 +41,7 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
         this.apiKey = apiKey;
         if (!DEFAULT_KEY.equals(apiKey)) {
-            queueManager = new FakeRequestQueueManager();
+            queueManager = RequestQueueManager.UNLIMITED;
         }
         return this;
     }
