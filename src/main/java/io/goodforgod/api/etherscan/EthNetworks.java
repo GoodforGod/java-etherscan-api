@@ -10,11 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public enum EthNetworks implements EthNetwork {
 
     MAINNET("api", "io"),
-    ROPSTEN("api-ropsten", "io"),
-    KOVAN("api-kovan", "io"),
-    TOBALABA("api-tobalaba", "com"),
     GORLI("api-goerli", "io"),
-    RINKEBY("api-rinkeby", "io");
+    SEPOLIA("api-sepolia", "io");
 
     private final URI domain;
 

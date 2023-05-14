@@ -9,9 +9,6 @@ public class ApiRunner extends Assertions {
     private static final String DEFAULT_KEY = "YourApiKeyToken";
 
     private static final EtherScanAPI api;
-    private static final EtherScanAPI apiRopsten;
-    private static final EtherScanAPI apiRinkeby;
-    private static final EtherScanAPI apiKovan;
     private static final String apiKey;
 
     static {
@@ -23,12 +20,6 @@ public class ApiRunner extends Assertions {
                 : key;
         api = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.MAINNET).withQueue(queueManager)
                 .build();
-        apiKovan = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.KOVAN).withQueue(queueManager)
-                .build();
-        apiRopsten = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.ROPSTEN).withQueue(queueManager)
-                .build();
-        apiRinkeby = EtherScanAPI.builder().withApiKey(ApiRunner.apiKey).withNetwork(EthNetworks.RINKEBY).withQueue(queueManager)
-                .build();
     }
 
     public static String getApiKey() {
@@ -39,23 +30,8 @@ public class ApiRunner extends Assertions {
         return api;
     }
 
-    public static EtherScanAPI getApiRopsten() {
-        return apiRopsten;
-    }
-
-    public static EtherScanAPI getApiRinkeby() {
-        return apiRinkeby;
-    }
-
-    public static EtherScanAPI getApiKovan() {
-        return apiKovan;
-    }
-
     @AfterAll
     public static void cleanup() throws Exception {
         api.close();
-        apiRopsten.close();
-        apiRinkeby.close();
-        apiKovan.close();
     }
 }
