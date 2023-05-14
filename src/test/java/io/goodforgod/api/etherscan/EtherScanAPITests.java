@@ -5,6 +5,7 @@ import io.goodforgod.api.etherscan.error.EtherScanKeyException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
 import io.goodforgod.api.etherscan.model.Balance;
+import java.net.URI;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.Test;
  */
 class EtherScanAPITests extends ApiRunner {
 
-    private final EthNetworks network = EthNetworks.KOVAN;
+    private final EthNetworks network = EthNetworks.SEPOLIA;
 
     @Test
     void validKey() {
@@ -46,14 +47,12 @@ class EtherScanAPITests extends ApiRunner {
 
     @Test
     void noTimeoutOnReadGroli() {
-        Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300));
         Balance balance = getApi().account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
         assertNotNull(balance);
     }
 
     @Test
     void noTimeoutOnReadTobalala() {
-        Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(30000));
         Balance balance = getApi().account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
         assertNotNull(balance);
     }
@@ -68,8 +67,12 @@ class EtherScanAPITests extends ApiRunner {
     void timeout() throws InterruptedException {
         TimeUnit.SECONDS.sleep(5);
         Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
-        EtherScanAPI api = EtherScanAPI.builder().withApiKey(getApiKey()).withNetwork(EthNetworks.KOVAN).withHttpClient(supplier)
+        EtherScanAPI api = EtherScanAPI.builder()
+                .withApiKey(getApiKey())
+                .withNetwork(() -> URI.create("https://api-unknown.etherscan.io/api"))
+                .withHttpClient(supplier)
                 .build();
+
         assertThrows(EtherScanConnectionException.class,
                 () -> api.account().blocksMined("0x0010f94b296A852aAac52EA6c5Ac72e03afD032D"));
     }

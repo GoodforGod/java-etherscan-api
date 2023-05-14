@@ -12,11 +12,8 @@ import java.time.Duration;
  */
 public interface RequestQueueManager extends AutoCloseable {
 
-    RequestQueueManager DEFAULT = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5050L),
-            Duration.ofMillis(5050L), 0);
-
-    RequestQueueManager PERSONAL = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1050L),
-            Duration.ofMillis(1050L), 5);
+    RequestQueueManager DEFAULT = new SemaphoreRequestQueueManager(1, Duration.ofMillis(5005L));
+    RequestQueueManager PERSONAL = new SemaphoreRequestQueueManager(5, Duration.ofMillis(1005L));
 
     /**
      * Waits in queue for chance to take turn

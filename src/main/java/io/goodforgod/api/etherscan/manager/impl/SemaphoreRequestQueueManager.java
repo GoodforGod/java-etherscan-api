@@ -21,18 +21,10 @@ public final class SemaphoreRequestQueueManager implements RequestQueueManager, 
     private final long queueResetTimeInMillis;
 
     public SemaphoreRequestQueueManager(int size, Duration resetIn) {
-        this(size, resetIn, resetIn);
-    }
-
-    public SemaphoreRequestQueueManager(int size, Duration resetIn, Duration delayIn) {
-        this(size, resetIn, delayIn, size);
-    }
-
-    public SemaphoreRequestQueueManager(int size, Duration queueResetTimeIn, Duration delayIn, int initialSize) {
-        this.semaphore = new Semaphore(initialSize);
-        this.queueResetTimeInMillis = queueResetTimeIn.toMillis();
-        this.executorService.scheduleAtFixedRate(releaseLocks(size + 1),
-                delayIn.toMillis(), queueResetTimeInMillis, TimeUnit.MILLISECONDS);
+        this.semaphore = new Semaphore(0);
+        this.queueResetTimeInMillis = resetIn.toMillis();
+        this.executorService.scheduleAtFixedRate(releaseLocks(size),
+                resetIn.toMillis(), queueResetTimeInMillis, TimeUnit.MILLISECONDS);
     }
 
     @SuppressWarnings("java:S899")
@@ -46,7 +38,13 @@ public final class SemaphoreRequestQueueManager implements RequestQueueManager, 
     }
 
     private Runnable releaseLocks(int toRelease) {
-        return () -> semaphore.release(toRelease);
+        return () -> {
+            int availablePermits = semaphore.availablePermits();
+            int neededPermits = toRelease - availablePermits;
+            if (neededPermits > 0) {
+                semaphore.release(neededPermits);
+            }
+        };
     }
 
     @Override
