@@ -30,23 +30,15 @@ public class Status {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof Status))
             return false;
-
         Status status = (Status) o;
-
-        if (isError != status.isError)
-            return false;
-        return Objects.equals(errDescription, status.errDescription);
+        return isError == status.isError && Objects.equals(errDescription, status.errDescription);
     }
 
     @Override
     public int hashCode() {
-        int result = isError;
-        result = 31 * result + (errDescription != null
-                ? errDescription.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(isError, errDescription);
     }
 
     @Override

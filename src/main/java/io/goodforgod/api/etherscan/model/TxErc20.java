@@ -9,30 +9,16 @@ import java.util.Objects;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class TxErc20 extends BaseTx {
+public class TxErc20 extends BlockTx {
 
     private BigInteger value;
-    private long nonce;
-    private String blockHash;
     private String tokenName;
     private String tokenSymbol;
     private String tokenDecimal;
-    private int transactionIndex;
-    private BigInteger gasPrice;
-    private BigInteger cumulativeGasUsed;
-    private long confirmations;
 
     protected TxErc20() {}
 
     // <editor-fold desc="Getters">
-    public long getNonce() {
-        return nonce;
-    }
-
-    public String getBlockHash() {
-        return blockHash;
-    }
-
     public BigInteger getValue() {
         return value;
     }
@@ -47,22 +33,6 @@ public class TxErc20 extends BaseTx {
 
     public String getTokenDecimal() {
         return tokenDecimal;
-    }
-
-    public int getTransactionIndex() {
-        return transactionIndex;
-    }
-
-    public Wei getGasPrice() {
-        return Wei.ofWei(gasPrice);
-    }
-
-    public Wei getGasUsedCumulative() {
-        return Wei.ofWei(cumulativeGasUsed);
-    }
-
-    public long getConfirmations() {
-        return confirmations;
     }
     // </editor-fold>
 
@@ -86,18 +56,27 @@ public class TxErc20 extends BaseTx {
 
     @Override
     public String toString() {
-        return "TxERC20{" +
-                "nonce=" + nonce +
-                ", blockHash='" + blockHash + '\'' +
-                ", value='" + value + '\'' +
+        return "TxErc20{" +
+                "value=" + value +
                 ", tokenName='" + tokenName + '\'' +
                 ", tokenSymbol='" + tokenSymbol + '\'' +
                 ", tokenDecimal='" + tokenDecimal + '\'' +
+                ", nonce=" + nonce +
+                ", blockHash='" + blockHash + '\'' +
                 ", transactionIndex=" + transactionIndex +
+                ", confirmations=" + confirmations +
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
-                ", confirmations=" + confirmations +
-                "} " + super.toString();
+                ", blockNumber=" + blockNumber +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", hash='" + hash + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", contractAddress='" + contractAddress + '\'' +
+                ", input='" + input + '\'' +
+                ", gas=" + gas +
+                ", gasUsed=" + gasUsed +
+                '}';
     }
 
     public static TxERC20Builder builder() {

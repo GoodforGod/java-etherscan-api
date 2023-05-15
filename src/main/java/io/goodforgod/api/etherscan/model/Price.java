@@ -1,6 +1,7 @@
 package io.goodforgod.api.etherscan.model;
 
 import com.google.gson.annotations.Expose;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
@@ -11,8 +12,8 @@ import java.util.Objects;
  */
 public class Price {
 
-    private double ethusd;
-    private double ethbtc;
+    private BigDecimal ethusd;
+    private BigDecimal ethbtc;
     private String ethusd_timestamp;
     private String ethbtc_timestamp;
     @Expose(deserialize = false, serialize = false)
@@ -22,11 +23,11 @@ public class Price {
 
     protected Price() {}
 
-    public double inUsd() {
+    public BigDecimal inUsd() {
         return ethusd;
     }
 
-    public double inBtc() {
+    public BigDecimal inBtc() {
         return ethbtc;
     }
 
@@ -51,7 +52,7 @@ public class Price {
         if (!(o instanceof Price))
             return false;
         Price price = (Price) o;
-        return Double.compare(price.ethusd, ethusd) == 0 && Double.compare(price.ethbtc, ethbtc) == 0
+        return Objects.equals(ethusd, price.ethusd) && Objects.equals(ethbtc, price.ethbtc)
                 && Objects.equals(ethusd_timestamp, price.ethusd_timestamp)
                 && Objects.equals(ethbtc_timestamp, price.ethbtc_timestamp);
     }
@@ -77,19 +78,19 @@ public class Price {
 
     public static final class PriceBuilder {
 
-        private double ethusd;
-        private double ethbtc;
+        private BigDecimal ethusd;
+        private BigDecimal ethbtc;
         private LocalDateTime ethusdTimestamp;
         private LocalDateTime ethbtcTimestamp;
 
         private PriceBuilder() {}
 
-        public PriceBuilder withEthUsd(double ethusd) {
+        public PriceBuilder withEthUsd(BigDecimal ethusd) {
             this.ethusd = ethusd;
             return this;
         }
 
-        public PriceBuilder withEthBtc(double ethbtc) {
+        public PriceBuilder withEthBtc(BigDecimal ethbtc) {
             this.ethbtc = ethbtc;
             return this;
         }

@@ -26,7 +26,7 @@ class ProxyTxReceiptApiTests extends ApiRunner {
         assertNotNull(infoProxy.get().getTransactionHash());
         assertNotNull(infoProxy.get().getTransactionIndex());
         assertNotNull(infoProxy.get().getGasUsed());
-        assertNotNull(infoProxy.get().getCumulativeGasUsed());
+        assertNotNull(infoProxy.get().getGasUsedCumulative());
         assertNotNull(infoProxy.get().getLogs());
         assertNotNull(infoProxy.get().getLogsBloom());
         assertNull(infoProxy.get().getContractAddress());

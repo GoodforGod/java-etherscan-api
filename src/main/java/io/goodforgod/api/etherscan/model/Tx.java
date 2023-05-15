@@ -4,21 +4,14 @@ import io.goodforgod.api.etherscan.util.BasicUtils;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Objects;
 
 /**
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class Tx extends BaseTx {
+public class Tx extends BlockTx {
 
     private BigInteger value;
-    private long nonce;
-    private String blockHash;
-    private int transactionIndex;
-    private BigInteger gasPrice;
-    private BigInteger cumulativeGasUsed;
-    private long confirmations;
     private String isError;
     private String txreceipt_status;
 
@@ -29,22 +22,6 @@ public class Tx extends BaseTx {
         return value;
     }
 
-    public long getNonce() {
-        return nonce;
-    }
-
-    public String getBlockHash() {
-        return blockHash;
-    }
-
-    public int getTransactionIndex() {
-        return transactionIndex;
-    }
-
-    public Wei getGasPrice() {
-        return Wei.ofWei(gasPrice);
-    }
-
     public boolean haveError() {
         return !BasicUtils.isEmpty(isError) && !isError.equals("0");
     }
@@ -52,50 +29,30 @@ public class Tx extends BaseTx {
     public String getTxReceiptStatus() {
         return txreceipt_status;
     }
-
-    public Wei getGasUsedCumulative() {
-        return Wei.ofWei(cumulativeGasUsed);
-    }
-
-    public long getConfirmations() {
-        return confirmations;
-    }
     // </editor-fold>
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Tx))
-            return false;
-        if (!super.equals(o))
-            return false;
-        Tx tx = (Tx) o;
-        return nonce == tx.nonce && transactionIndex == tx.transactionIndex && confirmations == tx.confirmations
-                && Objects.equals(value, tx.value) && Objects.equals(blockHash, tx.blockHash)
-                && Objects.equals(gasPrice, tx.gasPrice) && Objects.equals(cumulativeGasUsed, tx.cumulativeGasUsed)
-                && Objects.equals(isError, tx.isError) && Objects.equals(txreceipt_status, tx.txreceipt_status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), value, nonce, blockHash, transactionIndex, gasPrice, cumulativeGasUsed,
-                confirmations, isError, txreceipt_status);
-    }
 
     @Override
     public String toString() {
         return "Tx{" +
-                "nonce=" + nonce +
-                ", value='" + value + '\'' +
-                ", blockHash='" + blockHash + '\'' +
-                ", transactionIndex=" + transactionIndex +
-                ", gasPrice=" + gasPrice +
-                ", cumulativeGasUsed=" + cumulativeGasUsed +
-                ", confirmations=" + confirmations +
+                "value=" + value +
                 ", isError='" + isError + '\'' +
                 ", txreceipt_status='" + txreceipt_status + '\'' +
-                "} " + super.toString();
+                ", nonce=" + nonce +
+                ", blockHash='" + blockHash + '\'' +
+                ", transactionIndex=" + transactionIndex +
+                ", confirmations=" + confirmations +
+                ", gasPrice=" + gasPrice +
+                ", cumulativeGasUsed=" + cumulativeGasUsed +
+                ", blockNumber=" + blockNumber +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", hash='" + hash + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", contractAddress='" + contractAddress + '\'' +
+                ", input='" + input + '\'' +
+                ", gas=" + gas +
+                ", gasUsed=" + gasUsed +
+                '}';
     }
 
     public static TxBuilder builder() {

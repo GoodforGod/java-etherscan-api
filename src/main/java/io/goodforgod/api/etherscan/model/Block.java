@@ -6,12 +6,13 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author GoodforGod
  * @since 28.10.2018
  */
-public class Block {
+public class Block implements Comparable<Block> {
 
     long blockNumber;
     BigInteger blockReward;
@@ -58,8 +59,12 @@ public class Block {
                 "blockNumber=" + blockNumber +
                 ", blockReward=" + blockReward +
                 ", timeStamp='" + timeStamp + '\'' +
-                ", _timeStamp=" + _timeStamp +
                 '}';
+    }
+
+    @Override
+    public int compareTo(@NotNull Block o) {
+        return Long.compare(blockNumber, o.blockNumber);
     }
 
     public static BlockBuilder builder() {

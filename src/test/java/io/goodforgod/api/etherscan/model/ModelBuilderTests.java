@@ -74,7 +74,7 @@ class ModelBuilderTests extends Assertions {
                 .withSafeGasPrice(Wei.ofWei(1000000000))
                 .withGasUsedRatio(Collections.singletonList(new BigDecimal(1)))
                 .withLastBlock(1L)
-                .withSuggestBaseFee(1.0)
+                .withSuggestBaseFee(BigDecimal.valueOf(1.0))
                 .build();
 
         assertNotNull(value);
@@ -86,7 +86,7 @@ class ModelBuilderTests extends Assertions {
                 .withSafeGasPrice(Wei.ofWei(1000000000))
                 .withGasUsedRatio(Collections.singletonList(new BigDecimal(1)))
                 .withLastBlock(1L)
-                .withSuggestBaseFee(1.0)
+                .withSuggestBaseFee(BigDecimal.valueOf(1.0))
                 .build();
         assertEquals(value, value2);
         assertEquals(value.hashCode(), value2.hashCode());
@@ -117,15 +117,15 @@ class ModelBuilderTests extends Assertions {
     void priceBuilder() {
         LocalDateTime timestamp = LocalDateTime.now();
         Price value = Price.builder()
-                .withEthBtc(1.0)
-                .withEthUsd(1.0)
+                .withEthBtc(BigDecimal.valueOf(1.0))
+                .withEthUsd(BigDecimal.valueOf(1.0))
                 .withEthBtcTimestamp(timestamp)
                 .withEthUsdTimestamp(timestamp)
                 .build();
 
         assertNotNull(value);
-        assertEquals(1.0, value.inUsd());
-        assertEquals(1.0, value.inBtc());
+        assertEquals(BigDecimal.valueOf(1.0), value.inUsd());
+        assertEquals(BigDecimal.valueOf(1.0), value.inBtc());
     }
 
     @Test
@@ -193,6 +193,7 @@ class ModelBuilderTests extends Assertions {
         assertEquals(value, value2);
         assertEquals(value.hashCode(), value2.hashCode());
         assertEquals(value.toString(), value2.toString());
+        assertEquals(0, value.compareTo(value2));
     }
 
     @Test
@@ -464,11 +465,46 @@ class ModelBuilderTests extends Assertions {
     }
 
     @Test
-    void gasEstimate() {
-        GasEstimate gas1 = new GasEstimate(1);
-        GasEstimate gas2 = new GasEstimate(1);
-        assertEquals(gas1, gas2);
-        assertEquals(gas1.hashCode(), gas2.hashCode());
-        assertEquals(gas1.toString(), gas2.toString());
+    void weiTests() {
+        Wei w1 = Wei.ofWei(1);
+        Wei w2 = Wei.ofWei(1L);
+        Wei w3 = Wei.ofWei(BigInteger.valueOf(1));
+        assertEquals(w1, w2);
+        assertEquals(w1, w3);
+        assertEquals(w1.hashCode(), w2.hashCode());
+        assertEquals(w1.hashCode(), w3.hashCode());
+        assertEquals(w1.toString(), w3.toString());
+
+        Wei kw1 = Wei.ofKwei(1);
+        Wei kw2 = Wei.ofKwei(1L);
+        Wei kw3 = Wei.ofKwei(BigInteger.valueOf(1));
+        Wei kw4 = Wei.ofKwei(BigDecimal.valueOf(1));
+        assertEquals(kw1, kw2);
+        assertEquals(kw1, kw3);
+        assertEquals(kw1, kw4);
+
+        Wei mw1 = Wei.ofMwei(1);
+        Wei mw2 = Wei.ofMwei(1L);
+        Wei mw3 = Wei.ofMwei(BigInteger.valueOf(1));
+        Wei mw4 = Wei.ofMwei(BigDecimal.valueOf(1));
+        assertEquals(mw1, mw2);
+        assertEquals(mw1, mw3);
+        assertEquals(mw1, mw4);
+
+        Wei gw1 = Wei.ofGwei(1);
+        Wei gw2 = Wei.ofGwei(1L);
+        Wei gw3 = Wei.ofGwei(BigInteger.valueOf(1));
+        Wei gw4 = Wei.ofGwei(BigDecimal.valueOf(1));
+        assertEquals(gw1, gw2);
+        assertEquals(gw1, gw3);
+        assertEquals(gw1, gw4);
+
+        Wei ew1 = Wei.ofEther(1);
+        Wei ew2 = Wei.ofEther(1L);
+        Wei ew3 = Wei.ofEther(BigInteger.valueOf(1));
+        Wei ew4 = Wei.ofEther(BigDecimal.valueOf(1));
+        assertEquals(ew1, ew2);
+        assertEquals(ew1, ew3);
+        assertEquals(ew1, ew4);
     }
 }

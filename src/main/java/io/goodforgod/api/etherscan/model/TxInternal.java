@@ -68,12 +68,21 @@ public class TxInternal extends BaseTx {
     @Override
     public String toString() {
         return "TxInternal{" +
-                "type='" + type + '\'' +
-                ", traceId=" + traceId +
-                ", value=" + value +
+                "value=" + value +
+                ", type='" + type + '\'' +
+                ", traceId='" + traceId + '\'' +
                 ", isError=" + isError +
                 ", errCode='" + errCode + '\'' +
-                "} " + super.toString();
+                ", blockNumber=" + blockNumber +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", hash='" + hash + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", contractAddress='" + contractAddress + '\'' +
+                ", input='" + input + '\'' +
+                ", gas=" + gas +
+                ", gasUsed=" + gasUsed +
+                '}';
     }
 
     public static TxInternalBuilder builder() {

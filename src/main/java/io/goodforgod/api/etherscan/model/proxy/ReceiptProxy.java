@@ -5,6 +5,7 @@ import io.goodforgod.api.etherscan.model.Log;
 import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author GoodforGod
@@ -75,7 +76,7 @@ public class ReceiptProxy {
         return _gasUsed;
     }
 
-    public Wei getCumulativeGasUsed() {
+    public Wei getGasUsedCumulative() {
         if (_cumulativeGasUsed == null && !BasicUtils.isEmpty(cumulativeGasUsed))
             _cumulativeGasUsed = Wei.ofWei(BasicUtils.parseHex(cumulativeGasUsed));
         return _cumulativeGasUsed;
@@ -98,36 +99,17 @@ public class ReceiptProxy {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof ReceiptProxy))
             return false;
-
         ReceiptProxy that = (ReceiptProxy) o;
-
-        if (blockNumber != null
-                ? !blockNumber.equals(that.blockNumber)
-                : that.blockNumber != null)
-            return false;
-        if (transactionHash != null
-                ? !transactionHash.equals(that.transactionHash)
-                : that.transactionHash != null)
-            return false;
-        return transactionIndex != null
-                ? transactionIndex.equals(that.transactionIndex)
-                : that.transactionIndex == null;
+        return Objects.equals(blockNumber, that.blockNumber) && Objects.equals(blockHash, that.blockHash)
+                && Objects.equals(transactionHash, that.transactionHash)
+                && Objects.equals(transactionIndex, that.transactionIndex);
     }
 
     @Override
     public int hashCode() {
-        int result = blockNumber != null
-                ? blockNumber.hashCode()
-                : 0;
-        result = 31 * result + (transactionHash != null
-                ? transactionHash.hashCode()
-                : 0);
-        result = 31 * result + (transactionIndex != null
-                ? transactionIndex.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(blockNumber, blockHash, transactionHash, transactionIndex);
     }
 
     @Override
@@ -137,15 +119,11 @@ public class ReceiptProxy {
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", blockNumber='" + blockNumber + '\'' +
-                ", _blockNumber=" + _blockNumber +
                 ", blockHash='" + blockHash + '\'' +
                 ", transactionHash='" + transactionHash + '\'' +
                 ", transactionIndex='" + transactionIndex + '\'' +
-                ", _transactionIndex=" + _transactionIndex +
                 ", gasUsed='" + gasUsed + '\'' +
-                ", _gasUsed=" + _gasUsed +
                 ", cumulativeGasUsed='" + cumulativeGasUsed + '\'' +
-                ", _cumulativeGasUsed=" + _cumulativeGasUsed +
                 ", contractAddress='" + contractAddress + '\'' +
                 ", logs=" + logs +
                 ", logsBloom='" + logsBloom + '\'' +

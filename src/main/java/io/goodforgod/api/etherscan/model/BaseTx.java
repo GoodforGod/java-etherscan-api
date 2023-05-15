@@ -6,12 +6,13 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author GoodforGod
  * @since 28.10.2018
  */
-abstract class BaseTx {
+abstract class BaseTx implements Comparable<BaseTx> {
 
     long blockNumber;
     String timeStamp;
@@ -84,17 +85,7 @@ abstract class BaseTx {
     }
 
     @Override
-    public String toString() {
-        return "BaseTx{" +
-                "blockNumber=" + blockNumber +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", hash='" + hash + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
-                ", input='" + input + '\'' +
-                ", gas=" + gas +
-                ", gasUsed=" + gasUsed +
-                '}';
+    public int compareTo(@NotNull BaseTx o) {
+        return Long.compare(blockNumber, o.blockNumber);
     }
 }

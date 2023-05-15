@@ -3,12 +3,14 @@ package io.goodforgod.api.etherscan.model.proxy;
 import com.google.gson.annotations.Expose;
 import io.goodforgod.api.etherscan.model.Wei;
 import io.goodforgod.api.etherscan.util.BasicUtils;
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author GoodforGod
  * @since 31.10.2018
  */
-public class TxProxy {
+public class TxProxy implements Comparable<TxProxy> {
 
     private String to;
     private String hash;
@@ -109,36 +111,17 @@ public class TxProxy {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof TxProxy))
             return false;
-
         TxProxy txProxy = (TxProxy) o;
-
-        if (hash != null
-                ? !hash.equals(txProxy.hash)
-                : txProxy.hash != null)
-            return false;
-        if (blockHash != null
-                ? !blockHash.equals(txProxy.blockHash)
-                : txProxy.blockHash != null)
-            return false;
-        return blockNumber != null
-                ? blockNumber.equals(txProxy.blockNumber)
-                : txProxy.blockNumber == null;
+        return Objects.equals(hash, txProxy.hash) && Objects.equals(transactionIndex, txProxy.transactionIndex)
+                && Objects.equals(nonce, txProxy.nonce) && Objects.equals(blockHash, txProxy.blockHash)
+                && Objects.equals(blockNumber, txProxy.blockNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = hash != null
-                ? hash.hashCode()
-                : 0;
-        result = 31 * result + (blockHash != null
-                ? blockHash.hashCode()
-                : 0);
-        result = 31 * result + (blockNumber != null
-                ? blockNumber.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(hash, transactionIndex, nonce, blockHash, blockNumber);
     }
 
     @Override
@@ -147,23 +130,26 @@ public class TxProxy {
                 "to='" + to + '\'' +
                 ", hash='" + hash + '\'' +
                 ", transactionIndex='" + transactionIndex + '\'' +
-                ", _transactionIndex=" + _transactionIndex +
                 ", from='" + from + '\'' +
                 ", v='" + v + '\'' +
                 ", input='" + input + '\'' +
                 ", s='" + s + '\'' +
                 ", r='" + r + '\'' +
                 ", nonce='" + nonce + '\'' +
-                ", _nonce=" + _nonce +
                 ", value='" + value + '\'' +
                 ", gas='" + gas + '\'' +
-                ", _gas=" + _gas +
                 ", gasPrice='" + gasPrice + '\'' +
-                ", _gasPrice=" + _gasPrice +
                 ", blockHash='" + blockHash + '\'' +
                 ", blockNumber='" + blockNumber + '\'' +
-                ", _blockNumber=" + _blockNumber +
                 '}';
+    }
+
+    @Override
+    public int compareTo(@NotNull TxProxy o) {
+        final int firstCompare = Long.compare(getBlockNumber(), o.getBlockNumber());
+        return (firstCompare == 0)
+                ? Long.compare(getTransactionIndex(), o.getTransactionIndex())
+                : firstCompare;
     }
 
     public static TxProxyBuilder builder() {

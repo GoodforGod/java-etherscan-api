@@ -23,22 +23,17 @@ public class TokenBalance extends Balance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof TokenBalance))
             return false;
         if (!super.equals(o))
             return false;
-
         TokenBalance that = (TokenBalance) o;
         return Objects.equals(tokenContract, that.tokenContract);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (tokenContract != null
-                ? tokenContract.hashCode()
-                : 0);
-        return result;
+        return Objects.hash(super.hashCode(), tokenContract);
     }
 
     @Override

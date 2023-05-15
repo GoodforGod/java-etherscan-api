@@ -1,9 +1,9 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
-import io.goodforgod.api.etherscan.model.GasEstimate;
 import io.goodforgod.api.etherscan.model.GasOracle;
 import io.goodforgod.api.etherscan.model.Wei;
+import java.time.Duration;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 public interface GasTrackerAPI {
 
     /**
-     * Returns the estimated time, in seconds, for a transaction to be confirmed on the blockchain.
+     * Returns the estimated time for a transaction to be confirmed on the blockchain.
      *
-     * @return fast, suggested gas price
+     * @return estimated time
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    GasEstimate estimate(@NotNull Wei wei) throws EtherScanException;
+    Duration estimate(@NotNull Wei wei) throws EtherScanException;
 
     /**
      * Returns the current Safe, Proposed and Fast gas prices.

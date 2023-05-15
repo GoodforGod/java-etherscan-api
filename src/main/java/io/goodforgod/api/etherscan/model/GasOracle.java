@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 public class GasOracle {
 
     private Long LastBlock;
-    private Integer SafeGasPrice;
-    private Integer ProposeGasPrice;
-    private Integer FastGasPrice;
-    private Double suggestBaseFee;
+    private BigInteger SafeGasPrice;
+    private BigInteger ProposeGasPrice;
+    private BigInteger FastGasPrice;
+    private BigDecimal suggestBaseFee;
     private String gasUsedRatio;
 
     protected GasOracle() {}
@@ -27,18 +27,18 @@ public class GasOracle {
     }
 
     public Wei getSafeGasPriceInWei() {
-        return Wei.ofWei(BigInteger.valueOf(SafeGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofGwei(SafeGasPrice);
     }
 
     public Wei getProposeGasPriceInWei() {
-        return Wei.ofWei(BigInteger.valueOf(ProposeGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofGwei(ProposeGasPrice);
     }
 
     public Wei getFastGasPriceInWei() {
-        return Wei.ofWei(BigInteger.valueOf(FastGasPrice).multiply(BigInteger.TEN.pow(9)));
+        return Wei.ofGwei(FastGasPrice);
     }
 
-    public Double getSuggestBaseFee() {
+    public BigDecimal getSuggestBaseFee() {
         return suggestBaseFee;
     }
 
@@ -52,12 +52,14 @@ public class GasOracle {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof GasOracle))
             return false;
         GasOracle gasOracle = (GasOracle) o;
-        return LastBlock.equals(gasOracle.LastBlock) && SafeGasPrice.equals(gasOracle.SafeGasPrice)
-                && ProposeGasPrice.equals(gasOracle.ProposeGasPrice) && FastGasPrice.equals(gasOracle.FastGasPrice)
-                && suggestBaseFee.equals(gasOracle.suggestBaseFee) && gasUsedRatio.equals(gasOracle.gasUsedRatio);
+        return Objects.equals(LastBlock, gasOracle.LastBlock) && Objects.equals(SafeGasPrice, gasOracle.SafeGasPrice)
+                && Objects.equals(ProposeGasPrice, gasOracle.ProposeGasPrice)
+                && Objects.equals(FastGasPrice, gasOracle.FastGasPrice)
+                && Objects.equals(suggestBaseFee, gasOracle.suggestBaseFee)
+                && Objects.equals(gasUsedRatio, gasOracle.gasUsedRatio);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class GasOracle {
                 ", ProposeGasPrice=" + ProposeGasPrice +
                 ", FastGasPrice=" + FastGasPrice +
                 ", suggestBaseFee=" + suggestBaseFee +
-                ", gasUsedRatio='" + gasUsedRatio + '\'' +
+                ", gasUsedRatio=" + gasUsedRatio +
                 '}';
     }
 
@@ -87,7 +89,7 @@ public class GasOracle {
         private Wei safeGasPrice;
         private Wei proposeGasPrice;
         private Wei fastGasPrice;
-        private Double suggestBaseFee;
+        private BigDecimal suggestBaseFee;
         private List<BigDecimal> gasUsedRatio;
 
         private GasOracleBuilder() {}
@@ -112,7 +114,7 @@ public class GasOracle {
             return this;
         }
 
-        public GasOracleBuilder withSuggestBaseFee(Double suggestBaseFee) {
+        public GasOracleBuilder withSuggestBaseFee(BigDecimal suggestBaseFee) {
             this.suggestBaseFee = suggestBaseFee;
             return this;
         }
@@ -127,18 +129,18 @@ public class GasOracle {
             gasOracle.LastBlock = this.lastBlock;
             gasOracle.suggestBaseFee = this.suggestBaseFee;
             if (this.proposeGasPrice != null) {
-                gasOracle.ProposeGasPrice = this.proposeGasPrice.asGwei().intValue();
+                gasOracle.ProposeGasPrice = this.proposeGasPrice.asGwei().toBigInteger();
             }
             if (this.safeGasPrice != null) {
-                gasOracle.SafeGasPrice = this.safeGasPrice.asGwei().intValue();
+                gasOracle.SafeGasPrice = this.safeGasPrice.asGwei().toBigInteger();
             }
             if (this.fastGasPrice != null) {
-                gasOracle.FastGasPrice = this.fastGasPrice.asGwei().intValue();
+                gasOracle.FastGasPrice = this.fastGasPrice.asGwei().toBigInteger();
             }
             if (this.gasUsedRatio != null) {
                 gasOracle.gasUsedRatio = this.gasUsedRatio.stream()
                         .map(BigDecimal::toString)
-                        .collect(Collectors.joining(", "));
+                        .collect(Collectors.joining(","));
             }
             return gasOracle;
         }

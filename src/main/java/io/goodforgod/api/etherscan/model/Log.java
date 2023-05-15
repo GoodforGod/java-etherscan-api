@@ -139,21 +139,15 @@ public class Log {
     public String toString() {
         return "Log{" +
                 "blockNumber='" + blockNumber + '\'' +
-                ", _blockNumber=" + _blockNumber +
                 ", address='" + address + '\'' +
                 ", transactionHash='" + transactionHash + '\'' +
                 ", transactionIndex='" + transactionIndex + '\'' +
-                ", _transactionIndex=" + _transactionIndex +
                 ", timeStamp='" + timeStamp + '\'' +
-                ", _timeStamp=" + _timeStamp +
                 ", data='" + data + '\'' +
                 ", gasPrice='" + gasPrice + '\'' +
-                ", _gasPrice=" + _gasPrice +
                 ", gasUsed='" + gasUsed + '\'' +
-                ", _gasUsed=" + _gasUsed +
                 ", topics=" + topics +
                 ", logIndex='" + logIndex + '\'' +
-                ", _logIndex=" + _logIndex +
                 '}';
     }
 
