@@ -1,6 +1,5 @@
 package io.goodforgod.api.etherscan;
 
-import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanParseException;
 import io.goodforgod.api.etherscan.error.EtherScanRateLimitException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
@@ -9,7 +8,6 @@ import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.response.StringResponseTO;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 /**
  * Base provider for API Implementations
@@ -64,36 +62,14 @@ abstract class BasicProvider {
             }
 
             final String jsonAsString = new String(json, StandardCharsets.UTF_8);
-            try {
-                final Map<String, Object> map = converter.fromJson(json, Map.class);
-                final Object result = map.get("result");
-                if (result instanceof String && ((String) result).startsWith(MAX_RATE_LIMIT_REACHED))
-                    throw new EtherScanRateLimitException(((String) result));
-
-                throw new EtherScanParseException(e.getMessage() + ", for response: " + jsonAsString, e.getCause(), jsonAsString);
-            } catch (EtherScanException ex) {
-                throw ex;
-            } catch (Exception ex) {
-                throw new EtherScanParseException(e.getMessage() + ", for response: " + jsonAsString, e.getCause(), jsonAsString);
-            }
+            throw new EtherScanParseException(e.getMessage() + ", for response: " + jsonAsString, e.getCause(), jsonAsString);
         }
     }
 
     byte[] getRequest(String urlParameters) {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
-        final byte[] result = executor.get(uri);
-        if (result.length == 0) {
-            final StringResponseTO emptyResponse = StringResponseTO.builder()
-                    .withStatus("0")
-                    .withMessage("Server returned null value for GET request at URL - " + uri)
-                    .withResult("")
-                    .build();
-
-            throw new EtherScanResponseException(emptyResponse, "Server returned null value for GET request at URL - " + uri);
-        }
-
-        return result;
+        return executor.get(uri);
     }
 
     byte[] postRequest(String urlParameters, String dataToPost) {
