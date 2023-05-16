@@ -21,7 +21,7 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Balance balance(String address) throws EtherScanException;
+    Balance balance(@NotNull String address) throws EtherScanException;
 
     /**
      * ERC20 token balance for address
@@ -32,7 +32,7 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    TokenBalance balance(String address, String contract) throws EtherScanException;
+    TokenBalance balance(@NotNull String address, @NotNull String contract) throws EtherScanException;
 
     /**
      * Maximum 20 address for single batch request If address MORE THAN 20, then there will be more than
@@ -43,7 +43,7 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<Balance> balances(List<String> addresses) throws EtherScanException;
+    List<Balance> balances(@NotNull List<String> addresses) throws EtherScanException;
 
     /**
      * All txs for given address
@@ -55,13 +55,13 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<Tx> txs(String address, long startBlock, long endBlock) throws EtherScanException;
+    List<Tx> txs(@NotNull String address, long startBlock, long endBlock) throws EtherScanException;
 
     @NotNull
-    List<Tx> txs(String address, long startBlock) throws EtherScanException;
+    List<Tx> txs(@NotNull String address, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<Tx> txs(String address) throws EtherScanException;
+    List<Tx> txs(@NotNull String address) throws EtherScanException;
 
     /**
      * All internal txs for given address
@@ -73,13 +73,13 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxInternal> txsInternal(String address, long startBlock, long endBlock) throws EtherScanException;
+    List<TxInternal> txsInternal(@NotNull String address, long startBlock, long endBlock) throws EtherScanException;
 
     @NotNull
-    List<TxInternal> txsInternal(String address, long startBlock) throws EtherScanException;
+    List<TxInternal> txsInternal(@NotNull String address, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<TxInternal> txsInternal(String address) throws EtherScanException;
+    List<TxInternal> txsInternal(@NotNull String address) throws EtherScanException;
 
     /**
      * All internal tx for given transaction hash
@@ -89,7 +89,7 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxInternal> txsInternalByHash(String txhash) throws EtherScanException;
+    List<TxInternal> txsInternalByHash(@NotNull String txhash) throws EtherScanException;
 
     /**
      * All ERC-20 token txs for given address
@@ -101,13 +101,13 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxErc20> txsErc20(String address, long startBlock, long endBlock) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address, long startBlock, long endBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc20> txsErc20(String address, long startBlock) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc20> txsErc20(String address) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address) throws EtherScanException;
 
     /**
      * All ERC-20 token txs for given address and contract address
@@ -120,31 +120,14 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxErc20> txsErc20(String address, String contractAddress, long startBlock, long endBlock) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException;
 
     @NotNull
-    List<TxErc20> txsErc20(String address, String contractAddress, long startBlock) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc20> txsErc20(String address, String contractAddress) throws EtherScanException;
-
-    /**
-     * All ERC-721 (NFT) token txs for given address
-     *
-     * @param address    get txs for
-     * @param startBlock tx from this blockNumber
-     * @param endBlock   tx to this blockNumber
-     * @return txs for address
-     * @throws EtherScanException parent exception class
-     */
-    @NotNull
-    List<TxErc721> txsErc721(String address, long startBlock, long endBlock) throws EtherScanException;
-
-    @NotNull
-    List<TxErc721> txsErc721(String address, long startBlock) throws EtherScanException;
-
-    @NotNull
-    List<TxErc721> txsErc721(String address) throws EtherScanException;
+    List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress) throws EtherScanException;
 
     /**
      * All ERC-721 (NFT) token txs for given address
@@ -156,31 +139,13 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxErc721> txsErc721(String address, String contractAddress, long startBlock, long endBlock) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address, long startBlock, long endBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc721> txsErc721(String address, String contractAddress, long startBlock) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc721> txsErc721(String address, String contractAddress) throws EtherScanException;
-
-    /**
-     * All ERC-721 (NFT) token txs for given address
-     *
-     * @param address    get txs for
-     * @param startBlock tx from this blockNumber
-     * @param endBlock   tx to this blockNumber
-     * @return txs for address
-     * @throws EtherScanException parent exception class
-     */
-    @NotNull
-    List<TxErc1155> txsErc1155(String address, long startBlock, long endBlock) throws EtherScanException;
-
-    @NotNull
-    List<TxErc1155> txsErc1155(String address, long startBlock) throws EtherScanException;
-
-    @NotNull
-    List<TxErc1155> txsErc1155(String address) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address) throws EtherScanException;
 
     /**
      * All ERC-721 (NFT) token txs for given address
@@ -192,13 +157,52 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock, long endBlock) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException;
 
     @NotNull
-    List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address, @NotNull String contractAddress, long startBlock) throws EtherScanException;
 
     @NotNull
-    List<TxErc1155> txsErc1155(String address, String contractAddress) throws EtherScanException;
+    List<TxErc721> txsErc721(@NotNull String address, @NotNull String contractAddress) throws EtherScanException;
+
+    /**
+     * All ERC-721 (NFT) token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws EtherScanException parent exception class
+     */
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address, long startBlock, long endBlock) throws EtherScanException;
+
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address, long startBlock) throws EtherScanException;
+
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address) throws EtherScanException;
+
+    /**
+     * All ERC-721 (NFT) token txs for given address
+     *
+     * @param address    get txs for
+     * @param startBlock tx from this blockNumber
+     * @param endBlock   tx to this blockNumber
+     * @return txs for address
+     * @throws EtherScanException parent exception class
+     */
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
+            throws EtherScanException;
+
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address, @NotNull String contractAddress, long startBlock)
+            throws EtherScanException;
+
+    @NotNull
+    List<TxErc1155> txsErc1155(@NotNull String address, @NotNull String contractAddress) throws EtherScanException;
 
     /**
      * All blocks mined by address
@@ -208,5 +212,5 @@ public interface AccountAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    List<Block> blocksMined(String address) throws EtherScanException;
+    List<Block> blocksMined(@NotNull String address) throws EtherScanException;
 }

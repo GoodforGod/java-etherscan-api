@@ -96,7 +96,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Optional<TxProxy> tx(String txhash) throws EtherScanException {
+    public Optional<TxProxy> tx(@NotNull String txhash) throws EtherScanException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_BY_HASH_PARAM + TXHASH_PARAM + txhash;
@@ -127,7 +127,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
     }
 
     @Override
-    public int txSendCount(String address) throws EtherScanException {
+    public int txSendCount(@NotNull String address) throws EtherScanException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_TX_COUNT_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
@@ -137,7 +137,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @Override
     @NotNull
-    public Optional<String> txSendRaw(String hexEncodedTx) throws EtherScanException {
+    public Optional<String> txSendRaw(@NotNull String hexEncodedTx) throws EtherScanException {
         if (BasicUtils.isNotHex(hexEncodedTx))
             throw new EtherScanInvalidDataHexException("Data is not encoded in hex format - " + hexEncodedTx);
 
@@ -160,7 +160,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Optional<ReceiptProxy> txReceipt(String txhash) throws EtherScanException {
+    public Optional<ReceiptProxy> txReceipt(@NotNull String txhash) throws EtherScanException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_RECEIPT_PARAM + TXHASH_PARAM + txhash;
@@ -170,7 +170,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Optional<String> call(String address, String data) throws EtherScanException {
+    public Optional<String> call(@NotNull String address, @NotNull String data) throws EtherScanException {
         BasicUtils.validateAddress(address);
         if (BasicUtils.isNotHex(data))
             throw new EtherScanInvalidDataHexException("Data is not hex encoded.");
@@ -182,7 +182,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Optional<String> code(String address) throws EtherScanException {
+    public Optional<String> code(@NotNull String address) throws EtherScanException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_CODE_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
@@ -192,7 +192,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Optional<String> storageAt(String address, long position) throws EtherScanException {
+    public Optional<String> storageAt(@NotNull String address, long position) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final long compPosition = BasicUtils.compensateMinBlock(position);
 
@@ -220,7 +220,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     @NotNull
     @Override
-    public Wei gasEstimated(String hexData) throws EtherScanException {
+    public Wei gasEstimated(@NotNull String hexData) throws EtherScanException {
         if (!BasicUtils.isEmpty(hexData) && BasicUtils.isNotHex(hexData))
             throw new EtherScanInvalidDataHexException("Data is not in hex format.");
 

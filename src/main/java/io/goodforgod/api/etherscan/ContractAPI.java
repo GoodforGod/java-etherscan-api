@@ -20,5 +20,5 @@ public interface ContractAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Abi contractAbi(String address) throws EtherScanException;
+    Abi contractAbi(@NotNull String address) throws EtherScanException;
 }

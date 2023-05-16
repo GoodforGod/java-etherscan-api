@@ -79,10 +79,6 @@ public class Block implements Comparable<Block> {
 
         BlockBuilder() {}
 
-        public static BlockBuilder aBlock() {
-            return new BlockBuilder();
-        }
-
         public BlockBuilder withBlockNumber(long blockNumber) {
             this.blockNumber = blockNumber;
             return this;

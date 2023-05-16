@@ -21,7 +21,7 @@ public interface TransactionAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<Status> statusExec(String txhash) throws EtherScanException;
+    Optional<Status> statusExec(@NotNull String txhash) throws EtherScanException;
 
     /**
      * Check Transaction Receipt Status (Only applicable for Post Byzantium fork transactions)
@@ -31,5 +31,5 @@ public interface TransactionAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<Boolean> statusReceipt(String txhash) throws EtherScanException;
+    Optional<Boolean> statusReceipt(@NotNull String txhash) throws EtherScanException;
 }

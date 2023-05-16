@@ -56,7 +56,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<TxProxy> tx(String txhash) throws EtherScanException;
+    Optional<TxProxy> tx(@NotNull String txhash) throws EtherScanException;
 
     /**
      * Returns information about a transaction by block number and transaction index position
@@ -87,7 +87,7 @@ public interface ProxyAPI {
      * @return transactions send amount from address
      * @throws EtherScanException parent exception class
      */
-    int txSendCount(String address) throws EtherScanException;
+    int txSendCount(@NotNull String address) throws EtherScanException;
 
     /**
      * Creates new message call transaction or a contract creation for signed transactions
@@ -98,7 +98,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<String> txSendRaw(String hexEncodedTx) throws EtherScanException;
+    Optional<String> txSendRaw(@NotNull String hexEncodedTx) throws EtherScanException;
 
     /**
      * Returns the receipt of a transaction by transaction hash eth_getTransactionReceipt
@@ -108,7 +108,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<ReceiptProxy> txReceipt(String txhash) throws EtherScanException;
+    Optional<ReceiptProxy> txReceipt(@NotNull String txhash) throws EtherScanException;
 
     /**
      * Executes a new message call immediately without creating a transaction on the block chain
@@ -120,7 +120,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<String> call(String address, String data) throws EtherScanException;
+    Optional<String> call(@NotNull String address, @NotNull String data) throws EtherScanException;
 
     /**
      * Returns code at a given address eth_getCode
@@ -130,7 +130,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Optional<String> code(String address) throws EtherScanException;
+    Optional<String> code(@NotNull String address) throws EtherScanException;
 
     /**
      * (**experimental) Returns the value from a storage position at a given address eth_getStorageAt
@@ -142,7 +142,7 @@ public interface ProxyAPI {
      */
     @Experimental
     @NotNull
-    Optional<String> storageAt(String address, long position) throws EtherScanException;
+    Optional<String> storageAt(@NotNull String address, long position) throws EtherScanException;
 
     /**
      * Returns the current price per gas in wei eth_gasPrice
@@ -162,7 +162,7 @@ public interface ProxyAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Wei gasEstimated(String hexData) throws EtherScanException;
+    Wei gasEstimated(@NotNull String hexData) throws EtherScanException;
 
     @NotNull
     Wei gasEstimated() throws EtherScanException;

@@ -117,10 +117,10 @@ class ModelBuilderTests extends Assertions {
     void priceBuilder() {
         LocalDateTime timestamp = LocalDateTime.now();
         Price value = Price.builder()
-                .withEthBtc(BigDecimal.valueOf(1.0))
-                .withEthUsd(BigDecimal.valueOf(1.0))
-                .withEthBtcTimestamp(timestamp)
-                .withEthUsdTimestamp(timestamp)
+                .withBtc(BigDecimal.valueOf(1.0))
+                .withUsd(BigDecimal.valueOf(1.0))
+                .withTimestampBtc(timestamp)
+                .withTimestampUsd(timestamp)
                 .build();
 
         assertNotNull(value);

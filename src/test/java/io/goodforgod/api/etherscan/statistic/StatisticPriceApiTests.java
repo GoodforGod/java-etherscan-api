@@ -14,8 +14,8 @@ class StatisticPriceApiTests extends ApiRunner {
     void correct() {
         Price price = getApi().stats().priceLast();
         assertNotNull(price);
-        assertNotNull(price.btcTimestamp());
-        assertNotNull(price.usdTimestamp());
+        assertNotNull(price.timestampBtc());
+        assertNotNull(price.timestampUsd());
         assertNotEquals(0.0, price.inBtc().doubleValue());
         assertNotEquals(0.0, price.inUsd().doubleValue());
         assertNotNull(price.toString());

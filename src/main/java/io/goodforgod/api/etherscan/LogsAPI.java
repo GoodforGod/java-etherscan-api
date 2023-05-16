@@ -23,5 +23,5 @@ public interface LogsAPI {
      * @see LogQuery
      */
     @NotNull
-    List<Log> logs(LogQuery query) throws EtherScanException;
+    List<Log> logs(@NotNull LogQuery query) throws EtherScanException;
 }

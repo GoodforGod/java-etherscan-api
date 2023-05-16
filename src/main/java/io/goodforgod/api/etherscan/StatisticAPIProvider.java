@@ -58,7 +58,7 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
 
     @NotNull
     @Override
-    public Wei supply(String contract) throws EtherScanException {
+    public Wei supply(@NotNull String contract) throws EtherScanException {
         BasicUtils.validateAddress(contract);
 
         final String urlParams = ACT_TOKEN_SUPPLY_PARAM + CONTRACT_ADDRESS_PARAM + contract;

@@ -31,7 +31,7 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
 
     @NotNull
     @Override
-    public Abi contractAbi(String address) throws EtherScanException {
+    public Abi contractAbi(@NotNull String address) throws EtherScanException {
         BasicUtils.validateAddress(address);
 
         final String urlParam = ACT_ABI_PARAM + ADDRESS_PARAM + address;

@@ -56,7 +56,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public Balance balance(String address) throws EtherScanException {
+    public Balance balance(@NotNull String address) throws EtherScanException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
@@ -69,7 +69,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public TokenBalance balance(String address, String contract) throws EtherScanException {
+    public TokenBalance balance(@NotNull String address, @NotNull String contract) throws EtherScanException {
         BasicUtils.validateAddress(address);
         BasicUtils.validateAddress(contract);
 
@@ -83,7 +83,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<Balance> balances(List<String> addresses) throws EtherScanException {
+    public List<Balance> balances(@NotNull List<String> addresses) throws EtherScanException {
         if (BasicUtils.isEmpty(addresses)) {
             return Collections.emptyList();
         }
@@ -117,19 +117,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<Tx> txs(String address) throws EtherScanException {
+    public List<Tx> txs(@NotNull String address) throws EtherScanException {
         return txs(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txs(String address, long startBlock) throws EtherScanException {
+    public List<Tx> txs(@NotNull String address, long startBlock) throws EtherScanException {
         return txs(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Tx> txs(String address, long startBlock, long endBlock) throws EtherScanException {
+    public List<Tx> txs(@NotNull String address, long startBlock, long endBlock) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -171,19 +171,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(String address) throws EtherScanException {
+    public List<TxInternal> txsInternal(@NotNull String address) throws EtherScanException {
         return txsInternal(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(String address, long startBlock) throws EtherScanException {
+    public List<TxInternal> txsInternal(@NotNull String address, long startBlock) throws EtherScanException {
         return txsInternal(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternal(String address, long startBlock, long endBlock)
+    public List<TxInternal> txsInternal(@NotNull String address, long startBlock, long endBlock)
             throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
@@ -198,7 +198,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxInternal> txsInternalByHash(String txhash) throws EtherScanException {
+    public List<TxInternal> txsInternalByHash(@NotNull String txhash) throws EtherScanException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_INTERNAL_ACTION + TXHASH_PARAM + txhash;
@@ -212,19 +212,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address) throws EtherScanException {
+    public List<TxErc20> txsErc20(@NotNull String address) throws EtherScanException {
         return txsErc20(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address, long startBlock) throws EtherScanException {
+    public List<TxErc20> txsErc20(@NotNull String address, long startBlock) throws EtherScanException {
         return txsErc20(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address, long startBlock, long endBlock) throws EtherScanException {
+    public List<TxErc20> txsErc20(@NotNull String address, long startBlock, long endBlock) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -238,19 +238,20 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address, String contractAddress) throws EtherScanException {
+    public List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress) throws EtherScanException {
         return txsErc20(address, contractAddress, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address, String contractAddress, long startBlock) throws EtherScanException {
+    public List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress, long startBlock)
+            throws EtherScanException {
         return txsErc20(address, contractAddress, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc20> txsErc20(String address, String contractAddress, long startBlock, long endBlock)
+    public List<TxErc20> txsErc20(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
             throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
@@ -265,19 +266,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
     @NotNull
     @Override
-    public List<TxErc721> txsErc721(String address) throws EtherScanException {
+    public List<TxErc721> txsErc721(@NotNull String address) throws EtherScanException {
         return txsErc721(address, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc721> txsErc721(String address, long startBlock) throws EtherScanException {
+    public List<TxErc721> txsErc721(@NotNull String address, long startBlock) throws EtherScanException {
         return txsErc721(address, startBlock, MAX_END_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<TxErc721> txsErc721(String address, long startBlock, long endBlock) throws EtherScanException {
+    public List<TxErc721> txsErc721(@NotNull String address, long startBlock, long endBlock) throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -290,8 +291,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     }
 
     @Override
-    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress, long startBlock, long endBlock)
-            throws EtherScanException {
+    public @NotNull List<TxErc721>
+            txsErc721(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
+                    throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -304,17 +306,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     }
 
     @Override
-    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress, long startBlock) throws EtherScanException {
+    public @NotNull List<TxErc721> txsErc721(@NotNull String address, @NotNull String contractAddress, long startBlock)
+            throws EtherScanException {
         return txsErc721(address, contractAddress, startBlock, MAX_END_BLOCK);
     }
 
     @Override
-    public @NotNull List<TxErc721> txsErc721(String address, String contractAddress) throws EtherScanException {
+    public @NotNull List<TxErc721> txsErc721(@NotNull String address, @NotNull String contractAddress) throws EtherScanException {
         return txsErc721(address, contractAddress, MIN_START_BLOCK);
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address, long startBlock, long endBlock) throws EtherScanException {
+    public @NotNull List<TxErc1155> txsErc1155(@NotNull String address, long startBlock, long endBlock)
+            throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -327,18 +331,19 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address, long startBlock) throws EtherScanException {
+    public @NotNull List<TxErc1155> txsErc1155(@NotNull String address, long startBlock) throws EtherScanException {
         return txsErc1155(address, startBlock, MAX_END_BLOCK);
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address) throws EtherScanException {
+    public @NotNull List<TxErc1155> txsErc1155(@NotNull String address) throws EtherScanException {
         return txsErc1155(address, MIN_START_BLOCK);
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock, long endBlock)
-            throws EtherScanException {
+    public @NotNull List<TxErc1155>
+            txsErc1155(@NotNull String address, @NotNull String contractAddress, long startBlock, long endBlock)
+                    throws EtherScanException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
@@ -351,19 +356,20 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress, long startBlock)
+    public @NotNull List<TxErc1155> txsErc1155(@NotNull String address, @NotNull String contractAddress, long startBlock)
             throws EtherScanException {
         return txsErc1155(address, contractAddress, startBlock, MAX_END_BLOCK);
     }
 
     @Override
-    public @NotNull List<TxErc1155> txsErc1155(String address, String contractAddress) throws EtherScanException {
+    public @NotNull List<TxErc1155> txsErc1155(@NotNull String address, @NotNull String contractAddress)
+            throws EtherScanException {
         return txsErc1155(address, contractAddress, MIN_START_BLOCK);
     }
 
     @NotNull
     @Override
-    public List<Block> blocksMined(String address) throws EtherScanException {
+    public List<Block> blocksMined(@NotNull String address) throws EtherScanException {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_MINED_ACTION + PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX + BLOCK_TYPE_PARAM

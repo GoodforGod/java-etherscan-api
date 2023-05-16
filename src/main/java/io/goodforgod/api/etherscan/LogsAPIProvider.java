@@ -31,7 +31,7 @@ final class LogsAPIProvider extends BasicProvider implements LogsAPI {
 
     @NotNull
     @Override
-    public List<Log> logs(LogQuery query) throws EtherScanException {
+    public List<Log> logs(@NotNull LogQuery query) throws EtherScanException {
         final String urlParams = ACT_LOGS_PARAM + query.params();
         final LogResponseTO response = getRequest(urlParams, LogResponseTO.class);
         BasicUtils.validateTxResponse(response);

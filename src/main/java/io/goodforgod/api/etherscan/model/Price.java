@@ -31,14 +31,14 @@ public class Price {
         return ethbtc;
     }
 
-    public LocalDateTime usdTimestamp() {
+    public LocalDateTime timestampUsd() {
         if (_ethusd_timestamp == null && ethusd_timestamp != null) {
             _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethusd_timestamp), 0, ZoneOffset.UTC);
         }
         return _ethusd_timestamp;
     }
 
-    public LocalDateTime btcTimestamp() {
+    public LocalDateTime timestampBtc() {
         if (_ethbtc_timestamp == null && ethbtc_timestamp != null) {
             _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.parseLong(ethbtc_timestamp), 0, ZoneOffset.UTC);
         }
@@ -85,23 +85,23 @@ public class Price {
 
         private PriceBuilder() {}
 
-        public PriceBuilder withEthUsd(BigDecimal ethusd) {
-            this.ethusd = ethusd;
+        public PriceBuilder withUsd(BigDecimal ethToUsd) {
+            this.ethusd = ethToUsd;
             return this;
         }
 
-        public PriceBuilder withEthBtc(BigDecimal ethbtc) {
-            this.ethbtc = ethbtc;
+        public PriceBuilder withBtc(BigDecimal ethToBtc) {
+            this.ethbtc = ethToBtc;
             return this;
         }
 
-        public PriceBuilder withEthUsdTimestamp(LocalDateTime ethusdTimestamp) {
-            this.ethusdTimestamp = ethusdTimestamp;
+        public PriceBuilder withTimestampUsd(LocalDateTime ethToUsdTimestamp) {
+            this.ethusdTimestamp = ethToUsdTimestamp;
             return this;
         }
 
-        public PriceBuilder withEthBtcTimestamp(LocalDateTime ethbtcTimestamp) {
-            this.ethbtcTimestamp = ethbtcTimestamp;
+        public PriceBuilder withTimestampBtc(LocalDateTime ethToBtcTimestamp) {
+            this.ethbtcTimestamp = ethToBtcTimestamp;
             return this;
         }
 

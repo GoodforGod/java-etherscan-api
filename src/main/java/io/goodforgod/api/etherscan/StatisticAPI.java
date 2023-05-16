@@ -24,7 +24,7 @@ public interface StatisticAPI {
      * @throws EtherScanException parent exception class
      */
     @NotNull
-    Wei supply(String contract) throws EtherScanException;
+    Wei supply(@NotNull String contract) throws EtherScanException;
 
     /**
      * Returns the current amount of Ether in circulation excluding ETH2 Staking rewards and EIP1559

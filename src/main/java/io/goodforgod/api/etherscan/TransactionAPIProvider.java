@@ -33,7 +33,7 @@ final class TransactionAPIProvider extends BasicProvider implements TransactionA
 
     @NotNull
     @Override
-    public Optional<Status> statusExec(String txhash) throws EtherScanException {
+    public Optional<Status> statusExec(@NotNull String txhash) throws EtherScanException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_EXEC_STATUS_PARAM + TXHASH_PARAM + txhash;
@@ -45,7 +45,7 @@ final class TransactionAPIProvider extends BasicProvider implements TransactionA
 
     @NotNull
     @Override
-    public Optional<Boolean> statusReceipt(String txhash) throws EtherScanException {
+    public Optional<Boolean> statusReceipt(@NotNull String txhash) throws EtherScanException {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_RECEIPT_STATUS_PARAM + TXHASH_PARAM + txhash;

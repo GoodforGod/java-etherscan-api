@@ -6,9 +6,9 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 
-[Etherscan.io](https://etherscan.io/apis) Java API implementation.
+[Etherscan.io](https://docs.etherscan.io/) Java API implementation.
 
-Library supports all available EtherScan *API* calls for all available *Ethereum Networks* for *etherscan.io*
+Library supports EtherScan *API* for all available *Ethereum Networks* for *etherscan.io*
 
 ## Dependency :rocket:
 
