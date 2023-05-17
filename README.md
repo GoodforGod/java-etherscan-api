@@ -1,22 +1,20 @@
 # Java EtherScan API 
 
+[![Minimum required Java version](https://img.shields.io/badge/Java-1.8%2B-blue?logo=openjdk)](https://openjdk.org/projects/jdk8/)
 [![GitHub Action](https://github.com/goodforgod/java-etherscan-api/workflows/Java%20CI/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3A%22Java+CI%22)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
-[![](https://jitpack.io/v/GoodforGod/java-etherscan-api.svg)](https://jitpack.io/#GoodforGod/java-etherscan-api)
 
-[Etherscan.io](https://etherscan.io/apis) Java API implementation.
+[Etherscan.io](https://docs.etherscan.io/) Java API implementation.
 
-Library supports all available EtherScan *API* calls for all available *Ethereum Networks* for *etherscan.io*
+Library supports EtherScan *API* for all available *Ethereum Networks* for *etherscan.io*
 
 ## Dependency :rocket:
 
 **Gradle**
 ```groovy
-dependencies {
-    compile "com.github.goodforgod:java-etherscan-api:1.2.1"
-}
+implementation "com.github.goodforgod:java-etherscan-api:2.0.0"
 ```
 
 **Maven**
@@ -24,7 +22,7 @@ dependencies {
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>1.2.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -42,143 +40,142 @@ dependencies {
     - [Token](#token-api)
 - [Version History](#version-history)
 
-## Mainnet and Testnets
+## MainNet and TestNets
 
-API support Ethereum: *[MAINNET](https://etherscan.io),
- [ROPSTEN](https://ropsten.etherscan.io), 
- [KOVAN](https://kovan.etherscan.io), 
- [RINKEBY](https://rinkeby.etherscan.io), 
- [GORLI](https://goerli.etherscan.io), 
- [TOBALABA](https://tobalaba.etherscan.com)* networks.
+API support all Ethereum [default networks](https://docs.etherscan.io/getting-started/endpoint-urls):
+- [Mainnet](https://api.etherscan.io/)
+- [Goerli](https://api-goerli.etherscan.io/)
+- [Sepolia](https://api-sepolia.etherscan.io/)
+
 ```java
-EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET); // Default
-EtherScanApi apiRinkeby = new EtherScanApi(EthNetwork.RINKEBY);
-EtherScanApi apiRopsten = new EtherScanApi(EthNetwork.ROPSTEN);
-EtherScanApi apiKovan = new EtherScanApi("YourApiKey", EthNetwork.KOVAN);
+EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI apiGoerli = EtherScanAPI.builder().withNetwork(EthNetworks.GORLI).build();
+EtherScanAPI apiSepolia = EtherScanAPI.builder().withNetwork(EthNetworks.SEPOLIA).build();
+```
+
+### Custom Network
+
+In case you want to use API for other EtherScan compatible network, you can easily provide custom network with domain api URI.
+
+```java
+EtherScanAPI api = EtherScanAPI.builder()
+        .withNetwork(() -> URI.create("https://api-my-custom.etherscan.io/api"))
+        .build();
 ```
 
 ## Custom HttpClient
 
 In case you need to set custom timeout, custom headers or better implementation for HttpClient, 
-just implement **IHttpExecutor** by your self or initialize it with your values.
+just implement **EthHttpClient** by your self or initialize it with your values.
 
 ```java
-int connectionTimeout = 10000;
-int readTimeout = 7000;
- 
-Supplier<IHttpExecutor> supplier = () -> new HttpExecutor(connectionTimeout);
-Supplier<IHttpExecutor> supplierFull = () -> new HttpExecutor(connectionTimeout, readTimeout);
- 
-EtherScanApi api = new EtherScanApi(EthNetwork.RINKEBY, supplier);
-EtherScanApi apiWithKey = new EtherScanApi("YourApiKey", EthNetwork.MAINNET, supplierFull);
+Supplier<EthHttpClient> ethHttpClientSupplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
+EtherScanAPI api = EtherScanAPI.builder()
+    .withHttpClient(supplier)
+    .build();
 ```
 
 ## API Examples
 
-You can read about all API methods on [Etherscan](https://etherscan.io/apis)
+You can read about all API methods on [Etherscan](https://docs.etherscan.io/api-endpoints/accounts)
 
 *Library support all available EtherScan API.*
 
-You can use library *with or without* API key *([Check API request\sec restrictions when used without API key](https://ethereum.stackexchange.com/questions/34190/does-etherscan-require-the-use-of-an-api-key))*.
+You can use library *with or without* API key *([Check API request\sec restrictions when used without API key](https://docs.etherscan.io/getting-started/viewing-api-usage-statistics))*.
 
-Library will automatically limit requests up to **5 req/sec** when used *without* key.
+Library will automatically limit requests up to **1 requests in 5 seconds** when used *without* key and up to **5 requests in 1 seconds** when used with API KEY (free plan).
 ```java
-EtherScanApi api = new EtherScanApi();
-EtherScanApi api = new EtherScanApi("YourApiKey");
+EtherScanAPI.builder()
+        .withApiKey(ApiRunner.API_KEY)
+        .build();
 ```
 
 Below are examples for each API category.
 
-### Account Api
+### Account API
 
 **Get Ether Balance for a single Address**
-
 ```java
-EtherScanApi api = new EtherScanApi();
+EtherScanAPI api = EtherScanAPI.build();
 Balance balance = api.account().balance("0x8d4426f94e42f721C7116E81d6688cd935cB3b4F");
 ```
 
-### Block Api
+### Block API
 
 **Get uncles block for block height**
-
 ```java
-EtherScanApi api = new EtherScanApi();
+EtherScanAPI api = EtherScanAPI.build();
 Optional<UncleBlock> uncles = api.block().uncles(200000);
 ```
 
-### Contract Api
+### Contract API
 **Request contract ABI from [verified codes](https://etherscan.io/contractsVerified)**
 ```java
-EtherScanApi api = new EtherScanApi();
+EtherScanAPI api = EtherScanAPI.build();
 Abi abi = api.contract().contractAbi("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413");
 ```
 
-### Logs Api
+### Logs API
 
 **Get event logs for single topic**
-
 ```java
-EtherScanApi api = new EtherScanApi();
-LogQuery query = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c")
-           .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
+EtherScanAPI api = EtherScanAPI.build();
+LogQuery query = LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+           .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
            .build();
 List<Log> logs = api.logs().logs(query);
 ```
 
 **Get event logs for 3 topics with respectful operations**
-
 ```java
-EtherScanApi api = new EtherScanApi();
-LogQuery query = LogQueryBuilder.with("0x33990122638b9132ca29c723bdf037f1a891a70c", 379224, 400000)
-        .topic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
-                "0x72657075746174696f6e00000000000000000000000000000000000000000000",
-                "0x72657075746174696f6e00000000000000000000000000000000000000000000")
+EtherScanAPI api = EtherScanAPI.build();
+LogQuery query = LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
+        .withBlockFrom(379224)
+        .withBlockTo(400000)
+        .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545",
+        "0x72657075746174696f6e00000000000000000000000000000000000000000000",
+        "0x72657075746174696f6e00000000000000000000000000000000000000000000")
         .setOpTopic0_1(LogOp.AND)
-        .setOpTopic0_2(LogOp.OR)
+        .setOpTopic0_2(null)
         .setOpTopic1_2(LogOp.AND)
         .build();
  
 List<Log> logs = api.logs().logs(query);
 ```
 
-### Proxy Api
+### Proxy API
 
-**Get tx detailds with proxy endpoint**
-
+**Get tx details with proxy endpoint**
 ```java
-EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET);
+EtherScanAPI api = EtherScanAPI.build();
 Optional<TxProxy> tx = api.proxy().tx("0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
 ```
 
 **Get block info with proxy endpoint**
-
 ```java
-EtherScanApi api = new EtherScanApi(EthNetwork.MAINNET);
+EtherScanAPI api = EtherScanAPI.build();
 Optional<BlockProxy> block = api.proxy().block(15215);
 ```
 
-### Stats Api
+### Stats API
 
 **Statistic about last price**
-
 ```java
-EtherScanApi api = new EtherScanApi();
-Price price = api.stats().lastPrice();
+EtherScanAPI api = EtherScanAPI.build();
+Price price = api.stats().priceLast();
 ```
 
-### Transaction Api
+### Transaction API
 
 **Request receipt status for tx**
-
 ```java
-EtherScanApi api = new EtherScanApi();
+EtherScanAPI api = EtherScanAPI.build();
 Optional<Boolean> status = api.txs().receiptStatus("0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76");
 ```
 
-### Token Api
+### Token API
 
-You can read about token API [here](https://etherscan.io/apis#tokens)
+You can read about token API [here](https://docs.etherscan.io/api-endpoints/tokens)
 
 Token API methods migrated to [Account](#account-api) & [Stats](#stats-api) respectfully.
 

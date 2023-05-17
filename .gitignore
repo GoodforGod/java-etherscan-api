@@ -1,7 +1,18 @@
-/.settings/
-.idea
-.idea/httpRequests
-*.iml
+### Package Files
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Gradle template
 .gradle
-build
+build/
 target/
+
+### Idea generated files
+.idea
+.settings/
+*.iml
+out/

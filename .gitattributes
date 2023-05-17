@@ -2,9 +2,8 @@
 # and leave all files detected as binary untouched.
 *               text=auto
 
-#
+
 # The above will handle all files NOT found below
-#
 # These files are text and should be normalized (Convert crlf => lf)
 *.bash          text eol=lf
 *.css           text diff=css
@@ -26,16 +25,36 @@
 *.xml           text
 *.yml           text eol=lf
 
+
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
-*.class         binary
-*.dll           binary
-*.ear           binary
-*.gif           binary
-*.ico           binary
+# Archives
+*.7z            binary
+*.br            binary
+*.gz            binary
+*.tar           binary
+*.zip           binary
 *.jar           binary
+*.so            binary
+*.war           binary
+*.dll           binary
+
+# Documents
+*.pdf           binary
+
+# Images
+*.ico           binary
+*.gif           binary
 *.jpg           binary
 *.jpeg          binary
 *.png           binary
-*.so            binary
-*.war           binary
+*.psd           binary
+*.webp          binary
+
+# Fonts
+*.woff2         binary
+
+# Other
+*.exe           binary
+*.class         binary
+*.ear           binary
