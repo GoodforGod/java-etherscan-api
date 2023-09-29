@@ -3,9 +3,8 @@ package io.goodforgod.api.etherscan;
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.model.Abi;
 import io.goodforgod.api.etherscan.model.ContractCreation;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EtherScan - API Descriptions <a href="https://docs.etherscan.io/api-endpoints/contracts">...</a>
@@ -27,6 +26,7 @@ public interface ContractAPI {
 
     /**
      * Returns a contract's deployer address and transaction hash it was created, up to 5 at a time.
+     * 
      * @param contractAddresses - list of addresses to fetch
      * @throws EtherScanException parent exception class
      */

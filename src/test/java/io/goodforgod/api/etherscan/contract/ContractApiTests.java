@@ -4,11 +4,10 @@ import io.goodforgod.api.etherscan.ApiRunner;
 import io.goodforgod.api.etherscan.error.EtherScanInvalidAddressException;
 import io.goodforgod.api.etherscan.model.Abi;
 import io.goodforgod.api.etherscan.model.ContractCreation;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author GoodforGod
@@ -45,8 +44,8 @@ class ContractApiTests extends ApiRunner {
 
     @Test
     void correctContractCreation() {
-        List<ContractCreation> contractCreations =
-                getApi().contract().contractCreation(Collections.singletonList("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"));
+        List<ContractCreation> contractCreations = getApi().contract()
+                .contractCreation(Collections.singletonList("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"));
 
         assertEquals(1, contractCreations.size());
         ContractCreation contractCreation = contractCreations.get(0);
@@ -58,8 +57,8 @@ class ContractApiTests extends ApiRunner {
 
     @Test
     void correctMultipleContractCreation() {
-        List<ContractCreation> contractCreations =
-                getApi().contract().contractCreation(Arrays.asList("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413", "0x5EaC95ad5b287cF44E058dCf694419333b796123"));
+        List<ContractCreation> contractCreations = getApi().contract().contractCreation(
+                Arrays.asList("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413", "0x5EaC95ad5b287cF44E058dCf694419333b796123"));
         assertEquals(2, contractCreations.size());
 
         ContractCreation contractCreation1 = ContractCreation.builder()
@@ -81,6 +80,7 @@ class ContractApiTests extends ApiRunner {
     @Test
     void contractCreationInvalidParamWithError() {
         assertThrows(EtherScanInvalidAddressException.class,
-                () -> getApi().contract().contractCreation(Collections.singletonList("0xBBbc244D798123fDe783fCc1C72d3Bb8C189414")));
+                () -> getApi().contract()
+                        .contractCreation(Collections.singletonList("0xBBbc244D798123fDe783fCc1C72d3Bb8C189414")));
     }
 }

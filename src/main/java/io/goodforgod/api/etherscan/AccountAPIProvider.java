@@ -95,7 +95,8 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         final List<List<String>> addressesAsBatches = BasicUtils.partition(addresses, 20);
 
         for (final List<String> batch : addressesAsBatches) {
-            final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + BasicUtils.toAddressParam(batch);
+            final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM
+                    + BasicUtils.toAddressParam(batch);
             final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
             if (response.getStatus() != 1) {
                 throw new EtherScanResponseException(response);

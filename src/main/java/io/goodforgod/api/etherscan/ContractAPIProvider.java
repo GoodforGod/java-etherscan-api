@@ -9,10 +9,9 @@ import io.goodforgod.api.etherscan.model.ContractCreation;
 import io.goodforgod.api.etherscan.model.response.ContractCreationResponseTO;
 import io.goodforgod.api.etherscan.model.response.StringResponseTO;
 import io.goodforgod.api.etherscan.util.BasicUtils;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Contract API Implementation
@@ -60,7 +59,8 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
     @Override
     public List<ContractCreation> contractCreation(@NotNull List<String> contractAddresses) throws EtherScanException {
         BasicUtils.validateAddresses(contractAddresses);
-        final String urlParam = ACT_CONTRACT_CREATION + ACT_CONTRACT_ADDRESSES_PARAM + BasicUtils.toAddressParam(contractAddresses);
+        final String urlParam = ACT_CONTRACT_CREATION + ACT_CONTRACT_ADDRESSES_PARAM
+                + BasicUtils.toAddressParam(contractAddresses);
         final ContractCreationResponseTO response = getRequest(urlParam, ContractCreationResponseTO.class);
         if (response.getStatus() != 1 && response.getMessage().startsWith("NOTOK")) {
             throw new EtherScanResponseException(response);
@@ -71,7 +71,7 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
                         .withContractCreator(to.getContractCreator())
                         .withContractAddress(to.getContractAddress())
                         .withTxHash(to.getTxHash())
-                        .build()
-                ).collect(Collectors.toList());
+                        .build())
+                .collect(Collectors.toList());
     }
 }

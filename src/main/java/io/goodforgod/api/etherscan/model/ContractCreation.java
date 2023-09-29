@@ -3,6 +3,7 @@ package io.goodforgod.api.etherscan.model;
 import java.util.Objects;
 
 public class ContractCreation {
+
     private final String contractAddress;
     private final String contractCreator;
     private final String txHash;
@@ -27,10 +28,13 @@ public class ContractCreation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ContractCreation that = (ContractCreation) o;
-        return Objects.equals(contractAddress, that.contractAddress) && Objects.equals(contractCreator, that.contractCreator) && Objects.equals(txHash, that.txHash);
+        return Objects.equals(contractAddress, that.contractAddress) && Objects.equals(contractCreator, that.contractCreator)
+                && Objects.equals(txHash, that.txHash);
     }
 
     @Override
@@ -52,6 +56,7 @@ public class ContractCreation {
     }
 
     public static final class ContractCreationBuilder {
+
         private String contractAddress;
         private String contractCreator;
         private String txHash;
