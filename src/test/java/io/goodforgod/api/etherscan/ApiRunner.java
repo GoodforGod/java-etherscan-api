@@ -2,6 +2,8 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import java.util.Map;
+
+import io.goodforgod.api.etherscan.util.BasicUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 
@@ -15,6 +17,7 @@ public class ApiRunner extends Assertions {
     static {
         API_KEY = System.getenv().entrySet().stream()
                 .filter(e -> e.getKey().startsWith("ETHERSCAN_API_KEY"))
+                .filter(e -> !BasicUtils.isBlank(e.getValue()))
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .orElse(DEFAULT_KEY);
