@@ -1,9 +1,8 @@
 package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
-import java.util.Map;
-
 import io.goodforgod.api.etherscan.util.BasicUtils;
+import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 
