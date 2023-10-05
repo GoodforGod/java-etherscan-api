@@ -35,8 +35,9 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
     ContractAPIProvider(RequestQueueManager requestQueueManager,
                         String baseUrl,
                         EthHttpClient executor,
-                        Converter converter) {
-        super(requestQueueManager, "contract", baseUrl, executor, converter);
+                        Converter converter,
+                        int retryCount) {
+        super(requestQueueManager, "contract", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull

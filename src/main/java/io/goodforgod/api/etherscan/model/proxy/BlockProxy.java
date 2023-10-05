@@ -162,25 +162,25 @@ public class BlockProxy implements Comparable<BlockProxy> {
     @Override
     public String toString() {
         return "BlockProxy{" +
-                "number='" + number + '\'' +
-                ", hash='" + hash + '\'' +
-                ", parentHash='" + parentHash + '\'' +
-                ", stateRoot='" + stateRoot + '\'' +
-                ", size='" + size + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                ", totalDifficulty='" + totalDifficulty + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", miner='" + miner + '\'' +
-                ", nonce='" + nonce + '\'' +
-                ", extraData='" + extraData + '\'' +
-                ", logsBloom='" + logsBloom + '\'' +
-                ", mixHash='" + mixHash + '\'' +
-                ", gasUsed='" + gasUsed + '\'' +
-                ", gasLimit='" + gasLimit + '\'' +
-                ", sha3Uncles='" + sha3Uncles + '\'' +
+                "number=" + number +
+                ", hash=" + hash +
+                ", parentHash=" + parentHash +
+                ", stateRoot=" + stateRoot +
+                ", size=" + size +
+                ", difficulty=" + difficulty +
+                ", totalDifficulty=" + totalDifficulty +
+                ", timestamp=" + timestamp +
+                ", miner=" + miner +
+                ", nonce=" + nonce +
+                ", extraData=" + extraData +
+                ", logsBloom=" + logsBloom +
+                ", mixHash=" + mixHash +
+                ", gasUsed=" + gasUsed +
+                ", gasLimit=" + gasLimit +
+                ", sha3Uncles=" + sha3Uncles +
                 ", uncles=" + uncles +
-                ", receiptsRoot='" + receiptsRoot + '\'' +
-                ", transactionsRoot='" + transactionsRoot + '\'' +
+                ", receiptsRoot=" + receiptsRoot +
+                ", transactionsRoot=" + transactionsRoot +
                 ", transactions=" + transactions +
                 '}';
     }

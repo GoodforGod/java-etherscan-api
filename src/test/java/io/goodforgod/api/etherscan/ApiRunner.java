@@ -29,6 +29,7 @@ public class ApiRunner extends Assertions {
                 .withApiKey(ApiRunner.API_KEY)
                 .withNetwork(EthNetworks.MAINNET)
                 .withQueue(queueManager)
+                .withRetryOnLimitReach(5)
                 .build();
     }
 

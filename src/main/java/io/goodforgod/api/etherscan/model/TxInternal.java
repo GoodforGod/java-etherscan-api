@@ -69,17 +69,17 @@ public class TxInternal extends BaseTx {
     public String toString() {
         return "TxInternal{" +
                 "value=" + value +
-                ", type='" + type + '\'' +
-                ", traceId='" + traceId + '\'' +
+                ", type=" + type +
+                ", traceId=" + traceId +
                 ", isError=" + isError +
-                ", errCode='" + errCode + '\'' +
+                ", errCode=" + errCode +
                 ", blockNumber=" + blockNumber +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", hash='" + hash + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
-                ", input='" + input + '\'' +
+                ", timeStamp=" + timeStamp +
+                ", hash=" + hash +
+                ", from=" + from +
+                ", to=" + to +
+                ", contractAddress=" + contractAddress +
+                ", input=" + input +
                 ", gas=" + gas +
                 ", gasUsed=" + gasUsed +
                 '}';

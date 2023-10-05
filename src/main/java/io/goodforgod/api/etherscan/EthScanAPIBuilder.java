@@ -26,6 +26,7 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
     private final Gson gson = new GsonConfiguration().builder().create();
 
+    private int retryCountOnLimitReach = 0;
     private String apiKey = DEFAULT_KEY;
     private RequestQueueManager queueManager;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
@@ -87,6 +88,16 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
         return this;
     }
 
+    @NotNull
+    public EtherScanAPI.Builder withRetryOnLimitReach(int maxRetryCount) {
+        if (maxRetryCount < 0 || maxRetryCount > 20) {
+            throw new IllegalStateException("maxRetryCount value must be in range from 0 to 20, but was: " + maxRetryCount);
+        }
+
+        this.retryCountOnLimitReach = maxRetryCount;
+        return this;
+    }
+
     @Override
     public @NotNull EtherScanAPI build() {
         RequestQueueManager requestQueueManager;
@@ -99,6 +110,6 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
         }
 
         return new EtherScanAPIProvider(apiKey, ethNetwork, requestQueueManager, ethHttpClientSupplier.get(),
-                converterSupplier.get());
+                converterSupplier.get(), retryCountOnLimitReach);
     }
 }

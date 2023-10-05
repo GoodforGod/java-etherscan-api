@@ -17,7 +17,7 @@ public interface RequestQueueManager extends AutoCloseable {
      * Is used by default when no API KEY is provided
      */
     static RequestQueueManager anonymous() {
-        return new SemaphoreRequestQueueManager(1, Duration.ofMillis(5015L));
+        return new SemaphoreRequestQueueManager(1, Duration.ofMillis(5045L));
     }
 
     /**
@@ -25,19 +25,19 @@ public interface RequestQueueManager extends AutoCloseable {
      * <a href="https://docs.etherscan.io/getting-started/viewing-api-usage-statistics">Free API KEY</a>
      */
     static RequestQueueManager planFree() {
-        return new SemaphoreRequestQueueManager(5, Duration.ofMillis(1015L));
+        return new SemaphoreRequestQueueManager(5, Duration.ofMillis(1045L));
     }
 
     static RequestQueueManager planStandard() {
-        return new SemaphoreRequestQueueManager(10, Duration.ofMillis(1015L));
+        return new SemaphoreRequestQueueManager(10, Duration.ofMillis(1045L));
     }
 
     static RequestQueueManager planAdvanced() {
-        return new SemaphoreRequestQueueManager(20, Duration.ofMillis(1015L));
+        return new SemaphoreRequestQueueManager(20, Duration.ofMillis(1045L));
     }
 
     static RequestQueueManager planProfessional() {
-        return new SemaphoreRequestQueueManager(30, Duration.ofMillis(1015L));
+        return new SemaphoreRequestQueueManager(30, Duration.ofMillis(1045L));
     }
 
     static RequestQueueManager unlimited() {

@@ -4,15 +4,11 @@ import java.util.Objects;
 
 public class ContractCreation {
 
-    private final String contractAddress;
-    private final String contractCreator;
-    private final String txHash;
+    private String contractAddress;
+    private String contractCreator;
+    private String txHash;
 
-    private ContractCreation(String contractAddress, String contractCreator, String txHash) {
-        this.contractAddress = contractAddress;
-        this.contractCreator = contractCreator;
-        this.txHash = txHash;
-    }
+    protected ContractCreation() {}
 
     public String getContractAddress() {
         return contractAddress;
@@ -33,7 +29,8 @@ public class ContractCreation {
         if (o == null || getClass() != o.getClass())
             return false;
         ContractCreation that = (ContractCreation) o;
-        return Objects.equals(contractAddress, that.contractAddress) && Objects.equals(contractCreator, that.contractCreator)
+        return Objects.equals(contractAddress, that.contractAddress)
+                && Objects.equals(contractCreator, that.contractCreator)
                 && Objects.equals(txHash, that.txHash);
     }
 
@@ -45,9 +42,9 @@ public class ContractCreation {
     @Override
     public String toString() {
         return "ContractCreation{" +
-                "contractAddress='" + contractAddress + '\'' +
-                ", contractCreator='" + contractCreator + '\'' +
-                ", txHash='" + txHash + '\'' +
+                "contractAddress=" + contractAddress +
+                ", contractCreator=" + contractCreator +
+                ", txHash=" + txHash +
                 '}';
     }
 
@@ -79,7 +76,11 @@ public class ContractCreation {
         }
 
         public ContractCreation build() {
-            return new ContractCreation(contractAddress, contractCreator, txHash);
+            ContractCreation contractCreation = new ContractCreation();
+            contractCreation.contractAddress = contractAddress;
+            contractCreation.contractCreator = contractCreator;
+            contractCreation.txHash = txHash;
+            return contractCreation;
         }
     }
 }

@@ -60,8 +60,9 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
     ProxyAPIProvider(RequestQueueManager queue,
                      String baseUrl,
                      EthHttpClient executor,
-                     Converter converter) {
-        super(queue, "proxy", baseUrl, executor, converter);
+                     Converter converter,
+                     int retryCount) {
+        super(queue, "proxy", baseUrl, executor, converter, retryCount);
     }
 
     @Override

@@ -115,18 +115,18 @@ public class ReceiptProxy {
     @Override
     public String toString() {
         return "ReceiptProxy{" +
-                "root='" + root + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", blockNumber='" + blockNumber + '\'' +
-                ", blockHash='" + blockHash + '\'' +
-                ", transactionHash='" + transactionHash + '\'' +
-                ", transactionIndex='" + transactionIndex + '\'' +
-                ", gasUsed='" + gasUsed + '\'' +
-                ", cumulativeGasUsed='" + cumulativeGasUsed + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
+                "root=" + root +
+                ", from=" + from +
+                ", to=" + to +
+                ", blockNumber=" + blockNumber +
+                ", blockHash=" + blockHash +
+                ", transactionHash=" + transactionHash +
+                ", transactionIndex=" + transactionIndex +
+                ", gasUsed=" + gasUsed +
+                ", cumulativeGasUsed=" + cumulativeGasUsed +
+                ", contractAddress=" + contractAddress +
                 ", logs=" + logs +
-                ", logsBloom='" + logsBloom + '\'' +
+                ", logsBloom=" + logsBloom +
                 '}';
     }
 

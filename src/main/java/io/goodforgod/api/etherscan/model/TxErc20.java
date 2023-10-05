@@ -58,22 +58,22 @@ public class TxErc20 extends BlockTx {
     public String toString() {
         return "TxErc20{" +
                 "value=" + value +
-                ", tokenName='" + tokenName + '\'' +
-                ", tokenSymbol='" + tokenSymbol + '\'' +
-                ", tokenDecimal='" + tokenDecimal + '\'' +
+                ", tokenName=" + tokenName +
+                ", tokenSymbol=" + tokenSymbol +
+                ", tokenDecimal=" + tokenDecimal +
                 ", nonce=" + nonce +
-                ", blockHash='" + blockHash + '\'' +
+                ", blockHash=" + blockHash +
                 ", transactionIndex=" + transactionIndex +
                 ", confirmations=" + confirmations +
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
                 ", blockNumber=" + blockNumber +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", hash='" + hash + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
-                ", input='" + input + '\'' +
+                ", timeStamp=" + timeStamp +
+                ", hash=" + hash +
+                ", from=" + from +
+                ", to=" + to +
+                ", contractAddress=" + contractAddress +
+                ", input=" + input +
                 ", gas=" + gas +
                 ", gasUsed=" + gasUsed +
                 '}';

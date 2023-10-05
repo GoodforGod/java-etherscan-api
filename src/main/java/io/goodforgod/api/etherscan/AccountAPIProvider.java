@@ -50,8 +50,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     AccountAPIProvider(RequestQueueManager requestQueueManager,
                        String baseUrl,
                        EthHttpClient executor,
-                       Converter converter) {
-        super(requestQueueManager, "account", baseUrl, executor, converter);
+                       Converter converter,
+                       int retryCount) {
+        super(requestQueueManager, "account", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull

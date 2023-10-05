@@ -30,20 +30,23 @@ abstract class BasicProvider {
     private final EthHttpClient executor;
     private final RequestQueueManager queue;
     private final Converter converter;
+    private final int retryCountLimit;
 
     BasicProvider(RequestQueueManager requestQueueManager,
                   String module,
                   String baseUrl,
                   EthHttpClient ethHttpClient,
-                  Converter converter) {
+                  Converter converter,
+                  int retryCountLimit) {
         this.queue = requestQueueManager;
         this.module = "&module=" + module;
         this.baseUrl = baseUrl;
         this.executor = ethHttpClient;
         this.converter = converter;
+        this.retryCountLimit = retryCountLimit;
     }
 
-    <T> T convert(byte[] json, Class<T> tClass) {
+    private <T> T convert(byte[] json, Class<T> tClass) {
         try {
             final T t = converter.fromJson(json, tClass);
             if (t instanceof StringResponseTO && ((StringResponseTO) t).getResult().startsWith(MAX_RATE_LIMIT_REACHED)) {
@@ -66,23 +69,59 @@ abstract class BasicProvider {
         }
     }
 
-    byte[] getRequest(String urlParameters) {
+    private byte[] getRequest(String urlParameters) {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
         return executor.get(uri);
     }
 
-    byte[] postRequest(String urlParameters, String dataToPost) {
+    private byte[] postRequest(String urlParameters, String dataToPost) {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
         return executor.post(uri, dataToPost.getBytes(StandardCharsets.UTF_8));
     }
 
     <T> T getRequest(String urlParameters, Class<T> tClass) {
-        return convert(getRequest(urlParameters), tClass);
+        return getRequest(urlParameters, tClass, 0);
+    }
+
+    private <T> T getRequest(String urlParameters, Class<T> tClass, int retryCount) {
+        try {
+            return convert(getRequest(urlParameters), tClass);
+        } catch (Exception e) {
+            if (retryCount < retryCountLimit) {
+                try {
+                    Thread.sleep(1150);
+                } catch (InterruptedException ex) {
+                    throw new IllegalStateException(ex);
+                }
+
+                return getRequest(urlParameters, tClass, retryCount + 1);
+            } else {
+                throw e;
+            }
+        }
     }
 
     <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass) {
-        return convert(postRequest(urlParameters, dataToPost), tClass);
+        return postRequest(urlParameters, dataToPost, tClass, 0);
+    }
+
+    private <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass, int retryCount) {
+        try {
+            return convert(postRequest(urlParameters, dataToPost), tClass);
+        } catch (EtherScanRateLimitException e) {
+            if (retryCount < retryCountLimit) {
+                try {
+                    Thread.sleep(1150);
+                } catch (InterruptedException ex) {
+                    throw new IllegalStateException(ex);
+                }
+
+                return postRequest(urlParameters, dataToPost, tClass, retryCount + 1);
+            } else {
+                throw e;
+            }
+        }
     }
 }

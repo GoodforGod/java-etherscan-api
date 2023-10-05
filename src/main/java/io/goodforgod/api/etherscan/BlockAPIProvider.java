@@ -26,21 +26,17 @@ final class BlockAPIProvider extends BasicProvider implements BlockAPI {
     BlockAPIProvider(RequestQueueManager requestQueueManager,
                      String baseUrl,
                      EthHttpClient executor,
-                     Converter converter) {
-        super(requestQueueManager, "block", baseUrl, executor, converter);
+                     Converter converter,
+                     int retryCount) {
+        super(requestQueueManager, "block", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull
     @Override
     public Optional<BlockUncle> uncles(long blockNumber) throws EtherScanException {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
-        final byte[] response = getRequest(urlParam);
-        if (response.length == 0) {
-            return Optional.empty();
-        }
-
         try {
-            final UncleBlockResponseTO responseTO = convert(response, UncleBlockResponseTO.class);
+            final UncleBlockResponseTO responseTO = getRequest(urlParam, UncleBlockResponseTO.class);
             if (responseTO.getMessage().startsWith("NOTOK")) {
                 return Optional.empty();
             }

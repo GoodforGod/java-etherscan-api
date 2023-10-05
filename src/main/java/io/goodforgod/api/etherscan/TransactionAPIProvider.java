@@ -27,8 +27,9 @@ final class TransactionAPIProvider extends BasicProvider implements TransactionA
     TransactionAPIProvider(RequestQueueManager queue,
                            String baseUrl,
                            EthHttpClient executor,
-                           Converter converter) {
-        super(queue, "transaction", baseUrl, executor, converter);
+                           Converter converter,
+                           int retryCount) {
+        super(queue, "transaction", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull

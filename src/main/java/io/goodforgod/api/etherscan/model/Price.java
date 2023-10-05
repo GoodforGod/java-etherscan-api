@@ -67,8 +67,8 @@ public class Price {
         return "Price{" +
                 "ethusd=" + ethusd +
                 ", ethbtc=" + ethbtc +
-                ", ethusd_timestamp='" + ethusd_timestamp + '\'' +
-                ", ethbtc_timestamp='" + ethbtc_timestamp + '\'' +
+                ", ethusd_timestamp=" + ethusd_timestamp +
+                ", ethbtc_timestamp=" + ethbtc_timestamp +
                 '}';
     }
 

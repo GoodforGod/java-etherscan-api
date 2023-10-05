@@ -33,8 +33,9 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
     StatisticAPIProvider(RequestQueueManager queue,
                          String baseUrl,
                          EthHttpClient executor,
-                         Converter converter) {
-        super(queue, "stats", baseUrl, executor, converter);
+                         Converter converter,
+                         int retry) {
+        super(queue, "stats", baseUrl, executor, converter, retry);
     }
 
     @NotNull

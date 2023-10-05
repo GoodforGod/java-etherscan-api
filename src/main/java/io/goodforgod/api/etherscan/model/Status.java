@@ -45,7 +45,7 @@ public class Status {
     public String toString() {
         return "Status{" +
                 "isError=" + isError +
-                ", errDescription='" + errDescription + '\'' +
+                ", errDescription=" + errDescription +
                 '}';
     }
 
