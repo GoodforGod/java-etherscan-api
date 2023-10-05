@@ -1,7 +1,8 @@
 # Java EtherScan API 
 
 [![Minimum required Java version](https://img.shields.io/badge/Java-1.8%2B-blue?logo=openjdk)](https://openjdk.org/projects/jdk8/)
-[![GitHub Action](https://github.com/goodforgod/java-etherscan-api/workflows/Java%20CI/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3A%22Java+CI%22)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.goodforgod/java-etherscan-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.goodforgod/java-etherscan-api)
+[![Java CI](https://github.com/GoodforGod/java-etherscan-api/workflows/CI%20Master/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3ACI+Master)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
@@ -14,7 +15,7 @@ Library supports EtherScan *API* for all available *Ethereum Networks* for *ethe
 
 **Gradle**
 ```groovy
-implementation "com.github.goodforgod:java-etherscan-api:2.0.0"
+implementation "com.github.goodforgod:java-etherscan-api:2.1.0"
 ```
 
 **Maven**
@@ -22,7 +23,7 @@ implementation "com.github.goodforgod:java-etherscan-api:2.0.0"
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 
