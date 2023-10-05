@@ -40,7 +40,7 @@ test {
 
     reports {
         html.required = false
-        junitXml.required = false
+        junitXml.required = true
     }
 
     environment([
