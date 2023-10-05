@@ -17,7 +17,7 @@ public interface StatisticAPI {
     /**
      * ERC20 token total Supply
      * <a href=
-     * "https://docs.etherscan.io/api-endpoints/tokens#get-erc20-token-totalsupply-by-contractaddress">EtherScan<a>
+     * "https://docs.etherscan.io/api-endpoints/tokens#get-erc20-token-totalsupply-by-contractaddress">EtherScan</a>
      * Returns the current amount of an ERC-20 token in circulation.
      *
      * @param contract contract address
