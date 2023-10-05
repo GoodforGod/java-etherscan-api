@@ -89,7 +89,7 @@ final class EthScanAPIBuilder implements EtherScanAPI.Builder {
     }
 
     @NotNull
-    public EtherScanAPI.Builder withRetryOnLimitReach(int maxRetryCount) {
+    public EtherScanAPI.Builder withRetryOnRateLimit(int maxRetryCount) {
         if (maxRetryCount < 0 || maxRetryCount > 20) {
             throw new IllegalStateException("maxRetryCount value must be in range from 0 to 20, but was: " + maxRetryCount);
         }

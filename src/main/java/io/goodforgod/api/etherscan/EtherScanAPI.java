@@ -71,7 +71,7 @@ public interface EtherScanAPI extends AutoCloseable {
          * @return self
          */
         @NotNull
-        EtherScanAPI.Builder withRetryOnLimitReach(@Range(from = 0, to = 20) int maxRetryCount);
+        EtherScanAPI.Builder withRetryOnRateLimit(@Range(from = 0, to = 20) int maxRetryCount);
 
         @NotNull
         EtherScanAPI build();
