@@ -1,0 +1,44 @@
+name: CI Dev
+
+on:
+  push:
+    paths:
+      - '**/workflows/*.yml'
+      - '**/java/**'
+      - '*.java'
+      - '*.gradle'
+      - '*.properties'
+    branches:
+      - dev
+
+jobs:
+  publish-snapshot:
+    runs-on: ubuntu-latest
+    name: Publish Snapshot
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Code Style
+        run: './gradlew spotlessCheck'
+
+      - name: Build
+        run: './gradlew classes'
+
+      - name: Test
+        run: './gradlew test jacocoTestReport'
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_2 }}
+
+      - name: Publish Snapshot
+        run: './gradlew publish'
+        env:
+          OSS_USERNAME: ${{ secrets.OSS_USERNAME }}
+          OSS_PASSWORD: ${{ secrets.OSS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSS_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSS_SIGNING_PASSWORD }}

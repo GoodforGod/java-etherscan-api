@@ -1,0 +1,49 @@
+name: CI Master
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    name: Publish Release
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build
+        run: './gradlew classes'
+
+      - name: Test
+        run: './gradlew test jacocoTestReport'
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_2 }}
+
+      - name: SonarQube
+        run: './gradlew sonar --info'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Publish Release to GitHub Packages
+        run: './gradlew publishMavenJavaPublicationToGitHubPackagesRepository'
+        env:
+          RELEASE_VERSION: ${{ github.ref_name }}
+          GITHUB_TOKEN: ${{ secrets.OSS_GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSS_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSS_SIGNING_PASSWORD }}
+
+      - name: Publish Release to OSSRH
+        run: './gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository'
+        env:
+          RELEASE_VERSION: ${{ github.ref_name }}
+          OSS_USERNAME: ${{ secrets.OSS_USERNAME }}
+          OSS_PASSWORD: ${{ secrets.OSS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSS_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSS_SIGNING_PASSWORD }}

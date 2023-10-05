@@ -1,9 +1,6 @@
-name: Java CI
+name: CI Pull Request
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -15,37 +12,44 @@ jobs:
     strategy:
       matrix:
         java: [ '11', '17' ]
-    name: Java ${{ matrix.java }} setup
+    name: Java ${{ matrix.java }} Pull Request setup
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Set up JDK
-        uses: actions/setup-java@v1
-
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+
+      - name: Code Style
+        run: './gradlew spotlessCheck'
 
       - name: Build
-        run: ./gradlew classes
-
-      - name: Codestyle
-        run: ./gradlew spotlessCheck
+        run: './gradlew classes'
 
       - name: Test
         if: matrix.java == '11'
-        run: ./gradlew test jacocoTestReport
+        run: './gradlew test jacocoTestReport'
         env:
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_1 }}
 
       - name: Test
         if: matrix.java == '17'
-        run: ./gradlew test jacocoTestReport
+        run: './gradlew test jacocoTestReport'
         env:
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_2 }}
 
       - name: SonarQube
         if: matrix.java == '17'
-        run: ./gradlew sonarqube
+        run: './gradlew sonar --info'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Test Report
+        if: matrix.java == '17'
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: |
+            **/test-results/**/*.xml
