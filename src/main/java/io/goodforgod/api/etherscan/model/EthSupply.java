@@ -56,10 +56,10 @@ public class EthSupply {
     @Override
     public String toString() {
         return "EthSupply{" +
-                "EthSupply='" + EthSupply + '\'' +
-                ", Eth2Staking='" + Eth2Staking + '\'' +
-                ", BurntFees='" + BurntFees + '\'' +
-                ", WithdrawnTotal='" + WithdrawnTotal + '\'' +
+                "EthSupply=" + EthSupply +
+                ", Eth2Staking=" + Eth2Staking +
+                ", BurntFees=" + BurntFees +
+                ", WithdrawnTotal=" + WithdrawnTotal +
                 '}';
     }
 

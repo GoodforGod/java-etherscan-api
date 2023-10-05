@@ -50,8 +50,9 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     AccountAPIProvider(RequestQueueManager requestQueueManager,
                        String baseUrl,
                        EthHttpClient executor,
-                       Converter converter) {
-        super(requestQueueManager, "account", baseUrl, executor, converter);
+                       Converter converter,
+                       int retryCount) {
+        super(requestQueueManager, "account", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull
@@ -95,7 +96,8 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         final List<List<String>> addressesAsBatches = BasicUtils.partition(addresses, 20);
 
         for (final List<String> batch : addressesAsBatches) {
-            final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + toAddressParam(batch);
+            final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM
+                    + BasicUtils.toAddressParam(batch);
             final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
             if (response.getStatus() != 1) {
                 throw new EtherScanResponseException(response);
@@ -109,10 +111,6 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         }
 
         return balances;
-    }
-
-    private String toAddressParam(List<String> addresses) {
-        return String.join(",", addresses);
     }
 
     @NotNull

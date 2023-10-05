@@ -2,6 +2,8 @@ package io.goodforgod.api.etherscan;
 
 import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.model.Abi;
+import io.goodforgod.api.etherscan.model.ContractCreation;
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,4 +23,13 @@ public interface ContractAPI {
      */
     @NotNull
     Abi contractAbi(@NotNull String address) throws EtherScanException;
+
+    /**
+     * Returns a contract's deployer address and transaction hash it was created, up to 5 at a time.
+     * 
+     * @param contractAddresses - list of addresses to fetch
+     * @throws EtherScanException parent exception class
+     */
+    @NotNull
+    List<ContractCreation> contractCreation(@NotNull List<String> contractAddresses) throws EtherScanException;
 }

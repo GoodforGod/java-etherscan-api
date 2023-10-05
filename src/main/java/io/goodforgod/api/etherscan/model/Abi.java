@@ -55,7 +55,7 @@ public class Abi {
     @Override
     public String toString() {
         return "Abi{" +
-                "contractAbi='" + contractAbi + '\'' +
+                "contractAbi=" + contractAbi +
                 ", isVerified=" + isVerified +
                 '}';
     }

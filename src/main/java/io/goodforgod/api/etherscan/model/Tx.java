@@ -35,21 +35,21 @@ public class Tx extends BlockTx {
     public String toString() {
         return "Tx{" +
                 "value=" + value +
-                ", isError='" + isError + '\'' +
-                ", txreceipt_status='" + txreceipt_status + '\'' +
+                ", isError=" + isError +
+                ", txreceipt_status=" + txreceipt_status +
                 ", nonce=" + nonce +
-                ", blockHash='" + blockHash + '\'' +
+                ", blockHash=" + blockHash +
                 ", transactionIndex=" + transactionIndex +
                 ", confirmations=" + confirmations +
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
                 ", blockNumber=" + blockNumber +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", hash='" + hash + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
-                ", input='" + input + '\'' +
+                ", timeStamp=" + timeStamp +
+                ", hash=" + hash +
+                ", from=" + from +
+                ", to=" + to +
+                ", contractAddress=" + contractAddress +
+                ", input=" + input +
                 ", gas=" + gas +
                 ", gasUsed=" + gasUsed +
                 '}';

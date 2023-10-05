@@ -56,23 +56,23 @@ public class TxErc1155 extends BlockTx {
     @Override
     public String toString() {
         return "TxErc1155{" +
-                "tokenID='" + tokenID + '\'' +
-                ", tokenName='" + tokenName + '\'' +
-                ", tokenSymbol='" + tokenSymbol + '\'' +
-                ", tokenValue='" + tokenValue + '\'' +
+                "tokenID=" + tokenID +
+                ", tokenName=" + tokenName +
+                ", tokenSymbol=" + tokenSymbol +
+                ", tokenValue=" + tokenValue +
                 ", nonce=" + nonce +
-                ", blockHash='" + blockHash + '\'' +
+                ", blockHash=" + blockHash +
                 ", transactionIndex=" + transactionIndex +
                 ", confirmations=" + confirmations +
                 ", gasPrice=" + gasPrice +
                 ", cumulativeGasUsed=" + cumulativeGasUsed +
                 ", blockNumber=" + blockNumber +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", hash='" + hash + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", contractAddress='" + contractAddress + '\'' +
-                ", input='" + input + '\'' +
+                ", timeStamp=" + timeStamp +
+                ", hash=" + hash +
+                ", from=" + from +
+                ", to=" + to +
+                ", contractAddress=" + contractAddress +
+                ", input=" + input +
                 ", gas=" + gas +
                 ", gasUsed=" + gasUsed +
                 '}';

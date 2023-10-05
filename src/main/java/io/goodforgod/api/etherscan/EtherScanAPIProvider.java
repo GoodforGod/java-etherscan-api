@@ -26,19 +26,20 @@ final class EtherScanAPIProvider implements EtherScanAPI {
                          EthNetwork network,
                          RequestQueueManager queue,
                          EthHttpClient ethHttpClient,
-                         Converter converter) {
+                         Converter converter,
+                         int retryCount) {
         // EtherScan 1request\5sec limit support by queue manager
         final String baseUrl = network.domain() + "?apikey=" + apiKey;
 
         this.requestQueueManager = queue;
-        this.account = new AccountAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.block = new BlockAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.contract = new ContractAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.logs = new LogsAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.proxy = new ProxyAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.stats = new StatisticAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.txs = new TransactionAPIProvider(queue, baseUrl, ethHttpClient, converter);
-        this.gasTracker = new GasTrackerAPIProvider(queue, baseUrl, ethHttpClient, converter);
+        this.account = new AccountAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.block = new BlockAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.contract = new ContractAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.logs = new LogsAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.proxy = new ProxyAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.stats = new StatisticAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.txs = new TransactionAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
+        this.gasTracker = new GasTrackerAPIProvider(queue, baseUrl, ethHttpClient, converter, retryCount);
     }
 
     @NotNull

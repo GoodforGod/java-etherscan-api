@@ -127,20 +127,20 @@ public class TxProxy implements Comparable<TxProxy> {
     @Override
     public String toString() {
         return "TxProxy{" +
-                "to='" + to + '\'' +
-                ", hash='" + hash + '\'' +
-                ", transactionIndex='" + transactionIndex + '\'' +
-                ", from='" + from + '\'' +
-                ", v='" + v + '\'' +
-                ", input='" + input + '\'' +
-                ", s='" + s + '\'' +
-                ", r='" + r + '\'' +
-                ", nonce='" + nonce + '\'' +
-                ", value='" + value + '\'' +
-                ", gas='" + gas + '\'' +
-                ", gasPrice='" + gasPrice + '\'' +
-                ", blockHash='" + blockHash + '\'' +
-                ", blockNumber='" + blockNumber + '\'' +
+                "to=" + to +
+                ", hash=" + hash +
+                ", transactionIndex=" + transactionIndex +
+                ", from=" + from +
+                ", v=" + v +
+                ", input=" + input +
+                ", s=" + s +
+                ", r=" + r +
+                ", nonce=" + nonce +
+                ", value=" + value +
+                ", gas=" + gas +
+                ", gasPrice=" + gasPrice +
+                ", blockHash=" + blockHash +
+                ", blockNumber=" + blockNumber +
                 '}';
     }
 

@@ -19,7 +19,7 @@ public class BlockUncle extends Block {
         private BigInteger blockreward;
         private int unclePosition;
 
-        private Uncle() {}
+        protected Uncle() {}
 
         // <editor-fold desc="Getters">
         public String getMiner() {
@@ -54,7 +54,7 @@ public class BlockUncle extends Block {
         @Override
         public String toString() {
             return "Uncle{" +
-                    "miner='" + miner + '\'' +
+                    "miner=" + miner +
                     ", blockreward=" + blockreward +
                     ", unclePosition=" + unclePosition +
                     '}';
@@ -128,9 +128,9 @@ public class BlockUncle extends Block {
     @Override
     public String toString() {
         return "UncleBlock{" +
-                "blockMiner='" + blockMiner + '\'' +
+                "blockMiner=" + blockMiner +
                 ", uncles=" + uncles +
-                ", uncleInclusionReward='" + uncleInclusionReward + '\'' +
+                ", uncleInclusionReward=" + uncleInclusionReward +
                 '}';
     }
 

@@ -58,7 +58,7 @@ public class Block implements Comparable<Block> {
         return "Block{" +
                 "blockNumber=" + blockNumber +
                 ", blockReward=" + blockReward +
-                ", timeStamp='" + timeStamp + '\'' +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
 

@@ -45,7 +45,7 @@ public class Balance {
     @Override
     public String toString() {
         return "Balance{" +
-                "address='" + address + '\'' +
+                "address=" + address +
                 ", balance=" + balance +
                 '}';
     }

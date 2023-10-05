@@ -138,16 +138,16 @@ public class Log {
     @Override
     public String toString() {
         return "Log{" +
-                "blockNumber='" + blockNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", transactionHash='" + transactionHash + '\'' +
-                ", transactionIndex='" + transactionIndex + '\'' +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", data='" + data + '\'' +
-                ", gasPrice='" + gasPrice + '\'' +
-                ", gasUsed='" + gasUsed + '\'' +
+                "blockNumber=" + blockNumber +
+                ", address=" + address +
+                ", transactionHash=" + transactionHash +
+                ", transactionIndex=" + transactionIndex +
+                ", timeStamp=" + timeStamp +
+                ", data=" + data +
+                ", gasPrice=" + gasPrice +
+                ", gasUsed=" + gasUsed +
                 ", topics=" + topics +
-                ", logIndex='" + logIndex + '\'' +
+                ", logIndex=" + logIndex +
                 '}';
     }
 

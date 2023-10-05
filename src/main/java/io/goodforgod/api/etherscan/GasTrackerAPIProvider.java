@@ -28,8 +28,9 @@ final class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI
     GasTrackerAPIProvider(RequestQueueManager queue,
                           String baseUrl,
                           EthHttpClient ethHttpClient,
-                          Converter converter) {
-        super(queue, "gastracker", baseUrl, ethHttpClient, converter);
+                          Converter converter,
+                          int retryCount) {
+        super(queue, "gastracker", baseUrl, ethHttpClient, converter, retryCount);
     }
 
     @Override

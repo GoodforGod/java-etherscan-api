@@ -25,8 +25,9 @@ final class LogsAPIProvider extends BasicProvider implements LogsAPI {
     LogsAPIProvider(RequestQueueManager queue,
                     String baseUrl,
                     EthHttpClient executor,
-                    Converter converter) {
-        super(queue, "logs", baseUrl, executor, converter);
+                    Converter converter,
+                    int retryCount) {
+        super(queue, "logs", baseUrl, executor, converter, retryCount);
     }
 
     @NotNull

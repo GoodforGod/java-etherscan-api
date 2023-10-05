@@ -39,7 +39,7 @@ public class TokenBalance extends Balance {
     @Override
     public String toString() {
         return "TokenBalance{" +
-                "tokenContract='" + tokenContract + '\'' +
+                "tokenContract=" + tokenContract +
                 '}';
     }
 }
