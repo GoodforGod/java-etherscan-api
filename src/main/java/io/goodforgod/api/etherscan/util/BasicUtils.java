@@ -149,4 +149,8 @@ public final class BasicUtils {
 
         return partitioned;
     }
+
+    public static String toAddressParam(List<String> addresses) {
+        return String.join(",", addresses);
+    }
 }
