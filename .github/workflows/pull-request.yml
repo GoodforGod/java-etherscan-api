@@ -40,16 +40,16 @@ jobs:
         env:
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_2 }}
 
-      - name: SonarQube
-        if: matrix.java == '17'
-        run: './gradlew sonar --info'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: Test Report
         if: matrix.java == '17'
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: |
             **/test-results/**/*.xml
+
+      - name: SonarQube
+        if: matrix.java == '17'
+        run: './gradlew sonar --info'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
