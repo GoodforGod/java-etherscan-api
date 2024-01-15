@@ -49,7 +49,7 @@ API support all Ethereum [default networks](https://docs.etherscan.io/getting-st
 - [Sepolia](https://api-sepolia.etherscan.io/)
 
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 EtherScanAPI apiGoerli = EtherScanAPI.builder().withNetwork(EthNetworks.GORLI).build();
 EtherScanAPI apiSepolia = EtherScanAPI.builder().withNetwork(EthNetworks.SEPOLIA).build();
 ```
@@ -97,7 +97,7 @@ Below are examples for each API category.
 
 **Get Ether Balance for a single Address**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Balance balance = api.account().balance("0x8d4426f94e42f721C7116E81d6688cd935cB3b4F");
 ```
 
@@ -105,14 +105,14 @@ Balance balance = api.account().balance("0x8d4426f94e42f721C7116E81d6688cd935cB3
 
 **Get uncles block for block height**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Optional<UncleBlock> uncles = api.block().uncles(200000);
 ```
 
 ### Contract API
 **Request contract ABI from [verified codes](https://etherscan.io/contractsVerified)**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Abi abi = api.contract().contractAbi("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413");
 ```
 
@@ -120,7 +120,7 @@ Abi abi = api.contract().contractAbi("0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413
 
 **Get event logs for single topic**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 LogQuery query = LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
            .withTopic("0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545")
            .build();
@@ -129,7 +129,7 @@ List<Log> logs = api.logs().logs(query);
 
 **Get event logs for 3 topics with respectful operations**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 LogQuery query = LogQuery.builder("0x33990122638b9132ca29c723bdf037f1a891a70c")
         .withBlockFrom(379224)
         .withBlockTo(400000)
@@ -148,13 +148,13 @@ List<Log> logs = api.logs().logs(query);
 
 **Get tx details with proxy endpoint**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Optional<TxProxy> tx = api.proxy().tx("0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
 ```
 
 **Get block info with proxy endpoint**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Optional<BlockProxy> block = api.proxy().block(15215);
 ```
 
@@ -162,7 +162,7 @@ Optional<BlockProxy> block = api.proxy().block(15215);
 
 **Statistic about last price**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Price price = api.stats().priceLast();
 ```
 
@@ -170,7 +170,7 @@ Price price = api.stats().priceLast();
 
 **Request receipt status for tx**
 ```java
-EtherScanAPI api = EtherScanAPI.build();
+EtherScanAPI api = EtherScanAPI.builder().build();
 Optional<Boolean> status = api.txs().receiptStatus("0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76");
 ```
 
