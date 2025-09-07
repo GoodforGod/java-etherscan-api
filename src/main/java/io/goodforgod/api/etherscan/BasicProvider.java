@@ -129,7 +129,9 @@ public abstract class BasicProvider {
 
     protected <T> T getResponse(String urlParameters, Class<T> tClass, int retryCount) {
         try {
+            System.out.println("URL - " + URI.create(baseUrl + module + urlParameters));
             EthResponse response = getResponse(urlParameters);
+            System.out.println("Response - " + new String(response.body(), StandardCharsets.UTF_8));
             return convert(response.body(), tClass);
         } catch (Exception e) {
             if (retryCount < retryCountLimit) {

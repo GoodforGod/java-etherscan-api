@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,12 +23,11 @@ import org.jetbrains.annotations.NotNull;
 public class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
     private static final Supplier<EthHttpClient> DEFAULT_SUPPLIER = JdkEthHttpClient::new;
-    private static final String DEFAULT_KEY = "YourApiKeyToken";
 
     private final Gson gson = new GsonConfiguration().builder().create();
 
     private int retryCountOnLimitReach = 0;
-    private String apiKey = DEFAULT_KEY;
+    private String apiKey;
     private RequestQueueManager queueManager;
     private EthNetwork ethNetwork = EthNetworks.MAINNET;
     private Supplier<EthHttpClient> ethHttpClientSupplier = DEFAULT_SUPPLIER;
@@ -42,6 +42,10 @@ public class EthScanAPIBuilder implements EtherScanAPI.Builder {
             }
         }
     };
+
+    public EthScanAPIBuilder(String apiKey) {
+        this.apiKey = apiKey;
+    }
 
     @NotNull
     @Override
@@ -101,13 +105,7 @@ public class EthScanAPIBuilder implements EtherScanAPI.Builder {
     @Override
     public @NotNull EtherScanAPI build() {
         RequestQueueManager requestQueueManager;
-        if (queueManager != null) {
-            requestQueueManager = queueManager;
-        } else if (DEFAULT_KEY.equals(apiKey)) {
-            requestQueueManager = RequestQueueManager.anonymous();
-        } else {
-            requestQueueManager = RequestQueueManager.planFree();
-        }
+        requestQueueManager = Objects.requireNonNullElseGet(queueManager, RequestQueueManager::planFree);
 
         return new EtherScanAPIProvider(apiKey, ethNetwork, requestQueueManager, ethHttpClientSupplier.get(),
                 converterSupplier.get(), retryCountOnLimitReach);

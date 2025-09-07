@@ -22,25 +22,26 @@ class EtherScanAPITests extends ApiRunner {
     @Test
     void validKey() {
         String validKey = "YourKey";
-        EtherScanAPI api = EtherScanAPI.builder().withApiKey(validKey).withNetwork(network).build();
+        EtherScanAPI api = EtherScanAPI.builder(validKey).withApiKey(validKey).withNetwork(network).build();
         assertNotNull(api);
     }
 
     @Test
     void emptyKey() {
-        assertThrows(EtherScanKeyException.class, () -> EtherScanAPI.builder().withApiKey("").build());
+        assertThrows(EtherScanKeyException.class, () -> EtherScanAPI.builder("someKey").withApiKey("").build());
     }
 
     @Test
     void blankKey() {
         assertThrows(EtherScanKeyException.class,
-                () -> EtherScanAPI.builder().withApiKey("         ").withNetwork(network).build());
+                () -> EtherScanAPI.builder("someKey").withApiKey("         ").withNetwork(network).build());
     }
 
     @Test
     void noTimeoutOnRead() {
         Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300));
-        EtherScanAPI api = EtherScanAPI.builder().withNetwork(EthNetworks.MAINNET).withHttpClient(supplier).build();
+        EtherScanAPI api = EtherScanAPI.builder(ApiRunner.getKey()).withNetwork(EthNetworks.MAINNET).withHttpClient(supplier)
+                .build();
         Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
         assertNotNull(balance);
     }
@@ -67,7 +68,7 @@ class EtherScanAPITests extends ApiRunner {
     void timeout() throws InterruptedException {
         TimeUnit.SECONDS.sleep(5);
         Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
-        EtherScanAPI api = EtherScanAPI.builder()
+        EtherScanAPI api = EtherScanAPI.builder(ApiRunner.getKey())
                 .withNetwork(() -> URI.create("https://api-unknown.etherscan.io/api"))
                 .withHttpClient(supplier)
                 .build();

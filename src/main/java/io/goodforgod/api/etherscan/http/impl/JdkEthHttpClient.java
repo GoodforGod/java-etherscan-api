@@ -5,15 +5,17 @@ import io.goodforgod.api.etherscan.error.EtherScanConnectionTimeoutException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.EthResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpConnectTimeoutException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,7 +77,9 @@ public class JdkEthHttpClient implements EthHttpClient {
         headers.forEach(requestBuilder::header);
 
         try {
-            HttpResponse<byte[]> response = httpClient.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofByteArray());
+            HttpResponse<InputStream> response = httpClient.send(requestBuilder.build(),
+                    HttpResponse.BodyHandlers.ofInputStream());
+            byte[] bodyAsBytes = getDeflatedBytes(response);
             return new EthResponse() {
 
                 @Override
@@ -85,7 +89,7 @@ public class JdkEthHttpClient implements EthHttpClient {
 
                 @Override
                 public byte[] body() {
-                    return response.body();
+                    return bodyAsBytes;
                 }
 
                 @Override
@@ -115,7 +119,9 @@ public class JdkEthHttpClient implements EthHttpClient {
         headers.forEach(requestBuilder::header);
 
         try {
-            HttpResponse<byte[]> response = httpClient.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofByteArray());
+            HttpResponse<InputStream> response = httpClient.send(requestBuilder.build(),
+                    HttpResponse.BodyHandlers.ofInputStream());
+            byte[] bodyAsBytes = getDeflatedBytes(response);
             return new EthResponse() {
 
                 @Override
@@ -125,7 +131,7 @@ public class JdkEthHttpClient implements EthHttpClient {
 
                 @Override
                 public byte[] body() {
-                    return response.body();
+                    return bodyAsBytes;
                 }
 
                 @Override
@@ -142,6 +148,30 @@ public class JdkEthHttpClient implements EthHttpClient {
             throw new EtherScanConnectionException("Etherscan HTTP server network error occurred: " + e.getMessage(), e);
         } catch (InterruptedException e) {
             throw new EtherScanConnectionException("Etherscan HTTP server interrupt exception occurred: " + e.getMessage(), e);
+        }
+    }
+
+    private static byte[] getDeflatedBytes(HttpResponse<InputStream> response) {
+        try {
+            Optional<String> encoding = response.headers().firstValue("content-encoding");
+            if (encoding.isEmpty()) {
+                try (var is = response.body()) {
+                    return is.readAllBytes();
+                }
+            }
+
+            switch (encoding.get().strip().toLowerCase(Locale.ROOT)) {
+                case "gzip":
+                    return new GZIPInputStream(response.body()).readAllBytes();
+                case "deflate":
+                    return new InflaterInputStream(response.body()).readAllBytes();
+                default:
+                    try (var is = response.body()) {
+                        return is.readAllBytes();
+                    }
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 }

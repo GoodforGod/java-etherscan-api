@@ -25,8 +25,7 @@ public class ApiRunner extends Assertions {
                 ? RequestQueueManager.anonymous()
                 : RequestQueueManager.planFree();
 
-        API = EtherScanAPI.builder()
-                .withApiKey(ApiRunner.API_KEY)
+        API = EtherScanAPI.builder(ApiRunner.API_KEY)
                 .withNetwork(EthNetworks.MAINNET)
                 .withQueue(queueManager)
                 .withRetryOnRateLimit(5)
@@ -35,6 +34,10 @@ public class ApiRunner extends Assertions {
 
     public static EtherScanAPI getApi() {
         return API;
+    }
+
+    public static String getKey() {
+        return API_KEY;
     }
 
     @AfterAll
