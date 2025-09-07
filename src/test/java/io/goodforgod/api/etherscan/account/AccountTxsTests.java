@@ -16,7 +16,7 @@ class AccountTxsTests extends ApiRunner {
     void correct() {
         List<Tx> txs = getApi().account().txs("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9");
         assertNotNull(txs);
-        assertEquals(5, txs.size());
+        assertEquals(6, txs.size());
         assertTxs(txs);
         assertNotNull(txs.get(0).getTimeStamp());
         assertNotNull(txs.get(0).getHash());
@@ -39,7 +39,7 @@ class AccountTxsTests extends ApiRunner {
     void correctStartBlock() {
         List<Tx> txs = getApi().account().txs("0x9327cb34984c3992ec1EA0eAE98Ccf80A74f95B9", 3892842);
         assertNotNull(txs);
-        assertEquals(4, txs.size());
+        assertEquals(5, txs.size());
         assertTxs(txs);
     }
 

@@ -1,7 +1,6 @@
 package io.goodforgod.api.etherscan.model;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +13,9 @@ import java.util.stream.Collectors;
 public class GasOracle {
 
     private Long LastBlock;
-    private BigInteger SafeGasPrice;
-    private BigInteger ProposeGasPrice;
-    private BigInteger FastGasPrice;
+    private BigDecimal SafeGasPrice;
+    private BigDecimal ProposeGasPrice;
+    private BigDecimal FastGasPrice;
     private BigDecimal suggestBaseFee;
     private String gasUsedRatio;
 
@@ -129,13 +128,13 @@ public class GasOracle {
             gasOracle.LastBlock = this.lastBlock;
             gasOracle.suggestBaseFee = this.suggestBaseFee;
             if (this.proposeGasPrice != null) {
-                gasOracle.ProposeGasPrice = this.proposeGasPrice.asGwei().toBigInteger();
+                gasOracle.ProposeGasPrice = this.proposeGasPrice.asGwei();
             }
             if (this.safeGasPrice != null) {
-                gasOracle.SafeGasPrice = this.safeGasPrice.asGwei().toBigInteger();
+                gasOracle.SafeGasPrice = this.safeGasPrice.asGwei();
             }
             if (this.fastGasPrice != null) {
-                gasOracle.FastGasPrice = this.fastGasPrice.asGwei().toBigInteger();
+                gasOracle.FastGasPrice = this.fastGasPrice.asGwei();
             }
             if (this.gasUsedRatio != null) {
                 gasOracle.gasUsedRatio = this.gasUsedRatio.stream()

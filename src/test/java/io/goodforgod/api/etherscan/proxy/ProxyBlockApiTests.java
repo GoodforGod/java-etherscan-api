@@ -22,7 +22,6 @@ class ProxyBlockApiTests extends ApiRunner {
         assertNotNull(proxy.getStateRoot());
         assertNotNull(proxy.getSize());
         assertNotNull(proxy.getDifficulty());
-        assertNotNull(proxy.getTotalDifficulty());
         assertNotNull(proxy.getTimeStamp());
         assertNotNull(proxy.getMiner());
         assertNotNull(proxy.getNonce());

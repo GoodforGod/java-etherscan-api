@@ -1,4 +1,4 @@
-name: CI Master
+name: Release
 
 on:
   release:
@@ -22,8 +22,6 @@ jobs:
 
       - name: Test
         run: './gradlew test jacocoTestReport'
-        env:
-          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_2 }}
 
       - name: SonarQube
         run: './gradlew sonar --info'

@@ -42,6 +42,7 @@ public class JdkEthHttpClient implements EthHttpClient {
     private final HttpClient httpClient;
     private final Duration requestTimeout;
     private final Map<String, String> headers;
+    private final UrlEthHttpClient urlEthHttpClient;
 
     public JdkEthHttpClient() {
         this(HttpClient.newBuilder()
@@ -65,6 +66,7 @@ public class JdkEthHttpClient implements EthHttpClient {
         this.httpClient = httpClient;
         this.requestTimeout = requestTimeout;
         this.headers = headers;
+        this.urlEthHttpClient = new UrlEthHttpClient(DEFAULT_CONNECT_TIMEOUT, requestTimeout, headers);
     }
 
     @Override
@@ -111,12 +113,19 @@ public class JdkEthHttpClient implements EthHttpClient {
 
     @Override
     public EthResponse post(@NotNull URI uri, byte[] body) {
+        return urlEthHttpClient.post(uri, body);
+    }
+
+    // content-length somehow is not working properly and can't force user to override
+    // "jdk.httpclient.allowRestrictedHeaders" prop, so will force use UrlEthHttpClient
+    private EthResponse postJdk(@NotNull URI uri, byte[] body) {
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofByteArray(body))
                 .uri(uri)
                 .timeout(requestTimeout);
 
         headers.forEach(requestBuilder::header);
+        requestBuilder.header("Content-Type", "application/json; charset=UTF-8");
 
         try {
             HttpResponse<InputStream> response = httpClient.send(requestBuilder.build(),

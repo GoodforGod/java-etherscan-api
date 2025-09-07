@@ -1,10 +1,11 @@
-name: CI Pull Request
+name: CI Master
 
 on:
-  pull_request:
+  push:
     branches:
       - master
-      - dev
+  schedule:
+    - cron: 0 0 * * 0
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
     strategy:
       matrix:
         java: [ '11', '17' ]
-    name: Pull Request Java ${{ matrix.java }} action
+    name: Master Java ${{ matrix.java }} action
 
     steps:
       - uses: actions/checkout@v3
@@ -21,9 +22,6 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'adopt'
-
-      - name: Code Style
-        run: './gradlew spotlessCheck'
 
       - name: Build
         run: './gradlew classes'

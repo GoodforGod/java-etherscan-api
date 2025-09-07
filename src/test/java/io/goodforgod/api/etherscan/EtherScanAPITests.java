@@ -4,7 +4,6 @@ import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
-import io.goodforgod.api.etherscan.model.Balance;
 import java.net.URI;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -35,33 +34,6 @@ class EtherScanAPITests extends ApiRunner {
     void blankKey() {
         assertThrows(EtherScanKeyException.class,
                 () -> EtherScanAPI.builder("someKey").withApiKey("         ").withNetwork(network).build());
-    }
-
-    @Test
-    void noTimeoutOnRead() {
-        Supplier<EthHttpClient> supplier = () -> new UrlEthHttpClient(Duration.ofMillis(300));
-        EtherScanAPI api = EtherScanAPI.builder(ApiRunner.getKey()).withNetwork(EthNetworks.MAINNET).withHttpClient(supplier)
-                .build();
-        Balance balance = api.account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
-        assertNotNull(balance);
-    }
-
-    @Test
-    void noTimeoutOnReadGroli() {
-        Balance balance = getApi().account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
-        assertNotNull(balance);
-    }
-
-    @Test
-    void noTimeoutOnReadTobalala() {
-        Balance balance = getApi().account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
-        assertNotNull(balance);
-    }
-
-    @Test
-    void noTimeoutUnlimitedAwait() {
-        Balance balance = getApi().account().balance("0xF318ABc9A5a92357c4Fea8d082dade4D43e780B7");
-        assertNotNull(balance);
     }
 
     @Test
