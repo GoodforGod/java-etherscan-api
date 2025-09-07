@@ -9,12 +9,11 @@ import io.goodforgod.api.etherscan.http.EthResponse;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.model.response.BaseListResponseTO;
 import io.goodforgod.api.etherscan.model.response.StringResponseTO;
+import io.goodforgod.api.etherscan.util.BasicUtils;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.goodforgod.api.etherscan.util.BasicUtils;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**

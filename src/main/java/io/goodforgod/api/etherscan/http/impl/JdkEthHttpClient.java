@@ -4,9 +4,6 @@ import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
 import io.goodforgod.api.etherscan.error.EtherScanConnectionTimeoutException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
 import io.goodforgod.api.etherscan.http.EthResponse;
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -17,6 +14,8 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Anton Kurako (GoodforGod)
@@ -44,10 +43,10 @@ public class JdkEthHttpClient implements EthHttpClient {
 
     public JdkEthHttpClient() {
         this(HttpClient.newBuilder()
-                        .connectTimeout(DEFAULT_CONNECT_TIMEOUT)
-                        .followRedirects(HttpClient.Redirect.NORMAL)
-                        .version(HttpClient.Version.HTTP_2)
-                        .build(),
+                .connectTimeout(DEFAULT_CONNECT_TIMEOUT)
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .version(HttpClient.Version.HTTP_2)
+                .build(),
                 DEFAULT_READ_TIMEOUT,
                 DEFAULT_HEADERS);
     }
