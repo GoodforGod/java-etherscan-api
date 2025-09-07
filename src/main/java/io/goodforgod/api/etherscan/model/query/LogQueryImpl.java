@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 31.10.2018
  */
-final class LogQueryImpl implements LogQuery {
+public class LogQueryImpl implements LogQuery {
 
     /**
      * Final request parameter for api call

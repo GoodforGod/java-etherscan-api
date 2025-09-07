@@ -83,7 +83,7 @@ public class TxErc20 extends BlockTx {
         return new TxERC20Builder();
     }
 
-    public static final class TxERC20Builder {
+    public static class TxERC20Builder {
 
         private long blockNumber;
         private LocalDateTime timeStamp;

@@ -89,7 +89,7 @@ public class TxInternal extends BaseTx {
         return new TxInternalBuilder();
     }
 
-    public static final class TxInternalBuilder {
+    public static class TxInternalBuilder {
 
         private long blockNumber;
         private LocalDateTime timeStamp;

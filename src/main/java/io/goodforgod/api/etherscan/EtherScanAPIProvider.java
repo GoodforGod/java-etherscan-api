@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class EtherScanAPIProvider implements EtherScanAPI {
+public class EtherScanAPIProvider implements EtherScanAPI {
 
     private final RequestQueueManager requestQueueManager;
     private final AccountAPI account;
@@ -22,12 +22,12 @@ final class EtherScanAPIProvider implements EtherScanAPI {
     private final TransactionAPI txs;
     private final GasTrackerAPI gasTracker;
 
-    EtherScanAPIProvider(String apiKey,
-                         EthNetwork network,
-                         RequestQueueManager queue,
-                         EthHttpClient ethHttpClient,
-                         Converter converter,
-                         int retryCount) {
+    public EtherScanAPIProvider(String apiKey,
+                                EthNetwork network,
+                                RequestQueueManager queue,
+                                EthHttpClient ethHttpClient,
+                                Converter converter,
+                                int retryCount) {
         // EtherScan 1request\5sec limit support by queue manager
         final String baseUrl = network.domain() + "?apikey=" + apiKey;
 

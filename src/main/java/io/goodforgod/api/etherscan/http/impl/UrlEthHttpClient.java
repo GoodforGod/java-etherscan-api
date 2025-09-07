@@ -3,20 +3,23 @@ package io.goodforgod.api.etherscan.http.impl;
 import static java.net.HttpURLConnection.*;
 
 import io.goodforgod.api.etherscan.error.EtherScanConnectionException;
-import io.goodforgod.api.etherscan.error.EtherScanTimeoutException;
+import io.goodforgod.api.etherscan.error.EtherScanConnectionTimeoutException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URI;
-import java.net.URL;
+import io.goodforgod.api.etherscan.http.EthResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.*;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Http client implementation
@@ -25,12 +28,13 @@ import org.jetbrains.annotations.NotNull;
  * @see EthHttpClient
  * @since 28.10.2018
  */
-public final class UrlEthHttpClient implements EthHttpClient {
+@Internal
+public class UrlEthHttpClient implements EthHttpClient {
 
     private static final Map<String, String> DEFAULT_HEADERS = new HashMap<>();
 
     private static final Duration DEFAULT_CONNECT_TIMEOUT = Duration.ofSeconds(8);
-    private static final Duration DEFAULT_READ_TIMEOUT = Duration.ZERO;
+    private static final Duration DEFAULT_READ_TIMEOUT = Duration.ofMinutes(2);
 
     static {
         DEFAULT_HEADERS.put("Accept-Language", "en");
@@ -39,6 +43,8 @@ public final class UrlEthHttpClient implements EthHttpClient {
         DEFAULT_HEADERS.put("Accept-Charset", "UTF-8");
     }
 
+    @Nullable
+    private final Proxy proxy;
     private final Map<String, String> headers;
     private final int connectTimeout;
     private final int readTimeout;
@@ -48,11 +54,19 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     public UrlEthHttpClient(Duration connectTimeout) {
-        this(connectTimeout, DEFAULT_READ_TIMEOUT);
+        this(connectTimeout, DEFAULT_READ_TIMEOUT, DEFAULT_HEADERS, null);
     }
 
     public UrlEthHttpClient(Duration connectTimeout, Duration readTimeout) {
-        this(connectTimeout, readTimeout, DEFAULT_HEADERS);
+        this(connectTimeout, readTimeout, DEFAULT_HEADERS, null);
+    }
+
+    public UrlEthHttpClient(Duration connectTimeout, Duration readTimeout, Proxy proxy) {
+        this(connectTimeout, readTimeout, DEFAULT_HEADERS, null);
+    }
+
+    public UrlEthHttpClient(Duration connectTimeout, Duration readTimeout, Map<String, String> headers) {
+        this(connectTimeout, readTimeout, headers, null);
     }
 
     /**
@@ -62,15 +76,19 @@ public final class UrlEthHttpClient implements EthHttpClient {
      */
     public UrlEthHttpClient(Duration connectTimeout,
                             Duration readTimeout,
-                            Map<String, String> headers) {
+                            Map<String, String> headers,
+                            @Nullable Proxy proxy) {
         this.connectTimeout = Math.toIntExact(connectTimeout.toMillis());
         this.readTimeout = Math.toIntExact(readTimeout.toMillis());
         this.headers = Collections.unmodifiableMap(headers);
+        this.proxy = proxy;
     }
 
     private HttpURLConnection buildConnection(URI uri, String method) throws IOException {
         final URL url = uri.toURL();
-        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        final HttpURLConnection connection = (proxy == null)
+                ? (HttpURLConnection) url.openConnection()
+                : (HttpURLConnection) url.openConnection(proxy);
         connection.setRequestMethod(method);
         connection.setConnectTimeout(connectTimeout);
         connection.setReadTimeout(readTimeout);
@@ -79,7 +97,7 @@ public final class UrlEthHttpClient implements EthHttpClient {
     }
 
     @Override
-    public byte[] get(@NotNull URI uri) {
+    public EthResponse get(@NotNull URI uri) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "GET");
             final int status = connection.getResponseCode();
@@ -92,17 +110,19 @@ public final class UrlEthHttpClient implements EthHttpClient {
             }
 
             final byte[] data = readData(connection);
+            EthResponse ethResponse = EthResponse.of(connection.getResponseCode(), data, connection.getHeaderFields());
             connection.disconnect();
-            return data;
+            return ethResponse;
         } catch (SocketTimeoutException e) {
-            throw new EtherScanTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
+            throw new EtherScanConnectionTimeoutException(
+                    "Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
             throw new EtherScanConnectionException(e.getMessage(), e);
         }
     }
 
     @Override
-    public byte[] post(@NotNull URI uri, byte[] body) {
+    public EthResponse post(@NotNull URI uri, byte[] body) {
         try {
             final HttpURLConnection connection = buildConnection(uri, "POST");
             final int contentLength = body.length;
@@ -126,10 +146,12 @@ public final class UrlEthHttpClient implements EthHttpClient {
             }
 
             final byte[] data = readData(connection);
+            EthResponse ethResponse = EthResponse.of(connection.getResponseCode(), data, connection.getHeaderFields());
             connection.disconnect();
-            return data;
+            return ethResponse;
         } catch (SocketTimeoutException e) {
-            throw new EtherScanTimeoutException("Timeout: Could not establish connection for " + connectTimeout + " millis", e);
+            throw new EtherScanConnectionTimeoutException(
+                    "Timeout: Could not establish connection for " + connectTimeout + " millis", e);
         } catch (Exception e) {
             throw new EtherScanConnectionException(e.getMessage(), e);
         }

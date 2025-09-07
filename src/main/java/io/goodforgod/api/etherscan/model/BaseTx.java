@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-abstract class BaseTx implements Comparable<BaseTx> {
+public abstract class BaseTx implements Comparable<BaseTx> {
 
     long blockNumber;
     String timeStamp;

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 31.10.2018
  */
-public final class LogTopicQuadro implements LogTopicBuilder {
+public class LogTopicQuadro implements LogTopicBuilder {
 
     private final String address;
     private final long startBlock, endBlock;

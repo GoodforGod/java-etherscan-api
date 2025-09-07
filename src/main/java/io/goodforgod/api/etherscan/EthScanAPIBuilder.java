@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import io.goodforgod.api.etherscan.error.EtherScanKeyException;
 import io.goodforgod.api.etherscan.error.EtherScanParseException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
-import io.goodforgod.api.etherscan.http.impl.UrlEthHttpClient;
+import io.goodforgod.api.etherscan.http.impl.JdkEthHttpClient;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
 import io.goodforgod.api.etherscan.util.BasicUtils;
 import io.goodforgod.gson.configuration.GsonConfiguration;
@@ -19,9 +19,9 @@ import org.jetbrains.annotations.NotNull;
  * @author Anton Kurako (GoodforGod)
  * @since 11.05.2023
  */
-final class EthScanAPIBuilder implements EtherScanAPI.Builder {
+public class EthScanAPIBuilder implements EtherScanAPI.Builder {
 
-    private static final Supplier<EthHttpClient> DEFAULT_SUPPLIER = UrlEthHttpClient::new;
+    private static final Supplier<EthHttpClient> DEFAULT_SUPPLIER = JdkEthHttpClient::new;
     private static final String DEFAULT_KEY = "YourApiKeyToken";
 
     private final Gson gson = new GsonConfiguration().builder().create();

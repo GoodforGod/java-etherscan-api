@@ -16,7 +16,7 @@ public class StringResponseTO extends BaseResponseTO {
         return new StringResponseBuilder();
     }
 
-    public static final class StringResponseBuilder {
+    public static class StringResponseBuilder {
 
         private String status;
         private String message;

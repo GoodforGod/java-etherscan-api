@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class AccountAPIProvider extends BasicProvider implements AccountAPI {
+public class AccountAPIProvider extends BasicProvider implements AccountAPI {
 
-    private static final int OFFSET_MAX = 10000;
+    private static final int OFFSET_MAX = 9999;
 
     private static final String ACT_BALANCE_ACTION = ACT_PREFIX + "balance";
     private static final String ACT_TOKEN_BALANCE_PARAM = ACT_PREFIX + "tokenbalance";
@@ -47,11 +47,11 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
     private static final String OFFSET_PARAM = "&offset=";
     private static final String PAGE_PARAM = "&page=";
 
-    AccountAPIProvider(RequestQueueManager requestQueueManager,
-                       String baseUrl,
-                       EthHttpClient executor,
-                       Converter converter,
-                       int retryCount) {
+    public AccountAPIProvider(RequestQueueManager requestQueueManager,
+                              String baseUrl,
+                              EthHttpClient executor,
+                              Converter converter,
+                              int retryCount) {
         super(requestQueueManager, "account", baseUrl, executor, converter, retryCount);
     }
 
@@ -61,7 +61,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_BALANCE_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM + address;
-        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        final StringResponseTO response = getResponse(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -75,7 +75,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         BasicUtils.validateAddress(contract);
 
         final String urlParams = ACT_TOKEN_BALANCE_PARAM + ADDRESS_PARAM + address + CONTRACT_PARAM + contract;
-        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        final StringResponseTO response = getResponse(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -98,7 +98,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         for (final List<String> batch : addressesAsBatches) {
             final String urlParams = ACT_BALANCE_MULTI_ACTION + TAG_LATEST_PARAM + ADDRESS_PARAM
                     + BasicUtils.toAddressParam(batch);
-            final BalanceResponseTO response = getRequest(urlParams, BalanceResponseTO.class);
+            final BalanceResponseTO response = getResponse(urlParams, BalanceResponseTO.class);
             if (response.getStatus() != 1) {
                 throw new EtherScanResponseException(response);
             }
@@ -139,34 +139,6 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         return getRequestUsingOffset(urlParams, TxResponseTO.class);
     }
 
-    /**
-     * Generic search for txs using offset api param To avoid 10k limit per response
-     *
-     * @param urlParams Url params for #getRequest()
-     * @param tClass    responseListTO class
-     * @param <T>       responseTO list T type
-     * @param <R>       responseListTO type
-     * @return List of T values
-     */
-    private <T, R extends BaseListResponseTO<T>> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass)
-            throws EtherScanException {
-        final List<T> result = new ArrayList<>();
-        int page = 1;
-        while (true) {
-            final String formattedUrl = String.format(urlParams, page++);
-            final R response = getRequest(formattedUrl, tClass);
-            BasicUtils.validateTxResponse(response);
-            if (BasicUtils.isEmpty(response.getResult()))
-                break;
-
-            result.addAll(response.getResult());
-            if (response.getResult().size() < OFFSET_MAX)
-                break;
-        }
-
-        return result;
-    }
-
     @NotNull
     @Override
     public List<TxInternal> txsInternal(@NotNull String address) throws EtherScanException {
@@ -200,7 +172,7 @@ final class AccountAPIProvider extends BasicProvider implements AccountAPI {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_INTERNAL_ACTION + TXHASH_PARAM + txhash;
-        final TxInternalResponseTO response = getRequest(urlParams, TxInternalResponseTO.class);
+        final TxInternalResponseTO response = getResponse(urlParams, TxInternalResponseTO.class);
         BasicUtils.validateTxResponse(response);
 
         return BasicUtils.isEmpty(response.getResult())

@@ -194,7 +194,7 @@ public class BlockProxy implements Comparable<BlockProxy> {
         return new BlockProxyBuilder();
     }
 
-    public static final class BlockProxyBuilder {
+    public static class BlockProxyBuilder {
 
         private Long number;
         private String hash;

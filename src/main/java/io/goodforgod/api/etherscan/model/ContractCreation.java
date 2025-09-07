@@ -52,7 +52,7 @@ public class ContractCreation {
         return new ContractCreationBuilder();
     }
 
-    public static final class ContractCreationBuilder {
+    public static class ContractCreationBuilder {
 
         private String contractAddress;
         private String contractCreator;

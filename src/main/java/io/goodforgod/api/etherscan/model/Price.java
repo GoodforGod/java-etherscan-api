@@ -76,7 +76,7 @@ public class Price {
         return new PriceBuilder();
     }
 
-    public static final class PriceBuilder {
+    public static class PriceBuilder {
 
         private BigDecimal ethusd;
         private BigDecimal ethbtc;

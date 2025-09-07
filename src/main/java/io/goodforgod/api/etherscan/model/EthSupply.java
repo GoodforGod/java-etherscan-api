@@ -67,7 +67,7 @@ public class EthSupply {
         return new EthSupplyBuilder();
     }
 
-    public static final class EthSupplyBuilder {
+    public static class EthSupplyBuilder {
 
         private Wei ethSupply;
         private Wei eth2Staking;

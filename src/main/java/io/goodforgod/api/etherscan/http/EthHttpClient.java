@@ -17,7 +17,7 @@ public interface EthHttpClient {
      * @param uri as string
      * @return result as string
      */
-    byte[] get(@NotNull URI uri);
+    EthResponse get(@NotNull URI uri);
 
     /**
      * Performs a Http POST request
@@ -26,5 +26,5 @@ public interface EthHttpClient {
      * @param body to post
      * @return result as string
      */
-    byte[] post(@NotNull URI uri, byte[] body);
+    EthResponse post(@NotNull URI uri, byte[] body);
 }

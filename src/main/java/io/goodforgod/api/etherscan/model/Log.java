@@ -155,7 +155,7 @@ public class Log {
         return new LogBuilder();
     }
 
-    public static final class LogBuilder {
+    public static class LogBuilder {
 
         private Long blockNumber;
         private String address;

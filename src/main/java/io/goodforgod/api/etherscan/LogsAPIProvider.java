@@ -18,15 +18,15 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class LogsAPIProvider extends BasicProvider implements LogsAPI {
+public class LogsAPIProvider extends BasicProvider implements LogsAPI {
 
     private static final String ACT_LOGS_PARAM = ACT_PREFIX + "getLogs";
 
-    LogsAPIProvider(RequestQueueManager queue,
-                    String baseUrl,
-                    EthHttpClient executor,
-                    Converter converter,
-                    int retryCount) {
+    public LogsAPIProvider(RequestQueueManager queue,
+                           String baseUrl,
+                           EthHttpClient executor,
+                           Converter converter,
+                           int retryCount) {
         super(queue, "logs", baseUrl, executor, converter, retryCount);
     }
 
@@ -34,7 +34,7 @@ final class LogsAPIProvider extends BasicProvider implements LogsAPI {
     @Override
     public List<Log> logs(@NotNull LogQuery query) throws EtherScanException {
         final String urlParams = ACT_LOGS_PARAM + query.params();
-        final LogResponseTO response = getRequest(urlParams, LogResponseTO.class);
+        final LogResponseTO response = getResponse(urlParams, LogResponseTO.class);
         BasicUtils.validateTxResponse(response);
 
         return (BasicUtils.isEmpty(response.getResult()))

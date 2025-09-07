@@ -59,7 +59,7 @@ public class Tx extends BlockTx {
         return new TxBuilder();
     }
 
-    public static final class TxBuilder {
+    public static class TxBuilder {
 
         private long blockNumber;
         private LocalDateTime timeStamp;

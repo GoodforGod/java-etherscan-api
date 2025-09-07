@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class ContractAPIProvider extends BasicProvider implements ContractAPI {
+public class ContractAPIProvider extends BasicProvider implements ContractAPI {
 
     private static final String ACT_ABI_PARAM = ACT_PREFIX + "getabi";
 
@@ -32,11 +32,11 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
 
     private static final String ACT_CONTRACT_ADDRESSES_PARAM = "&contractaddresses=";
 
-    ContractAPIProvider(RequestQueueManager requestQueueManager,
-                        String baseUrl,
-                        EthHttpClient executor,
-                        Converter converter,
-                        int retryCount) {
+    public ContractAPIProvider(RequestQueueManager requestQueueManager,
+                               String baseUrl,
+                               EthHttpClient executor,
+                               Converter converter,
+                               int retryCount) {
         super(requestQueueManager, "contract", baseUrl, executor, converter, retryCount);
     }
 
@@ -46,7 +46,7 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
         BasicUtils.validateAddress(address);
 
         final String urlParam = ACT_ABI_PARAM + ADDRESS_PARAM + address;
-        final StringResponseTO response = getRequest(urlParam, StringResponseTO.class);
+        final StringResponseTO response = getResponse(urlParam, StringResponseTO.class);
         if (response.getStatus() != 1 && response.getMessage().startsWith("NOTOK")) {
             throw new EtherScanResponseException(response);
         }
@@ -62,7 +62,7 @@ final class ContractAPIProvider extends BasicProvider implements ContractAPI {
         BasicUtils.validateAddresses(contractAddresses);
         final String urlParam = ACT_CONTRACT_CREATION + ACT_CONTRACT_ADDRESSES_PARAM
                 + BasicUtils.toAddressParam(contractAddresses);
-        final ContractCreationResponseTO response = getRequest(urlParam, ContractCreationResponseTO.class);
+        final ContractCreationResponseTO response = getResponse(urlParam, ContractCreationResponseTO.class);
         if (response.getStatus() != 1 && response.getMessage().startsWith("NOTOK")) {
             throw new EtherScanResponseException(response);
         }

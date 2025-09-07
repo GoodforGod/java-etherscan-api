@@ -83,7 +83,7 @@ public class GasOracle {
         return new GasOracleBuilder();
     }
 
-    public static final class GasOracleBuilder {
+    public static class GasOracleBuilder {
 
         private Long lastBlock;
         private Wei safeGasPrice;

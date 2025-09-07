@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-public final class BasicUtils {
+public class BasicUtils {
 
     private BasicUtils() {}
 

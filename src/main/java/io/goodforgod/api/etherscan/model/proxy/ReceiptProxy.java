@@ -134,7 +134,7 @@ public class ReceiptProxy {
         return new ReceiptProxyBuilder();
     }
 
-    public static final class ReceiptProxyBuilder {
+    public static class ReceiptProxyBuilder {
 
         private String root;
         private String from;

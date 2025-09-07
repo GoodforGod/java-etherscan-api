@@ -64,7 +64,7 @@ public class BlockUncle extends Block {
             return new UncleBuilder();
         }
 
-        public static final class UncleBuilder {
+        public static class UncleBuilder {
 
             private String miner;
             private BigInteger blockreward;
@@ -138,7 +138,7 @@ public class BlockUncle extends Block {
         return new BlockUncleBuilder();
     }
 
-    public static final class BlockUncleBuilder extends Block.BlockBuilder {
+    public static class BlockUncleBuilder extends Block.BlockBuilder {
 
         private long blockNumber;
         private BigInteger blockReward;

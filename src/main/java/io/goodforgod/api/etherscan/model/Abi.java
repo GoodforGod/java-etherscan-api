@@ -64,7 +64,7 @@ public class Abi {
         return new AbiBuilder();
     }
 
-    public static final class AbiBuilder {
+    public static class AbiBuilder {
 
         private String contractAbi;
         private boolean isVerified;

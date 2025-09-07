@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Anton Kurako (GoodforGod)
  * @since 15.05.2023
  */
-abstract class BlockTx extends BaseTx {
+public abstract class BlockTx extends BaseTx {
 
     long nonce;
     String blockHash;

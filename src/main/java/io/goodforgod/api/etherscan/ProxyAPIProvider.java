@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
+public class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     private static final String ACT_BLOCKNO_PARAM = ACT_PREFIX + "eth_blockNumber";
     private static final String ACT_BY_BLOCKNO_PARAM = ACT_PREFIX + "eth_getBlockByNumber";
@@ -57,17 +57,17 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
     private static final Pattern EMPTY_HEX = Pattern.compile("0x0+");
 
-    ProxyAPIProvider(RequestQueueManager queue,
-                     String baseUrl,
-                     EthHttpClient executor,
-                     Converter converter,
-                     int retryCount) {
+    public ProxyAPIProvider(RequestQueueManager queue,
+                            String baseUrl,
+                            EthHttpClient executor,
+                            Converter converter,
+                            int retryCount) {
         super(queue, "proxy", baseUrl, executor, converter, retryCount);
     }
 
     @Override
     public long blockNoLast() throws EtherScanException {
-        final StringProxyTO response = getRequest(ACT_BLOCKNO_PARAM, StringProxyTO.class);
+        final StringProxyTO response = getResponse(ACT_BLOCKNO_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? -1
                 : BasicUtils.parseHex(response.getResult()).longValue();
@@ -79,7 +79,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         final long compBlockNo = BasicUtils.compensateMinBlock(blockNo);
 
         final String urlParams = ACT_BY_BLOCKNO_PARAM + TAG_PARAM + compBlockNo + BOOLEAN_PARAM;
-        final BlockProxyTO response = getRequest(urlParams, BlockProxyTO.class);
+        final BlockProxyTO response = getResponse(urlParams, BlockProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -91,7 +91,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
         final String urlParams = ACT_UNCLE_BY_BLOCKNOINDEX_PARAM + TAG_PARAM
                 + "0x" + Long.toHexString(compBlockNo) + INDEX_PARAM + "0x" + Long.toHexString(compIndex);
-        final BlockProxyTO response = getRequest(urlParams, BlockProxyTO.class);
+        final BlockProxyTO response = getResponse(urlParams, BlockProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -101,7 +101,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_BY_HASH_PARAM + TXHASH_PARAM + txhash;
-        final TxProxyTO response = getRequest(urlParams, TxProxyTO.class);
+        final TxProxyTO response = getResponse(urlParams, TxProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -115,7 +115,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
 
         final String urlParams = ACT_TX_BY_BLOCKNOINDEX_PARAM + TAG_PARAM + compBlockNo + INDEX_PARAM + "0x"
                 + Long.toHexString(compIndex);
-        final TxProxyTO response = getRequest(urlParams, TxProxyTO.class);
+        final TxProxyTO response = getResponse(urlParams, TxProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -123,7 +123,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
     public int txCount(long blockNo) throws EtherScanException {
         final long compensatedBlockNo = BasicUtils.compensateMinBlock(blockNo);
         final String urlParams = ACT_BLOCKTX_COUNT_PARAM + TAG_PARAM + "0x" + Long.toHexString(compensatedBlockNo);
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return BasicUtils.parseHex(response.getResult()).intValue();
     }
 
@@ -132,7 +132,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_TX_COUNT_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return BasicUtils.parseHex(response.getResult()).intValue();
     }
 
@@ -165,7 +165,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         BasicUtils.validateTxHash(txhash);
 
         final String urlParams = ACT_TX_RECEIPT_PARAM + TXHASH_PARAM + txhash;
-        final TxInfoProxyTO response = getRequest(urlParams, TxInfoProxyTO.class);
+        final TxInfoProxyTO response = getResponse(urlParams, TxInfoProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -177,7 +177,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
             throw new EtherScanInvalidDataHexException("Data is not hex encoded.");
 
         final String urlParams = ACT_CALL_PARAM + TO_PARAM + address + DATA_PARAM + data + TAG_LAST_PARAM;
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -187,7 +187,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         BasicUtils.validateAddress(address);
 
         final String urlParams = ACT_CODE_PARAM + ADDRESS_PARAM + address + TAG_LAST_PARAM;
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return Optional.ofNullable(response.getResult());
     }
 
@@ -198,7 +198,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
         final long compPosition = BasicUtils.compensateMinBlock(position);
 
         final String urlParams = ACT_STORAGEAT_PARAM + ADDRESS_PARAM + address + POSITION_PARAM + compPosition + TAG_LAST_PARAM;
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()) || EMPTY_HEX.matcher(response.getResult()).matches())
                 ? Optional.empty()
                 : Optional.of(response.getResult());
@@ -207,7 +207,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
     @NotNull
     @Override
     public Wei gasPrice() throws EtherScanException {
-        final StringProxyTO response = getRequest(ACT_GASPRICE_PARAM, StringProxyTO.class);
+        final StringProxyTO response = getResponse(ACT_GASPRICE_PARAM, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? Wei.ofWei(0)
                 : Wei.ofWei(BasicUtils.parseHex(response.getResult()));
@@ -226,7 +226,7 @@ final class ProxyAPIProvider extends BasicProvider implements ProxyAPI {
             throw new EtherScanInvalidDataHexException("Data is not in hex format.");
 
         final String urlParams = ACT_ESTIMATEGAS_PARAM + DATA_PARAM + hexData + GAS_PARAM + "2000000000000000";
-        final StringProxyTO response = getRequest(urlParams, StringProxyTO.class);
+        final StringProxyTO response = getResponse(urlParams, StringProxyTO.class);
         return (BasicUtils.isEmpty(response.getResult()))
                 ? Wei.ofWei(0)
                 : Wei.ofWei(BasicUtils.parseHex(response.getResult()));

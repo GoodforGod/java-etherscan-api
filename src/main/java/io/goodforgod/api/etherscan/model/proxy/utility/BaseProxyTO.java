@@ -4,7 +4,7 @@ package io.goodforgod.api.etherscan.model.proxy.utility;
  * @author GoodforGod
  * @since 31.10.2018
  */
-abstract class BaseProxyTO {
+public abstract class BaseProxyTO {
 
     private String id;
     private String jsonrpc;

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 31.10.2018
  */
-final class LogQueryBuilderImpl implements LogQuery.Builder {
+public class LogQueryBuilderImpl implements LogQuery.Builder {
 
     static final long MIN_BLOCK = 0;
     static final long MAX_BLOCK = 99999999999999999L;

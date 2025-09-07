@@ -3,9 +3,9 @@ plugins {
     id "java-library"
     id "maven-publish"
 
-    id "org.sonarqube" version "4.3.0.3225"
+    id "org.sonarqube" version "6.3.1.5724"
     id "com.diffplug.spotless" version "6.19.0"
-    id "io.github.gradle-nexus.publish-plugin" version "1.3.0"
+    id "io.github.gradle-nexus.publish-plugin" version "2.0.0"
 }
 
 repositories {
@@ -17,16 +17,16 @@ group = groupId
 var ver = System.getenv().getOrDefault("RELEASE_VERSION", artifactVersion)
 version = ver.startsWith("v") ? ver.substring(1) : ver
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 dependencies {
-    compileOnly "org.jetbrains:annotations:23.0.0"
+    compileOnly "org.jetbrains:annotations:24.0.1"
     implementation "io.goodforgod:gson-configuration:2.0.0"
 
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.3"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.3"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.11.4"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.11.4"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.11.4"
 }
 
 test {

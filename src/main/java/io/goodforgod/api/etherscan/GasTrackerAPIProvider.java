@@ -18,25 +18,25 @@ import org.jetbrains.annotations.NotNull;
  * @author Abhay Gupta
  * @since 14.11.2022
  */
-final class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI {
+public class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI {
 
     private static final String ACT_GAS_ORACLE_PARAM = ACT_PREFIX + "gasoracle";
     private static final String ACT_GAS_ESTIMATE_PARAM = ACT_PREFIX + "gasestimate";
 
     private static final String GASPRICE_PARAM = "&gasprice=";
 
-    GasTrackerAPIProvider(RequestQueueManager queue,
-                          String baseUrl,
-                          EthHttpClient ethHttpClient,
-                          Converter converter,
-                          int retryCount) {
+    public GasTrackerAPIProvider(RequestQueueManager queue,
+                                 String baseUrl,
+                                 EthHttpClient ethHttpClient,
+                                 Converter converter,
+                                 int retryCount) {
         super(queue, "gastracker", baseUrl, ethHttpClient, converter, retryCount);
     }
 
     @Override
     public @NotNull Duration estimate(@NotNull Wei wei) throws EtherScanException {
         final String urlParams = ACT_GAS_ESTIMATE_PARAM + GASPRICE_PARAM + wei.asWei().toString();
-        final GasEstimateResponseTO response = getRequest(urlParams, GasEstimateResponseTO.class);
+        final GasEstimateResponseTO response = getResponse(urlParams, GasEstimateResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -46,7 +46,7 @@ final class GasTrackerAPIProvider extends BasicProvider implements GasTrackerAPI
     @NotNull
     @Override
     public GasOracle oracle() throws EtherScanException {
-        final GasOracleResponseTO response = getRequest(ACT_GAS_ORACLE_PARAM, GasOracleResponseTO.class);
+        final GasOracleResponseTO response = getResponse(ACT_GAS_ORACLE_PARAM, GasOracleResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 

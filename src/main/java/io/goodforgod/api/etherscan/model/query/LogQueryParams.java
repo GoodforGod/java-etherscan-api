@@ -10,7 +10,7 @@ import io.goodforgod.api.etherscan.LogsAPI;
  * @author GoodforGod
  * @since 31.10.2018
  */
-final class LogQueryParams {
+public class LogQueryParams {
 
     private LogQueryParams() {}
 

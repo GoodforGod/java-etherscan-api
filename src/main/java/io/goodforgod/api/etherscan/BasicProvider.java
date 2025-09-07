@@ -1,13 +1,21 @@
 package io.goodforgod.api.etherscan;
 
+import io.goodforgod.api.etherscan.error.EtherScanException;
 import io.goodforgod.api.etherscan.error.EtherScanParseException;
 import io.goodforgod.api.etherscan.error.EtherScanRateLimitException;
 import io.goodforgod.api.etherscan.error.EtherScanResponseException;
 import io.goodforgod.api.etherscan.http.EthHttpClient;
+import io.goodforgod.api.etherscan.http.EthResponse;
 import io.goodforgod.api.etherscan.manager.RequestQueueManager;
+import io.goodforgod.api.etherscan.model.response.BaseListResponseTO;
 import io.goodforgod.api.etherscan.model.response.StringResponseTO;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.goodforgod.api.etherscan.util.BasicUtils;
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * Base provider for API Implementations
@@ -16,9 +24,12 @@ import java.nio.charset.StandardCharsets;
  * @see EtherScanAPIProvider
  * @since 28.10.2018
  */
-abstract class BasicProvider {
+@Internal
+public abstract class BasicProvider {
 
     private static final String MAX_RATE_LIMIT_REACHED = "Max rate limit reached";
+
+    private static final int OFFSET_MAX = 9999;
 
     static final int MAX_END_BLOCK = Integer.MAX_VALUE;
     static final int MIN_START_BLOCK = 0;
@@ -32,12 +43,12 @@ abstract class BasicProvider {
     private final Converter converter;
     private final int retryCountLimit;
 
-    BasicProvider(RequestQueueManager requestQueueManager,
-                  String module,
-                  String baseUrl,
-                  EthHttpClient ethHttpClient,
-                  Converter converter,
-                  int retryCountLimit) {
+    public BasicProvider(RequestQueueManager requestQueueManager,
+                         String module,
+                         String baseUrl,
+                         EthHttpClient ethHttpClient,
+                         Converter converter,
+                         int retryCountLimit) {
         this.queue = requestQueueManager;
         this.module = "&module=" + module;
         this.baseUrl = baseUrl;
@@ -46,7 +57,7 @@ abstract class BasicProvider {
         this.retryCountLimit = retryCountLimit;
     }
 
-    private <T> T convert(byte[] json, Class<T> tClass) {
+    protected <T> T convert(byte[] json, Class<T> tClass) {
         try {
             final T t = converter.fromJson(json, tClass);
             if (t instanceof StringResponseTO && ((StringResponseTO) t).getResult().startsWith(MAX_RATE_LIMIT_REACHED)) {
@@ -69,25 +80,58 @@ abstract class BasicProvider {
         }
     }
 
-    private byte[] getRequest(String urlParameters) {
+    protected int getMaximumOffset() {
+        return OFFSET_MAX;
+    }
+
+    /**
+     * Generic search for txs using offset api param To avoid 10k limit per response
+     *
+     * @param urlParams Url params for #getRequest()
+     * @param tClass    responseListTO class
+     * @param <T>       responseTO list T type
+     * @param <R>       responseListTO type
+     * @return List of T values
+     */
+    protected <T, R extends BaseListResponseTO<T>> List<T> getRequestUsingOffset(final String urlParams, Class<R> tClass)
+            throws EtherScanException {
+        final List<T> result = new ArrayList<>();
+        int page = 1;
+        while (true) {
+            final String formattedUrl = String.format(urlParams, page++);
+            final R response = getResponse(formattedUrl, tClass);
+            BasicUtils.validateTxResponse(response);
+            if (BasicUtils.isEmpty(response.getResult()))
+                break;
+
+            result.addAll(response.getResult());
+            if (response.getResult().size() < getMaximumOffset())
+                break;
+        }
+
+        return result;
+    }
+
+    protected EthResponse getResponse(String urlParameters) {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
         return executor.get(uri);
     }
 
-    private byte[] postRequest(String urlParameters, String dataToPost) {
+    protected EthResponse postRequest(String urlParameters, String dataToPost) {
         queue.takeTurn();
         final URI uri = URI.create(baseUrl + module + urlParameters);
         return executor.post(uri, dataToPost.getBytes(StandardCharsets.UTF_8));
     }
 
-    <T> T getRequest(String urlParameters, Class<T> tClass) {
-        return getRequest(urlParameters, tClass, 0);
+    protected <T> T getResponse(String urlParameters, Class<T> tClass) {
+        return getResponse(urlParameters, tClass, 0);
     }
 
-    private <T> T getRequest(String urlParameters, Class<T> tClass, int retryCount) {
+    protected <T> T getResponse(String urlParameters, Class<T> tClass, int retryCount) {
         try {
-            return convert(getRequest(urlParameters), tClass);
+            EthResponse response = getResponse(urlParameters);
+            return convert(response.body(), tClass);
         } catch (Exception e) {
             if (retryCount < retryCountLimit) {
                 try {
@@ -96,20 +140,21 @@ abstract class BasicProvider {
                     throw new IllegalStateException(ex);
                 }
 
-                return getRequest(urlParameters, tClass, retryCount + 1);
+                return getResponse(urlParameters, tClass, retryCount + 1);
             } else {
                 throw e;
             }
         }
     }
 
-    <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass) {
+    protected <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass) {
         return postRequest(urlParameters, dataToPost, tClass, 0);
     }
 
-    private <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass, int retryCount) {
+    protected <T> T postRequest(String urlParameters, String dataToPost, Class<T> tClass, int retryCount) {
         try {
-            return convert(postRequest(urlParameters, dataToPost), tClass);
+            EthResponse response = postRequest(urlParameters, dataToPost);
+            return convert(response.body(), tClass);
         } catch (EtherScanRateLimitException e) {
             if (retryCount < retryCountLimit) {
                 try {

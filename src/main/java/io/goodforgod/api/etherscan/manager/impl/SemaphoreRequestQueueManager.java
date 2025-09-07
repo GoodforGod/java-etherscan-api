@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author GoodforGod
  * @since 30.10.2018
  */
-public final class SemaphoreRequestQueueManager implements RequestQueueManager, AutoCloseable {
+public class SemaphoreRequestQueueManager implements RequestQueueManager, AutoCloseable {
 
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Semaphore semaphore;

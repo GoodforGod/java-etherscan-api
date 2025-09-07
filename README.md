@@ -15,7 +15,7 @@ Library supports EtherScan *API* for all available *Ethereum Networks* for *ethe
 
 **Gradle**
 ```groovy
-implementation "com.github.goodforgod:java-etherscan-api:2.1.0"
+implementation "com.github.goodforgod:java-etherscan-api:3.0.0"
 ```
 
 **Maven**
@@ -23,7 +23,7 @@ implementation "com.github.goodforgod:java-etherscan-api:2.1.0"
 <dependency>
     <groupId>com.github.goodforgod</groupId>
     <artifactId>java-etherscan-api</artifactId>
-    <version>2.1.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -71,6 +71,14 @@ just implement **EthHttpClient** by your self or initialize it with your values.
 
 ```java
 Supplier<EthHttpClient> ethHttpClientSupplier = () -> new UrlEthHttpClient(Duration.ofMillis(300), Duration.ofMillis(300));
+EtherScanAPI api = EtherScanAPI.builder()
+    .withHttpClient(supplier)
+    .build();
+```
+
+Also you can use Java 11+ HttpClient:
+```java
+Supplier<EthHttpClient> ethHttpClientSupplier = () -> new JdkEthHttpClient();
 EtherScanAPI api = EtherScanAPI.builder()
     .withHttpClient(supplier)
     .build();
@@ -149,7 +157,7 @@ List<Log> logs = api.logs().logs(query);
 **Get tx details with proxy endpoint**
 ```java
 EtherScanAPI api = EtherScanAPI.builder().build();
-Optional<TxProxy> tx = api.proxy().tx("0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
+Optional<TxProxy> tx = api.proxy().tx("0x1e2910a263.0.08d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1");
 ```
 
 **Get block info with proxy endpoint**

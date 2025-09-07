@@ -53,7 +53,7 @@ public class Status {
         return new StatusBuilder();
     }
 
-    public static final class StatusBuilder {
+    public static class StatusBuilder {
 
         private int isError;
         private String errDescription;

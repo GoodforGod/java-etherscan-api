@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * @author GoodforGod
  * @since 28.10.2018
  */
-final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
+public class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
 
     private static final String ACT_SUPPLY_PARAM = ACT_PREFIX + "ethsupply";
     private static final String ACT_SUPPLY2_PARAM = ACT_PREFIX + "ethsupply2";
@@ -30,18 +30,18 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
 
     private static final String CONTRACT_ADDRESS_PARAM = "&contractaddress=";
 
-    StatisticAPIProvider(RequestQueueManager queue,
-                         String baseUrl,
-                         EthHttpClient executor,
-                         Converter converter,
-                         int retry) {
+    public StatisticAPIProvider(RequestQueueManager queue,
+                                String baseUrl,
+                                EthHttpClient executor,
+                                Converter converter,
+                                int retry) {
         super(queue, "stats", baseUrl, executor, converter, retry);
     }
 
     @NotNull
     @Override
     public Wei supply() throws EtherScanException {
-        final StringResponseTO response = getRequest(ACT_SUPPLY_PARAM, StringResponseTO.class);
+        final StringResponseTO response = getResponse(ACT_SUPPLY_PARAM, StringResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -50,7 +50,7 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
 
     @Override
     public @NotNull EthSupply supplyTotal() throws EtherScanException {
-        final EthSupplyResponseTO response = getRequest(ACT_SUPPLY2_PARAM, EthSupplyResponseTO.class);
+        final EthSupplyResponseTO response = getResponse(ACT_SUPPLY2_PARAM, EthSupplyResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -63,7 +63,7 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
         BasicUtils.validateAddress(contract);
 
         final String urlParams = ACT_TOKEN_SUPPLY_PARAM + CONTRACT_ADDRESS_PARAM + contract;
-        final StringResponseTO response = getRequest(urlParams, StringResponseTO.class);
+        final StringResponseTO response = getResponse(urlParams, StringResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 
@@ -73,7 +73,7 @@ final class StatisticAPIProvider extends BasicProvider implements StatisticAPI {
     @NotNull
     @Override
     public Price priceLast() throws EtherScanException {
-        final PriceResponseTO response = getRequest(ACT_LASTPRICE_PARAM, PriceResponseTO.class);
+        final PriceResponseTO response = getResponse(ACT_LASTPRICE_PARAM, PriceResponseTO.class);
         if (response.getStatus() != 1)
             throw new EtherScanResponseException(response);
 

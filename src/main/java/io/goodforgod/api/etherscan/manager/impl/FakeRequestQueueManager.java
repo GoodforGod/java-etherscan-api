@@ -8,7 +8,7 @@ import io.goodforgod.api.etherscan.manager.RequestQueueManager;
  * @author GoodforGod
  * @since 03.11.2018
  */
-public final class FakeRequestQueueManager implements RequestQueueManager {
+public class FakeRequestQueueManager implements RequestQueueManager {
 
     @Override
     public void takeTurn() {

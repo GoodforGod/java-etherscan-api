@@ -82,7 +82,7 @@ public class TxErc721 extends BlockTx {
         return new TxERC721Builder();
     }
 
-    public static final class TxERC721Builder {
+    public static class TxERC721Builder {
 
         private long blockNumber;
         private LocalDateTime timeStamp;

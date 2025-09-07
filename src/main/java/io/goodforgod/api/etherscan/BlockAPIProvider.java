@@ -17,17 +17,17 @@ import org.jetbrains.annotations.NotNull;
  * @see BlockAPI
  * @since 28.10.2018
  */
-final class BlockAPIProvider extends BasicProvider implements BlockAPI {
+public class BlockAPIProvider extends BasicProvider implements BlockAPI {
 
     private static final String ACT_BLOCK_PARAM = ACT_PREFIX + "getblockreward";
 
     private static final String BLOCKNO_PARAM = "&blockno=";
 
-    BlockAPIProvider(RequestQueueManager requestQueueManager,
-                     String baseUrl,
-                     EthHttpClient executor,
-                     Converter converter,
-                     int retryCount) {
+    public BlockAPIProvider(RequestQueueManager requestQueueManager,
+                            String baseUrl,
+                            EthHttpClient executor,
+                            Converter converter,
+                            int retryCount) {
         super(requestQueueManager, "block", baseUrl, executor, converter, retryCount);
     }
 
@@ -36,7 +36,7 @@ final class BlockAPIProvider extends BasicProvider implements BlockAPI {
     public Optional<BlockUncle> uncles(long blockNumber) throws EtherScanException {
         final String urlParam = ACT_BLOCK_PARAM + BLOCKNO_PARAM + blockNumber;
         try {
-            final UncleBlockResponseTO responseTO = getRequest(urlParam, UncleBlockResponseTO.class);
+            final UncleBlockResponseTO responseTO = getResponse(urlParam, UncleBlockResponseTO.class);
             if (responseTO.getMessage().startsWith("NOTOK")) {
                 return Optional.empty();
             }

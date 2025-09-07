@@ -156,7 +156,7 @@ public class TxProxy implements Comparable<TxProxy> {
         return new TxProxyBuilder();
     }
 
-    public static final class TxProxyBuilder {
+    public static class TxProxyBuilder {
 
         private String to;
         private String hash;
