@@ -144,48 +144,6 @@ public class BlockProxy implements Comparable<BlockProxy> {
     // </editor-fold>
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof BlockProxy))
-            return false;
-        BlockProxy that = (BlockProxy) o;
-        return Objects.equals(number, that.number) && Objects.equals(hash, that.hash)
-                && Objects.equals(parentHash, that.parentHash) && Objects.equals(nonce, that.nonce);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, hash, parentHash, nonce);
-    }
-
-    @Override
-    public String toString() {
-        return "BlockProxy{" +
-                "number=" + number +
-                ", hash=" + hash +
-                ", parentHash=" + parentHash +
-                ", stateRoot=" + stateRoot +
-                ", size=" + size +
-                ", difficulty=" + difficulty +
-                ", totalDifficulty=" + totalDifficulty +
-                ", timestamp=" + timestamp +
-                ", miner=" + miner +
-                ", nonce=" + nonce +
-                ", extraData=" + extraData +
-                ", logsBloom=" + logsBloom +
-                ", mixHash=" + mixHash +
-                ", gasUsed=" + gasUsed +
-                ", gasLimit=" + gasLimit +
-                ", sha3Uncles=" + sha3Uncles +
-                ", uncles=" + uncles +
-                ", receiptsRoot=" + receiptsRoot +
-                ", transactionsRoot=" + transactionsRoot +
-                ", transactions=" + transactions +
-                '}';
-    }
-
-    @Override
     public int compareTo(@NotNull BlockProxy o) {
         return Long.compare(getNumber(), o.getNumber());
     }
@@ -352,5 +310,64 @@ public class BlockProxy implements Comparable<BlockProxy> {
             blockProxy._number = this.number;
             return blockProxy;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        BlockProxy that = (BlockProxy) o;
+        return Objects.equals(number, that.number) && Objects.equals(_number, that._number) && Objects.equals(hash, that.hash)
+                && Objects.equals(parentHash, that.parentHash) && Objects.equals(stateRoot, that.stateRoot)
+                && Objects.equals(size, that.size) && Objects.equals(_size, that._size)
+                && Objects.equals(difficulty, that.difficulty) && Objects.equals(totalDifficulty, that.totalDifficulty)
+                && Objects.equals(timestamp, that.timestamp) && Objects.equals(_timestamp, that._timestamp)
+                && Objects.equals(miner, that.miner) && Objects.equals(nonce, that.nonce)
+                && Objects.equals(extraData, that.extraData) && Objects.equals(logsBloom, that.logsBloom)
+                && Objects.equals(mixHash, that.mixHash) && Objects.equals(gasUsed, that.gasUsed)
+                && Objects.equals(_gasUsed, that._gasUsed) && Objects.equals(gasLimit, that.gasLimit)
+                && Objects.equals(_gasLimit, that._gasLimit) && Objects.equals(sha3Uncles, that.sha3Uncles)
+                && Objects.equals(uncles, that.uncles) && Objects.equals(receiptsRoot, that.receiptsRoot)
+                && Objects.equals(transactionsRoot, that.transactionsRoot) && Objects.equals(transactions, that.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, number, hash, parentHash, stateRoot, size, size, difficulty, totalDifficulty, timestamp,
+                timestamp, miner, nonce, extraData, logsBloom, mixHash, gasUsed, gasUsed, gasLimit, gasLimit, sha3Uncles, uncles,
+                receiptsRoot, transactionsRoot, transactions);
+    }
+
+    @Override
+    public String toString() {
+        return "BlockProxy{" +
+                "number=" + number +
+                ", number=" + _number +
+                ", hash=" + hash +
+                ", parentHash=" + parentHash +
+                ", stateRoot=" + stateRoot +
+                ", size=" + size +
+                ", size=" + _size +
+                ", difficulty=" + difficulty +
+                ", totalDifficulty=" + totalDifficulty +
+                ", timestamp=" + timestamp +
+                ", timestamp=" + _timestamp +
+                ", miner=" + miner +
+                ", nonce=" + nonce +
+                ", extraData=" + extraData +
+                ", logsBloom=" + logsBloom +
+                ", mixHash=" + mixHash +
+                ", gasUsed=" + gasUsed +
+                ", gasUsed=" + _gasUsed +
+                ", gasLimit=" + gasLimit +
+                ", gasLimit=" + _gasLimit +
+                ", sha3Uncles=" + sha3Uncles +
+                ", uncles=" + uncles +
+                ", receiptsRoot=" + receiptsRoot +
+                ", transactionsRoot=" + transactionsRoot +
+                ", transactions=" + transactions +
+                '}';
     }
 }

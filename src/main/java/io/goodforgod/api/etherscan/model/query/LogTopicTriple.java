@@ -4,6 +4,7 @@ import static io.goodforgod.api.etherscan.model.query.LogQueryParams.*;
 
 import io.goodforgod.api.etherscan.LogsAPI;
 import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -68,5 +69,38 @@ public class LogTopicTriple implements LogTopicBuilder {
                 + TOPIC_0_1_OPR_PARAM + topic0_1_opr.getOperation()
                 + TOPIC_1_2_OPR_PARAM + topic1_2_opr.getOperation()
                 + TOPIC_0_2_OPR_PARAM + topic0_2_opr.getOperation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        LogTopicTriple that = (LogTopicTriple) o;
+        return startBlock == that.startBlock && endBlock == that.endBlock && Objects.equals(address, that.address)
+                && Objects.equals(topic0, that.topic0) && Objects.equals(topic1, that.topic1)
+                && Objects.equals(topic2, that.topic2) && topic0_1_opr == that.topic0_1_opr && topic1_2_opr == that.topic1_2_opr
+                && topic0_2_opr == that.topic0_2_opr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, startBlock, endBlock, topic0, topic1, topic2, topic0_1_opr, topic1_2_opr, topic0_2_opr);
+    }
+
+    @Override
+    public String toString() {
+        return "LogTopicTriple{" +
+                "address=" + address + '\'' +
+                ", startBlock=" + startBlock +
+                ", endBlock=" + endBlock +
+                ", topic0=" + topic0 + '\'' +
+                ", topic1=" + topic1 + '\'' +
+                ", topic2=" + topic2 + '\'' +
+                ", topic0_1_opr=" + topic0_1_opr +
+                ", topic1_2_opr=" + topic1_2_opr +
+                ", topic0_2_opr=" + topic0_2_opr +
+                '}';
     }
 }

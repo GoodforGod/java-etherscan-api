@@ -4,6 +4,7 @@ import static io.goodforgod.api.etherscan.model.query.LogQueryParams.*;
 
 import io.goodforgod.api.etherscan.LogsAPI;
 import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -49,5 +50,34 @@ public class LogTopicTuple implements LogTopicBuilder {
                 + TOPIC_0_PARAM + topic0
                 + TOPIC_1_PARAM + topic1
                 + TOPIC_0_1_OPR_PARAM + topic0_1_opr.getOperation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        LogTopicTuple that = (LogTopicTuple) o;
+        return startBlock == that.startBlock && endBlock == that.endBlock && Objects.equals(address, that.address)
+                && Objects.equals(topic0, that.topic0) && Objects.equals(topic1, that.topic1)
+                && topic0_1_opr == that.topic0_1_opr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, startBlock, endBlock, topic0, topic1, topic0_1_opr);
+    }
+
+    @Override
+    public String toString() {
+        return "LogTopicTuple{" +
+                "address=" + address + '\'' +
+                ", startBlock=" + startBlock +
+                ", endBlock=" + endBlock +
+                ", topic0=" + topic0 + '\'' +
+                ", topic1=" + topic1 + '\'' +
+                ", topic0_1_opr=" + topic0_1_opr +
+                '}';
     }
 }
