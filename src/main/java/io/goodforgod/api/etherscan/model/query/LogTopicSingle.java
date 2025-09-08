@@ -4,6 +4,7 @@ import static io.goodforgod.api.etherscan.model.query.LogQueryParams.*;
 
 import io.goodforgod.api.etherscan.LogsAPI;
 import io.goodforgod.api.etherscan.error.EtherScanLogQueryException;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,5 +34,31 @@ public class LogTopicSingle implements LogTopicBuilder {
         return new LogQueryImpl(ADDRESS_PARAM + address
                 + FROM_BLOCK_PARAM + startBlock + TO_BLOCK_PARAM + endBlock
                 + TOPIC_0_PARAM + topic0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        LogTopicSingle that = (LogTopicSingle) o;
+        return startBlock == that.startBlock && endBlock == that.endBlock && Objects.equals(address, that.address)
+                && Objects.equals(topic0, that.topic0);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, startBlock, endBlock, topic0);
+    }
+
+    @Override
+    public String toString() {
+        return "LogTopicSingle{" +
+                "address=" + address + '\'' +
+                ", startBlock=" + startBlock +
+                ", endBlock=" + endBlock +
+                ", topic0=" + topic0 + '\'' +
+                '}';
     }
 }

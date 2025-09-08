@@ -32,6 +32,8 @@ jobs:
 
       - name: Test
         run: './gradlew test jacocoTestReport'
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY_PUBLISH }}
 
       - name: Publish Snapshot
         run: './gradlew publish'

@@ -95,41 +95,6 @@ public class ReceiptProxy {
     }
     // </editor-fold>
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof ReceiptProxy))
-            return false;
-        ReceiptProxy that = (ReceiptProxy) o;
-        return Objects.equals(blockNumber, that.blockNumber) && Objects.equals(blockHash, that.blockHash)
-                && Objects.equals(transactionHash, that.transactionHash)
-                && Objects.equals(transactionIndex, that.transactionIndex);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(blockNumber, blockHash, transactionHash, transactionIndex);
-    }
-
-    @Override
-    public String toString() {
-        return "ReceiptProxy{" +
-                "root=" + root +
-                ", from=" + from +
-                ", to=" + to +
-                ", blockNumber=" + blockNumber +
-                ", blockHash=" + blockHash +
-                ", transactionHash=" + transactionHash +
-                ", transactionIndex=" + transactionIndex +
-                ", gasUsed=" + gasUsed +
-                ", cumulativeGasUsed=" + cumulativeGasUsed +
-                ", contractAddress=" + contractAddress +
-                ", logs=" + logs +
-                ", logsBloom=" + logsBloom +
-                '}';
-    }
-
     public static ReceiptProxyBuilder builder() {
         return new ReceiptProxyBuilder();
     }
@@ -233,5 +198,51 @@ public class ReceiptProxy {
             receiptProxy._blockNumber = this.blockNumber;
             return receiptProxy;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        ReceiptProxy that = (ReceiptProxy) o;
+        return Objects.equals(root, that.root) && Objects.equals(from, that.from) && Objects.equals(to, that.to)
+                && Objects.equals(blockNumber, that.blockNumber) && Objects.equals(_blockNumber, that._blockNumber)
+                && Objects.equals(blockHash, that.blockHash) && Objects.equals(transactionHash, that.transactionHash)
+                && Objects.equals(transactionIndex, that.transactionIndex)
+                && Objects.equals(_transactionIndex, that._transactionIndex) && Objects.equals(gasUsed, that.gasUsed)
+                && Objects.equals(_gasUsed, that._gasUsed) && Objects.equals(cumulativeGasUsed, that.cumulativeGasUsed)
+                && Objects.equals(_cumulativeGasUsed, that._cumulativeGasUsed)
+                && Objects.equals(contractAddress, that.contractAddress) && Objects.equals(logs, that.logs)
+                && Objects.equals(logsBloom, that.logsBloom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(root, from, to, blockNumber, blockNumber, blockHash, transactionHash, transactionIndex,
+                transactionIndex, gasUsed, gasUsed, cumulativeGasUsed, cumulativeGasUsed, contractAddress, logs, logsBloom);
+    }
+
+    @Override
+    public String toString() {
+        return "ReceiptProxy{" +
+                "root=" + root + '\'' +
+                ", from=" + from + '\'' +
+                ", to=" + to + '\'' +
+                ", blockNumber=" + blockNumber + '\'' +
+                ", blockNumber=" + _blockNumber +
+                ", blockHash=" + blockHash + '\'' +
+                ", transactionHash=" + transactionHash + '\'' +
+                ", transactionIndex=" + transactionIndex + '\'' +
+                ", transactionIndex=" + _transactionIndex +
+                ", gasUsed=" + gasUsed + '\'' +
+                ", gasUsed=" + _gasUsed +
+                ", cumulativeGasUsed=" + cumulativeGasUsed + '\'' +
+                ", cumulativeGasUsed=" + _cumulativeGasUsed +
+                ", contractAddress=" + contractAddress + '\'' +
+                ", logs=" + logs +
+                ", logsBloom=" + logsBloom + '\'' +
+                '}';
     }
 }

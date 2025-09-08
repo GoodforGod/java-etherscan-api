@@ -108,43 +108,6 @@ public class TxProxy implements Comparable<TxProxy> {
     // </editor-fold>
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof TxProxy))
-            return false;
-        TxProxy txProxy = (TxProxy) o;
-        return Objects.equals(hash, txProxy.hash) && Objects.equals(transactionIndex, txProxy.transactionIndex)
-                && Objects.equals(nonce, txProxy.nonce) && Objects.equals(blockHash, txProxy.blockHash)
-                && Objects.equals(blockNumber, txProxy.blockNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(hash, transactionIndex, nonce, blockHash, blockNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "TxProxy{" +
-                "to=" + to +
-                ", hash=" + hash +
-                ", transactionIndex=" + transactionIndex +
-                ", from=" + from +
-                ", v=" + v +
-                ", input=" + input +
-                ", s=" + s +
-                ", r=" + r +
-                ", nonce=" + nonce +
-                ", value=" + value +
-                ", gas=" + gas +
-                ", gasPrice=" + gasPrice +
-                ", blockHash=" + blockHash +
-                ", blockNumber=" + blockNumber +
-                '}';
-    }
-
-    @Override
     public int compareTo(@NotNull TxProxy o) {
         final int firstCompare = Long.compare(getBlockNumber(), o.getBlockNumber());
         return (firstCompare == 0)
@@ -270,5 +233,54 @@ public class TxProxy implements Comparable<TxProxy> {
             }
             return txProxy;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        TxProxy txProxy = (TxProxy) o;
+        return Objects.equals(to, txProxy.to) && Objects.equals(hash, txProxy.hash)
+                && Objects.equals(transactionIndex, txProxy.transactionIndex)
+                && Objects.equals(_transactionIndex, txProxy._transactionIndex) && Objects.equals(from, txProxy.from)
+                && Objects.equals(v, txProxy.v) && Objects.equals(input, txProxy.input) && Objects.equals(s, txProxy.s)
+                && Objects.equals(r, txProxy.r) && Objects.equals(nonce, txProxy.nonce) && Objects.equals(_nonce, txProxy._nonce)
+                && Objects.equals(value, txProxy.value) && Objects.equals(gas, txProxy.gas) && Objects.equals(_gas, txProxy._gas)
+                && Objects.equals(gasPrice, txProxy.gasPrice) && Objects.equals(_gasPrice, txProxy._gasPrice)
+                && Objects.equals(blockHash, txProxy.blockHash) && Objects.equals(blockNumber, txProxy.blockNumber)
+                && Objects.equals(_blockNumber, txProxy._blockNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(to, hash, transactionIndex, transactionIndex, from, v, input, s, r, nonce, nonce, value, gas, gas,
+                gasPrice, gasPrice, blockHash, blockNumber, blockNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "TxProxy{" +
+                "to=" + to + '\'' +
+                ", hash=" + hash + '\'' +
+                ", transactionIndex=" + transactionIndex + '\'' +
+                ", transactionIndex=" + _transactionIndex +
+                ", from=" + from + '\'' +
+                ", v=" + v + '\'' +
+                ", input=" + input + '\'' +
+                ", s=" + s + '\'' +
+                ", r=" + r + '\'' +
+                ", nonce=" + nonce + '\'' +
+                ", nonce=" + _nonce +
+                ", value=" + value + '\'' +
+                ", gas=" + gas + '\'' +
+                ", gas=" + _gas +
+                ", gasPrice=" + gasPrice + '\'' +
+                ", gasPrice=" + _gasPrice +
+                ", blockHash=" + blockHash + '\'' +
+                ", blockNumber=" + blockNumber + '\'' +
+                ", blockNumber=" + _blockNumber +
+                '}';
     }
 }

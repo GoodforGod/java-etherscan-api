@@ -30,9 +30,11 @@ jobs:
 
       - name: Test
         run: './gradlew test jacocoTestReport'
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
 
       - name: SonarQube
-        if: matrix.java == '17'
+        if: matrix.java == '11'
         run: './gradlew sonar --info'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

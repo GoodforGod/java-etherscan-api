@@ -1,6 +1,6 @@
 # Java EtherScan API 
 
-[![Minimum required Java version](https://img.shields.io/badge/Java-1.8%2B-blue?logo=openjdk)](https://openjdk.org/projects/jdk8/)
+[![Minimum required Java version](https://img.shields.io/badge/Java-11%2B-blue?logo=openjdk)](https://openjdk.org/projects/jdk/11/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.goodforgod/java-etherscan-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.goodforgod/java-etherscan-api)
 [![Java CI](https://github.com/GoodforGod/java-etherscan-api/workflows/CI%20Master/badge.svg)](https://github.com/GoodforGod/java-etherscan-api/actions?query=workflow%3ACI+Master)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GoodforGod_java-etherscan-api&metric=coverage)](https://sonarcloud.io/dashboard?id=GoodforGod_java-etherscan-api)
